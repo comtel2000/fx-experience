@@ -120,7 +120,7 @@ public class SwingMainDemo extends JApplet {
 
 		fxKeyboard.setScaleX(0.0d);
 		fxKeyboard.setScaleY(0.0d);
-		//fxKeyboard.setOpacity(0.9d);
+		// fxKeyboard.setOpacity(0.9d);
 		fxKeyboard.setOnKeyboardCloseButton(new EventHandler<Event>() {
 
 			public void handle(Event event) {

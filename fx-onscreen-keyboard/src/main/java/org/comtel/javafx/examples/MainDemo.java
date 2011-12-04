@@ -14,7 +14,6 @@ import javafx.geometry.Point2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -53,11 +52,12 @@ public class MainDemo extends Application {
 		tf.focusedProperty().addListener(new ChangeListener<Boolean>() {
 			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
 				if (newValue) {
-					Point2D point = new Point2D(tf.getScene().getWindow().getX() + tf.getLayoutX(), 
-							tf.getScene().getWindow().getY() + tf.getLayoutY() + 40);
+					Point2D point = new Point2D(tf.getScene().getWindow().getX() + tf.getLayoutX(), tf.getScene()
+							.getWindow().getY()
+							+ tf.getLayoutY() + 40);
 					setKeyboardVisible(true, point);
-					
-				} else{
+
+				} else {
 					setKeyboardVisible(false, null);
 				}
 			}
@@ -67,11 +67,12 @@ public class MainDemo extends Application {
 		tf2.focusedProperty().addListener(new ChangeListener<Boolean>() {
 			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
 				if (newValue) {
-					Point2D point = new Point2D(tf2.getScene().getWindow().getX() + tf2.getLayoutX(), 
-							tf2.getScene().getWindow().getY() + tf2.getLayoutY() + 40);
+					Point2D point = new Point2D(tf2.getScene().getWindow().getX() + tf2.getLayoutX(), tf2.getScene()
+							.getWindow().getY()
+							+ tf2.getLayoutY() + 40);
 					setKeyboardVisible(true, point);
-					
-				} else{
+
+				} else {
 					setKeyboardVisible(false, null);
 				}
 			}
