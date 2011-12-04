@@ -50,34 +50,28 @@ public class MainDemo extends Application {
 		pane.setPrefSize(800, 600);
 
 		final TextField tf = new TextField("");
-
 		tf.focusedProperty().addListener(new ChangeListener<Boolean>() {
 			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-				if (!newValue) {
+				if (newValue) {
+					Point2D point = new Point2D(tf.getScene().getWindow().getX() + tf.getLayoutX(), 
+							tf.getScene().getWindow().getY() + tf.getLayoutY() + 40);
+					setKeyboardVisible(true, point);
+					
+				} else{
 					setKeyboardVisible(false, null);
 				}
 			}
 		});
-
-		tf.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
-			public void handle(MouseEvent event) {
-				Point2D point = new Point2D(event.getScreenX(), event.getScreenY());
-				setKeyboardVisible(true, point);
-			}
-		});
-
 		final TextField tf2 = new TextField("");
-		tf2.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
-			public void handle(MouseEvent event) {
-				Point2D point = new Point2D(event.getScreenX(), event.getScreenY());
-				setKeyboardVisible(true, point);
-			}
-		});
 		tf2.focusedProperty().addListener(new ChangeListener<Boolean>() {
 			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-				if (!newValue) {
+				if (newValue) {
+					Point2D point = new Point2D(tf2.getScene().getWindow().getX() + tf2.getLayoutX(), 
+							tf2.getScene().getWindow().getY() + tf2.getLayoutY() + 40);
+					setKeyboardVisible(true, point);
+					
+				} else{
 					setKeyboardVisible(false, null);
 				}
 			}
