@@ -9,6 +9,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseButton;
@@ -134,7 +135,8 @@ public class KeyButton extends Button implements LongPressable {
 		if (onLongPressed == null) {
 			onLongPressed = new SimpleObjectProperty<EventHandler<? super KeyButtonEvent>>() {
 
-				protected void invalidated() {
+				@Override
+                protected void invalidated() {
 					setEventHandler(KeyButtonEvent.LONG_PRESSED, (EventHandler<? super Event>) get());
 				}
 			};
@@ -154,7 +156,8 @@ public class KeyButton extends Button implements LongPressable {
 		if (onShortPressed == null) {
 			onShortPressed = new SimpleObjectProperty<EventHandler<? super KeyButtonEvent>>() {
 
-				protected void invalidated() {
+				@Override
+                protected void invalidated() {
 					setEventHandler(KeyButtonEvent.SHORT_PRESSED, (EventHandler<? super Event>) get());
 				}
 			};
