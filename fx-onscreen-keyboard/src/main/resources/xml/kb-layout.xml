@@ -26,7 +26,7 @@
 	</Row>
 
 	<Row>
-		<Key codes="-1" keyIcon="@drawable/sym_keyboard_shift_off" keyWidth="15"
+		<Key codes="-1" keyIcon="@drawable/sym_keyboard_shift_off.svg" keyWidth="15"
 			isModifier="true" isSticky="true" keyEdgeFlags="left" />
 		<Key codes="122" keyLabel="z" />
 		<Key codes="120" keyLabel="x" />
@@ -46,7 +46,7 @@
 		<Key codes="32" keyIcon="@drawable/sym_keyboard_space" keyWidth="30"
 			isRepeatable="true" />
 		<Key codes="46,44,45,95" keyLabel="." keyWidth="15" />
-		<Key codes="10" keyIcon="@drawable/sym_keyboard_return" keyWidth="20"
+		<Key codes="10" keyIcon="@drawable/sym_keyboard_return.svg" keyWidth="20"
 			keyEdgeFlags="right" />
 	</Row>
 </Keyboard>

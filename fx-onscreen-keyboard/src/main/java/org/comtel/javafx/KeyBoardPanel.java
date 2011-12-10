@@ -5,12 +5,14 @@ import java.awt.Component;
 import java.awt.KeyboardFocusManager;
 import java.awt.Robot;
 import java.io.InputStream;
+import java.net.URL;
 
 import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.ContentDisplay;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -31,6 +33,8 @@ import org.comtel.javafx.control.KeyButton;
 import org.comtel.javafx.control.KeyboardLayer;
 import org.comtel.javafx.control.MultiKeyButton;
 import org.comtel.javafx.event.KeyButtonEvent;
+import org.comtel.javafx.svg.SVGContent;
+import org.comtel.javafx.svg.SVGLoader;
 import org.comtel.javafx.xml.KeyboardLayoutHandler;
 import org.comtel.javafx.xml.layout.Keyboard;
 import org.tbee.javafx.scene.layout.MigPane;
@@ -93,7 +97,7 @@ public class KeyBoardPanel extends Group implements EventHandler<KeyButtonEvent>
 	}
 
 	private void init() {
-
+		
 		KeyboardLayoutHandler handler = new KeyboardLayoutHandler();
 		qwertyKeyboardPane = createKeyboardPane(handler.getLayout(layerPath + "/kb-layout.xml"));
 		qwertyShiftedKeyboardPane = createKeyboardPane(handler.getLayout(layerPath + "/kb-layout-shift.xml"));
@@ -207,18 +211,27 @@ public class KeyBoardPanel extends Group implements EventHandler<KeyButtonEvent>
 							}
 						}
 					}
-
 				}
 
 				if (key.getKeyIcon() != null) {
+					URL url = KeyBoardPanel.class.getResource(key.getKeyIcon().replace("@", "/") + ".svg");
+					if (url != null) {
+						SVGContent content = SVGLoader.load(url);
+						Group svgG = content.getRoot();
+						svgG.scaleXProperty().bind(button.scaleXProperty().multiply(0.8));
+						svgG.scaleYProperty().bind(button.scaleYProperty().multiply(0.8));
+						button.setContentDisplay(ContentDisplay.BOTTOM);
+						button.setGraphic(svgG);
 
-					InputStream is = KeyBoardPanel.class.getResourceAsStream(key.getKeyIcon().replace("@", "/")
-							+ ".png");
-					Image image = new Image(is);
-					if (!image.isError()) {
-						button.setGraphic(new ImageView(image));
 					} else {
-						System.err.println("Image: " + key.getKeyIcon() + " not found");
+						InputStream is = KeyBoardPanel.class.getResourceAsStream(key.getKeyIcon().replace("@", "/")
+								+ ".png");
+						Image image = new Image(is);
+						if (!image.isError()) {
+							button.setGraphic(new ImageView(image));
+						} else {
+							System.err.println("Image: " + key.getKeyIcon() + " not found");
+						}
 					}
 				}
 				if (key.getKeyLabel() != null) {
