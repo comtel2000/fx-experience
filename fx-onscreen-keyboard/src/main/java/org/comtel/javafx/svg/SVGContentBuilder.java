@@ -652,8 +652,14 @@ class SVGContentBuilder {
 
 		Attribute strokeDashArrayAttribute = element.getAttributeByName(new QName("stroke-dasharray"));
 		if (strokeDashArrayAttribute != null) {
-			double dashValue = Double.parseDouble(strokeDashArrayAttribute.getValue());
-			shape.getStrokeDashArray().add(dashValue);
+			String styles = strokeDashArrayAttribute.getValue();
+
+			StringTokenizer tokenizer = new StringTokenizer(styles, ",");
+			while (tokenizer.hasMoreTokens()) {
+				String style = tokenizer.nextToken();
+				double dashValue = Double.parseDouble(style);
+				shape.getStrokeDashArray().add(dashValue);
+			}
 		}
 
 		Attribute styleAttribute = element.getAttributeByName(new QName("style"));

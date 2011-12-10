@@ -18,7 +18,7 @@
 	</Row>
 
 	<Row>
-		<Key codes="-4" keyIcon="@drawable/sym_keyboard_search" keyWidth="14"
+		<Key codes="43" keyIcon="@drawable/sym_keyboard_zoom_in" keyWidth="14"
 			keyEdgeFlags="left" />
 		<Key codes="97" keyLabel="A" />
 		<Key codes="115,223" keyLabel="" />
@@ -34,7 +34,7 @@
 	</Row>
 
 	<Row>
-		<Key codes="-1" keyIcon="@drawable/sym_keyboard_shift_off"
+		<Key codes="45" keyIcon="@drawable/sym_keyboard_zoom_out"
 			keyWidth="14" isModifier="true" isSticky="true" keyEdgeFlags="left" />
 		<Key codes="122" keyLabel="" />
 		<Key codes="120" keyLabel="X" />
@@ -43,8 +43,8 @@
 		<Key codes="98" keyLabel="" />
 		<Key codes="110" keyLabel="" />
 		<Key codes="109" keyLabel="" />
-		<Key codes="45" keyLabel="-" />
-		<Key codes="43" keyLabel="+" />
+		<Key codes="45" keyLabel="" />
+		<Key codes="43" keyLabel="" />
 		<Key codes="-1" keyIcon="@drawable/sym_keyboard_shift_off"
 			keyWidth="14" keyEdgeFlags="right" />
 	</Row>
