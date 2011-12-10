@@ -118,8 +118,9 @@ class SVGContentBuilder {
 				} else if (nodeName.equals("radialGradient")) {
 
 					buildRadialGradient(reader, element);
+				}  else if (nodeName.equals("title")) {
+					group.setUserData(buildTitle(reader, element));
 				} else {
-
 					Logger.getLogger(SVGContentBuilder.class.getName()).log(Level.INFO, "Non Support Element: {0}",
 							element);
 
@@ -149,6 +150,15 @@ class SVGContentBuilder {
 				}
 			}
 		}
+	}
+
+	private String buildTitle(XMLEventReader reader, StartElement element) {
+		try {
+			return reader.getElementText();
+		} catch (XMLStreamException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	private Group buildGroup(XMLEventReader reader, StartElement element) throws IOException, XMLStreamException {

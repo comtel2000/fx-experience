@@ -1,7 +1,8 @@
-<svg width="10" height="10" xmlns="http://www.w3.org/2000/svg">
+<svg width="170" height="100" xmlns="http://www.w3.org/2000/svg">
  <!-- Created with SVG-edit - http://svg-edit.googlecode.com/ -->
-  <g id="sym_keyboard_shift_off">
-   <path id="shift_off_1" d="m60,50l19.889503,-0.073666l0,-13.25967l14.91713,0l-24.86187,-26.887666l-25.138134,26.887666l15.193371,0l0,13.333336z" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" stroke="#ffffff" fill="none"/>
-   <path id="shift_off_2" d="m80,65l-0.165749,-10.055248l-19.8895,0l0,9.944752l20.055248,0.110497z" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" stroke="#ffffff" fill="none"/>
-  </g>
+ <g>
+  <title>Ebene 1</title>
+  <rect fill="none" stroke="#ffffff" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" x="81" y="49" width="9" height="3" id="svg_19"/>
+  <path fill="none" stroke="#ffffff" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" d="m80.571426,45l-0.082489,-6.037659l-6.598923,0l11.905556,-12.01255l11.190681,12.01255l-6.598923,0c0,2.008369 0,4.016739 0,6.025108l-9.815903,0.01255z" id="svg_20"/>
+ </g>
 </svg>
