@@ -1,17 +1,14 @@
 <svg width="170" height="100" xmlns="http://www.w3.org/2000/svg">
  <!-- Created with SVG-edit - http://svg-edit.googlecode.com/ -->
  <g>
-  <title>Ebene 1</title>
-  <g id="svg_67">
-   <line y="NaN" x="NaN" opacity="0.4" id="svg_47" y2="75" x2="120" y1="75" x1="60" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2,2" stroke="#7f7f7f" fill="none"/>
-   <line y="NaN" x="NaN" id="svg_48" opacity="0.4" y2="70" x2="120" y1="70" x1="60" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2,2" stroke="#7f7f7f" fill="none"/>
-   <line id="svg_60" y="NaN" x="NaN" opacity="0.4" y2="80" x2="120" y1="80" x1="60" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2,2" stroke="#7f7f7f" fill="none"/>
+  <g id="grip">
+   <line id="svg_60" y="NaN" x="NaN" opacity="0.4" y2="60" x2="120" y1="60" x1="60" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2,2" stroke="#7f7f7f" fill="none"/>
    <line id="svg_61" y="NaN" x="NaN" opacity="0.4" y2="65" x2="120" y1="65" x1="60" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2,2" stroke="#7f7f7f" fill="none"/>
-   <line id="svg_62" y="NaN" x="NaN" opacity="0.4" y2="60" x2="120" y1="60" x1="60" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2,2" stroke="#7f7f7f" fill="none"/>
-   <line id="svg_63" y="NaN" x="NaN" opacity="0.4" y2="62" x2="117" y1="62" x1="62" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2,2" stroke="#7f7f7f" fill="none"/>
-   <line id="svg_64" y="NaN" x="NaN" opacity="0.4" y2="67" x2="117" y1="67" x1="61" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2,2" stroke="#7f7f7f" fill="none"/>
-   <line id="svg_65" y="NaN" x="NaN" opacity="0.4" y2="72" x2="116" y1="72" x1="61" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2,2" stroke="#7f7f7f" fill="none"/>
-   <line id="svg_66" y="NaN" x="NaN" opacity="0.4" y2="77" x2="118" y1="77" x1="62" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2,2" stroke="#7f7f7f" fill="none"/>
+   <line id="svg_62" y="NaN" x="NaN" opacity="0.4" y2="70" x2="120" y1="70" x1="60" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2,2" stroke="#7f7f7f" fill="none"/>
+   <line id="svg_63" y="NaN" x="NaN" opacity="0.4" y2="75" x2="120" y1="75" x1="60" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2,2" stroke="#7f7f7f" fill="none"/>
+   <line id="svg_64" y="NaN" x="NaN" opacity="0.4" y2="80" x2="120" y1="80" x1="60" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2,2" stroke="#7f7f7f" fill="none"/>
+   <line id="svg_65" y="NaN" x="NaN" opacity="0.4" y2="85" x2="120" y1="85" x1="60" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2,2" stroke="#7f7f7f" fill="none"/>
+   <line id="svg_66" y="NaN" x="NaN" opacity="0.4" y2="90" x2="120" y1="90" x1="60" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2,2" stroke="#7f7f7f" fill="none"/>
   </g>
  </g>
 </svg>
