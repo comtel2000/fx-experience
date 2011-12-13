@@ -1,2 +1,2 @@
 cd C:/Program Files (x86)/Oracle/JavaFX 2.0 SDK/rt/lib/
-mvn install:install-file -Dfile=jfxrt.jar -DgroupId=com.oracle -DartifactId=javafx-runtime -Dversion=2.0.1 -Dpackaging=jar -DgeneratePom=true
+mvn install:install-file -Dfile=jfxrt.jar -DgroupId=com.oracle -DartifactId=javafx-runtime -Dversion=2.0.2 -Dpackaging=jar -DgeneratePom=true

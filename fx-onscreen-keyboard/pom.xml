@@ -15,7 +15,7 @@
 		<dependency>
 			<groupId>com.oracle</groupId>
 			<artifactId>javafx-runtime</artifactId>
-			<version>2.0.1</version>
+			<version>2.0.2</version>
 		</dependency>
 		<dependency>
 			<groupId>com.miglayout</groupId>
@@ -45,19 +45,6 @@
 					<source>1.6</source>
 					<target>1.6</target>
 				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-assembly-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>make-assembly</id> <!-- this is used for inheritance merges -->
-						<phase>package</phase> <!-- bind to the packaging phase -->
-						<goals>
-							<goal>single</goal>
-						</goals>
-					</execution>
-				</executions>
 			</plugin>
 		</plugins>
 	</build>
