@@ -23,7 +23,6 @@
 			<groupId>com.miglayout</groupId>
 			<artifactId>miglayout-javafx</artifactId>
 			<version>4.2-SNAPSHOT</version>
-			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.miglayout</groupId>
@@ -45,15 +44,15 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>2.3.2</version>
 				<configuration>
-								    <resources>
-      <resource>
-        <filtering>false</filtering>
-        <directory>${basedir}/src/main/resources</directory>
-        <excludes>
-          <exclude>**/*.cdr</exclude>
-        </excludes>
-      </resource>
-    </resources>
+					<resources>
+						<resource>
+							<filtering>false</filtering>
+							<directory>${basedir}/src/main/resources</directory>
+							<excludes>
+								<exclude>**/*.cdr</exclude>
+							</excludes>
+						</resource>
+					</resources>
 					<source>1.6</source>
 					<target>1.6</target>
 				</configuration>
