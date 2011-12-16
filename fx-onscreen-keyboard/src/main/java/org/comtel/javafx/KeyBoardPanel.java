@@ -518,19 +518,25 @@ public class KeyBoardPanel extends Group implements EventHandler<KeyButtonEvent>
 				robot.keyRelease(KeyCode.CONTROL);
 				return;
 			case java.awt.event.KeyEvent.VK_X:
-				robot.keyPress(KeyCode.CUT);
-				robot.keyType(KeyCode.CUT, "");
-				robot.keyRelease(KeyCode.CUT);
+				robot.keyPress(KeyCode.CONTROL);
+				robot.keyPress(KeyCode.X);
+				robot.keyType(KeyCode.X, "");
+				robot.keyRelease(KeyCode.X);
+				robot.keyRelease(KeyCode.CONTROL);
 				return;
 			case java.awt.event.KeyEvent.VK_C:
-				robot.keyPress(KeyCode.COPY);
-				robot.keyType(KeyCode.COPY, "");
-				robot.keyRelease(KeyCode.COPY);
+				robot.keyPress(KeyCode.CONTROL);
+				robot.keyPress(KeyCode.C);
+				robot.keyType(KeyCode.C, "");
+				robot.keyRelease(KeyCode.C);
+				robot.keyRelease(KeyCode.CONTROL);
 				return;
 			case java.awt.event.KeyEvent.VK_V:
-				robot.keyPress(KeyCode.PASTE);
-				robot.keyType(KeyCode.PASTE, "");
-				robot.keyRelease(KeyCode.PASTE);
+				robot.keyPress(KeyCode.CONTROL);
+				robot.keyPress(KeyCode.V);
+				robot.keyType(KeyCode.V, "");
+				robot.keyRelease(KeyCode.V);
+				robot.keyRelease(KeyCode.CONTROL);
 				return;
 			case java.awt.event.KeyEvent.VK_MINUS:
 				scale -= 0.1d;
