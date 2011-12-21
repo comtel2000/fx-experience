@@ -1,3 +1,7 @@
+/*
+ * Copyright (c)omtel 2011.
+ */
+
 package org.comtel.javafx.xml;
 
 import java.io.InputStream;

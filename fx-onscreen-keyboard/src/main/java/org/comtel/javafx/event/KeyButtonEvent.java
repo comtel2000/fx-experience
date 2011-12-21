@@ -1,3 +1,7 @@
+/*
+ * Copyright (c)omtel 2011.
+ */
+
 package org.comtel.javafx.event;
 
 import javafx.event.Event;

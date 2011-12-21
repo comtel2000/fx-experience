@@ -1,3 +1,7 @@
+/*
+ * Copyright (c)omtel 2011.
+ */
+
 package org.comtel.javafx;
 
 import java.awt.AWTException;
@@ -606,9 +610,8 @@ public class KeyBoardPanel extends Group implements EventHandler<KeyButtonEvent>
 
 	/**
 	 * default keyboard scale
-	 * 
-	 * @param scale
-	 */
+	 *
+     */
 	public double getScale() {
 		return scale;
 	}
