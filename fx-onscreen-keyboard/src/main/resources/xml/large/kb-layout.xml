@@ -1,8 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  ~ Copyright (c)omtel 2011.
-  -->
-
 <Keyboard keyWidth="8" horizontalGap="0" verticalGap="0">
 	<Row>
 		<Key codes="-4" keyIcon="@drawable/sym_keyboard_tab" keyWidth="10"

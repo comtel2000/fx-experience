@@ -1,7 +1,3 @@
-/*
- * Copyright (c)omtel 2011.
- */
-
 package org.comtel.javafx.control;
 
 import javafx.animation.Animation.Status;

@@ -1,7 +1,3 @@
-/*
- * Copyright (c)omtel 2011.
- */
-
 package org.comtel.javafx.examples;
 
 import java.awt.BorderLayout;
