@@ -67,9 +67,24 @@ public class KeyButton extends Button implements LongPressable {
 			}
 		});
 
+		setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+			public void handle(MouseEvent event) {
+				if (event.getButton().equals(MouseButton.PRIMARY)) {
+					if (timer.getStatus().equals(Status.RUNNING)) {
+						timer.stop();
+						fireShortPressed();
+					}
+
+				}
+				setFocused(false);
+			}
+		});
+
 		setOnMousePressed(new EventHandler<MouseEvent>() {
 
 			public void handle(MouseEvent event) {
+				System.out.println("pressed: " + timer.getCurrentTime());
 				if (event.getButton().equals(MouseButton.PRIMARY)) {
 					timer.playFromStart();
 				}
@@ -79,7 +94,7 @@ public class KeyButton extends Button implements LongPressable {
 		setOnMouseReleased(new EventHandler<MouseEvent>() {
 
 			public void handle(MouseEvent event) {
-
+				System.out.println("release: " + timer.getCurrentTime());
 				if (event.getButton().equals(MouseButton.PRIMARY)) {
 					if (timer.getStatus().equals(Status.RUNNING)) {
 						timer.stop();
@@ -95,7 +110,7 @@ public class KeyButton extends Button implements LongPressable {
 
 			public void handle(MouseEvent event) {
 				if (event.getButton().equals(MouseButton.PRIMARY)) {
-					if (timer.getStatus().equals(Status.RUNNING)) {
+					if (timer.getStatus().equals(Status.RUNNING) && timer.getCurrentTime().toMillis() > 50) {
 						timer.stop();
 						fireLongPressed();
 					}
@@ -135,7 +150,7 @@ public class KeyButton extends Button implements LongPressable {
 			onLongPressed = new SimpleObjectProperty<EventHandler<? super KeyButtonEvent>>() {
 
 				@Override
-                protected void invalidated() {
+				protected void invalidated() {
 					setEventHandler(KeyButtonEvent.LONG_PRESSED, (EventHandler<? super Event>) get());
 				}
 			};
@@ -156,7 +171,7 @@ public class KeyButton extends Button implements LongPressable {
 			onShortPressed = new SimpleObjectProperty<EventHandler<? super KeyButtonEvent>>() {
 
 				@Override
-                protected void invalidated() {
+				protected void invalidated() {
 					setEventHandler(KeyButtonEvent.SHORT_PRESSED, (EventHandler<? super Event>) get());
 				}
 			};
