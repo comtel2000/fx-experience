@@ -46,7 +46,7 @@ public class MainDemo extends Application {
 		fxKeyboardPopup.getContent().add(fxKeyboard);
 
 		MigPane pane = new MigPane();
-		pane.setPrefSize(800, 600);
+		pane.setPrefSize(800, 200);
 
 		final TextField tf = new TextField("");
 		tf.focusedProperty().addListener(new ChangeListener<Boolean>() {

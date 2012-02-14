@@ -1,5 +1,8 @@
 package org.comtel.javafx.control;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import javafx.animation.Animation.Status;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -19,7 +22,9 @@ import org.comtel.javafx.event.KeyButtonEvent;
 
 public class KeyButton extends Button implements LongPressable {
 
-	private final static long DEFAULT_DELAY = 1000;
+	private final static Logger logger = Logger.getLogger(KeyButton.class.getName());
+	
+	private final static long DEFAULT_DELAY = 400;
 
 	private int keyCode;
 
@@ -52,7 +57,8 @@ public class KeyButton extends Button implements LongPressable {
 	public KeyButton(String label, Node graphic, long delay) {
 		super(label, graphic);
 		setId("key-button");
-		timer = new Timeline(new KeyFrame(new Duration(10), new KeyValue[0]));
+
+		timer = new Timeline(new KeyFrame(new Duration(20), new KeyValue[0]));
 		if (delay > 0) {
 			timer.setDelay(new Duration(delay));
 			initEventListener();
@@ -65,57 +71,59 @@ public class KeyButton extends Button implements LongPressable {
 			public void handle(ActionEvent event) {
 				fireLongPressed();
 			}
+
+		});
+
+		setOnDragDetected(new EventHandler<MouseEvent>() {
+
+			@Override
+			public void handle(MouseEvent me) {
+				logger.finest("drag detected");
+			}
 		});
 
 		setOnMouseClicked(new EventHandler<MouseEvent>() {
 
 			public void handle(MouseEvent event) {
+				logger.log(Level.FINEST, "clicked: {0}", timer.getCurrentRate());
+
 				if (event.getButton().equals(MouseButton.PRIMARY)) {
 					if (timer.getStatus().equals(Status.RUNNING)) {
 						timer.stop();
 						fireShortPressed();
+
 					}
 
 				}
 				setFocused(false);
+				event.consume();
 			}
 		});
 
 		setOnMousePressed(new EventHandler<MouseEvent>() {
 
 			public void handle(MouseEvent event) {
-				System.out.println("pressed: " + timer.getCurrentTime());
+				logger.log(Level.FINEST, "pressed: {0}", timer.getCurrentRate());
 				if (event.getButton().equals(MouseButton.PRIMARY)) {
 					timer.playFromStart();
 				}
-			}
-		});
-
-		setOnMouseReleased(new EventHandler<MouseEvent>() {
-
-			public void handle(MouseEvent event) {
-				System.out.println("release: " + timer.getCurrentTime());
-				if (event.getButton().equals(MouseButton.PRIMARY)) {
-					if (timer.getStatus().equals(Status.RUNNING)) {
-						timer.stop();
-						fireShortPressed();
-					}
-
-				}
-				setFocused(false);
+				event.consume();
 			}
 		});
 
 		setOnMouseDragged(new EventHandler<MouseEvent>() {
 
 			public void handle(MouseEvent event) {
+				logger.log(Level.FINEST, "dragged: {0}", timer.getCurrentRate());
+
 				if (event.getButton().equals(MouseButton.PRIMARY)) {
-					if (timer.getStatus().equals(Status.RUNNING) && timer.getCurrentTime().toMillis() > 50) {
+					if (timer.getStatus().equals(Status.RUNNING) && timer.getCurrentRate() > 1) {
 						timer.stop();
 						fireLongPressed();
 					}
-
+					event.consume();
 				}
+
 			}
 		});
 

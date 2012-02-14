@@ -6,6 +6,8 @@ import java.awt.KeyboardFocusManager;
 import java.awt.Robot;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javafx.application.Platform;
 import javafx.event.Event;
@@ -15,6 +17,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.DragEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -44,6 +47,8 @@ import com.sun.javafx.robot.FXRobotFactory;
 
 public class KeyBoardPanel extends Group implements EventHandler<KeyButtonEvent> {
 
+	private final static Logger logger = Logger.getLogger(KeyBoardPanel.class.getName());
+	
 	private String layerPath;
 	private Region qwertyKeyboardPane;
 	private Region qwertyShiftedKeyboardPane;
@@ -162,7 +167,7 @@ public class KeyBoardPanel extends Group implements EventHandler<KeyButtonEvent>
 
 			}
 		});
-
+		
 		pane.setPrefSize(650, 200);
 		pane.setId("key-background");
 		LC lc = new LC();
@@ -230,7 +235,7 @@ public class KeyBoardPanel extends Group implements EventHandler<KeyButtonEvent>
 						if (!image.isError()) {
 							button.setGraphic(new ImageView(image));
 						} else {
-							System.err.println("Image: " + key.getKeyIcon() + " not found");
+							logger.log(Level.SEVERE, "Image: {0} not found",  key.getKeyIcon());
 						}
 					}
 				}
@@ -384,10 +389,10 @@ public class KeyBoardPanel extends Group implements EventHandler<KeyButtonEvent>
 	 */
 	private void sendToComponent(final char ch) {
 
-		System.out.println(ch + "\t" + (int) ch);
+		logger.log(Level.FINE, "send ({0})", ch);
 
 		if (useAwtRobot) {
-			System.out.println("send to AWT");
+			 logger.fine("to AWT");
 			SwingUtilities.invokeLater(new Runnable() {
 
 				public void run() {
@@ -397,7 +402,7 @@ public class KeyBoardPanel extends Group implements EventHandler<KeyButtonEvent>
 		} else {
 			final Window popup = getScene().getWindow();
 			if (popup != null && popup instanceof Popup) {
-				System.out.println("send to FX");
+				logger.fine("to FX");
 				Platform.runLater(new Runnable() {
 					public void run() {
 						sendToFxComponent(((Popup) popup).getOwnerWindow().getScene(), ch);
@@ -410,7 +415,7 @@ public class KeyBoardPanel extends Group implements EventHandler<KeyButtonEvent>
 	private void sendToSwingComponent(char ch) {
 		Component c = KeyboardFocusManager.getCurrentKeyboardFocusManager().getFocusOwner();
 		if (c == null || !c.isEnabled()) {
-			System.err.println("no awt focus owner");
+			logger.warning("no awt focus owner");
 			return;
 		}
 
