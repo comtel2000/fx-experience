@@ -1,5 +1,9 @@
 package org.comtel.javafx.svg;
 
+/**
+ * revised code of https://github.com/skrb/SVGLoader
+ */
+
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -231,7 +235,6 @@ class SVGContentBuilder {
 				cx = tempCx * affine.getMxx() + tempCy * affine.getMxy() + affine.getTx();
 				cy = tempCx * affine.getMyx() + tempCy * affine.getMyy() + affine.getTy();
 
-				// これは多分違う
 				r = Math.sqrt(tempR * affine.getMxx() * tempR * affine.getMxx() + tempR * affine.getMyx() * tempR
 						* affine.getMyx());
 
@@ -242,7 +245,6 @@ class SVGContentBuilder {
 					fy = tempFx * affine.getMyx() + tempFy * affine.getMyy() + affine.getTy();
 				} else {
 					fAngle = Math.asin(affine.getMyx()) * 180.0 / Math.PI;
-					// これもかなり怪しい
 					fDistance = Math.sqrt((cx - tempCx) * (cx - tempCx) + (cy - tempCy) * (cy - tempCy));
 				}
 			}
@@ -300,7 +302,6 @@ class SVGContentBuilder {
 			}
 		}
 
-		// Stop の読み込み
 		List<Stop> stops = buildStops(reader, "linearGradient");
 
 		if (id != null && x1 != Double.NaN && y1 != Double.NaN && x2 != Double.NaN && y2 != Double.NaN) {
@@ -486,7 +487,6 @@ class SVGContentBuilder {
 		Attribute fontFamilyAttribute = element.getAttributeByName(new QName("font-family"));
 		Attribute fontSizeAttribute = element.getAttributeByName(new QName("font-size"));
 
-		// TODO styleにfontの指定がある場合
 		Font font = null;
 		if (fontFamilyAttribute != null && fontSizeAttribute != null) {
 			font = Font.font(fontFamilyAttribute.getValue().replace("'", ""),

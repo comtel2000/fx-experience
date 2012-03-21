@@ -1,5 +1,9 @@
 package org.comtel.javafx.svg;
 
+/**
+ * revised code of https://github.com/skrb/SVGLoader
+ */
+
 import java.util.HashMap;
 import java.util.Map;
 import javafx.scene.Group;

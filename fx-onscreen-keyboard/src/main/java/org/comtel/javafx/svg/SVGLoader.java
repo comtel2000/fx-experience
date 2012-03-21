@@ -1,5 +1,9 @@
 package org.comtel.javafx.svg;
 
+/**
+ * revised code of https://github.com/skrb/SVGLoader
+ */
+
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
