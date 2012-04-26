@@ -4,6 +4,7 @@ import java.awt.AWTException;
 import java.awt.Component;
 import java.awt.KeyboardFocusManager;
 import java.awt.Robot;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.logging.Level;
@@ -12,6 +13,7 @@ import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.ContentDisplay;
@@ -219,23 +221,37 @@ public class KeyBoardPanel extends Group implements EventHandler<KeyButtonEvent>
 				}
 
 				if (key.getKeyIcon() != null) {
-					URL url = KeyBoardPanel.class.getResource(key.getKeyIcon().replace("@", "/") + ".svg");
+					URL url = KeyBoardPanel.class.getResource(key.getKeyIcon().replace("@", "/") + ".fxml");
 					if (url != null) {
-						SVGContent content = SVGLoader.load(url);
-						Group svgG = content.getRoot();
-						svgG.scaleXProperty().bind(button.scaleXProperty().multiply(0.8));
-						svgG.scaleYProperty().bind(button.scaleYProperty().multiply(0.8));
-						button.setContentDisplay(ContentDisplay.BOTTOM);
-						button.setGraphic(svgG);
-
+						Group fxmlG;
+						try {
+							fxmlG = FXMLLoader.load(url);
+							fxmlG.scaleXProperty().bind(button.scaleXProperty().multiply(0.8));
+							fxmlG.scaleYProperty().bind(button.scaleYProperty().multiply(0.8));
+							button.setContentDisplay(ContentDisplay.BOTTOM);
+							button.setGraphic(fxmlG);
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
 					} else {
-						InputStream is = KeyBoardPanel.class.getResourceAsStream(key.getKeyIcon().replace("@", "/")
-								+ ".png");
-						Image image = new Image(is);
-						if (!image.isError()) {
-							button.setGraphic(new ImageView(image));
+						url = KeyBoardPanel.class.getResource(key.getKeyIcon().replace("@", "/") + ".svg");
+						if (url != null) {
+							SVGContent content = SVGLoader.load(url);
+							Group svgG = content.getRoot();
+							svgG.scaleXProperty().bind(button.scaleXProperty().multiply(0.8));
+							svgG.scaleYProperty().bind(button.scaleYProperty().multiply(0.8));
+							button.setContentDisplay(ContentDisplay.BOTTOM);
+							button.setGraphic(svgG);
+
 						} else {
-							logger.log(Level.SEVERE, "Image: {0} not found",  key.getKeyIcon());
+							InputStream is = KeyBoardPanel.class.getResourceAsStream(key.getKeyIcon().replace("@", "/")
+									+ ".png");
+							Image image = new Image(is);
+							if (!image.isError()) {
+								button.setGraphic(new ImageView(image));
+							} else {
+								logger.log(Level.SEVERE, "Image: {0} not found", key.getKeyIcon());
+							}
 						}
 					}
 				}

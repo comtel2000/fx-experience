@@ -101,6 +101,7 @@ public class SwingMainDemo extends JApplet {
 		Platform.runLater(new Runnable() {
 			public void run() {
 				createScene(javafxPanel);
+				System.err.println("JavaFX: " + System.getProperty("javafx.runtime.version"));
 			}
 		});
 

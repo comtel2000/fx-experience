@@ -31,7 +31,7 @@ public class MainDemo extends Application {
 	@Override
 	public void start(Stage stage) {
 
-		stage.setTitle("FX Keyboard");
+		stage.setTitle("FX Keyboard (" + System.getProperty("javafx.runtime.version") + ")");
 		stage.setResizable(true);
 		fxKeyboard = new KeyBoardPanel("/xml/large");
 		fxKeyboard.setOnKeyboardCloseButton(new EventHandler<Event>() {
