@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.comtel.javafx</groupId>
 	<artifactId>fx-onscreen-keyboard</artifactId>
-	<version>0.7-SNAPSHOT</version>
+	<version>0.8-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>fx-onscreen-keyboard</name>
 	<repositories>
@@ -41,6 +41,8 @@
 			<artifactId>maven-resources-plugin</artifactId>
 			<version>2.5</version>
 			<type>maven-plugin</type>
+			<scope>provided</scope>
+			<optional>true</optional>
 		</dependency>
 	</dependencies>
 
@@ -68,7 +70,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-assembly-plugin</artifactId>
-				<version>2.2.1</version>
+				<version>2.3</version>
 				<executions>
 					<execution>
 						<id>make-assembly</id> <!-- this is used for inheritance merges -->
