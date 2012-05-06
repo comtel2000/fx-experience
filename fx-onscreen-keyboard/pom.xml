@@ -6,6 +6,9 @@
 	<version>0.8-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>fx-onscreen-keyboard</name>
+	<properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
 	<repositories>
 		<repository>
 			<id>oss.sonatype.org</id>
