@@ -68,9 +68,9 @@ public class KeyBoardPanel extends Group implements EventHandler<KeyButtonEvent>
 	private Region symbolShiftedKeyboardPane;
 	private Region qwertyCtrlKeyboardPane;
 
-	private SimpleBooleanProperty isSymbolDown = new SimpleBooleanProperty(false);
-	private SimpleBooleanProperty isShiftDown = new SimpleBooleanProperty(false);
-	private SimpleBooleanProperty isCtrlDown = new SimpleBooleanProperty(false);
+	private SimpleBooleanProperty symbolProperty = new SimpleBooleanProperty(false);
+	private SimpleBooleanProperty shiftProperty = new SimpleBooleanProperty(false);
+	private SimpleBooleanProperty ctrlProperty = new SimpleBooleanProperty(false);
 
 	private boolean useAwtRobot;
 
@@ -131,19 +131,19 @@ public class KeyBoardPanel extends Group implements EventHandler<KeyButtonEvent>
 
 		setKeyboardLayer(KeyboardLayer.QWERTY);
 
-		isShiftDown.addListener(new ChangeListener<Boolean>() {
+		shiftProperty.addListener(new ChangeListener<Boolean>() {
 			public void changed(ObservableValue<? extends Boolean> arg0, Boolean arg1, Boolean arg2) {
-				setKeyboardLayer(isSymbolDown.get() ? KeyboardLayer.SYMBOL : KeyboardLayer.QWERTY);
+				setKeyboardLayer(symbolProperty.get() ? KeyboardLayer.SYMBOL : KeyboardLayer.QWERTY);
 			}
 		});
 		
-		isCtrlDown.addListener(new ChangeListener<Boolean>() {
+		ctrlProperty.addListener(new ChangeListener<Boolean>() {
 			public void changed(ObservableValue<? extends Boolean> arg0, Boolean arg1, Boolean arg2) {
 				setKeyboardLayer(arg2 ? KeyboardLayer.CTRL : KeyboardLayer.QWERTY);
 			}
 		});
 		
-		isSymbolDown.addListener(new ChangeListener<Boolean>() {
+		symbolProperty.addListener(new ChangeListener<Boolean>() {
 			public void changed(ObservableValue<? extends Boolean> arg0, Boolean arg1, Boolean arg2) {
 				setKeyboardLayer(arg2 ? KeyboardLayer.SYMBOL : KeyboardLayer.QWERTY);
 			}
@@ -151,41 +151,14 @@ public class KeyBoardPanel extends Group implements EventHandler<KeyButtonEvent>
 
 	}
 
-//	private void setSymbolDown(boolean flag) {
-//		if (flag == isSymbolDown) {
-//			return;
-//		}
-//		setSymbol(!isSymbolDown);
-//		setShifted(false);
-//		setCtrl(false);
-//		setKeyboardLayer(isSymbolDown ? KeyboardLayer.SYMBOL : KeyboardLayer.QWERTY);
-//	}
-//
-//	private void setCtrlDown(boolean flag) {
-//		if (flag == isCtrlDown) {
-//			return;
-//		}
-//		setCtrl(!isCtrlDown);
-//		setShifted(false);
-//		setKeyboardLayer(isCtrlDown ? KeyboardLayer.CTRL : KeyboardLayer.QWERTY);
-//	}
-//
-//	private void setShiftDown(boolean flag) {
-//		if (flag == isShiftDown) {
-//			return;
-//		}
-//		setShifted(!isShiftDown);
-//		setCtrl(false);
-//		setKeyboardLayer(isSymbolDown ? KeyboardLayer.SYMBOL : KeyboardLayer.QWERTY);
-//	}
 	public void setKeyboardLayer(KeyboardLayer layer) {
 		final Region pane;
 		switch (layer) {
 		case QWERTY:
-			pane = isShiftDown.get() ? qwertyShiftedKeyboardPane : qwertyKeyboardPane;
+			pane = shiftProperty.get() ? qwertyShiftedKeyboardPane : qwertyKeyboardPane;
 			break;
 		case SYMBOL:
-			pane = isShiftDown.get() ? symbolShiftedKeyboardPane : symbolKeyboardPane;
+			pane = shiftProperty.get() ? symbolShiftedKeyboardPane : symbolKeyboardPane;
 			break;
 		case CTRL:
 			pane = qwertyCtrlKeyboardPane;
@@ -365,15 +338,15 @@ public class KeyBoardPanel extends Group implements EventHandler<KeyButtonEvent>
 	}
 
 	public boolean isShifted() {
-		return isShiftDown.get();
+		return shiftProperty.get();
 	}
 
 	public boolean isSymbol() {
-		return isSymbolDown.get();
+		return symbolProperty.get();
 	}
 
 	public boolean isCtrl() {
-		return isCtrlDown.get();
+		return ctrlProperty.get();
 	}
 
 
@@ -385,11 +358,11 @@ public class KeyBoardPanel extends Group implements EventHandler<KeyButtonEvent>
 			switch (kb.getKeyCode()) {
 			case SHIFT_DOWN:
 				// switch shifted
-				isShiftDown.set(!isShiftDown.get());
+				shiftProperty.set(!shiftProperty.get());
 				break;
 			case SYMBOL_DOWN:
 				// switch sym / qwerty
-				isSymbolDown.set(!isSymbolDown.get());
+				symbolProperty.set(!symbolProperty.get());
 				break;
 			case CLOSE:
 				if (closeEventHandler == null) {
@@ -406,7 +379,7 @@ public class KeyBoardPanel extends Group implements EventHandler<KeyButtonEvent>
 				break;
 			case CTRL_DOWN:
 				// switch ctrl
-				isCtrlDown.set(!isCtrlDown.get());
+				ctrlProperty.set(!ctrlProperty.get());
 				break;
 			default:
 				// System.out.println(java.awt.event.KeyEvent.getKeyText(kb.getKeyCode()));
@@ -463,7 +436,7 @@ public class KeyBoardPanel extends Group implements EventHandler<KeyButtonEvent>
 			return;
 		}
 
-		if (isCtrlDown.get()) {
+		if (ctrlProperty.get()) {
 			switch (Character.toUpperCase(ch)) {
 			case java.awt.event.KeyEvent.VK_A:
 				robot.keyPress(java.awt.event.KeyEvent.VK_CONTROL);
@@ -545,7 +518,7 @@ public class KeyBoardPanel extends Group implements EventHandler<KeyButtonEvent>
 
 		FXRobot robot = FXRobotFactory.createRobot(scene);
 
-		if (isCtrlDown.get()) {
+		if (ctrlProperty.get()) {
 			switch (Character.toUpperCase(ch)) {
 			case java.awt.event.KeyEvent.VK_A:
 				robot.keyPress(KeyCode.CONTROL);
