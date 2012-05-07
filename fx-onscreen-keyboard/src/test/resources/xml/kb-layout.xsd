@@ -16,7 +16,7 @@
 										type="xsd:string">
 
 									</xsd:attribute>
-									<xsd:attribute name="keyIcon" type="xsd:string"></xsd:attribute>
+									<xsd:attribute name="keyIconStyle" type="xsd:string"></xsd:attribute>
 									<xsd:attribute name="keyWidth" type="xsd:int"></xsd:attribute>
 									<xsd:attribute name="keyEdgeFlags">
 										<xsd:simpleType>

@@ -4,10 +4,7 @@ import java.awt.AWTException;
 import java.awt.Component;
 import java.awt.KeyboardFocusManager;
 import java.awt.Robot;
-import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -18,10 +15,10 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.ContentDisplay;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -41,8 +38,6 @@ import org.comtel.javafx.control.KeyButton;
 import org.comtel.javafx.control.KeyboardLayer;
 import org.comtel.javafx.control.MultiKeyButton;
 import org.comtel.javafx.event.KeyButtonEvent;
-import org.comtel.javafx.svg.SVGContent;
-import org.comtel.javafx.svg.SVGLoader;
 import org.comtel.javafx.xml.KeyboardLayoutHandler;
 import org.comtel.javafx.xml.layout.Keyboard;
 import org.tbee.javafx.scene.layout.MigPane;
@@ -90,7 +85,7 @@ public class KeyBoardPanel extends Group implements EventHandler<KeyButtonEvent>
 	public KeyBoardPanel(String layerpath, boolean awtRobot) {
 		layerPath = layerpath;
 		useAwtRobot = awtRobot;
-		//setAutoSizeChildren(true);
+		// setAutoSizeChildren(true);
 		setFocusTraversable(false);
 		init();
 		scaleProperty.addListener(new ChangeListener<Number>() {
@@ -101,33 +96,33 @@ public class KeyBoardPanel extends Group implements EventHandler<KeyButtonEvent>
 			}
 
 		});
-//		setOnKeyPressed(new EventHandler<KeyEvent>() {
-//
-//			public void handle(KeyEvent e) {
-//				// e.consume();
-//				switch (e.getCode()) {
-//				case SHIFT:
-//					isShiftDown.set(isShiftDown.get());
-//					break;
-//				// case CONTROL:
-//				// setCtrlDown(!isCtrlDown);
-//				// break;
-//				// case ALT:
-//				// setSymbolDown(!isSymbolDown);
-//				// break;
-//				}
-//			}
-//		});
+		// setOnKeyPressed(new EventHandler<KeyEvent>() {
+		//
+		// public void handle(KeyEvent e) {
+		// // e.consume();
+		// switch (e.getCode()) {
+		// case SHIFT:
+		// isShiftDown.set(isShiftDown.get());
+		// break;
+		// // case CONTROL:
+		// // setCtrlDown(!isCtrlDown);
+		// // break;
+		// // case ALT:
+		// // setSymbolDown(!isSymbolDown);
+		// // break;
+		// }
+		// }
+		// });
 	}
 
 	private void init() {
 
 		KeyboardLayoutHandler handler = new KeyboardLayoutHandler();
-		qwertyKeyboardPane = createKeyboardPane(handler.getLayout(layerPath + File.separator + "kb-layout.xml"));
-		qwertyShiftedKeyboardPane = createKeyboardPane(handler.getLayout(layerPath + File.separator + "kb-layout-shift.xml"));
-		qwertyCtrlKeyboardPane = createKeyboardPane(handler.getLayout(layerPath + File.separator + "kb-layout-ctrl.xml"));
-		symbolKeyboardPane = createKeyboardPane(handler.getLayout(layerPath + File.separator + "kb-layout-sym.xml"));
-		symbolShiftedKeyboardPane = createKeyboardPane(handler.getLayout(layerPath + File.separator + "kb-layout-sym-shift.xml"));
+		qwertyKeyboardPane = createKeyboardPane(handler.getLayout(layerPath + "/" + "kb-layout.xml"));
+		qwertyShiftedKeyboardPane = createKeyboardPane(handler.getLayout(layerPath + "/" + "kb-layout-shift.xml"));
+		qwertyCtrlKeyboardPane = createKeyboardPane(handler.getLayout(layerPath + "/" + "kb-layout-ctrl.xml"));
+		symbolKeyboardPane = createKeyboardPane(handler.getLayout(layerPath + "/" + "kb-layout-sym.xml"));
+		symbolShiftedKeyboardPane = createKeyboardPane(handler.getLayout(layerPath + "/" + "kb-layout-sym-shift.xml"));
 
 		setKeyboardLayer(KeyboardLayer.QWERTY);
 
@@ -136,13 +131,13 @@ public class KeyBoardPanel extends Group implements EventHandler<KeyButtonEvent>
 				setKeyboardLayer(symbolProperty.get() ? KeyboardLayer.SYMBOL : KeyboardLayer.QWERTY);
 			}
 		});
-		
+
 		ctrlProperty.addListener(new ChangeListener<Boolean>() {
 			public void changed(ObservableValue<? extends Boolean> arg0, Boolean arg1, Boolean arg2) {
 				setKeyboardLayer(arg2 ? KeyboardLayer.CTRL : KeyboardLayer.QWERTY);
 			}
 		});
-		
+
 		symbolProperty.addListener(new ChangeListener<Boolean>() {
 			public void changed(ObservableValue<? extends Boolean> arg0, Boolean arg1, Boolean arg2) {
 				setKeyboardLayer(arg2 ? KeyboardLayer.SYMBOL : KeyboardLayer.QWERTY);
@@ -252,42 +247,31 @@ public class KeyBoardPanel extends Group implements EventHandler<KeyButtonEvent>
 					}
 				}
 
-				if (key.getKeyIcon() != null) {
-					URL url = KeyBoardPanel.class.getResource(key.getKeyIcon().replace("@", File.separator) + ".fxml");
-					if (url != null) {
-						Group fxmlG;
-						try {
-							fxmlG = FXMLLoader.load(url);
-							fxmlG.scaleXProperty().bind(button.scaleXProperty().multiply(0.8));
-							fxmlG.scaleYProperty().bind(button.scaleYProperty().multiply(0.8));
-							button.setContentDisplay(ContentDisplay.BOTTOM);
-							button.setGraphic(fxmlG);
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
-					} else {
-						url = KeyBoardPanel.class.getResource(key.getKeyIcon().replace("@", File.separator) + ".svg");
-						if (url != null) {
-							SVGContent content = SVGLoader.load(url);
-							Group svgG = content.getRoot();
-							svgG.scaleXProperty().bind(button.scaleXProperty().multiply(0.8));
-							svgG.scaleYProperty().bind(button.scaleYProperty().multiply(0.8));
-							button.setContentDisplay(ContentDisplay.BOTTOM);
-							button.setGraphic(svgG);
+				if (key.getKeyIconStyle() != null && key.getKeyIconStyle().startsWith(".")) {
+					logger.log(Level.FINE, "Load css style: {0}", key.getKeyIconStyle());
+					Label icon = new Label();
+					icon.getStyleClass().add(key.getKeyIconStyle().substring(1));
+					button.setContentDisplay(ContentDisplay.BOTTOM);
+					button.setGraphic(icon);
 
-						} else {
-							InputStream is = KeyBoardPanel.class.getResourceAsStream(key.getKeyIcon().replace("@", File.separator)
-									+ ".png");
-							Image image = new Image(is);
-							if (!image.isError()) {
-								button.setGraphic(new ImageView(image));
-							} else {
-								logger.log(Level.SEVERE, "Image: {0} not found", key.getKeyIcon());
-							}
-						}
+				} else if (key.getKeyIconStyle() != null && key.getKeyIconStyle().startsWith("@")) {
+
+					InputStream is = KeyBoardPanel.class.getResourceAsStream(key.getKeyIconStyle().replace("@", "/")
+							+ ".png");
+					Image image = new Image(is);
+					if (!image.isError()) {
+						button.setGraphic(new ImageView(image));
+					} else {
+						logger.log(Level.SEVERE, "Image: {0} not found", key.getKeyIconStyle());
 					}
 				}
-				if (key.getKeyLabel() != null) {
+
+				if (button.isContextAvailable()) {
+					button.setText(key.getKeyLabel());
+					Label icon = new Label();
+					icon.getStyleClass().add("extend-style");	
+					button.setGraphic(icon);
+				}else{
 					button.setText(key.getKeyLabel());
 				}
 
@@ -348,7 +332,6 @@ public class KeyBoardPanel extends Group implements EventHandler<KeyButtonEvent>
 	public boolean isCtrl() {
 		return ctrlProperty.get();
 	}
-
 
 	public void handle(KeyButtonEvent event) {
 		event.consume();
@@ -608,6 +591,34 @@ public class KeyBoardPanel extends Group implements EventHandler<KeyButtonEvent>
 
 	public void setOnKeyboardCloseButton(EventHandler<? super Event> value) {
 		closeEventHandler = value;
+	}
+
+	public String getDefaultIconStyle(int ch) {
+		switch (ch) {
+		case java.awt.event.KeyEvent.VK_ENTER:
+			return "enter-icon";
+		case java.awt.event.KeyEvent.VK_BACK_SPACE:
+		case BACK_SPACE:
+			return "back-space-icon";
+		case java.awt.event.KeyEvent.VK_DELETE:
+			return "delete-icon";
+		case java.awt.event.KeyEvent.VK_ESCAPE:
+			return "escape-icon";
+		case java.awt.event.KeyEvent.VK_SPACE:
+			return "space-icon";
+		case java.awt.event.KeyEvent.VK_TAB:
+			return "tab-icon";
+		case CLOSE:
+			return "close-icon";
+		case SHIFT_DOWN:
+			return "shift-icon";
+		case SYMBOL_DOWN:
+			return "symbol-icon";
+		case CTRL_DOWN:
+			return "ctrl-icon";
+		default:
+			return null;
+		}
 	}
 
 	/**

@@ -29,7 +29,7 @@
 	</Row>
 
 	<Row>
-		<Key codes="-1" keyIcon="@drawable/sym_keyboard_shift_on" keyWidth="15"
+		<Key codes="-1" keyIconStyle="@drawable/sym_keyboard_shift_on" keyWidth="15"
 			isModifier="true" isSticky="true" keyEdgeFlags="left" />
 		<Key codes="161" keyLabel="¡" />
 		<Key codes="60" keyLabel="&lt;" />
@@ -38,18 +38,18 @@
 		<Key codes="124" keyLabel="|" />
 		<Key codes="92" keyLabel="\" />
 		<Key codes="191" keyLabel="¿" />
-		<Key codes="-5" keyIcon="@drawable/sym_keyboard_delete" keyWidth="15"
+		<Key codes="-5" keyIconStyle="@drawable/sym_keyboard_delete" keyWidth="15"
 			keyEdgeFlags="right" isRepeatable="true" />
 	</Row>
 
 	<Row rowEdgeFlags="bottom">
-		<Key codes="-3" keyIcon="@drawable/sym_keyboard_done" keyWidth="20"
+		<Key codes="-3" keyIconStyle="@drawable/sym_keyboard_done" keyWidth="20"
 			keyEdgeFlags="left" />
 		<Key codes="-2" keyLabel="ABC" keyWidth="15" />
-		<Key codes="32" keyIcon="@drawable/sym_keyboard_space" keyWidth="30"
+		<Key codes="32" keyIconStyle="@drawable/sym_keyboard_space" keyWidth="30"
 			isRepeatable="true" />
 		<Key codes="8230" keyLabel="…" keyWidth="15" />
-		<Key codes="10" keyIcon="@drawable/sym_keyboard_return" keyWidth="20"
+		<Key codes="10" keyIconStyle="@drawable/sym_keyboard_return" keyWidth="20"
 			keyEdgeFlags="right" />
 	</Row>
 </Keyboard>

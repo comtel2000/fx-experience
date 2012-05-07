@@ -26,12 +26,13 @@ public class KeyboardXmlLayoutTest {
 	public void testGetLayout() {
 		Keyboard kb = handler.getLayout("/xml/kb-layout.xml");
 		Assert.assertNotNull(kb);
+		Assert.assertFalse(kb.getRow().isEmpty());
 
 		for (Keyboard.Row row : kb.getRow()) {
 			System.err.println("\nRow " + row.getRowEdgeFlags());
 			for (Keyboard.Row.Key key : row.getKey()) {
 				System.err.println(key.getCodes() + "\t"
-						+ (key.getKeyLabel() != null ? key.getKeyLabel() : key.getKeyIcon()));
+						+ (key.getKeyLabel() != null ? key.getKeyLabel() : key.getKeyIconStyle()));
 			}
 		}
 	}

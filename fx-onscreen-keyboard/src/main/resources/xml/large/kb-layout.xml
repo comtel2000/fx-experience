@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Keyboard keyWidth="8" horizontalGap="0" verticalGap="0">
 	<Row>
-		<Key codes="-4" keyIcon="@drawable/sym_keyboard_tab" keyWidth="10"
+		<Key codes="-4" keyIconStyle=".tab-icon" keyWidth="10"
 			keyEdgeFlags="left" />
 		<Key codes="113" keyLabel="q" />
 		<Key codes="119" keyLabel="w" />
@@ -13,12 +13,12 @@
 		<Key codes="105" keyLabel="i" />
 		<Key codes="111,246,245,244,243,242,248" keyLabel="o" />
 		<Key codes="112" keyLabel="p" />
-		<Key codes="-5" keyIcon="@drawable/sym_keyboard_delete" keyWidth="10"
+		<Key codes="-5" keyIconStyle=".delete-icon" keyWidth="10"
 			keyEdgeFlags="right" isRepeatable="true" />
 	</Row>
 
 	<Row>
-		<Key codes="-4" keyIcon="@drawable/sym_keyboard_search" keyWidth="14"
+		<Key codes="-4" keyIconStyle=".search-icon" keyWidth="14"
 			keyEdgeFlags="left" />
 		<Key codes="97,228,229,227,226,225,224" keyLabel="a" />
 		<Key codes="115,223" keyLabel="s" />
@@ -29,12 +29,12 @@
 		<Key codes="106" keyLabel="j" />
 		<Key codes="107" keyLabel="k" />
 		<Key codes="108" keyLabel="l" />
-		<Key codes="10" keyIcon="@drawable/sym_keyboard_return" keyWidth="14"
+		<Key codes="10" keyIconStyle=".enter-icon" keyWidth="14"
 			keyEdgeFlags="right" />
 	</Row>
 
 	<Row>
-		<Key codes="-1" keyIcon="@drawable/sym_keyboard_shift_off"
+		<Key codes="-1" keyIconStyle=".shift-off-icon"
 			keyWidth="14" isModifier="true" isSticky="true" keyEdgeFlags="left" />
 		<Key codes="122" keyLabel="z" />
 		<Key codes="120" keyLabel="x" />
@@ -45,7 +45,7 @@
 		<Key codes="109" keyLabel="m" />
 		<Key codes="44" keyLabel="," />
 		<Key codes="46" keyLabel="." />
-		<Key codes="-1" keyIcon="@drawable/sym_keyboard_shift_off"
+		<Key codes="-1" keyIconStyle=".shift-off-icon"
 			keyWidth="14" keyEdgeFlags="right" />
 	</Row>
 
@@ -53,10 +53,10 @@
 		<Key codes="-6" keyLabel="CTRL" keyWidth="12"
 			keyEdgeFlags="left" />
 		<Key codes="-2" keyLabel="?123" keyWidth="15" />
-		<Key codes="32" keyIcon="@drawable/sym_keyboard_space" keyWidth="50"
+		<Key codes="32" keyIconStyle=".space-icon" keyWidth="50"
 			isRepeatable="true" />
 		<Key codes="-2" keyLabel="?123" keyWidth="15" />
-		<Key codes="-3" keyIcon="@drawable/sym_keyboard_done" keyWidth="8"
+		<Key codes="-3" keyIconStyle=".done-icon" keyWidth="8"
 			keyEdgeFlags="right" />
 	</Row>
 </Keyboard>

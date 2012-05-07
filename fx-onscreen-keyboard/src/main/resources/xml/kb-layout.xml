@@ -26,7 +26,7 @@
 	</Row>
 
 	<Row>
-		<Key codes="-1" keyIcon="@drawable/sym_keyboard_shift_off.svg" keyWidth="15"
+		<Key codes="-1" keyIconStyle="@drawable/sym_keyboard_shift_off.svg" keyWidth="15"
 			isModifier="true" isSticky="true" keyEdgeFlags="left" />
 		<Key codes="122" keyLabel="z" />
 		<Key codes="120" keyLabel="x" />
@@ -35,18 +35,18 @@
 		<Key codes="98" keyLabel="b" />
 		<Key codes="110" keyLabel="n" />
 		<Key codes="109" keyLabel="m" />
-		<Key codes="-5" keyIcon="@drawable/sym_keyboard_delete" keyWidth="15"
+		<Key codes="-5" keyIconStyle="@drawable/sym_keyboard_delete" keyWidth="15"
 			keyEdgeFlags="right" isRepeatable="true" />
 	</Row>
 
 	<Row rowEdgeFlags="bottom">
-		<Key codes="-3" keyIcon="@drawable/sym_keyboard_done" keyWidth="20"
+		<Key codes="-3" keyIconStyle="@drawable/sym_keyboard_done" keyWidth="20"
 			keyEdgeFlags="left" />
 		<Key codes="-2" keyLabel="123" keyWidth="15" />
-		<Key codes="32" keyIcon="@drawable/sym_keyboard_space" keyWidth="30"
+		<Key codes="32" keyIconStyle="@drawable/sym_keyboard_space" keyWidth="30"
 			isRepeatable="true" />
 		<Key codes="46,44,45,95" keyLabel="." keyWidth="15" />
-		<Key codes="10" keyIcon="@drawable/sym_keyboard_return.svg" keyWidth="20"
+		<Key codes="10" keyIconStyle="@drawable/sym_keyboard_return.svg" keyWidth="20"
 			keyEdgeFlags="right" />
 	</Row>
 </Keyboard>
