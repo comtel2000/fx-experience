@@ -18,9 +18,8 @@
 	</Row>
 
 	<Row>
-		<Key codes="-4" keyIconStyle=".search-icon" keyWidth="14"
-			keyEdgeFlags="left" />
-		<Key codes="65,196,197,195,194,193,192" keyLabel="A"/>
+		<Key codes="-7" keyLabel="EN" keyLabelStyle=".small-style" keyEdgeFlags="left" />
+		<Key codes="65,196,197,195,194,193,192" keyLabel="A" />
 		<Key codes="83,223" keyLabel="S" />
 		<Key codes="68" keyLabel="D" />
 		<Key codes="70" keyLabel="F" />
@@ -29,13 +28,14 @@
 		<Key codes="74" keyLabel="J" />
 		<Key codes="75" keyLabel="K" />
 		<Key codes="76" keyLabel="L" />
-				<Key codes="10" keyIconStyle=".enter-icon" keyWidth="14"
+		<Key codes="95" keyLabel="_" />
+		<Key codes="10" keyIconStyle=".enter-icon" keyWidth="14"
 			keyEdgeFlags="right" />
 	</Row>
 
 	<Row>
-		<Key codes="-1" keyIconStyle=".shift-on-icon"
-			keyWidth="14" isModifier="true" isSticky="true" keyEdgeFlags="left" />
+		<Key codes="-1" keyIconStyle=".shift-on-icon" keyWidth="14"
+			isModifier="true" isSticky="true" keyEdgeFlags="left" />
 		<Key codes="90" keyLabel="Z" />
 		<Key codes="88" keyLabel="X" />
 		<Key codes="67" keyLabel="C" />
@@ -45,13 +45,12 @@
 		<Key codes="77" keyLabel="M" />
 		<Key codes="59" keyLabel=";" />
 		<Key codes="58" keyLabel=":" />
-		<Key codes="-1" keyIconStyle=".shift-on-icon"
-			keyWidth="14" keyEdgeFlags="right" />
+		<Key codes="-1" keyIconStyle=".shift-on-icon" keyWidth="14"
+			keyEdgeFlags="right" />
 	</Row>
 
 	<Row rowEdgeFlags="bottom">
-		<Key codes="-6" keyLabel="CTRL" keyWidth="12"
-			keyEdgeFlags="left" />
+		<Key codes="-6" keyLabel="CTRL" keyWidth="12" keyEdgeFlags="left" />
 		<Key codes="-2" keyLabel="?123" keyWidth="15" />
 		<Key codes="32" keyIconStyle=".space-icon" keyWidth="50"
 			isRepeatable="true" />

@@ -27,6 +27,7 @@ import javax.swing.JWindow;
 import javax.swing.SwingUtilities;
 
 import org.comtel.javafx.KeyBoardPanel;
+import org.comtel.javafx.robot.SwingRobotHandler;
 
 public class SwingMainDemo extends JApplet {
 
@@ -117,7 +118,7 @@ public class SwingMainDemo extends JApplet {
 		scene.getStylesheets().add(css);
 		fxKeyboardPopup = new Popup();
 		// fxKeyboardPopup.setAutoFix(true);
-		fxKeyboardPopup.getContent().add(fxKeyboard = new KeyBoardPanel("/xml/large", true));
+		fxKeyboardPopup.getContent().add(fxKeyboard = new KeyBoardPanel("/xml/large", new SwingRobotHandler()));
 
 		fxKeyboard.setScaleX(0.0d);
 		fxKeyboard.setScaleY(0.0d);

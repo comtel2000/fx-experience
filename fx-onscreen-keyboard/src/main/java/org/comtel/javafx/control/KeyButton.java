@@ -1,8 +1,5 @@
 package org.comtel.javafx.control;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import javafx.animation.Animation.Status;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -19,11 +16,12 @@ import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
 
 import org.comtel.javafx.event.KeyButtonEvent;
+import org.slf4j.LoggerFactory;
 
 public class KeyButton extends Button implements LongPressable {
 
-	private final static Logger logger = Logger.getLogger(KeyButton.class.getName());
-	
+	private final static org.slf4j.Logger logger = LoggerFactory.getLogger(KeyButton.class);
+
 	private final static long DEFAULT_DELAY = 400;
 
 	private int keyCode;
@@ -65,7 +63,7 @@ public class KeyButton extends Button implements LongPressable {
 		}
 	}
 
-	private void initEventListener() {
+	protected void initEventListener() {
 		timer.setOnFinished(new EventHandler<ActionEvent>() {
 
 			public void handle(ActionEvent event) {
@@ -77,15 +75,16 @@ public class KeyButton extends Button implements LongPressable {
 		setOnDragDetected(new EventHandler<MouseEvent>() {
 
 			@Override
-			public void handle(MouseEvent me) {
-				logger.finest("drag detected");
+			public void handle(MouseEvent event) {
+				logger.trace("{} drag detected", keyCode);
+				event.consume();
 			}
 		});
 
 		setOnMouseClicked(new EventHandler<MouseEvent>() {
 
 			public void handle(MouseEvent event) {
-				logger.log(Level.FINEST, "clicked: {0}", timer.getCurrentRate());
+				logger.trace("{} clicked: {}", keyCode, timer.getCurrentRate());
 
 				if (event.getButton().equals(MouseButton.PRIMARY)) {
 					if (timer.getStatus().equals(Status.RUNNING)) {
@@ -103,7 +102,7 @@ public class KeyButton extends Button implements LongPressable {
 		setOnMousePressed(new EventHandler<MouseEvent>() {
 
 			public void handle(MouseEvent event) {
-				logger.log(Level.FINEST, "pressed: {0}", timer.getCurrentRate());
+				logger.trace("{} pressed: {}", keyCode, timer.getCurrentRate());
 				if (event.getButton().equals(MouseButton.PRIMARY)) {
 					timer.playFromStart();
 				}
@@ -114,7 +113,7 @@ public class KeyButton extends Button implements LongPressable {
 		setOnMouseDragged(new EventHandler<MouseEvent>() {
 
 			public void handle(MouseEvent event) {
-				logger.log(Level.FINEST, "dragged: {0}", timer.getCurrentRate());
+				logger.trace("{} dragged: {}", keyCode, timer.getCurrentRate());
 
 				if (event.getButton().equals(MouseButton.PRIMARY)) {
 					if (timer.getStatus().equals(Status.RUNNING) && timer.getCurrentRate() > 1) {

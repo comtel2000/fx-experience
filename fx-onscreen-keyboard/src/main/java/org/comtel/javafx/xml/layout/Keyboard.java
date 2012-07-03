@@ -40,6 +40,7 @@ import javax.xml.bind.annotation.XmlType;
  *                           &lt;attribute name="codes" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
  *                           &lt;attribute name="keyLabel" type="{http://www.w3.org/2001/XMLSchema}string" />
  *                           &lt;attribute name="keyIconStyle" type="{http://www.w3.org/2001/XMLSchema}string" />
+ *                           &lt;attribute name="keyLabelStyle" type="{http://www.w3.org/2001/XMLSchema}string" />
  *                           &lt;attribute name="keyWidth" type="{http://www.w3.org/2001/XMLSchema}int" />
  *                           &lt;attribute name="keyEdgeFlags">
  *                             &lt;simpleType>
@@ -240,6 +241,7 @@ public class Keyboard {
      *                 &lt;attribute name="codes" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
      *                 &lt;attribute name="keyLabel" type="{http://www.w3.org/2001/XMLSchema}string" />
      *                 &lt;attribute name="keyIconStyle" type="{http://www.w3.org/2001/XMLSchema}string" />
+     *                 &lt;attribute name="keyLabelStyle" type="{http://www.w3.org/2001/XMLSchema}string" />
      *                 &lt;attribute name="keyWidth" type="{http://www.w3.org/2001/XMLSchema}int" />
      *                 &lt;attribute name="keyEdgeFlags">
      *                   &lt;simpleType>
@@ -374,6 +376,8 @@ public class Keyboard {
             protected String keyLabel;
             @XmlAttribute(name = "keyIconStyle")
             protected String keyIconStyle;
+            @XmlAttribute(name = "keyLabelStyle")
+            protected String keyLabelStyle;
             @XmlAttribute(name = "keyWidth")
             protected Integer keyWidth;
             @XmlAttribute(name = "keyEdgeFlags")
@@ -453,6 +457,30 @@ public class Keyboard {
                 this.keyIconStyle = value;
             }
 
+            /**
+             * Gets the value of the keyLabelStyle property.
+             * 
+             * @return
+             *     possible object is
+             *     {@link String }
+             *     
+             */
+            public String getKeyLabelStyle() {
+                return keyLabelStyle;
+            }
+
+            /**
+             * Sets the value of the keyLabelStyle property.
+             * 
+             * @param value
+             *     allowed object is
+             *     {@link String }
+             *     
+             */
+            public void setKeyLabelStyle(String value) {
+                this.keyLabelStyle = value;
+            }
+            
             /**
              * Gets the value of the keyWidth property.
              * 

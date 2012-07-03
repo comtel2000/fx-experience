@@ -1,5 +1,7 @@
 package org.comtel.javafx;
 
+import java.io.IOException;
+
 import junit.framework.Assert;
 
 import org.comtel.javafx.xml.KeyboardLayoutHandler;
@@ -11,7 +13,7 @@ import org.junit.Test;
 public class KeyboardXmlLayoutTest {
 
 	private static KeyboardLayoutHandler handler;
-
+ 
 	@BeforeClass
 	public static void open() {
 		handler = new KeyboardLayoutHandler();
@@ -23,7 +25,7 @@ public class KeyboardXmlLayoutTest {
 	}
 
 	@Test
-	public void testGetLayout() {
+	public void testGetLayout() throws IOException {
 		Keyboard kb = handler.getLayout("/xml/kb-layout.xml");
 		Assert.assertNotNull(kb);
 		Assert.assertFalse(kb.getRow().isEmpty());

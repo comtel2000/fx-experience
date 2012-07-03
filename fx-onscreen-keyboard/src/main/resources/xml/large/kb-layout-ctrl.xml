@@ -1,57 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Keyboard keyWidth="8" horizontalGap="0" verticalGap="0">
 	<Row>
-		<Key codes="-4" keyIconStyle=".tab-icon" keyWidth="10"
-			keyEdgeFlags="left" />
-		<Key codes="113" keyLabel="" />
-		<Key codes="119" keyLabel="" />
-		<Key codes="101" keyLabel="" />
-		<Key codes="114" keyLabel="" />
-		<Key codes="116" keyLabel="" />
-		<Key codes="121" keyLabel="" />
-		<Key codes="117,252,251,250,249" keyLabel="" />
-		<Key codes="105" keyLabel="" />
-		<Key codes="111,246,245,244,243,242,248" keyLabel="" />
-		<Key codes="112" keyLabel="" />
-		<Key codes="-5" keyIconStyle=".delete-icon" keyWidth="10"
-			keyEdgeFlags="right" isRepeatable="true" />
+		<Key codes="-100" keyLabel="&#171;"  keyWidth="5" keyEdgeFlags="left"/>
+		<Key codes="-112" keyLabel="F1" />
+		<Key codes="-113" keyLabel="F2" />
+		<Key codes="-114" keyLabel="F3" />
+		<Key codes="-115" keyLabel="F4" />
+		<Key codes="-116" keyLabel="F5" />
+		<Key codes="-117" keyLabel="F6" />
+		<Key codes="-118" keyLabel="F7" />
+		<Key codes="-119" keyLabel="F8" />
+		<Key codes="-120" keyLabel="F9" />
+		<Key codes="-121" keyLabel="F10" />
+		<Key codes="-101" keyLabel="&#187;"  keyWidth="5" keyEdgeFlags="right" isRepeatable="true" />
+
 	</Row>
 
 	<Row>
 		<Key codes="43" keyIconStyle=".zoom-in-icon" keyWidth="14"
 			keyEdgeFlags="left" />
-		<Key codes="97" keyLabel="A" />
-		<Key codes="115,223" keyLabel="" />
+		<Key codes="97" keyLabel="SELECT ALL" keyLabelStyle=".small-style" keyWidth="16"/>
 		<Key codes="100" keyLabel="" />
 		<Key codes="102" keyLabel="" />
 		<Key codes="103" keyLabel="" />
 		<Key codes="104" keyLabel="" />
 		<Key codes="106" keyLabel="" />
 		<Key codes="107" keyLabel="" />
-		<Key codes="108" keyLabel="" />
 		<Key codes="10" keyIconStyle=".enter-icon" keyWidth="14"
 			keyEdgeFlags="right" />
 	</Row>
 
 	<Row>
-		<Key codes="45" keyIconStyle=".zoom-out-icon"
-			keyWidth="14" isModifier="true" isSticky="true" keyEdgeFlags="left" />
+		<Key codes="45" keyIconStyle=".zoom-out-icon" keyWidth="14"
+			isModifier="true" isSticky="true" keyEdgeFlags="left" />
 		<Key codes="122" keyLabel="" />
-		<Key codes="120" keyLabel="X" />
-		<Key codes="99" keyLabel="C" />
-		<Key codes="118" keyLabel="V" />
+		<Key codes="120" keyLabel="CUT" keyLabelStyle=".small-style" keyWidth="14"/>
+		<Key codes="99" keyLabel="COPY" keyLabelStyle=".small-style" keyWidth="14"/>
+		<Key codes="118" keyLabel="PASTE" keyLabelStyle=".small-style" keyWidth="14"/>
 		<Key codes="98" keyLabel="" />
 		<Key codes="110" keyLabel="" />
-		<Key codes="109" keyLabel="" />
-		<Key codes="45" keyLabel="" />
-		<Key codes="43" keyLabel="" />
-		<Key codes="-1" keyIconStyle=".shift-off-icon"
-			keyWidth="14" keyEdgeFlags="right" />
+		<Key codes="-1" keyIconStyle=".shift-off-icon" keyWidth="14"
+			keyEdgeFlags="right" />
 	</Row>
 
 	<Row rowEdgeFlags="bottom">
-		<Key codes="-6" keyLabel="CTRL" keyWidth="12"
-			keyEdgeFlags="left" />
+		<Key codes="-6" keyLabel="CTRL" keyWidth="12" keyEdgeFlags="left" />
 		<Key codes="-2" keyLabel="?123" keyWidth="15" />
 		<Key codes="32" keyIconStyle=".space-icon" keyWidth="50"
 			isRepeatable="true" />

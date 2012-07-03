@@ -1,14 +1,19 @@
 package org.comtel.javafx;
 
-import java.awt.AWTException;
-import java.awt.Component;
-import java.awt.KeyboardFocusManager;
-import java.awt.Robot;
+import java.io.IOException;
 import java.io.InputStream;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
 
-import javafx.application.Platform;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.value.ChangeListener;
@@ -16,19 +21,12 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
-import javafx.scene.Scene;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Region;
-import javafx.stage.Popup;
-import javafx.stage.Window;
-
-import javax.swing.SwingUtilities;
-
 import net.miginfocom.layout.BoundSize;
 import net.miginfocom.layout.CC;
 import net.miginfocom.layout.LC;
@@ -38,23 +36,24 @@ import org.comtel.javafx.control.KeyButton;
 import org.comtel.javafx.control.KeyboardLayer;
 import org.comtel.javafx.control.MultiKeyButton;
 import org.comtel.javafx.event.KeyButtonEvent;
+import org.comtel.javafx.robot.FXRobotHandler;
+import org.comtel.javafx.robot.IRobot;
 import org.comtel.javafx.xml.KeyboardLayoutHandler;
 import org.comtel.javafx.xml.layout.Keyboard;
+import org.slf4j.LoggerFactory;
 import org.tbee.javafx.scene.layout.MigPane;
-
-import com.sun.javafx.robot.FXRobot;
-import com.sun.javafx.robot.FXRobotFactory;
 
 public class KeyBoardPanel extends Group implements EventHandler<KeyButtonEvent> {
 
-	private final static Logger logger = Logger.getLogger(KeyBoardPanel.class.getName());
+	private final static org.slf4j.Logger logger = LoggerFactory.getLogger(KeyBoardPanel.class);
 
-	public final int SHIFT_DOWN = -1;
-	public final int SYMBOL_DOWN = -2;
-	public final int CLOSE = -3;
-	public final int TAB = -4;
-	public final int BACK_SPACE = -5;
-	public final int CTRL_DOWN = -6;
+	private static final int SHIFT_DOWN = -1;
+	private static final int SYMBOL_DOWN = -2;
+	private static final int CLOSE = -3;
+	private static final int TAB = -4;
+	private static final int BACK_SPACE = -5;
+	private static final int CTRL_DOWN = -6;
+	private static final int LOCALE_SWITCH = -7;
 
 	private String layerPath;
 	private Region qwertyKeyboardPane;
@@ -67,11 +66,15 @@ public class KeyBoardPanel extends Group implements EventHandler<KeyButtonEvent>
 	private SimpleBooleanProperty shiftProperty = new SimpleBooleanProperty(false);
 	private SimpleBooleanProperty ctrlProperty = new SimpleBooleanProperty(false);
 
-	private boolean useAwtRobot;
-
 	private SimpleDoubleProperty scaleProperty = new SimpleDoubleProperty(1.0);
 
 	private EventHandler<? super Event> closeEventHandler;
+
+	private double mousePressedX;
+	private double mousePressedY;
+
+	private IRobot robotHandler;
+	private Locale layoutLocale;
 
 	/**
 	 * default FX robot
@@ -79,22 +82,33 @@ public class KeyBoardPanel extends Group implements EventHandler<KeyButtonEvent>
 	 * @param layerpath
 	 */
 	public KeyBoardPanel(String layerpath) {
-		this(layerpath, false);
+		this(layerpath, new FXRobotHandler());
 	}
 
-	public KeyBoardPanel(String layerpath, boolean awtRobot) {
-		layerPath = layerpath;
-		useAwtRobot = awtRobot;
+	public KeyBoardPanel(String layerpath, IRobot robot) {
+		this(layerpath, robot, Locale.getDefault());
+	}
+	
+	public KeyBoardPanel(String layerpath, Locale local) {
+		this(layerpath, new FXRobotHandler(), local);
+	}
+	
+	public KeyBoardPanel(String layerpath, IRobot robot, Locale local) {
+		layerPath = layerpath == null ? "" : layerpath;
+		robotHandler = robot;
+		layoutLocale = local;
+
 		// setAutoSizeChildren(true);
 		setFocusTraversable(false);
+		
 		init();
+
 		scaleProperty.addListener(new ChangeListener<Number>() {
 			@Override
 			public void changed(ObservableValue<? extends Number> arg0, Number arg1, Number arg2) {
 				setScaleX(arg2.doubleValue());
 				setScaleY(arg2.doubleValue());
 			}
-
 		});
 		// setOnKeyPressed(new EventHandler<KeyEvent>() {
 		//
@@ -117,13 +131,12 @@ public class KeyBoardPanel extends Group implements EventHandler<KeyButtonEvent>
 
 	private void init() {
 
-		KeyboardLayoutHandler handler = new KeyboardLayoutHandler();
-		qwertyKeyboardPane = createKeyboardPane(handler.getLayout(layerPath + "/" + "kb-layout.xml"));
-		qwertyShiftedKeyboardPane = createKeyboardPane(handler.getLayout(layerPath + "/" + "kb-layout-shift.xml"));
-		qwertyCtrlKeyboardPane = createKeyboardPane(handler.getLayout(layerPath + "/" + "kb-layout-ctrl.xml"));
-		symbolKeyboardPane = createKeyboardPane(handler.getLayout(layerPath + "/" + "kb-layout-sym.xml"));
-		symbolShiftedKeyboardPane = createKeyboardPane(handler.getLayout(layerPath + "/" + "kb-layout-sym-shift.xml"));
-
+		try {
+			setLayoutLocale(layoutLocale);
+		} catch (IOException | URISyntaxException e) {
+			logger.error(e.getMessage(), e);
+			return;
+		}
 		setKeyboardLayer(KeyboardLayer.QWERTY);
 
 		shiftProperty.addListener(new ChangeListener<Boolean>() {
@@ -146,6 +159,71 @@ public class KeyBoardPanel extends Group implements EventHandler<KeyButtonEvent>
 
 	}
 
+	public void setLayoutLocale(Locale local) throws MalformedURLException, IOException, URISyntaxException {
+		logger.debug("set keyboard local: {}", local);
+		KeyboardLayoutHandler handler = new KeyboardLayoutHandler();
+		Path path = null;
+		Map<Locale, Path> localMap = getAvailableLocales();
+		if (localMap.containsKey(local)) {
+			path = localMap.get(local);
+		} else if (localMap.containsKey(new Locale(local.getLanguage()))) {
+			logger.debug("use language compatible locale: {}", local.getLanguage());
+			path = localMap.get(new Locale(local.getLanguage()));
+		}else {
+			URL url = KeyboardLayoutHandler.class.getResource(layerPath);
+			logger.debug("use default locale on: {}", url);
+			if (url != null) {
+				path = Paths.get(url.toURI());
+			}
+		}
+
+		if (path != null) {
+			qwertyKeyboardPane = createKeyboardPane(handler.getLayout(path.resolve("kb-layout.xml").toUri().toURL()));
+			qwertyShiftedKeyboardPane = createKeyboardPane(handler.getLayout(path.resolve("kb-layout-shift.xml")
+					.toUri().toURL()));
+			qwertyCtrlKeyboardPane = createKeyboardPane(handler.getLayout(path.resolve("kb-layout-ctrl.xml").toUri()
+					.toURL()));
+			symbolKeyboardPane = createKeyboardPane(handler
+					.getLayout(path.resolve("kb-layout-sym.xml").toUri().toURL()));
+			symbolShiftedKeyboardPane = createKeyboardPane(handler.getLayout(path.resolve("kb-layout-sym-shift.xml")
+					.toUri().toURL()));
+		}
+
+	}
+
+	
+	public Map<Locale, Path> getAvailableLocales(){
+		Map<Locale, Path> localList = new HashMap<>();
+		URL url = KeyboardLayoutHandler.class.getResource(layerPath);
+		if (url == null){
+			return localList;
+		}
+		
+		try {
+			Path dir = Paths.get(url.toURI());
+			try (DirectoryStream<Path> stream = Files.newDirectoryStream(dir)) {
+				for (Path entry : stream) {
+					if (entry.toFile().isDirectory()) {
+						for (Locale l : Locale.getAvailableLocales()) {
+							if (entry.getFileName().toString().equals(l.getLanguage()+ (l.getCountry().isEmpty()? "" : "_" + l.getCountry()))) {
+								localList.put(l, entry);
+								break;
+							}
+						}
+					}
+				}
+			}
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+		}
+		
+		
+		logger.debug("available locals: {}", localList.keySet());
+		return localList;
+
+
+	}
+	
 	public void setKeyboardLayer(KeyboardLayer layer) {
 		final Region pane;
 		switch (layer) {
@@ -165,10 +243,27 @@ public class KeyBoardPanel extends Group implements EventHandler<KeyButtonEvent>
 
 		getChildren().clear();
 		getChildren().add(pane);
-	}
 
-	private double mousePressedX;
-	private double mousePressedY;
+		// if (getChildren().isEmpty()){
+		// qwertyKeyboardPane.setVisible(false);
+		// getChildren().add(qwertyKeyboardPane);
+		// qwertyShiftedKeyboardPane.setVisible(false);
+		// getChildren().add(qwertyShiftedKeyboardPane);
+		//
+		// symbolKeyboardPane.setVisible(false);
+		// getChildren().add(symbolKeyboardPane);
+		// symbolShiftedKeyboardPane.setVisible(false);
+		// getChildren().add(symbolShiftedKeyboardPane);
+		//
+		// qwertyCtrlKeyboardPane.setVisible(false);
+		// getChildren().add(qwertyCtrlKeyboardPane);
+		// }
+		// for (javafx.scene.Node node : getChildren()){
+		// node.setVisible(false);
+		// }
+		// pane.setVisible(true);
+
+	}
 
 	/**
 	 * with MIG layout manager
@@ -225,7 +320,12 @@ public class KeyBoardPanel extends Group implements EventHandler<KeyButtonEvent>
 
 			for (Keyboard.Row.Key key : row.getKey()) {
 				CC lCC = new CC();
-
+				// if (key.getKeyLabel() != null &&
+				// !key.getKeyLabel().isEmpty()) {
+				// System.err.println(MessageFormat.format("\t<Key codes=\"{0}\" keyLabel=\"{1}\" />",
+				// Integer.toString((int) key.getKeyLabel().charAt(0)),
+				// key.getKeyLabel()));
+				// }
 				MultiKeyButton button = new MultiKeyButton();
 				button.setFocusTraversable(false);
 				button.setOnShortPressed(this);
@@ -245,10 +345,19 @@ public class KeyBoardPanel extends Group implements EventHandler<KeyButtonEvent>
 							}
 						}
 					}
+					if (button.getKeyCode() == LOCALE_SWITCH){
+						button.addExtKeyCode(LOCALE_SWITCH, Locale.ENGLISH.getLanguage().toUpperCase(Locale.ENGLISH));
+						for (Locale l : getAvailableLocales().keySet()){
+							button.addExtKeyCode(LOCALE_SWITCH, l.getLanguage().toUpperCase(Locale.ENGLISH));
+						}
+					}
 				}
 
+				if (key.getKeyLabelStyle() != null && key.getKeyLabelStyle().startsWith(".")) {
+					button.getStyleClass().add(key.getKeyLabelStyle().substring(1));
+				}
 				if (key.getKeyIconStyle() != null && key.getKeyIconStyle().startsWith(".")) {
-					logger.log(Level.FINE, "Load css style: {0}", key.getKeyIconStyle());
+					logger.trace("Load css style: {}", key.getKeyIconStyle());
 					Label icon = new Label();
 					icon.getStyleClass().add(key.getKeyIconStyle().substring(1));
 					button.setContentDisplay(ContentDisplay.BOTTOM);
@@ -262,17 +371,16 @@ public class KeyBoardPanel extends Group implements EventHandler<KeyButtonEvent>
 					if (!image.isError()) {
 						button.setGraphic(new ImageView(image));
 					} else {
-						logger.log(Level.SEVERE, "Image: {0} not found", key.getKeyIconStyle());
+						logger.error("Image: {} not found", key.getKeyIconStyle());
 					}
 				}
 
-				if (button.isContextAvailable()) {
-					button.setText(key.getKeyLabel());
+				button.setText(key.getKeyLabel());
+				
+				if (button.isContextAvailable() && button.getGraphic() == null) {
 					Label icon = new Label();
-					icon.getStyleClass().add("extend-style");	
+					icon.getStyleClass().add("extend-style");
 					button.setGraphic(icon);
-				}else{
-					button.setText(key.getKeyLabel());
 				}
 
 				if (key.getKeyWidth() != null) {
@@ -364,10 +472,27 @@ public class KeyBoardPanel extends Group implements EventHandler<KeyButtonEvent>
 				// switch ctrl
 				ctrlProperty.set(!ctrlProperty.get());
 				break;
+			case LOCALE_SWITCH:
+				try {
+					Locale l = new Locale(kb.getText());
+					setLayoutLocale(l);
+				} catch (IOException | URISyntaxException e) {
+					logger.error(e.getMessage(), e);
+				}
+				if (ctrlProperty.get()) {
+					ctrlProperty.set(false);
+				} else if (symbolProperty.get()) {
+					symbolProperty.set(false);
+				} else {
+					setKeyboardLayer(KeyboardLayer.QWERTY);
+				}
+				break;
 			default:
-				// System.out.println(java.awt.event.KeyEvent.getKeyText(kb.getKeyCode()));
+				// logger.debug(java.awt.event.KeyEvent.getKeyText(kb.getKeyCode()));
 				if (kb.getKeyCode() > -1) {
 					sendToComponent((char) kb.getKeyCode());
+				} else {
+					logger.warn("key code: {} not supported", kb.getKeyCode());
 				}
 				break;
 			}
@@ -375,76 +500,16 @@ public class KeyBoardPanel extends Group implements EventHandler<KeyButtonEvent>
 	}
 
 	/**
-	 * send keyEvent to java awt or fx
+	 * send keyEvent to iRobot implementation
 	 * 
 	 * @param ch
 	 */
 	private void sendToComponent(final char ch) {
 
-		logger.log(Level.FINE, "send ({0})", ch);
-
-		if (useAwtRobot) {
-			logger.fine("to AWT");
-			SwingUtilities.invokeLater(new Runnable() {
-
-				public void run() {
-					sendToSwingComponent(ch);
-				}
-			});
-		} else {
-			final Window popup = getScene().getWindow();
-			if (popup != null && popup instanceof Popup) {
-				logger.fine("to FX");
-				Platform.runLater(new Runnable() {
-					public void run() {
-						sendToFxComponent(((Popup) popup).getOwnerWindow().getScene(), ch);
-					}
-				});
-			}
-		}
-	}
-
-	private void sendToSwingComponent(char ch) {
-		Component c = KeyboardFocusManager.getCurrentKeyboardFocusManager().getFocusOwner();
-		if (c == null || !c.isEnabled()) {
-			logger.warning("no awt focus owner");
-			return;
-		}
-
-		Robot robot = null;
-		try {
-			robot = new Robot();
-		} catch (AWTException e1) {
-			e1.printStackTrace();
-			return;
-		}
+		logger.trace("send ({})", ch);
 
 		if (ctrlProperty.get()) {
 			switch (Character.toUpperCase(ch)) {
-			case java.awt.event.KeyEvent.VK_A:
-				robot.keyPress(java.awt.event.KeyEvent.VK_CONTROL);
-				robot.keyPress(java.awt.event.KeyEvent.VK_A);
-				robot.keyRelease(java.awt.event.KeyEvent.VK_A);
-				robot.keyRelease(java.awt.event.KeyEvent.VK_CONTROL);
-				return;
-			case java.awt.event.KeyEvent.VK_X:
-				robot.keyPress(java.awt.event.KeyEvent.VK_CONTROL);
-				robot.keyPress(java.awt.event.KeyEvent.VK_X);
-				robot.keyRelease(java.awt.event.KeyEvent.VK_X);
-				robot.keyRelease(java.awt.event.KeyEvent.VK_CONTROL);
-				return;
-			case java.awt.event.KeyEvent.VK_C:
-				robot.keyPress(java.awt.event.KeyEvent.VK_CONTROL);
-				robot.keyPress(java.awt.event.KeyEvent.VK_C);
-				robot.keyRelease(java.awt.event.KeyEvent.VK_C);
-				robot.keyRelease(java.awt.event.KeyEvent.VK_CONTROL);
-				return;
-			case java.awt.event.KeyEvent.VK_V:
-				robot.keyPress(java.awt.event.KeyEvent.VK_CONTROL);
-				robot.keyPress(java.awt.event.KeyEvent.VK_V);
-				robot.keyRelease(java.awt.event.KeyEvent.VK_V);
-				robot.keyRelease(java.awt.event.KeyEvent.VK_CONTROL);
-				return;
 			case java.awt.event.KeyEvent.VK_MINUS:
 				scaleProperty.set(scaleProperty.get() - 0.1d);
 				return;
@@ -454,139 +519,16 @@ public class KeyBoardPanel extends Group implements EventHandler<KeyButtonEvent>
 			}
 		}
 
-		switch (ch) {
-		case java.awt.event.KeyEvent.VK_ENTER:
-			robot.keyPress(java.awt.event.KeyEvent.VK_ENTER);
-			robot.keyRelease(java.awt.event.KeyEvent.VK_ENTER);
-			break;
-		case java.awt.event.KeyEvent.VK_BACK_SPACE:
-			robot.keyPress(java.awt.event.KeyEvent.VK_BACK_SPACE);
-			robot.keyRelease(java.awt.event.KeyEvent.VK_BACK_SPACE);
-			break;
-		case java.awt.event.KeyEvent.VK_DELETE:
-			robot.keyPress(java.awt.event.KeyEvent.VK_DELETE);
-			robot.keyRelease(java.awt.event.KeyEvent.VK_DELETE);
-			break;
-		case java.awt.event.KeyEvent.VK_ESCAPE:
-			robot.keyPress(java.awt.event.KeyEvent.VK_ESCAPE);
-			robot.keyRelease(java.awt.event.KeyEvent.VK_ESCAPE);
-			break;
-		case java.awt.event.KeyEvent.VK_SPACE:
-			robot.keyPress(java.awt.event.KeyEvent.VK_SPACE);
-			robot.keyRelease(java.awt.event.KeyEvent.VK_SPACE);
-			break;
-		case java.awt.event.KeyEvent.VK_TAB:
-			robot.keyPress(java.awt.event.KeyEvent.VK_TAB);
-			robot.keyRelease(java.awt.event.KeyEvent.VK_TAB);
-			break;
-		default:
-			int modififiers = Character.isUpperCase(ch) ? java.awt.event.KeyEvent.SHIFT_DOWN_MASK : 0;
-			KeyboardFocusManager.getCurrentKeyboardFocusManager().dispatchKeyEvent(
-					new java.awt.event.KeyEvent(c, java.awt.event.KeyEvent.KEY_PRESSED, System.currentTimeMillis(),
-							modififiers, java.awt.event.KeyEvent.VK_UNDEFINED, ch,
-							java.awt.event.KeyEvent.KEY_LOCATION_STANDARD));
-			KeyboardFocusManager.getCurrentKeyboardFocusManager().dispatchKeyEvent(
-					new java.awt.event.KeyEvent(c, java.awt.event.KeyEvent.KEY_TYPED, System.currentTimeMillis(),
-							modififiers, java.awt.event.KeyEvent.VK_UNDEFINED, ch,
-							java.awt.event.KeyEvent.KEY_LOCATION_UNKNOWN));
-			KeyboardFocusManager.getCurrentKeyboardFocusManager().dispatchKeyEvent(
-					new java.awt.event.KeyEvent(c, java.awt.event.KeyEvent.KEY_RELEASED, System.currentTimeMillis(),
-							modififiers, java.awt.event.KeyEvent.VK_UNDEFINED, ch,
-							java.awt.event.KeyEvent.KEY_LOCATION_STANDARD));
-			break;
+		if (robotHandler == null) {
+			logger.error("no robot handler available");
+			return;
 		}
-	}
-
-	private void sendToFxComponent(Scene scene, char ch) {
-
-		FXRobot robot = FXRobotFactory.createRobot(scene);
-
-		if (ctrlProperty.get()) {
-			switch (Character.toUpperCase(ch)) {
-			case java.awt.event.KeyEvent.VK_A:
-				robot.keyPress(KeyCode.CONTROL);
-				robot.keyPress(KeyCode.A);
-				robot.keyType(KeyCode.A, "");
-				robot.keyRelease(KeyCode.A);
-				robot.keyRelease(KeyCode.CONTROL);
-				return;
-			case java.awt.event.KeyEvent.VK_X:
-				robot.keyPress(KeyCode.CONTROL);
-				robot.keyPress(KeyCode.X);
-				robot.keyType(KeyCode.X, "");
-				robot.keyRelease(KeyCode.X);
-				robot.keyRelease(KeyCode.CONTROL);
-				return;
-			case java.awt.event.KeyEvent.VK_C:
-				robot.keyPress(KeyCode.CONTROL);
-				robot.keyPress(KeyCode.C);
-				robot.keyType(KeyCode.C, "");
-				robot.keyRelease(KeyCode.C);
-				robot.keyRelease(KeyCode.CONTROL);
-				return;
-			case java.awt.event.KeyEvent.VK_V:
-				robot.keyPress(KeyCode.CONTROL);
-				robot.keyPress(KeyCode.V);
-				robot.keyType(KeyCode.V, "");
-				robot.keyRelease(KeyCode.V);
-				robot.keyRelease(KeyCode.CONTROL);
-				return;
-			case java.awt.event.KeyEvent.VK_MINUS:
-				scaleProperty.set(scaleProperty.get() - 0.1d);
-				return;
-			case 0x2B:
-				scaleProperty.set(scaleProperty.get() + 0.1d);
-				return;
-			}
-
-		}
-		switch (ch) {
-		case java.awt.event.KeyEvent.VK_ENTER:
-			robot.keyPress(KeyCode.ENTER);
-			robot.keyType(KeyCode.ENTER, Character.toString(ch));
-			robot.keyRelease(KeyCode.ENTER);
-			break;
-		case java.awt.event.KeyEvent.VK_BACK_SPACE:
-			System.err.println("back_space");
-			robot.keyPress(KeyCode.BACK_SPACE);
-			robot.keyType(KeyCode.BACK_SPACE, Character.toString(ch));
-			robot.keyRelease(KeyCode.BACK_SPACE);
-			break;
-		case java.awt.event.KeyEvent.VK_DELETE:
-			robot.keyPress(KeyCode.DELETE);
-			robot.keyType(KeyCode.DELETE, Character.toString(ch));
-			robot.keyRelease(KeyCode.DELETE);
-			break;
-		case java.awt.event.KeyEvent.VK_ESCAPE:
-			robot.keyPress(KeyCode.ESCAPE);
-			robot.keyType(KeyCode.ESCAPE, Character.toString(ch));
-			robot.keyRelease(KeyCode.ESCAPE);
-			break;
-		case java.awt.event.KeyEvent.VK_SPACE:
-			robot.keyPress(KeyCode.SPACE);
-			robot.keyType(KeyCode.SPACE, " ");
-			robot.keyRelease(KeyCode.SPACE);
-			break;
-		case java.awt.event.KeyEvent.VK_TAB:
-			robot.keyPress(KeyCode.TAB);
-			robot.keyType(KeyCode.TAB, Character.toString(ch));
-			robot.keyRelease(KeyCode.TAB);
-			break;
-		default:
-			robot.keyPress(KeyCode.UNDEFINED);
-			robot.keyType(KeyCode.UNDEFINED, Character.toString(ch));
-			robot.keyRelease(KeyCode.UNDEFINED);
-			break;
-		}
+		robotHandler.sendToComponent(this, ch, ctrlProperty.get());
 
 	}
 
-	public boolean isUseAwtRobot() {
-		return useAwtRobot;
-	}
-
-	public void setUseAwtRobot(boolean useAwtRobot) {
-		this.useAwtRobot = useAwtRobot;
+	public void setRobotHandler(IRobot robot) {
+		robotHandler = robot;
 	}
 
 	public void setOnKeyboardCloseButton(EventHandler<? super Event> value) {
@@ -616,6 +558,8 @@ public class KeyBoardPanel extends Group implements EventHandler<KeyButtonEvent>
 			return "symbol-icon";
 		case CTRL_DOWN:
 			return "ctrl-icon";
+		case LOCALE_SWITCH:
+			return "language-icon";
 		default:
 			return null;
 		}

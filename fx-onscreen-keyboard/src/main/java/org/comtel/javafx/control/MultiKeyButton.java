@@ -12,24 +12,17 @@ import javafx.stage.WindowEvent;
 
 public class MultiKeyButton extends KeyButton {
 
-	private ObservableList<Integer> extKeyCodes;
+	private ObservableList<KeyButton> extKeyCodes;
 	private MultiKeyPopup context;
 
-	public ObservableList<Integer> getExtKeyCodes() {
+	public ObservableList<KeyButton> getExtKeyCodes() {
 		if (extKeyCodes == null) {
 			extKeyCodes = FXCollections.observableArrayList();
-			extKeyCodes.addListener(new ListChangeListener<Integer>() {
+			extKeyCodes.addListener(new ListChangeListener<KeyButton>() {
 
-				public void onChanged(Change<? extends Integer> c) {
+				public void onChanged(Change<? extends KeyButton> c) {
 					while (c.next()) {
-						for (int code : c.getAddedSubList()) {
-							KeyButton button = new KeyButton(Character.toString((char) code));
-							// button.setPrefSize(getPrefWidth(),
-							// getPrefHeight());
-							button.setPrefWidth(40);
-							button.setPrefHeight(30);
-							button.setKeyCode(code);
-							button.setOnShortPressed(getOnShortPressed());
+						for (KeyButton button : c.getAddedSubList()) {
 							getContext().getButtons().add(button);
 						}
 					}
@@ -70,9 +63,24 @@ public class MultiKeyButton extends KeyButton {
 	}
 
 	public void addExtKeyCode(int extKeyCode) {
-		getExtKeyCodes().add(extKeyCode);
+		addExtKeyCode(extKeyCode, null);
 	}
 
+	public void addExtKeyCode(int extKeyCode, String label) {
+		ShortPressKeyButton button = new ShortPressKeyButton(Character.toString((char) extKeyCode));
+		if (label != null){
+			button.setText(label);
+		}
+		//TODO: add to css style
+		button.setPrefWidth(40);
+		button.setPrefHeight(30);
+		
+		button.setKeyCode(extKeyCode);
+		button.setOnShortPressed(getOnShortPressed());
+		
+		getExtKeyCodes().add(button);
+	}
+	
 	public boolean isContextAvailable() {
 		return context != null && extKeyCodes != null;
 	}

@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.comtel.javafx</groupId>
 	<artifactId>fx-onscreen-keyboard</artifactId>
-	<version>0.9-SNAPSHOT</version>
+	<version>0.9.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>fx-onscreen-keyboard</name>
 	<properties>
@@ -18,11 +18,19 @@
 	<dependencies>
         <dependency>
             <groupId>com.oracle</groupId>
-            <artifactId>javafx</artifactId>
+            <artifactId>javafx-scenebuilder</artifactId>
+            <version>2.2</version>
+            <systemPath>${javafx.scenebuilder}/lib/jfxrt.jar</systemPath>
+            <scope>system</scope>
+        </dependency>
+       <!--   <dependency>
+            <groupId>com.oracle</groupId>
+            <artifactId>javafx-scenebuilder</artifactId>
             <version>2.1</version>
             <systemPath>${fx.home}/rt/lib/jfxrt.jar</systemPath>
             <scope>system</scope>
         </dependency>
+        -->
 		<dependency>
 			<groupId>com.miglayout</groupId>
 			<artifactId>miglayout-javafx</artifactId>
@@ -46,6 +54,17 @@
 			<type>maven-plugin</type>
 			<scope>provided</scope>
 			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.6.6</version>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>1.0.6</version>
+			<scope>runtime</scope>
 		</dependency>
 	</dependencies>
 

@@ -18,8 +18,7 @@
 	</Row>
 
 	<Row>
-		<Key codes="-4" keyIconStyle=".search-icon" keyWidth="14"
-			keyEdgeFlags="left" />
+		<Key codes="-7" keyLabel="EN" keyLabelStyle=".small-style" keyEdgeFlags="left" />
 		<Key codes="97,228,229,227,226,225,224" keyLabel="a" />
 		<Key codes="115,223" keyLabel="s" />
 		<Key codes="100" keyLabel="d" />
@@ -29,6 +28,7 @@
 		<Key codes="106" keyLabel="j" />
 		<Key codes="107" keyLabel="k" />
 		<Key codes="108" keyLabel="l" />
+		<Key codes="45" keyLabel="-" />
 		<Key codes="10" keyIconStyle=".enter-icon" keyWidth="14"
 			keyEdgeFlags="right" />
 	</Row>

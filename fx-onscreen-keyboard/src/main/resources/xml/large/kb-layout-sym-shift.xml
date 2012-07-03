@@ -20,8 +20,7 @@
 	</Row>
 
 	<Row>
-		<Key codes="-4" keyIconStyle=".search-icon"
-			keyEdgeFlags="left" />
+		<Key codes="-7" keyLabel="EN" keyLabelStyle=".small-style" keyEdgeFlags="left" />
 		<Key codes="169" keyLabel="©" />
 		<Key codes="163" keyLabel="£" />
 		<Key codes="8364" keyLabel="€" />

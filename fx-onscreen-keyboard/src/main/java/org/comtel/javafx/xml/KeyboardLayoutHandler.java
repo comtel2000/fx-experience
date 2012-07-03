@@ -1,6 +1,7 @@
 package org.comtel.javafx.xml;
 
-import java.io.InputStream;
+import java.io.IOException;
+import java.net.URL;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -22,25 +23,24 @@ public class KeyboardLayoutHandler {
 		}
 	}
 
+	public Keyboard getLayout(String file) throws IOException {
+		return getLayout(KeyboardLayoutHandler.class.getResource(file));
+	}
+	
 	/**
 	 * "resources/xml/kb-layout.xml"
 	 * 
-	 * @param file
+	 * @param url
 	 * @return
+	 * @throws IOException 
 	 */
-	public Keyboard getLayout(String filename) throws IllegalStateException {
-
-		InputStream is = KeyboardLayoutHandler.class.getResourceAsStream(filename);
-
-		if (is == null) {
-			throw new IllegalStateException("file: " + filename + " can not be found");
-		}
+	public Keyboard getLayout(URL url) throws IOException {
 
 		Object obj = null;
 		try {
-			obj = unmarshaller.unmarshal(is);
+			obj = unmarshaller.unmarshal(url);
 		} catch (JAXBException e) {
-			throw new IllegalStateException("file: " + filename + " can not be read", e);
+			throw new IOException("file: " + url + " can not be read", e);
 		}
 		if (obj != null && obj instanceof Keyboard) {
 			return (Keyboard) obj;
