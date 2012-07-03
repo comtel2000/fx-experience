@@ -73,7 +73,7 @@ public class MultiKeyButton extends KeyButton {
 		}
 		//TODO: add to css style
 		button.setPrefWidth(40);
-		button.setPrefHeight(30);
+		button.setPrefHeight(40);
 		
 		button.setKeyCode(extKeyCode);
 		button.setOnShortPressed(getOnShortPressed());

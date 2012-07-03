@@ -18,7 +18,7 @@
 	</Row>
 
 	<Row>
-		<Key codes="-7" keyLabel="DE" keyLabelStyle=".small-style" keyIconStyle=".language-icon" keyEdgeFlags="left" />
+		<Key codes="-7" keyLabel="DE" keyLabelStyle=".small-style" keyEdgeFlags="left" />
 		<Key codes="97,228,229,227,226,225,224" keyLabel="a" />
 		<Key codes="115,223" keyLabel="s" />
 		<Key codes="100" keyLabel="d" />
