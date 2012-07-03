@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Keyboard keyWidth="8" horizontalGap="0" verticalGap="0">
+	<Row>
+		<Key codes="-4" keyIconStyle=".tab-icon" keyWidth="10"
+			keyEdgeFlags="left" />
+		<Key codes="1081" keyLabel="й" />
+		<Key codes="1094" keyLabel="ц" />
+		<Key codes="1091" keyLabel="у" />
+		<Key codes="1082" keyLabel="к" />
+		<Key codes="1077" keyLabel="е" />
+		<Key codes="1085" keyLabel="н" />
+		<Key codes="1075" keyLabel="г" />
+		<Key codes="1096" keyLabel="ш" />
+		<Key codes="1097" keyLabel="щ" />
+		<Key codes="1079" keyLabel="з" />
+		<Key codes="1093" keyLabel="х" />
+		<Key codes="-5" keyIconStyle=".delete-icon" keyWidth="10"
+			keyEdgeFlags="right" isRepeatable="true" />
+	</Row>
+
+	<Row>
+		<Key codes="-7" keyLabel="RU" keyLabelStyle=".small-style" keyEdgeFlags="left" />
+		<Key codes="1092" keyLabel="ф" />
+		<Key codes="1099" keyLabel="ы" />
+		<Key codes="1074" keyLabel="в" />
+		<Key codes="1072" keyLabel="а" />
+		<Key codes="1087" keyLabel="п" />
+		<Key codes="1088" keyLabel="р" />
+		<Key codes="1086,1255" keyLabel="о" />
+		<Key codes="1083" keyLabel="л" />
+		<Key codes="1076" keyLabel="д" />
+		<Key codes="1078" keyLabel="ж" />
+		<Key codes="1101" keyLabel="э" />
+		<Key codes="1105,1104,1243" keyLabel="ё" keyEdgeFlags="right" />
+	</Row>
+
+	<Row>
+		<Key codes="-1" keyIconStyle=".shift-off-icon" keyWidth="14"
+			isModifier="true" isSticky="true" keyEdgeFlags="left" />
+		<Key codes="1103" keyLabel="я" />
+		<Key codes="1095" keyLabel="ч" />
+		<Key codes="1089" keyLabel="с" />
+		<Key codes="1084" keyLabel="м" />
+		<Key codes="1080" keyLabel="и" />
+		<Key codes="1090" keyLabel="т" />
+		<Key codes="1100" keyLabel="ь" />
+		<Key codes="1073" keyLabel="б" />
+		<Key codes="1102" keyLabel="ю" />
+		<Key codes="10" keyIconStyle=".enter-icon" keyWidth="14"
+			keyEdgeFlags="right" />
+	</Row>
+
+	<Row rowEdgeFlags="bottom">
+		<Key codes="-6" keyLabel="CTRL" keyWidth="12" keyEdgeFlags="left" />
+		<Key codes="-2" keyLabel="?123" keyWidth="15" />
+		<Key codes="32" keyIconStyle=".space-icon" keyWidth="50"
+			isRepeatable="true" />
+		<Key codes="-2" keyLabel="?123" keyWidth="15" />
+		<Key codes="-3" keyIconStyle=".done-icon" keyWidth="8"
+			keyEdgeFlags="right" />
+	</Row>
+</Keyboard>
+    

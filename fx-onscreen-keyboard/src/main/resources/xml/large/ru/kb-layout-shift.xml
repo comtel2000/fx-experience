@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Keyboard keyWidth="8" horizontalGap="0" verticalGap="0">
+	<Row>
+		<Key codes="-4" keyIconStyle=".tab-icon" keyWidth="10"
+			keyEdgeFlags="left" />
+	<Key codes="1049" keyLabel="Й" />
+	<Key codes="1062" keyLabel="Ц" />
+	<Key codes="1059" keyLabel="У" />
+	<Key codes="1050" keyLabel="К" />
+	<Key codes="1045" keyLabel="Е" />
+	<Key codes="1053" keyLabel="Н" />
+	<Key codes="1043" keyLabel="Г" />
+	<Key codes="1064" keyLabel="Ш" />
+	<Key codes="1065" keyLabel="Щ" />
+	<Key codes="1047" keyLabel="З" />
+	<Key codes="1061" keyLabel="Х" />
+		<Key codes="-5" keyIconStyle=".delete-icon" keyWidth="10"
+			keyEdgeFlags="right" isRepeatable="true" />
+	</Row>
+
+	<Row>
+		<Key codes="-7" keyLabel="RU" keyLabelStyle=".small-style" keyEdgeFlags="left" />
+	<Key codes="1060" keyLabel="Ф" />
+	<Key codes="1067" keyLabel="Ы" />
+	<Key codes="1042" keyLabel="В" />
+	<Key codes="1040" keyLabel="А" />
+	<Key codes="1055" keyLabel="П" />
+	<Key codes="1056" keyLabel="Р" />
+	<Key codes="1054,1254" keyLabel="О" />
+	<Key codes="1051" keyLabel="Л" />
+	<Key codes="1044" keyLabel="Д" />
+	<Key codes="1046" keyLabel="Ж" />
+	<Key codes="1069" keyLabel="Э" />
+	<Key codes="1025,1024,1242" keyLabel="Ё"  keyEdgeFlags="right" />
+	</Row>
+
+	<Row>
+		<Key codes="-1" keyIconStyle=".shift-on-icon"
+			keyWidth="14" isModifier="true" isSticky="true" keyEdgeFlags="left" />
+	<Key codes="1071" keyLabel="Я" />
+	<Key codes="1063" keyLabel="Ч" />
+	<Key codes="1057" keyLabel="С" />
+	<Key codes="1052" keyLabel="М" />
+	<Key codes="1048" keyLabel="И" />
+	<Key codes="1058" keyLabel="Т" />
+	<Key codes="1068" keyLabel="Ь" />
+	<Key codes="1041" keyLabel="Б" />
+	<Key codes="1070" keyLabel="Ю" />
+		<Key codes="10" keyIconStyle=".enter-icon"
+			keyWidth="14" keyEdgeFlags="right" />
+	</Row>
+
+	<Row rowEdgeFlags="bottom">
+		<Key codes="-6" keyLabel="CTRL" keyWidth="12"
+			keyEdgeFlags="left" />
+		<Key codes="-2" keyLabel="?123" keyWidth="15" />
+		<Key codes="32" keyIconStyle=".space-icon" keyWidth="50"
+			isRepeatable="true" />
+		<Key codes="-2" keyLabel="?123" keyWidth="15" />
+		<Key codes="-3" keyIconStyle=".done-icon" keyWidth="8"
+			keyEdgeFlags="right" />
+	</Row>
+</Keyboard>
+    
