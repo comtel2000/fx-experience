@@ -1,5 +1,7 @@
 package org.comtel.javafx;
 
+import java.nio.file.Path;
+
 import org.comtel.javafx.robot.IRobot;
 
 import javafx.stage.PopupWindow;
@@ -12,7 +14,7 @@ public class KeyboardPopup extends PopupWindow {
 		return keyboard;
 	}
 
-	public KeyboardPopup(String layerpath, IRobot robot) {
+	public KeyboardPopup(Path layerpath, IRobot robot) {
 		this(new KeyBoardPanel(layerpath, robot));
 	}
 

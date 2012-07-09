@@ -17,9 +17,9 @@ public class FXRobotHandler implements IRobot{
 	private final static org.slf4j.Logger logger = LoggerFactory.getLogger(FXRobotHandler.class);
 	
 	@Override
-	public void sendToComponent(KeyBoardPanel kb, final char ch, final boolean ctrl) {
+	public void sendToComponent(Object kb, final char ch, final boolean ctrl) {
 		logger.trace("fire: {}", ch);
-		final Window popup = kb.getScene().getWindow();
+		final Window popup = ((KeyBoardPanel)kb).getScene().getWindow();
 		if (popup != null && popup instanceof Popup) {
 			Platform.runLater(new Runnable() {
 				public void run() {

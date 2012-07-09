@@ -1,11 +1,3 @@
-.scene {
-	-fx-background-color: rgb(220, 220, 220);
-}
-
-.button {
-	-fx-font-size: 20pt;
-	-fx-font-smoothing-type: lcd;
-}
 
 #key-background { /** -fx-background-color: rgb(220, 220, 220);
 	-fx-background-radius: 10; 

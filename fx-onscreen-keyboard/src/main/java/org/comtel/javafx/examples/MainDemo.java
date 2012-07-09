@@ -20,6 +20,7 @@ import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 
 import org.comtel.javafx.KeyBoardPanel;
+import org.comtel.javafx.robot.FXRobotHandler;
 import org.tbee.javafx.scene.layout.MigPane;
 
 public class MainDemo extends Application {
@@ -33,7 +34,8 @@ public class MainDemo extends Application {
 
 		stage.setTitle("FX Keyboard (" + System.getProperty("javafx.runtime.version") + ")");
 		stage.setResizable(true);
-		fxKeyboard = new KeyBoardPanel("/xml/large");
+		fxKeyboard = new KeyBoardPanel(null);
+		fxKeyboard.addRobotHandler(new FXRobotHandler());
 		fxKeyboard.setOnKeyboardCloseButton(new EventHandler<Event>() {
 
 			public void handle(Event event) {

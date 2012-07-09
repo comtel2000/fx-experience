@@ -118,7 +118,7 @@ public class SwingMainDemo extends JApplet {
 		scene.getStylesheets().add(css);
 		fxKeyboardPopup = new Popup();
 		// fxKeyboardPopup.setAutoFix(true);
-		fxKeyboardPopup.getContent().add(fxKeyboard = new KeyBoardPanel("/xml/large", new SwingRobotHandler()));
+		fxKeyboardPopup.getContent().add(fxKeyboard = new KeyBoardPanel(null, new SwingRobotHandler()));
 
 		fxKeyboard.setScaleX(0.0d);
 		fxKeyboard.setScaleY(0.0d);

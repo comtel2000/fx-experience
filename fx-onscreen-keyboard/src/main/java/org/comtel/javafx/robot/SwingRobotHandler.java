@@ -7,7 +7,6 @@ import java.awt.Robot;
 
 import javax.swing.SwingUtilities;
 
-import org.comtel.javafx.KeyBoardPanel;
 import org.slf4j.LoggerFactory;
 
 public class SwingRobotHandler implements IRobot {
@@ -15,7 +14,7 @@ public class SwingRobotHandler implements IRobot {
 	private final static org.slf4j.Logger logger = LoggerFactory.getLogger(SwingRobotHandler.class);
 
 	@Override
-	public void sendToComponent(KeyBoardPanel kb, final char ch, final boolean ctrl) {
+	public void sendToComponent(Object source, final char ch, final boolean ctrl) {
 		logger.trace("fire: {}", ch);
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {

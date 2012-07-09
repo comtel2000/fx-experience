@@ -9,7 +9,9 @@ import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -55,7 +57,7 @@ public class KeyBoardPanel extends Group implements EventHandler<KeyButtonEvent>
 	private static final int CTRL_DOWN = -6;
 	private static final int LOCALE_SWITCH = -7;
 
-	private String layerPath;
+	private Path layerPath;
 	private Region qwertyKeyboardPane;
 	private Region qwertyShiftedKeyboardPane;
 	private Region symbolKeyboardPane;
@@ -73,29 +75,29 @@ public class KeyBoardPanel extends Group implements EventHandler<KeyButtonEvent>
 	private double mousePressedX;
 	private double mousePressedY;
 
-	private IRobot robotHandler;
+	private final List<IRobot> robotHandler = new ArrayList<>();
 	private Locale layoutLocale;
 
 	/**
-	 * default FX robot
-	 * 
 	 * @param layerpath
 	 */
-	public KeyBoardPanel(String layerpath) {
+	public KeyBoardPanel(Path layerpath) {
 		this(layerpath, new FXRobotHandler());
 	}
 
-	public KeyBoardPanel(String layerpath, IRobot robot) {
+	public KeyBoardPanel(Path layerpath, IRobot robot) {
 		this(layerpath, robot, Locale.getDefault());
 	}
 	
-	public KeyBoardPanel(String layerpath, Locale local) {
-		this(layerpath, new FXRobotHandler(), local);
+	public KeyBoardPanel(Path layerpath, Locale local) {
+		this(layerpath, null, local);
 	}
 	
-	public KeyBoardPanel(String layerpath, IRobot robot, Locale local) {
-		layerPath = layerpath == null ? "" : layerpath;
-		robotHandler = robot;
+	public KeyBoardPanel(Path layerpath, IRobot robot, Locale local) {
+		layerPath = layerpath;
+		if (robot != null){
+			robotHandler.add(robot);
+		}
 		layoutLocale = local;
 
 		// setAutoSizeChildren(true);
@@ -160,21 +162,27 @@ public class KeyBoardPanel extends Group implements EventHandler<KeyButtonEvent>
 	}
 
 	public void setLayoutLocale(Locale local) throws MalformedURLException, IOException, URISyntaxException {
-		logger.debug("set keyboard local: {}", local);
+		logger.debug("try to set keyboard local: {}", local);
 		KeyboardLayoutHandler handler = new KeyboardLayoutHandler();
-		Path path = null;
+
+		if (layerPath == null) {
+			logger.warn("use default embedded layouts");
+			String xmlPath = "/xml/large/" + (local.getLanguage().equals("en") ? "" : local.getLanguage());
+			qwertyKeyboardPane = createKeyboardPane(handler.getLayout(xmlPath + "/kb-layout.xml"));
+			qwertyShiftedKeyboardPane = createKeyboardPane(handler.getLayout(xmlPath + "/kb-layout-shift.xml"));
+			qwertyCtrlKeyboardPane = createKeyboardPane(handler.getLayout(xmlPath + "/kb-layout-ctrl.xml"));
+			symbolKeyboardPane = createKeyboardPane(handler.getLayout(xmlPath + "/kb-layout-sym.xml"));
+			symbolShiftedKeyboardPane = createKeyboardPane(handler.getLayout(xmlPath + "/kb-layout-sym-shift.xml"));
+			return;
+		}
+
+		Path path = layerPath;
 		Map<Locale, Path> localMap = getAvailableLocales();
 		if (localMap.containsKey(local)) {
 			path = localMap.get(local);
 		} else if (localMap.containsKey(new Locale(local.getLanguage()))) {
 			logger.debug("use language compatible locale: {}", local.getLanguage());
 			path = localMap.get(new Locale(local.getLanguage()));
-		}else {
-			URL url = KeyboardLayoutHandler.class.getResource(layerPath);
-			logger.debug("use default locale on: {}", url);
-			if (url != null) {
-				path = Paths.get(url.toURI());
-			}
 		}
 
 		if (path != null) {
@@ -190,22 +198,22 @@ public class KeyBoardPanel extends Group implements EventHandler<KeyButtonEvent>
 		}
 
 	}
-
 	
-	public Map<Locale, Path> getAvailableLocales(){
+	public Map<Locale, Path> getAvailableLocales() {
+
 		Map<Locale, Path> localList = new HashMap<>();
-		URL url = KeyboardLayoutHandler.class.getResource(layerPath);
-		if (url == null){
+		if (layerPath == null) {
+			localList.put(new Locale("de"), null);
+			localList.put(new Locale("ru"), null);
 			return localList;
 		}
-		
 		try {
-			Path dir = Paths.get(url.toURI());
-			try (DirectoryStream<Path> stream = Files.newDirectoryStream(dir)) {
+			try (DirectoryStream<Path> stream = Files.newDirectoryStream(layerPath)) {
 				for (Path entry : stream) {
 					if (entry.toFile().isDirectory()) {
 						for (Locale l : Locale.getAvailableLocales()) {
-							if (entry.getFileName().toString().equals(l.getLanguage()+ (l.getCountry().isEmpty()? "" : "_" + l.getCountry()))) {
+							if (entry.getFileName().toString()
+									.equals(l.getLanguage() + (l.getCountry().isEmpty() ? "" : "_" + l.getCountry()))) {
 								localList.put(l, entry);
 								break;
 							}
@@ -216,14 +224,11 @@ public class KeyBoardPanel extends Group implements EventHandler<KeyButtonEvent>
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 		}
-		
-		
-		logger.debug("available locals: {}", localList.keySet());
+
+		logger.debug("available locales: {}", localList.keySet());
 		return localList;
-
-
 	}
-	
+
 	public void setKeyboardLayer(KeyboardLayer layer) {
 		final Region pane;
 		switch (layer) {
@@ -519,50 +524,26 @@ public class KeyBoardPanel extends Group implements EventHandler<KeyButtonEvent>
 			}
 		}
 
-		if (robotHandler == null) {
+		if (robotHandler.isEmpty()) {
 			logger.error("no robot handler available");
 			return;
 		}
-		robotHandler.sendToComponent(this, ch, ctrlProperty.get());
+		for (IRobot robot : robotHandler){
+			robot.sendToComponent(this, ch, ctrlProperty.get());
+		}
 
 	}
 
-	public void setRobotHandler(IRobot robot) {
-		robotHandler = robot;
+	public void addRobotHandler(IRobot robot) {
+		robotHandler.add(robot);
 	}
 
+	public void removeRobotHandler(IRobot robot) {
+		robotHandler.remove(robot);
+	}
+	
 	public void setOnKeyboardCloseButton(EventHandler<? super Event> value) {
 		closeEventHandler = value;
-	}
-
-	public String getDefaultIconStyle(int ch) {
-		switch (ch) {
-		case java.awt.event.KeyEvent.VK_ENTER:
-			return "enter-icon";
-		case java.awt.event.KeyEvent.VK_BACK_SPACE:
-		case BACK_SPACE:
-			return "back-space-icon";
-		case java.awt.event.KeyEvent.VK_DELETE:
-			return "delete-icon";
-		case java.awt.event.KeyEvent.VK_ESCAPE:
-			return "escape-icon";
-		case java.awt.event.KeyEvent.VK_SPACE:
-			return "space-icon";
-		case java.awt.event.KeyEvent.VK_TAB:
-			return "tab-icon";
-		case CLOSE:
-			return "close-icon";
-		case SHIFT_DOWN:
-			return "shift-icon";
-		case SYMBOL_DOWN:
-			return "symbol-icon";
-		case CTRL_DOWN:
-			return "ctrl-icon";
-		case LOCALE_SWITCH:
-			return "language-icon";
-		default:
-			return null;
-		}
 	}
 
 	/**
