@@ -9,9 +9,9 @@ import javax.swing.SwingUtilities;
 
 import org.slf4j.LoggerFactory;
 
-public class SwingRobotHandler implements IRobot {
+public class AWTRobotHandler implements IRobot {
 
-	private final static org.slf4j.Logger logger = LoggerFactory.getLogger(SwingRobotHandler.class);
+	private final static org.slf4j.Logger logger = LoggerFactory.getLogger(AWTRobotHandler.class);
 
 	@Override
 	public void sendToComponent(Object source, final char ch, final boolean ctrl) {

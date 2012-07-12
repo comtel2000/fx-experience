@@ -28,7 +28,7 @@ import javax.swing.SwingUtilities;
 import org.comtel.javafx.control.KeyBoard;
 import org.comtel.javafx.control.KeyBoardPopup;
 import org.comtel.javafx.control.KeyBoardPopupBuilder;
-import org.comtel.javafx.robot.SwingRobotHandler;
+import org.comtel.javafx.robot.AWTRobotHandler;
 
 public class SwingMainDemo extends JApplet {
 
@@ -116,7 +116,7 @@ public class SwingMainDemo extends JApplet {
 		javafxPanel.setScene(scene);
 		scene.getStylesheets().add(css);
 		KeyBoard fxKeyboard = new KeyBoard(null);
-		fxKeyboard.addRobotHandler(new SwingRobotHandler());
+		fxKeyboard.addRobotHandler(new AWTRobotHandler());
 		fxKeyboard.setOnKeyboardCloseButton(new EventHandler<Event>() {
 
 			public void handle(Event event) {

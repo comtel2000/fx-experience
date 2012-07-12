@@ -159,7 +159,7 @@ public class KeyBoard extends Group implements EventHandler<KeyButtonEvent> {
 		KeyboardLayoutHandler handler = new KeyboardLayoutHandler();
 
 		if (layerPath == null) {
-			String xmlPath = "/xml/default/" + (local.getLanguage().equals("en") ? "" : local.getLanguage());
+			String xmlPath = "/xml/default" + (local.getLanguage().equals("en") ? "" : "/" + local.getLanguage());
 			logger.warn("use default embedded layouts path: {}", xmlPath);
 			
 			qwertyKeyboardPane = createKeyboardPane(handler.getLayout(xmlPath + "/kb-layout.xml"));
@@ -177,6 +177,8 @@ public class KeyBoard extends Group implements EventHandler<KeyButtonEvent> {
 		} else if (localMap.containsKey(new Locale(local.getLanguage()))) {
 			logger.debug("use language compatible locale: {}", local.getLanguage());
 			path = localMap.get(new Locale(local.getLanguage()));
+		} else {
+			logger.warn("locale: {} not available. try to use default", local);
 		}
 
 		if (path != null) {

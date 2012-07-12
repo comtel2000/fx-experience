@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Keyboard keyWidth="10" horizontalGap="0" verticalGap="0">
+
+	<Row>
+		<Key codes="49" keyLabel="1" keyEdgeFlags="left" />
+		<Key codes="50" keyLabel="2" />
+		<Key codes="51" keyLabel="3" />
+		<Key codes="52" keyLabel="4" />
+		<Key codes="53" keyLabel="5" />
+		<Key codes="54" keyLabel="6" />
+		<Key codes="55" keyLabel="7" />
+		<Key codes="56" keyLabel="8" />
+		<Key codes="57" keyLabel="9" />
+		<Key codes="48" keyLabel="0" keyEdgeFlags="right" />
+	</Row>
+
+	<Row>
+		<Key codes="64" keyLabel="@" keyEdgeFlags="left" />
+		<Key codes="35" keyLabel="#" />
+		<Key codes="36" keyLabel="$" />
+		<Key codes="37" keyLabel="%" />
+		<Key codes="38" keyLabel="&amp;" />
+		<Key codes="42" keyLabel="*" />
+		<Key codes="45" keyLabel="-" />
+		<Key codes="61" keyLabel="=" />
+		<Key codes="40" keyLabel="(" />
+		<Key codes="41" keyLabel=")" keyEdgeFlags="right" />
+	</Row>
+
+	<Row>
+		<Key codes="-1" keyIconStyle="@drawable/sym_keyboard_shift_off"
+			keyWidth="15" isModifier="true" isSticky="true" keyEdgeFlags="left" />
+		<Key codes="33" keyLabel="!" />
+		<Key codes="34" keyLabel="&quot;" />
+		<Key codes="39" keyLabel="'" />
+		<Key codes="58" keyLabel=":" />
+		<Key codes="59" keyLabel=";" />
+		<Key codes="47" keyLabel="/" />
+		<Key codes="63" keyLabel="?" />
+		<Key codes="-5" keyIconStyle="@drawable/sym_keyboard_delete" keyWidth="15"
+			keyEdgeFlags="right" isRepeatable="true" />
+	</Row>
+
+	<Row rowEdgeFlags="bottom">
+		<Key codes="-3" keyIconStyle="@drawable/sym_keyboard_done" keyWidth="20"
+			keyEdgeFlags="left" />
+		<Key codes="-2" keyLabel="ABC" keyWidth="15" />
+		<Key codes="32" keyIconStyle="@drawable/sym_keyboard_space" keyWidth="30"
+			isRepeatable="true" />
+		<Key codes="44" keyLabel="," keyWidth="15" />
+		<Key codes="10" keyIconStyle="@drawable/sym_keyboard_return" keyWidth="20"
+			keyEdgeFlags="right" />
+	</Row>
+</Keyboard>
