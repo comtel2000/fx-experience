@@ -4,17 +4,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -35,7 +32,6 @@ import net.miginfocom.layout.LC;
 import net.miginfocom.layout.UnitValue;
 
 import org.comtel.javafx.event.KeyButtonEvent;
-import org.comtel.javafx.robot.FXRobotHandler;
 import org.comtel.javafx.robot.IRobot;
 import org.comtel.javafx.xml.KeyboardLayoutHandler;
 import org.comtel.javafx.xml.layout.Keyboard;
@@ -238,6 +234,9 @@ public class KeyBoard extends Group implements EventHandler<KeyButtonEvent> {
 		case CTRL:
 			pane = qwertyCtrlKeyboardPane;
 			break;
+		case NUMBER:
+			pane = qwertyCtrlKeyboardPane;
+			break;
 		default:
 			pane = qwertyKeyboardPane;
 			break;
@@ -335,7 +334,7 @@ public class KeyBoard extends Group implements EventHandler<KeyButtonEvent> {
 				button.setPrefHeight(defaultKeyHeight);
 				if (key.getCodes() != null) {
 					String[] codes = key.getCodes().split(",");
-					if (codes.length > 0) {
+					if (codes.length > 0 && !codes[0].isEmpty()) {
 						int keyCode = Integer.valueOf(codes[0]);
 						button.setKeyCode(keyCode);
 					}

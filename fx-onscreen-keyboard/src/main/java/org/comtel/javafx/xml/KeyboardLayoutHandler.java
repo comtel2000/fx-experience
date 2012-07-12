@@ -8,9 +8,12 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
 import org.comtel.javafx.xml.layout.Keyboard;
+import org.slf4j.LoggerFactory;
 
 public class KeyboardLayoutHandler {
 
+	private final static org.slf4j.Logger logger = LoggerFactory.getLogger(KeyboardLayoutHandler.class);
+	
 	private JAXBContext context;
 	private Unmarshaller unmarshaller;
 
@@ -19,7 +22,7 @@ public class KeyboardLayoutHandler {
 			context = JAXBContext.newInstance(new Class[] { Keyboard.class });
 			unmarshaller = context.createUnmarshaller();
 		} catch (JAXBException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		}
 	}
 

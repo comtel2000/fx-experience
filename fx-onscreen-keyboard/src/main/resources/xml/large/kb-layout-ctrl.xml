@@ -20,25 +20,25 @@
 		<Key codes="43" keyIconStyle=".zoom-in-icon" keyWidth="14"
 			keyEdgeFlags="left" />
 		<Key codes="97" keyLabel="SELECT ALL" keyLabelStyle=".small-style" keyWidth="16"/>
-		<Key codes="100" keyLabel="" />
-		<Key codes="102" keyLabel="" />
-		<Key codes="103" keyLabel="" />
-		<Key codes="104" keyLabel="" />
-		<Key codes="106" keyLabel="" />
-		<Key codes="107" keyLabel="" />
-		<Key codes="10" keyIconStyle=".enter-icon" keyWidth="14"
+		<Key codes="" keyLabel="" />
+		<Key codes="" keyLabel="" />
+		<Key codes="" keyLabel="" />
+		<Key codes="" keyLabel="" />
+		<Key codes="" keyLabel="" />
+		<Key codes="" keyLabel="" />
+		<Key codes="" keyIconStyle=".enter-icon" keyWidth="14"
 			keyEdgeFlags="right" />
 	</Row>
 
 	<Row>
 		<Key codes="45" keyIconStyle=".zoom-out-icon" keyWidth="14"
 			isModifier="true" isSticky="true" keyEdgeFlags="left" />
-		<Key codes="122" keyLabel="" />
+		<Key codes="" keyLabel="" />
 		<Key codes="120" keyLabel="CUT" keyLabelStyle=".small-style" keyWidth="14"/>
 		<Key codes="99" keyLabel="COPY" keyLabelStyle=".small-style" keyWidth="14"/>
 		<Key codes="118" keyLabel="PASTE" keyLabelStyle=".small-style" keyWidth="14"/>
-		<Key codes="98" keyLabel="" />
-		<Key codes="110" keyLabel="" />
+		<Key codes="" keyLabel="" />
+		<Key codes="" keyLabel="" />
 		<Key codes="-1" keyIconStyle=".shift-off-icon" keyWidth="14"
 			keyEdgeFlags="right" />
 	</Row>
