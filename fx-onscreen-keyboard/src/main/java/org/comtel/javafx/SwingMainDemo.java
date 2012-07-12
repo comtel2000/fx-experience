@@ -1,4 +1,4 @@
-package org.comtel.javafx.examples;
+package org.comtel.javafx;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -15,7 +15,6 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.stage.Popup;
 import javafx.util.Duration;
 
 import javax.swing.JApplet;
@@ -26,16 +25,16 @@ import javax.swing.JTextField;
 import javax.swing.JWindow;
 import javax.swing.SwingUtilities;
 
-import org.comtel.javafx.KeyBoardPanel;
+import org.comtel.javafx.control.KeyBoard;
+import org.comtel.javafx.control.KeyBoardPopup;
+import org.comtel.javafx.control.KeyBoardPopupBuilder;
 import org.comtel.javafx.robot.SwingRobotHandler;
 
 public class SwingMainDemo extends JApplet {
 
 	private static final long serialVersionUID = 1L;
 
-	private Popup fxKeyboardPopup;
-	private KeyBoardPanel fxKeyboard;
-
+	private KeyBoardPopup fxKeyboardPopup;
 	private Transition transition;
 
 	public SwingMainDemo() {
@@ -116,19 +115,16 @@ public class SwingMainDemo extends JApplet {
 		Scene scene = new Scene(new Group(), 0, 0);
 		javafxPanel.setScene(scene);
 		scene.getStylesheets().add(css);
-		fxKeyboardPopup = new Popup();
-		// fxKeyboardPopup.setAutoFix(true);
-		fxKeyboardPopup.getContent().add(fxKeyboard = new KeyBoardPanel(null, new SwingRobotHandler()));
-
-		fxKeyboard.setScaleX(0.0d);
-		fxKeyboard.setScaleY(0.0d);
-		// fxKeyboard.setOpacity(0.9d);
+		KeyBoard fxKeyboard = new KeyBoard(null);
+		fxKeyboard.addRobotHandler(new SwingRobotHandler());
 		fxKeyboard.setOnKeyboardCloseButton(new EventHandler<Event>() {
 
 			public void handle(Event event) {
 				setKeyboardVisible(false, null);
 			}
 		});
+		
+		fxKeyboardPopup = new KeyBoardPopupBuilder().keyBoardPanel(fxKeyboard).build();
 		fxKeyboardPopup.show(scene.getWindow());
 	}
 
@@ -137,7 +133,7 @@ public class SwingMainDemo extends JApplet {
 		final Point location = point;
 		Platform.runLater(new Runnable() {
 			public void run() {
-				if (fxKeyboardPopup == null || fxKeyboard == null) {
+				if (fxKeyboardPopup == null) {
 					return;
 				}
 				if (location != null) {
@@ -148,7 +144,7 @@ public class SwingMainDemo extends JApplet {
 				if (transition == null) {
 					// transition = new FadeTransition(Duration.millis(200),
 					// fxKeyboard);
-					transition = new ScaleTransition(Duration.millis(200), fxKeyboard);
+					transition = new ScaleTransition(Duration.millis(200), fxKeyboardPopup.getKeyBoard());
 					transition.setCycleCount(1);
 					transition.setAutoReverse(false);
 				}
@@ -159,8 +155,8 @@ public class SwingMainDemo extends JApplet {
 
 					((ScaleTransition) transition).setFromX(0.0d);
 					((ScaleTransition) transition).setFromY(0.0d);
-					((ScaleTransition) transition).setToX(fxKeyboard.getScale());
-					((ScaleTransition) transition).setToY(fxKeyboard.getScale());
+					((ScaleTransition) transition).setToX(fxKeyboardPopup.getKeyBoard().getScale());
+					((ScaleTransition) transition).setToY(fxKeyboardPopup.getKeyBoard().getScale());
 
 					// ((FadeTransition) transition).setFromValue(0.0f);
 					// ((FadeTransition) transition).setToValue(1.0f);
@@ -169,8 +165,8 @@ public class SwingMainDemo extends JApplet {
 				} else {
 					System.err.println("fade out");
 					transition.stop();
-					((ScaleTransition) transition).setFromX(fxKeyboard.getScale());
-					((ScaleTransition) transition).setFromY(fxKeyboard.getScale());
+					((ScaleTransition) transition).setFromX(fxKeyboardPopup.getKeyBoard().getScale());
+					((ScaleTransition) transition).setFromY(fxKeyboardPopup.getKeyBoard().getScale());
 					((ScaleTransition) transition).setToX(0.0d);
 					((ScaleTransition) transition).setToY(0.0d);
 

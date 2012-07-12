@@ -1,4 +1,4 @@
-package org.comtel.javafx;
+package org.comtel.javafx.control;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -34,9 +34,6 @@ import net.miginfocom.layout.CC;
 import net.miginfocom.layout.LC;
 import net.miginfocom.layout.UnitValue;
 
-import org.comtel.javafx.control.KeyButton;
-import org.comtel.javafx.control.KeyboardLayer;
-import org.comtel.javafx.control.MultiKeyButton;
 import org.comtel.javafx.event.KeyButtonEvent;
 import org.comtel.javafx.robot.FXRobotHandler;
 import org.comtel.javafx.robot.IRobot;
@@ -45,9 +42,9 @@ import org.comtel.javafx.xml.layout.Keyboard;
 import org.slf4j.LoggerFactory;
 import org.tbee.javafx.scene.layout.MigPane;
 
-public class KeyBoardPanel extends Group implements EventHandler<KeyButtonEvent> {
+public class KeyBoard extends Group implements EventHandler<KeyButtonEvent> {
 
-	private final static org.slf4j.Logger logger = LoggerFactory.getLogger(KeyBoardPanel.class);
+	private final static org.slf4j.Logger logger = LoggerFactory.getLogger(KeyBoard.class);
 
 	private static final int SHIFT_DOWN = -1;
 	private static final int SYMBOL_DOWN = -2;
@@ -81,19 +78,19 @@ public class KeyBoardPanel extends Group implements EventHandler<KeyButtonEvent>
 	/**
 	 * @param layerpath
 	 */
-	public KeyBoardPanel(Path layerpath) {
-		this(layerpath, new FXRobotHandler());
+	public KeyBoard(Path layerpath) {
+		this(layerpath, null, Locale.getDefault());
 	}
 
-	public KeyBoardPanel(Path layerpath, IRobot robot) {
+	public KeyBoard(Path layerpath, IRobot robot) {
 		this(layerpath, robot, Locale.getDefault());
 	}
 	
-	public KeyBoardPanel(Path layerpath, Locale local) {
+	public KeyBoard(Path layerpath, Locale local) {
 		this(layerpath, null, local);
 	}
 	
-	public KeyBoardPanel(Path layerpath, IRobot robot, Locale local) {
+	public KeyBoard(Path layerpath, IRobot robot, Locale local) {
 		layerPath = layerpath;
 		if (robot != null){
 			robotHandler.add(robot);
@@ -370,7 +367,7 @@ public class KeyBoardPanel extends Group implements EventHandler<KeyButtonEvent>
 
 				} else if (key.getKeyIconStyle() != null && key.getKeyIconStyle().startsWith("@")) {
 
-					InputStream is = KeyBoardPanel.class.getResourceAsStream(key.getKeyIconStyle().replace("@", "/")
+					InputStream is = KeyBoard.class.getResourceAsStream(key.getKeyIconStyle().replace("@", "/")
 							+ ".png");
 					Image image = new Image(is);
 					if (!image.isError()) {
