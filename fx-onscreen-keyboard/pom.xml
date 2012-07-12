@@ -106,7 +106,7 @@
 					</descriptorRefs>
 					<archive>
 						<manifest>
-							<mainClass>org.comtel.javafx.examples.SwingMainDemo</mainClass>
+							<mainClass>org.comtel.javafx.MainDemo</mainClass>
 							<addDefaultImplementationEntries>
 								true
 							</addDefaultImplementationEntries>
