@@ -159,8 +159,9 @@ public class KeyBoard extends Group implements EventHandler<KeyButtonEvent> {
 		KeyboardLayoutHandler handler = new KeyboardLayoutHandler();
 
 		if (layerPath == null) {
-			logger.warn("use default embedded layouts");
-			String xmlPath = "/xml/large/" + (local.getLanguage().equals("en") ? "" : local.getLanguage());
+			String xmlPath = "/xml/default/" + (local.getLanguage().equals("en") ? "" : local.getLanguage());
+			logger.warn("use default embedded layouts path: {}", xmlPath);
+			
 			qwertyKeyboardPane = createKeyboardPane(handler.getLayout(xmlPath + "/kb-layout.xml"));
 			qwertyShiftedKeyboardPane = createKeyboardPane(handler.getLayout(xmlPath + "/kb-layout-shift.xml"));
 			qwertyCtrlKeyboardPane = createKeyboardPane(handler.getLayout(xmlPath + "/kb-layout-ctrl.xml"));
