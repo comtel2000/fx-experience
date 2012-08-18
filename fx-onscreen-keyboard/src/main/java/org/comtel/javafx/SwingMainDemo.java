@@ -6,6 +6,7 @@ import java.awt.FlowLayout;
 import java.awt.Point;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.util.Locale;
 
 import javafx.animation.ScaleTransition;
 import javafx.animation.Transition;
@@ -25,10 +26,9 @@ import javax.swing.JTextField;
 import javax.swing.JWindow;
 import javax.swing.SwingUtilities;
 
-import org.comtel.javafx.control.KeyBoard;
 import org.comtel.javafx.control.KeyBoardPopup;
 import org.comtel.javafx.control.KeyBoardPopupBuilder;
-import org.comtel.javafx.robot.AWTRobotHandler;
+import org.comtel.javafx.robot.RobotFactory;
 
 public class SwingMainDemo extends JApplet {
 
@@ -115,16 +115,13 @@ public class SwingMainDemo extends JApplet {
 		Scene scene = new Scene(new Group(), 0, 0);
 		javafxPanel.setScene(scene);
 		scene.getStylesheets().add(css);
-		KeyBoard fxKeyboard = new KeyBoard(null);
-		fxKeyboard.addRobotHandler(new AWTRobotHandler());
-		fxKeyboard.setOnKeyboardCloseButton(new EventHandler<Event>() {
-
+		fxKeyboardPopup = KeyBoardPopupBuilder.create().initLocale(Locale.ENGLISH)
+				.addIRobot(RobotFactory.createAWTRobot()).build();
+		fxKeyboardPopup.getKeyBoard().setOnKeyboardCloseButton(new EventHandler<Event>() {
 			public void handle(Event event) {
 				setKeyboardVisible(false, null);
 			}
 		});
-		
-		fxKeyboardPopup = new KeyBoardPopupBuilder().keyBoardPanel(fxKeyboard).build();
 		fxKeyboardPopup.show(scene.getWindow());
 	}
 

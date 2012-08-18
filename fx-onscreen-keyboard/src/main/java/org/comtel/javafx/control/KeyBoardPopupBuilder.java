@@ -1,30 +1,42 @@
 package org.comtel.javafx.control;
 
 import java.nio.file.Path;
+import java.util.Locale;
+
+import org.comtel.javafx.robot.IRobot;
 
 import javafx.util.Builder;
 
 public class KeyBoardPopupBuilder implements Builder<KeyBoardPopup> {
 
-	private KeyBoard panel;
-	private Path path;
-	
-	public KeyBoardPopupBuilder layerPath(Path path){
-		this.path = path;
+	private final KeyBoardBuilder kb;
+
+	protected KeyBoardPopupBuilder() {
+		kb = KeyBoardBuilder.create();
+	}
+
+	public static KeyBoardPopupBuilder create() {
+		return new KeyBoardPopupBuilder();
+	}
+
+	public KeyBoardPopupBuilder layerPath(Path path) {
+		kb.layerPath(path);
 		return this;
 	}
-	
-	public KeyBoardPopupBuilder keyBoardPanel(KeyBoard panel){
-		this.panel = panel;
+
+	public KeyBoardPopupBuilder initLocale(Locale locale) {
+		kb.initLocale(locale);
+		return this;
+	}
+
+	public KeyBoardPopupBuilder addIRobot(IRobot robot) {
+		kb.addIRobot(robot);
 		return this;
 	}
 
 	@Override
 	public KeyBoardPopup build() {
-		if (panel == null){
-			panel = new KeyBoard(path);
-		}
-		KeyBoardPopup popup = new KeyBoardPopup(panel);
+		KeyBoardPopup popup = new KeyBoardPopup(kb.build());
 		return popup;
 	}
 

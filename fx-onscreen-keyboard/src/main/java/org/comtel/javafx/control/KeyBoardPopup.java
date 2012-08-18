@@ -20,6 +20,6 @@ public class KeyBoardPopup extends Popup {
 
 	public KeyBoardPopup(KeyBoard panel) {
 		keyboard = panel;
-		super.getContent().add(panel);
+		getContent().add(panel);
 	}
 }

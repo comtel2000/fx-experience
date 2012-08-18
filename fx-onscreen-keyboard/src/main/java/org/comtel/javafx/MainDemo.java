@@ -1,5 +1,7 @@
 package org.comtel.javafx;
 
+import java.util.Locale;
+
 import javafx.animation.Animation.Status;
 import javafx.animation.ScaleTransition;
 import javafx.animation.Transition;
@@ -20,10 +22,9 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 
-import org.comtel.javafx.control.KeyBoard;
 import org.comtel.javafx.control.KeyBoardPopup;
 import org.comtel.javafx.control.KeyBoardPopupBuilder;
-import org.comtel.javafx.robot.FXRobotHandler;
+import org.comtel.javafx.robot.RobotFactory;
 
 public class MainDemo extends Application {
 
@@ -34,18 +35,15 @@ public class MainDemo extends Application {
 
 		stage.setTitle("FX Keyboard (" + System.getProperty("javafx.runtime.version") + ")");
 		stage.setResizable(true);
-		KeyBoard fxKeyboard = new KeyBoard(null);
-		fxKeyboard.addRobotHandler(new FXRobotHandler());
-		fxKeyboard.setOnKeyboardCloseButton(new EventHandler<Event>() {
 
+		fxKeyboardPopup = KeyBoardPopupBuilder.create().initLocale(Locale.ENGLISH)
+				.addIRobot(RobotFactory.createFXRobot()).build();
+		fxKeyboardPopup.getKeyBoard().setOnKeyboardCloseButton(new EventHandler<Event>() {
 			public void handle(Event event) {
 				setKeyboardVisible(false, null);
 			}
 		});
-
 		
-		fxKeyboardPopup = new KeyBoardPopupBuilder().keyBoardPanel(fxKeyboard).build();
-
 		FlowPane pane = new FlowPane();
 		pane.setVgap(20);
 		pane.setHgap(20);

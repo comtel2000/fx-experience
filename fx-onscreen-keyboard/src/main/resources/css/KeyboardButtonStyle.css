@@ -1,10 +1,11 @@
 
-#key-background { /** -fx-background-color: rgb(220, 220, 220);
+#key-background {  
+	-fx-background-color: rgb(220, 220, 220);
 	-fx-background-radius: 10; 
 	-fx-focus-traversable: false;
 	-fx-border-color: rgb(10, 10, 10);
 	-fx-border-width: 0.5;
-	-fx-border-radius: 10;*/
+	-fx-border-radius: 10;
 	-fx-padding: 10;
 	-fx-vgap: 10;
 	-fx-hgap: 10;
@@ -40,8 +41,9 @@
 
 #key-button.button:pressed {
 	-fx-color: rgb(200, 206, 220);
-	-fx-scale-x: 0.95;
-	-fx-scale-y: 0.95;
+	-fx-scale-x: 1.02;
+	-fx-scale-y: 1.10;
+	-fx-text-fill: black;
 }
 
 #key-button.button .extend-style {
