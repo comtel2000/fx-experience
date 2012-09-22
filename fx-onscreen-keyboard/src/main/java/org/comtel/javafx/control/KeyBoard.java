@@ -49,7 +49,8 @@ public class KeyBoard extends Group implements EventHandler<KeyButtonEvent> {
 	private static final int BACK_SPACE = -5;
 	private static final int CTRL_DOWN = -6;
 	private static final int LOCALE_SWITCH = -7;
-
+	private static final int DELETE = -8;
+	
 	private Path layerPath;
 	private Region qwertyKeyboardPane;
 	private Region qwertyShiftedKeyboardPane;
@@ -75,21 +76,19 @@ public class KeyBoard extends Group implements EventHandler<KeyButtonEvent> {
 	 * @param layerpath
 	 */
 	public KeyBoard(Path layerpath) {
-		this(layerpath, null, Locale.getDefault());
+		this(layerpath, 1.0, Locale.getDefault());
 	}
 
-	public KeyBoard(Path layerpath, IRobot robot) {
-		this(layerpath, robot, Locale.getDefault());
-	}
-	
 	public KeyBoard(Path layerpath, Locale local) {
-		this(layerpath, null, local);
+		this(layerpath, 1.0, local);
 	}
 	
-	public KeyBoard(Path layerpath, IRobot robot, Locale local) {
+	public KeyBoard(Path layerpath, double scale, Locale local) {
 		layerPath = layerpath;
-		if (robot != null){
-			robotHandler.add(robot);
+		if (scale != 1.0) {
+			scaleProperty.set(scale);
+			setScaleX(scale);
+			setScaleY(scale);
 		}
 		layoutLocale = local;
 
@@ -279,22 +278,22 @@ public class KeyBoard extends Group implements EventHandler<KeyButtonEvent> {
 
 		MigPane pane = new MigPane();
 
-		setOnMousePressed(new EventHandler<MouseEvent>() {
-
-			public void handle(MouseEvent event) {
-				mousePressedX = event.getX();
-				mousePressedY = event.getY();
-			}
-		});
-
-		setOnMouseDragged(new EventHandler<MouseEvent>() {
-
-			public void handle(MouseEvent event) {
-				getScene().getWindow().setX(event.getScreenX() - mousePressedX);
-				getScene().getWindow().setY(event.getScreenY() - mousePressedY);
-
-			}
-		});
+//		setOnMousePressed(new EventHandler<MouseEvent>() {
+//
+//			public void handle(MouseEvent event) {
+//				mousePressedX = event.getX();
+//				mousePressedY = event.getY();
+//			}
+//		});
+//
+//		setOnMouseDragged(new EventHandler<MouseEvent>() {
+//
+//			public void handle(MouseEvent event) {
+//				getScene().getWindow().setX(event.getScreenX() - mousePressedX);
+//				getScene().getWindow().setY(event.getScreenY() - mousePressedY);
+//
+//			}
+//		});
 
 		pane.setPrefSize(650, 200);
 		pane.setId("key-background");
@@ -426,6 +425,17 @@ public class KeyBoard extends Group implements EventHandler<KeyButtonEvent> {
 						}
 					});
 				}
+				if (button.getKeyCode() == BACK_SPACE || button.getKeyCode() == DELETE) {
+					button.setOnLongPressed(new EventHandler<Event>() {
+
+						@Override
+						public void handle(Event e) {
+							e.consume();
+							sendToComponent((char) 97, true);
+							sendToComponent((char) java.awt.event.KeyEvent.VK_DELETE, ctrlProperty.get());
+						}
+					});
+				}
 				pane.add(button, lCC);
 
 			}
@@ -467,10 +477,13 @@ public class KeyBoard extends Group implements EventHandler<KeyButtonEvent> {
 				}
 				break;
 			case TAB:
-				sendToComponent((char) java.awt.event.KeyEvent.VK_TAB);
+				sendToComponent((char) java.awt.event.KeyEvent.VK_TAB, ctrlProperty.get());
 				break;
 			case BACK_SPACE:
-				sendToComponent((char) java.awt.event.KeyEvent.VK_BACK_SPACE);
+				sendToComponent((char) java.awt.event.KeyEvent.VK_BACK_SPACE, ctrlProperty.get());
+				break;
+			case DELETE:
+				sendToComponent((char) java.awt.event.KeyEvent.VK_DELETE, ctrlProperty.get());
 				break;
 			case CTRL_DOWN:
 				// switch ctrl
@@ -494,7 +507,7 @@ public class KeyBoard extends Group implements EventHandler<KeyButtonEvent> {
 			default:
 				// logger.debug(java.awt.event.KeyEvent.getKeyText(kb.getKeyCode()));
 				if (kb.getKeyCode() > -1) {
-					sendToComponent((char) kb.getKeyCode());
+					sendToComponent((char) kb.getKeyCode(), ctrlProperty.get());
 				} else {
 					logger.warn("key code: {} not supported", kb.getKeyCode());
 				}
@@ -503,16 +516,17 @@ public class KeyBoard extends Group implements EventHandler<KeyButtonEvent> {
 		}
 	}
 
+
 	/**
 	 * send keyEvent to iRobot implementation
-	 * 
 	 * @param ch
+	 * @param ctrl
 	 */
-	private void sendToComponent(final char ch) {
+	private void sendToComponent(char ch, boolean ctrl) {
 
 		logger.trace("send ({})", ch);
 
-		if (ctrlProperty.get()) {
+		if (ctrl) {
 			switch (Character.toUpperCase(ch)) {
 			case java.awt.event.KeyEvent.VK_MINUS:
 				scaleProperty.set(scaleProperty.get() - 0.1d);
@@ -528,7 +542,7 @@ public class KeyBoard extends Group implements EventHandler<KeyButtonEvent> {
 			return;
 		}
 		for (IRobot robot : robotHandler){
-			robot.sendToComponent(this, ch, ctrlProperty.get());
+			robot.sendToComponent(this, ch, ctrl);
 		}
 
 	}
@@ -554,4 +568,7 @@ public class KeyBoard extends Group implements EventHandler<KeyButtonEvent> {
 		return scaleProperty.get();
 	}
 
+	public void setScale(double scale) {
+		scaleProperty.set(scale);
+	}
 }

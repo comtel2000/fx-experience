@@ -71,7 +71,6 @@ public class FXRobotHandler implements IRobot{
 			robot.keyRelease(KeyCode.ENTER);
 			break;
 		case java.awt.event.KeyEvent.VK_BACK_SPACE:
-			System.err.println("back_space");
 			robot.keyPress(KeyCode.BACK_SPACE);
 			robot.keyType(KeyCode.BACK_SPACE, Character.toString(ch));
 			robot.keyRelease(KeyCode.BACK_SPACE);

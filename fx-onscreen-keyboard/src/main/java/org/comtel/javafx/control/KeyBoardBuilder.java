@@ -14,6 +14,7 @@ public class KeyBoardBuilder implements Builder<KeyBoard> {
 	private Path layerPath;
 	private Locale initLocale;
 	private List<IRobot> iRobots = new ArrayList<>();
+	private double initScale = 0.0;
 
 	protected KeyBoardBuilder() {
 	}
@@ -32,6 +33,11 @@ public class KeyBoardBuilder implements Builder<KeyBoard> {
 		return this;
 	}
 
+	public KeyBoardBuilder initScale(double scale) {
+		initScale  = scale;
+		return this;
+	}
+	
 	public KeyBoardBuilder addIRobot(IRobot robot) {
 		iRobots.add(robot);
 		return this;
@@ -39,6 +45,9 @@ public class KeyBoardBuilder implements Builder<KeyBoard> {
 
 	public KeyBoard build() {
 		KeyBoard keyBoard = new KeyBoard(layerPath, initLocale);
+		if (initScale > 0.0){
+			keyBoard.setScale(initScale);
+		}
 		for (IRobot robot : iRobots) {
 			keyBoard.addRobotHandler(robot);
 		}

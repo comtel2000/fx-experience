@@ -28,6 +28,11 @@ public class KeyBoardPopupBuilder implements Builder<KeyBoardPopup> {
 		kb.initLocale(locale);
 		return this;
 	}
+	
+	public KeyBoardPopupBuilder initScale(double scale) {
+		kb.initScale(scale);
+		return this;
+	}
 
 	public KeyBoardPopupBuilder addIRobot(IRobot robot) {
 		kb.addIRobot(robot);
