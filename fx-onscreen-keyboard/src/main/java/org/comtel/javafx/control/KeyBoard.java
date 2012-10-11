@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.sound.sampled.ReverbType;
+
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.value.ChangeListener;
@@ -64,6 +66,9 @@ public class KeyBoard extends Group implements EventHandler<KeyButtonEvent> {
 
 	private SimpleDoubleProperty scaleProperty = new SimpleDoubleProperty(1.0);
 
+	private SimpleDoubleProperty minScaleProperty = new SimpleDoubleProperty(0.5);
+	private SimpleDoubleProperty maxScaleProperty = new SimpleDoubleProperty(5.0);
+	
 	private EventHandler<? super Event> closeEventHandler;
 
 	private double mousePressedX;
@@ -135,18 +140,30 @@ public class KeyBoard extends Group implements EventHandler<KeyButtonEvent> {
 
 		shiftProperty.addListener(new ChangeListener<Boolean>() {
 			public void changed(ObservableValue<? extends Boolean> arg0, Boolean arg1, Boolean arg2) {
+				if (ctrlProperty.get()){
+					logger.warn("ignore in ctrl mode");
+					return;
+				}
 				setKeyboardLayer(symbolProperty.get() ? KeyboardLayer.SYMBOL : KeyboardLayer.QWERTY);
 			}
 		});
 
 		ctrlProperty.addListener(new ChangeListener<Boolean>() {
 			public void changed(ObservableValue<? extends Boolean> arg0, Boolean arg1, Boolean arg2) {
-				setKeyboardLayer(arg2 ? KeyboardLayer.CTRL : KeyboardLayer.QWERTY);
+				if (arg2){
+					setKeyboardLayer(KeyboardLayer.CTRL);
+				}else{
+					setKeyboardLayer(symbolProperty.get() ? KeyboardLayer.SYMBOL : KeyboardLayer.QWERTY);
+				}
 			}
 		});
 
 		symbolProperty.addListener(new ChangeListener<Boolean>() {
 			public void changed(ObservableValue<? extends Boolean> arg0, Boolean arg1, Boolean arg2) {
+				if (ctrlProperty.get()){
+					logger.warn("ignore in ctrl mode");
+					return;
+				}
 				setKeyboardLayer(arg2 ? KeyboardLayer.SYMBOL : KeyboardLayer.QWERTY);
 			}
 		});
@@ -529,10 +546,14 @@ public class KeyBoard extends Group implements EventHandler<KeyButtonEvent> {
 		if (ctrl) {
 			switch (Character.toUpperCase(ch)) {
 			case java.awt.event.KeyEvent.VK_MINUS:
-				scaleProperty.set(scaleProperty.get() - 0.1d);
+				if (scaleProperty.get() > minScaleProperty.get()){
+					scaleProperty.set(scaleProperty.get() - 0.1d);
+				}
 				return;
 			case 0x2B:
-				scaleProperty.set(scaleProperty.get() + 0.1d);
+				if (scaleProperty.get() < maxScaleProperty.get()){
+					scaleProperty.set(scaleProperty.get() + 0.1d);
+				}
 				return;
 			}
 		}
@@ -571,4 +592,22 @@ public class KeyBoard extends Group implements EventHandler<KeyButtonEvent> {
 	public void setScale(double scale) {
 		scaleProperty.set(scale);
 	}
+	
+	public double getMinimumScale() {
+		return minScaleProperty.get();
+	}
+	
+	public void setMinimumScale(double min){
+		minScaleProperty.set(min);
+	}
+	
+	public double getMaximumScale() {
+		return maxScaleProperty.get();
+	}
+
+	
+	public void setMaximumScale(double max){
+		maxScaleProperty.set(max);
+	}
+
 }

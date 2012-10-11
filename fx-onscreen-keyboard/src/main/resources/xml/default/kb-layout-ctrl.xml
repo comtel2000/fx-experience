@@ -45,10 +45,10 @@
 
 	<Row rowEdgeFlags="bottom">
 		<Key codes="-6" keyLabel="CTRL" keyWidth="12" keyEdgeFlags="left" />
-		<Key codes="-2" keyLabel="?123" keyWidth="15" />
+		<Key codes="" keyLabel="" keyWidth="15" />
 		<Key codes="32" keyIconStyle=".space-icon" keyWidth="50"
 			isRepeatable="true" />
-		<Key codes="-2" keyLabel="?123" keyWidth="15" />
+		<Key codes="" keyLabel="" keyWidth="15" />
 		<Key codes="-3" keyIconStyle=".done-icon" keyWidth="8"
 			keyEdgeFlags="right" />
 	</Row>

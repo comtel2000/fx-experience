@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.comtel.javafx</groupId>
 	<artifactId>fx-onscreen-keyboard</artifactId>
-	<version>0.9.8-SNAPSHOT</version>
+	<version>0.9.9-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>fx-onscreen-keyboard</name>
 	<properties>
@@ -50,7 +50,7 @@
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
-			<version>1.6.6</version>
+			<version>1.7.1</version>
 		</dependency>
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
@@ -72,7 +72,7 @@
 							<filtering>false</filtering>
 							<directory>${basedir}/src/main/resources</directory>
 							<excludes>
-								<exclude>**/*.cdr</exclude>
+								<exclude>**/*.svg</exclude>
 							</excludes>
 						</resource>
 					</resources>
