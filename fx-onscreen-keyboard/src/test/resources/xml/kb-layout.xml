@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Keyboard keyWidth="8" horizontalGap="0" verticalGap="0">
+<Keyboard keyWidth="8" horizontalGap="0" verticalGap="5">
 	<Row>
 		<Key codes="-4" keyIconStyle=".tab-icon" keyWidth="10"
 			keyEdgeFlags="left" />

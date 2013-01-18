@@ -95,6 +95,26 @@ public class FXRobotHandler implements IRobot{
 			robot.keyType(KeyCode.TAB, Character.toString(ch));
 			robot.keyRelease(KeyCode.TAB);
 			break;
+		case java.awt.event.KeyEvent.VK_UP:
+			robot.keyPress(KeyCode.UP);
+			robot.keyType(KeyCode.UP, "");
+			robot.keyRelease(KeyCode.UP);
+			break;
+		case java.awt.event.KeyEvent.VK_DOWN:
+			robot.keyPress(KeyCode.DOWN);
+			robot.keyType(KeyCode.DOWN, "");
+			robot.keyRelease(KeyCode.DOWN);
+			break;
+		case java.awt.event.KeyEvent.VK_LEFT:
+			robot.keyPress(KeyCode.LEFT);
+			robot.keyType(KeyCode.LEFT, "");
+			robot.keyRelease(KeyCode.LEFT);
+			break;
+		case java.awt.event.KeyEvent.VK_RIGHT:
+			robot.keyPress(KeyCode.RIGHT);
+			robot.keyType(KeyCode.RIGHT, "");
+			robot.keyRelease(KeyCode.RIGHT);
+			break;
 		default:
 			robot.keyPress(KeyCode.UNDEFINED);
 			robot.keyType(KeyCode.UNDEFINED, Character.toString(ch));

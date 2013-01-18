@@ -6,12 +6,16 @@ import java.awt.FlowLayout;
 import java.awt.Point;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.Locale;
 
-import javafx.animation.ScaleTransition;
+import javafx.animation.Animation;
+import javafx.animation.FadeTransition;
 import javafx.animation.Transition;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
+import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
@@ -22,13 +26,17 @@ import javax.swing.JApplet;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JWindow;
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 
 import org.comtel.javafx.control.KeyBoardPopup;
 import org.comtel.javafx.control.KeyBoardPopupBuilder;
 import org.comtel.javafx.robot.RobotFactory;
+import org.comtel.swing.ui.KeyboardTextAreaUI;
+import org.comtel.swing.ui.KeyboardTextFieldUI;
 
 public class SwingMainDemo extends JApplet {
 
@@ -41,46 +49,34 @@ public class SwingMainDemo extends JApplet {
 	}
 
 	public void init() {
-		// create swing table
+		
+		UIManager.put("TextFieldUI", KeyboardTextFieldUI.class.getName());
+		UIManager.put("TextAreaUI", KeyboardTextAreaUI.class.getName());
+		
+		//register global onscreen keyboard focus listener
+		FocusListener fl = createFocusListener();
+		//register global onscreen keyboard mouse(double)clicked listener
+		MouseListener ml = createMouseListener();
+		
+		KeyboardTextFieldUI.setFocusListener(fl);
+		KeyboardTextFieldUI.setMouseListener(ml);
 
+		KeyboardTextAreaUI.setFocusListener(fl);
+		KeyboardTextAreaUI.setMouseListener(ml);
+		
 		JPanel panel = new JPanel();
-		panel.setLayout(new FlowLayout());
+		panel.setPreferredSize(new Dimension(800, 400));
+		panel.setLayout(new FlowLayout(FlowLayout.LEFT, 20, 20));
 
-		JTextField tf = new JTextField(50);
-		tf.addFocusListener(new FocusListener() {
-
-			public void focusLost(FocusEvent e) {
-				setKeyboardVisible(false, null);
-
-			}
-
-			public void focusGained(FocusEvent e) {
-				setKeyboardVisible(true, e.getComponent().getLocationOnScreen());
-
-			}
-		});
-
-		JTextField tf2 = new JTextField(50);
-		tf2.addFocusListener(new FocusListener() {
-
-			public void focusLost(FocusEvent e) {
-				setKeyboardVisible(false, null);
-
-			}
-
-			public void focusGained(FocusEvent e) {
-				setKeyboardVisible(true, e.getComponent().getLocationOnScreen());
-
-			}
-		});
-
-		panel.add(tf);
-		panel.add(tf2);
+		panel.add(new JTextField(50));
+		panel.add(new JTextField(50));
+		panel.add(new JTextArea(2, 50));
+		
 		panel.add(new JButton("Ok"));
 		panel.add(new JButton("Cancel"));
-		panel.setPreferredSize(new Dimension(800, 400));
+
 		setLayout(new BorderLayout());
-		add(panel, BorderLayout.SOUTH);
+		add(panel, BorderLayout.CENTER);
 
 		// create javafx panel
 		final JFXPanel javafxPanel = new JFXPanel();
@@ -92,16 +88,16 @@ public class SwingMainDemo extends JApplet {
 		fxKeyboard.getContentPane().add(javafxPanel);
 		fxKeyboard.setFocusable(false);
 		fxKeyboard.setBackground(null);
+		
 		// fxKeyboard.pack();
 		// fxKeyboard.setLocationByPlatform(true);
-
 		// fxKeyboard.setVisible(false);
 
 		// create JavaFX scene
 		Platform.runLater(new Runnable() {
 			public void run() {
 				createScene(javafxPanel);
-				System.err.println("JavaFX: " + System.getProperty("javafx.runtime.version"));
+				System.out.println("JavaFX: " + System.getProperty("javafx.runtime.version"));
 			}
 		});
 
@@ -109,10 +105,12 @@ public class SwingMainDemo extends JApplet {
 
 	public void createScene(JFXPanel javafxPanel) {
 
+		//set default embedded css style
 		String css = this.getClass().getResource("/css/KeyboardButtonStyle.css").toExternalForm();
 
 		// create empty scene
 		Scene scene = new Scene(new Group(), 0, 0);
+
 		javafxPanel.setScene(scene);
 		scene.getStylesheets().add(css);
 		fxKeyboardPopup = KeyBoardPopupBuilder.create().initLocale(Locale.ENGLISH)
@@ -122,7 +120,8 @@ public class SwingMainDemo extends JApplet {
 				setKeyboardVisible(false, null);
 			}
 		});
-		fxKeyboardPopup.show(scene.getWindow());
+		fxKeyboardPopup.setOwner(scene);
+
 	}
 
 	public void setKeyboardVisible(boolean flag, Point point) {
@@ -139,36 +138,57 @@ public class SwingMainDemo extends JApplet {
 				}
 
 				if (transition == null) {
-					// transition = new FadeTransition(Duration.millis(200),
-					// fxKeyboard);
-					transition = new ScaleTransition(Duration.millis(200), fxKeyboardPopup.getKeyBoard());
-					transition.setCycleCount(1);
-					transition.setAutoReverse(false);
+					transition = new FadeTransition(Duration.seconds(0.1), fxKeyboardPopup.getKeyBoard());
+					// transition = new ScaleTransition(Duration.seconds(0.1),
+					// fxKeyboardPopup.getKeyBoard());
+					// transition.setCycleCount(1);
+					// transition.setAutoReverse(false);
 				}
 				if (visible) {
-					// fxKeyboardPopup.show(fxKeyboardPopup.getOwnerWindow());
+					if (fxKeyboardPopup.isVisible() && transition.getStatus() == Animation.Status.STOPPED) {
+						return;
+					}
 					System.err.println("fade in");
 					transition.stop();
+					transition.setOnFinished(new EventHandler<ActionEvent>() {
+						@Override
+						public void handle(ActionEvent arg0) {
+						}
+					});
+					// ((ScaleTransition) transition).setFromX(0.0d);
+					// ((ScaleTransition) transition).setFromY(0.0d);
+					// ((ScaleTransition)
+					// transition).setToX(fxKeyboardPopup.getKeyBoard().getScale());
+					// ((ScaleTransition)
+					// transition).setToY(fxKeyboardPopup.getKeyBoard().getScale());
 
-					((ScaleTransition) transition).setFromX(0.0d);
-					((ScaleTransition) transition).setFromY(0.0d);
-					((ScaleTransition) transition).setToX(fxKeyboardPopup.getKeyBoard().getScale());
-					((ScaleTransition) transition).setToY(fxKeyboardPopup.getKeyBoard().getScale());
-
-					// ((FadeTransition) transition).setFromValue(0.0f);
-					// ((FadeTransition) transition).setToValue(1.0f);
+					fxKeyboardPopup.getKeyBoard().setOpacity(0.0);
+					fxKeyboardPopup.setVisible(true);
+					((FadeTransition) transition).setFromValue(0.0f);
+					((FadeTransition) transition).setToValue(1.0f);
 					transition.play();
 
 				} else {
+					if (!fxKeyboardPopup.isVisible() && transition.getStatus() == Animation.Status.STOPPED) {
+						return;
+					}
 					System.err.println("fade out");
 					transition.stop();
-					((ScaleTransition) transition).setFromX(fxKeyboardPopup.getKeyBoard().getScale());
-					((ScaleTransition) transition).setFromY(fxKeyboardPopup.getKeyBoard().getScale());
-					((ScaleTransition) transition).setToX(0.0d);
-					((ScaleTransition) transition).setToY(0.0d);
+					transition.setOnFinished(new EventHandler<ActionEvent>() {
+						@Override
+						public void handle(ActionEvent arg0) {
+							fxKeyboardPopup.setVisible(false);
+						}
+					});
+					// ((ScaleTransition)
+					// transition).setFromX(fxKeyboardPopup.getKeyBoard().getScale());
+					// ((ScaleTransition)
+					// transition).setFromY(fxKeyboardPopup.getKeyBoard().getScale());
+					// ((ScaleTransition) transition).setToX(0.0d);
+					// ((ScaleTransition) transition).setToY(0.0d);
 
-					// ((FadeTransition) transition).setFromValue(1.0f);
-					// ((FadeTransition) transition).setToValue(0.0f);
+					((FadeTransition) transition).setFromValue(1.0f);
+					((FadeTransition) transition).setToValue(0.0f);
 					transition.play();
 
 					// fxKeyboardPopup.hide();
@@ -199,4 +219,31 @@ public class SwingMainDemo extends JApplet {
 		});
 	}
 
+	private FocusListener createFocusListener() {
+		FocusListener l = new FocusListener() {
+			public void focusLost(FocusEvent e) {
+				setKeyboardVisible(false, null);
+			}
+			public void focusGained(FocusEvent e) {
+				setKeyboardVisible(true, e.getComponent().getLocationOnScreen());
+			}
+		};
+		return l;
+	}
+
+	private MouseListener createMouseListener() {
+		return new MouseListener() {
+			@Override public void mouseReleased(MouseEvent e) {}
+			@Override public void mousePressed(MouseEvent e) {}
+			@Override public void mouseExited(MouseEvent e) {}
+			@Override public void mouseEntered(MouseEvent e) {}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() == 2){
+					setKeyboardVisible(true, e.getComponent().getLocationOnScreen());
+				}
+			}
+		};
+	}
 }

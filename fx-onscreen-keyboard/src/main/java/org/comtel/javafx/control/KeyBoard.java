@@ -13,34 +13,33 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.sound.sampled.ReverbType;
-
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.scene.Group;
+import javafx.geometry.HPos;
+import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
-import net.miginfocom.layout.BoundSize;
-import net.miginfocom.layout.CC;
-import net.miginfocom.layout.LC;
-import net.miginfocom.layout.UnitValue;
+import javafx.scene.layout.RowConstraints;
 
 import org.comtel.javafx.event.KeyButtonEvent;
 import org.comtel.javafx.robot.IRobot;
 import org.comtel.javafx.xml.KeyboardLayoutHandler;
 import org.comtel.javafx.xml.layout.Keyboard;
 import org.slf4j.LoggerFactory;
-import org.tbee.javafx.scene.layout.MigPane;
 
-public class KeyBoard extends Group implements EventHandler<KeyButtonEvent> {
+public class KeyBoard extends Region implements EventHandler<KeyButtonEvent> {
 
 	private final static org.slf4j.Logger logger = LoggerFactory.getLogger(KeyBoard.class);
 
@@ -52,6 +51,11 @@ public class KeyBoard extends Group implements EventHandler<KeyButtonEvent> {
 	private static final int CTRL_DOWN = -6;
 	private static final int LOCALE_SWITCH = -7;
 	private static final int DELETE = -8;
+	
+	private static final int ARROW_UP = -10;
+	private static final int ARROW_DOWN = -11;
+	private static final int ARROW_LEFT = -12;
+	private static final int ARROW_RIGHT = -13;
 	
 	private Path layerPath;
 	private Region qwertyKeyboardPane;
@@ -96,7 +100,7 @@ public class KeyBoard extends Group implements EventHandler<KeyButtonEvent> {
 			setScaleY(scale);
 		}
 		layoutLocale = local;
-
+		setId("key-background");
 		// setAutoSizeChildren(true);
 		setFocusTraversable(false);
 		
@@ -285,72 +289,66 @@ public class KeyBoard extends Group implements EventHandler<KeyButtonEvent> {
 
 	}
 
-	/**
-	 * with MIG layout manager
-	 * 
-	 * @param layout
-	 * @return
-	 */
 	private Region createKeyboardPane(Keyboard layout) {
 
-		MigPane pane = new MigPane();
-
-//		setOnMousePressed(new EventHandler<MouseEvent>() {
-//
-//			public void handle(MouseEvent event) {
-//				mousePressedX = event.getX();
-//				mousePressedY = event.getY();
-//			}
-//		});
-//
-//		setOnMouseDragged(new EventHandler<MouseEvent>() {
-//
-//			public void handle(MouseEvent event) {
-//				getScene().getWindow().setX(event.getScreenX() - mousePressedX);
-//				getScene().getWindow().setY(event.getScreenY() - mousePressedY);
-//
-//			}
-//		});
-
-		pane.setPrefSize(650, 200);
-		pane.setId("key-background");
-		LC lc = new LC();
-		lc.setNoGrid(true);
-		lc.setFillX(true);
-		lc.setFillY(true);
-		// lc.setDebugMillis(1000);
-		UnitValue uv = new UnitValue((float) pane.getPrefWidth(), UnitValue.PIXEL, "bSize");
-		BoundSize bs = new BoundSize(uv, "bbSize");
-		lc.setWidth(bs);
-		pane.setLayoutConstraints(lc);
+		GridPane rPane = new GridPane();
+		rPane.setAlignment(Pos.CENTER);
+		//pane.setPrefSize(600, 200);
+		
+		if (layout.getVerticalGap() != null){
+			rPane.setVgap(layout.getVerticalGap());
+		}
+		rPane.setId("key-background-row");
 
 		int defaultKeyWidth = 10;
-
 		if (layout.getKeyWidth() != null) {
 			defaultKeyWidth = layout.getKeyWidth();
 		}
 
-		int defaultKeyHeight = 45;
-
+		int defaultKeyHeight = 35;
 		if (layout.getKeyHeight() != null) {
 			defaultKeyHeight = layout.getKeyHeight();
 		}
 
+		int rowIdx = 0;
 		for (Keyboard.Row row : layout.getRow()) {
-
+			int colIdx = 0;
+			GridPane colPane = new GridPane();
+			colPane.setId("key-background-column");
+			//gridRow.setVgap(20);
+			//gridRow.setPrefWidth(Region.USE_COMPUTED_SIZE);
+			
+			RowConstraints rc = new RowConstraints();
+			rc.setPrefHeight(defaultKeyHeight);
+			
+			if (row.getRowEdgeFlags()!= null){
+				if (row.getRowEdgeFlags().equals("bottom")){
+					rc.setValignment(VPos.BOTTOM);
+				}
+				if (row.getRowEdgeFlags().equals("top")){
+					rc.setValignment(VPos.TOP);
+				}
+			}
 			for (Keyboard.Row.Key key : row.getKey()) {
-				CC lCC = new CC();
-				// if (key.getKeyLabel() != null &&
-				// !key.getKeyLabel().isEmpty()) {
-				// System.err.println(MessageFormat.format("\t<Key codes=\"{0}\" keyLabel=\"{1}\" />",
-				// Integer.toString((int) key.getKeyLabel().charAt(0)),
-				// key.getKeyLabel()));
-				// }
+				
+				if (key.getHorizontalGap() != null){
+					colPane.setHgap(key.getHorizontalGap());
+				}else if (layout.getHorizontalGap() != null){
+					colPane.setHgap(layout.getHorizontalGap());
+				}
+				ColumnConstraints cc = new ColumnConstraints();
+				cc.setHgrow(Priority.SOMETIMES);
+				
 				MultiKeyButton button = new MultiKeyButton();
 				button.setFocusTraversable(false);
 				button.setOnShortPressed(this);
+				
+				button.setMinHeight(10);
+				button.setPrefHeight(40);
 				button.setMaxWidth(600);
-				button.setPrefHeight(defaultKeyHeight);
+				
+				cc.setFillWidth(true);
+				
 				if (key.getCodes() != null) {
 					String[] codes = key.getCodes().split(",");
 					if (codes.length > 0 && !codes[0].isEmpty()) {
@@ -366,9 +364,9 @@ public class KeyBoard extends Group implements EventHandler<KeyButtonEvent> {
 						}
 					}
 					if (button.getKeyCode() == LOCALE_SWITCH){
-						button.addExtKeyCode(LOCALE_SWITCH, Locale.ENGLISH.getLanguage().toUpperCase(Locale.ENGLISH));
+						button.addExtKeyCode(LOCALE_SWITCH, Locale.ENGLISH.getLanguage().toUpperCase(Locale.ENGLISH), key.getKeyLabelStyle());
 						for (Locale l : getAvailableLocales().keySet()){
-							button.addExtKeyCode(LOCALE_SWITCH, l.getLanguage().toUpperCase(Locale.ENGLISH));
+							button.addExtKeyCode(LOCALE_SWITCH, l.getLanguage().toUpperCase(Locale.ENGLISH), key.getKeyLabelStyle());
 						}
 					}
 				}
@@ -405,22 +403,24 @@ public class KeyBoard extends Group implements EventHandler<KeyButtonEvent> {
 
 				if (key.getKeyWidth() != null) {
 					int p = key.getKeyWidth();
-					button.setPrefWidth((pane.getPrefWidth() * p) / 100);
+					cc.setPrefWidth(p);
+					//cc.setPercentWidth(p);
 				} else {
-					button.setPrefWidth((pane.getPrefWidth() * defaultKeyWidth) / 100);
+					cc.setPrefWidth(defaultKeyWidth);
+					//cc.setPercentWidth(defaultKeyWidth);
 				}
 
-				lCC.growX();
+				
 				if (key.getKeyEdgeFlags() != null) {
-					if (key.getHorizontalGap() != null) {
-						if (key.getKeyEdgeFlags().equals("right")) {
-							lCC.gapRight(key.getHorizontalGap() + "%");
-						} else {
-							lCC.gapLeft(key.getHorizontalGap() + "%");
-						}
+					if (key.getKeyEdgeFlags().equals("right")) {
+						cc.setHalignment(HPos.RIGHT);
+					} else if (key.getKeyEdgeFlags().equals("left")) {
+						cc.setHalignment(HPos.LEFT);
+					} else {
+						cc.setHalignment(HPos.CENTER);
 					}
-
-					lCC.setWrap(key.getKeyEdgeFlags().equals("right"));
+				}else{
+					cc.setHalignment(HPos.CENTER);
 				}
 				// use space button as drag pane
 				if (button.getKeyCode() == java.awt.event.KeyEvent.VK_SPACE) {
@@ -453,13 +453,22 @@ public class KeyBoard extends Group implements EventHandler<KeyButtonEvent> {
 						}
 					});
 				}
-				pane.add(button, lCC);
 
+				colPane.add(button, colIdx, 0);
+				colPane.getColumnConstraints().add(cc);
+				
+				//logger.info("btn: {} {}", button.getText(), cc);
+				colIdx++;
 			}
+			colPane.getRowConstraints().add(rc);
+			//colPane.setGridLinesVisible(true);
+			rPane.add(colPane, 0, rowIdx);
+			rowIdx++;
 		}
-		return pane;
+		
+		return rPane;
 	}
-
+	
 	public boolean isShifted() {
 		return shiftProperty.get();
 	}
@@ -520,6 +529,18 @@ public class KeyBoard extends Group implements EventHandler<KeyButtonEvent> {
 				} else {
 					setKeyboardLayer(KeyboardLayer.QWERTY);
 				}
+				break;
+			case ARROW_UP:
+				sendToComponent((char) java.awt.event.KeyEvent.VK_UP, ctrlProperty.get());
+				break;
+			case ARROW_DOWN:
+				sendToComponent((char) java.awt.event.KeyEvent.VK_DOWN, ctrlProperty.get());
+				break;
+			case ARROW_LEFT:
+				sendToComponent((char) java.awt.event.KeyEvent.VK_LEFT, ctrlProperty.get());
+				break;
+			case ARROW_RIGHT:
+				sendToComponent((char) java.awt.event.KeyEvent.VK_RIGHT, ctrlProperty.get());
 				break;
 			default:
 				// logger.debug(java.awt.event.KeyEvent.getKeyText(kb.getKeyCode()));

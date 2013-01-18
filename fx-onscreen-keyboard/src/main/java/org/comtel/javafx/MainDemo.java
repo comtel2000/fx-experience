@@ -2,7 +2,9 @@ package org.comtel.javafx;
 
 import java.util.Locale;
 
-import javafx.animation.Animation.Status;
+import javafx.animation.Animation;
+import javafx.animation.FadeTransition;
+import javafx.animation.ParallelTransition;
 import javafx.animation.ScaleTransition;
 import javafx.animation.Transition;
 import javafx.application.Application;
@@ -12,12 +14,16 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.geometry.Point2D;
+import javafx.geometry.Rectangle2D;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputControl;
 import javafx.scene.layout.FlowPane;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
@@ -28,7 +34,7 @@ import org.comtel.javafx.robot.RobotFactory;
 
 public class MainDemo extends Application {
 
-	private KeyBoardPopup fxKeyboardPopup;
+	private KeyBoardPopup popup;
 
 	@Override
 	public void start(Stage stage) {
@@ -36,63 +42,52 @@ public class MainDemo extends Application {
 		stage.setTitle("FX Keyboard (" + System.getProperty("javafx.runtime.version") + ")");
 		stage.setResizable(true);
 
-		fxKeyboardPopup = KeyBoardPopupBuilder.create().initLocale(Locale.ENGLISH)
-				.addIRobot(RobotFactory.createFXRobot()).build();
-		fxKeyboardPopup.getKeyBoard().setOnKeyboardCloseButton(new EventHandler<Event>() {
+		popup = KeyBoardPopupBuilder.create().initLocale(Locale.ENGLISH).addIRobot(RobotFactory.createFXRobot())
+				.build();
+		popup.getKeyBoard().setOnKeyboardCloseButton(new EventHandler<Event>() {
 			public void handle(Event event) {
-				setKeyboardVisible(false, null);
+				setPopupVisible(false, null);
 			}
 		});
-		
+
 		FlowPane pane = new FlowPane();
 		pane.setVgap(20);
 		pane.setHgap(20);
 		pane.setPrefWrapLength(100);
 
 		final TextField tf = new TextField("");
-		
-		tf.focusedProperty().addListener(new ChangeListener<Boolean>() {
-			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-				if (newValue) {
-					Point2D point = new Point2D(tf.getScene().getWindow().getX() + tf.getLayoutX(), tf.getScene()
-							.getWindow().getY()
-							+ tf.getLayoutY() + 40);
-					setKeyboardVisible(true, point);
+		final TextArea ta = new TextArea("");
 
-				} else {
-					setKeyboardVisible(false, null);
-				}
-			}
-		});
-		final TextField tf2 = new TextField("");
-		tf2.focusedProperty().addListener(new ChangeListener<Boolean>() {
-			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-				if (newValue) {
-					Point2D point = new Point2D(tf2.getScene().getWindow().getX() + tf2.getLayoutX(), tf2.getScene()
-							.getWindow().getY()
-							+ tf2.getLayoutY() + 40);
-					setKeyboardVisible(true, point);
-
-				} else {
-					setKeyboardVisible(false, null);
-				}
-			}
-		});
-		
 		Button okButton = new Button("Ok");
 		okButton.setDefaultButton(true);
 
 		Button cancelButton = new Button("Cancel");
 		cancelButton.setCancelButton(true);
-		
+
 		pane.getChildren().add(new Label("Text1"));
 		pane.getChildren().add(tf);
 		pane.getChildren().add(new Label("Text2"));
-		pane.getChildren().add(tf2);
+		pane.getChildren().add(ta);
 		pane.getChildren().add(okButton);
 		pane.getChildren().add(cancelButton);
 
 		Scene scene = new Scene(pane, 200, 300);
+
+		// add keyboard scene listener to all text components
+		scene.focusOwnerProperty().addListener(new ChangeListener<Node>() {
+			@Override
+			public void changed(ObservableValue<? extends Node> value, Node n1, Node n2) {
+				if (n2 != null && n2 instanceof TextInputControl) {
+					System.err.println("on");
+					setPopupVisible(true, (TextInputControl) n2);
+					
+				} else {
+					System.err.println("off");
+					setPopupVisible(false, null);
+				}
+			}
+		});
+
 		String css = this.getClass().getResource("/css/KeyboardButtonStyle.css").toExternalForm();
 		scene.getStylesheets().add(css);
 		stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
@@ -101,73 +96,79 @@ public class MainDemo extends Application {
 				System.exit(0);
 			}
 		});
-		fxKeyboardPopup.show(stage);
+		popup.show(stage);
 		stage.setScene(scene);
 		stage.show();
 
 	}
 
-	private Transition fadeOut;
-	private Transition fadeIn;
+	private void setPopupVisible(final boolean b, final TextInputControl textNode) {
 
-	public void setKeyboardVisible(boolean flag, Point2D pos) {
-		final boolean visible = flag;
-		final Point2D location = pos;
 		Platform.runLater(new Runnable() {
+
+			private Animation fadeAnimation;
+
+			@Override
 			public void run() {
-				if (fxKeyboardPopup == null) {
+				if (b) {
+					if (textNode != null) {
+						Rectangle2D textNodeBounds = new Rectangle2D(textNode.getScene().getWindow().getX()
+								+ textNode.getLocalToSceneTransform().getTx(), textNode.getScene().getWindow().getY()
+								+ textNode.getLocalToSceneTransform().getTy(), textNode.getWidth(), textNode
+								.getHeight());
+
+						Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+						if (textNodeBounds.getMinX() + popup.getWidth() > screenBounds.getMaxX()) {
+							popup.setX(screenBounds.getMaxX() - popup.getWidth());
+						} else {
+							popup.setX(textNodeBounds.getMinX());
+						}
+
+						if (textNodeBounds.getMaxY() + popup.getHeight() > screenBounds.getMaxY()) {
+							popup.setY(textNodeBounds.getMinY() - popup.getHeight() + 20);
+						} else {
+							popup.setY(textNodeBounds.getMaxY() + 40);
+						}
+					}
+
+				}
+
+				if (fadeAnimation != null) {
+					fadeAnimation.stop();
+				}
+				if (!b){
+					popup.hide();
 					return;
 				}
-				if (location != null) {
-					fxKeyboardPopup.setX(location.getX());
-					fxKeyboardPopup.setY(location.getY() + 20);
+				if (popup.isShowing()){
+					return;
 				}
+				popup.getKeyBoard().setOpacity(0.0);
 
-				if (fadeOut == null) {
-					// transition = new FadeTransition(Duration.millis(200),
-					// fxKeyboard);
-					fadeOut = new ScaleTransition(Duration.millis(150), fxKeyboardPopup.getKeyBoard());
-					fadeOut.setOnFinished(new EventHandler<ActionEvent>() {
-
-						public void handle(ActionEvent e) {
-							fxKeyboardPopup.hide();
-						}
-					});
-				}
-				if (fadeIn == null) {
-					fadeIn = new ScaleTransition(Duration.millis(150), fxKeyboardPopup.getKeyBoard());
-
-				}
-				if (visible && fadeIn.getStatus() == Status.STOPPED) {
-					if (!fxKeyboardPopup.isShowing()) {
-						fxKeyboardPopup.show(fxKeyboardPopup.getOwnerWindow());
+				FadeTransition fade = new FadeTransition(Duration.seconds(.5), popup.getKeyBoard());
+				fade.setToValue(b ? 1.0 : 0.0);
+				fade.setOnFinished(new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent event) {
+						fadeAnimation = null;
 					}
-					System.err.println("fade in");
-					fadeOut.stop();
+				});
 
-					((ScaleTransition) fadeIn).setFromX(0.1d);
-					((ScaleTransition) fadeIn).setFromY(0.1d);
-					((ScaleTransition) fadeIn).setToX(fxKeyboardPopup.getKeyBoard().getScale());
-					((ScaleTransition) fadeIn).setToY(fxKeyboardPopup.getKeyBoard().getScale());
+				ScaleTransition scale = new ScaleTransition(Duration.seconds(.5), popup.getKeyBoard());
+				scale.setToX(b ? 1 : 0.8);
+				scale.setToY(b ? 1 : 0.8);
 
-					// ((FadeTransition) transition).setFromValue(0.0f);
-					// ((FadeTransition) transition).setToValue(1.0f);
-					fadeIn.play();
-
-				} else if (fxKeyboardPopup.isShowing() && fadeOut.getStatus() == Status.STOPPED) {
-					System.err.println("fade out");
-					fadeIn.stop();
-					((ScaleTransition) fadeOut).setFromX(fxKeyboardPopup.getKeyBoard().getScale());
-					((ScaleTransition) fadeOut).setFromY(fxKeyboardPopup.getKeyBoard().getScale());
-					((ScaleTransition) fadeOut).setToX(0.1d);
-					((ScaleTransition) fadeOut).setToY(0.1d);
-
-					// ((FadeTransition) transition).setFromValue(1.0f);
-					// ((FadeTransition) transition).setToValue(0.0f);
-					fadeOut.play();
-
-					// fxKeyboardPopup.hide();
+				ParallelTransition tx = new ParallelTransition(fade, scale);
+				fadeAnimation = tx;
+				tx.play();
+				if (b) {
+					if (!popup.isShowing()) {
+						popup.show(popup.getOwnerWindow());
+					}
 				}
+
+				
+
 			}
 		});
 	}

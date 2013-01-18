@@ -1,15 +1,22 @@
 
-#key-background {  
-	-fx-background-color: rgb(220, 220, 220);
-	-fx-background-radius: 10; 
-	-fx-focus-traversable: false;
-	-fx-border-color: rgb(10, 10, 10);
-	-fx-border-width: 0.5;
-	-fx-border-radius: 10;
-	-fx-padding: 10;
-	-fx-vgap: 10;
-	-fx-hgap: 10;
-	-fx-effect: dropshadow(two-pass-box, rgba(0, 0, 0, 0.4), 10, 0.0, 2, 4 );
+#key-background {
+	-fx-background-color:rgb(220.0,220.0,220.0);
+	-fx-background-radius:5.0;
+	-fx-focus-traversable:false;
+	-fx-border-color:rgb(10.0,10.0,10.0);
+	-fx-border-width:0.5;
+	-fx-border-radius:5.0;
+	-fx-padding:0.0;
+	-fx-effect:dropshadow(two-pass-box,rgba(0.0,0.0,0.0,0.4),10.0,0.0,2.0,4.0);
+}
+
+#key-background-row {
+	-fx-padding:5.0;
+	-fx-vgap:3.0;
+}
+
+#key-background-column {
+	-fx-hgap:3.0;
 }
 
 #key-context-background {
@@ -31,7 +38,7 @@
 	-fx-font-size: 18pt;
 	-fx-font-family: "sans-serif";
 	-fx-text-fill: white;
-	-fx-padding: 5;
+	-fx-padding: 0;
 	-fx-color: rgb(60, 66, 80);
 }
 
@@ -64,7 +71,7 @@
 #key-button.button .small-style {
 	-fx-font-family: "sans-serif";
 	-fx-font-weight: bold;
-	-fx-font-size: 14pt;
+	-fx-font-size: 12pt;
 	-fx-padding: 1;
 }
 

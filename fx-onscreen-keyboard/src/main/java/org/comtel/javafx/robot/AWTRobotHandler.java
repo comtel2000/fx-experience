@@ -92,6 +92,22 @@ public class AWTRobotHandler implements IRobot {
 			robot.keyPress(java.awt.event.KeyEvent.VK_TAB);
 			robot.keyRelease(java.awt.event.KeyEvent.VK_TAB);
 			break;
+		case java.awt.event.KeyEvent.VK_UP:
+			robot.keyPress(java.awt.event.KeyEvent.VK_UP);
+			robot.keyRelease(java.awt.event.KeyEvent.VK_UP);
+			break;
+		case java.awt.event.KeyEvent.VK_DOWN:
+			robot.keyPress(java.awt.event.KeyEvent.VK_DOWN);
+			robot.keyRelease(java.awt.event.KeyEvent.VK_DOWN);
+			break;
+		case java.awt.event.KeyEvent.VK_LEFT:
+			robot.keyPress(java.awt.event.KeyEvent.VK_LEFT);
+			robot.keyRelease(java.awt.event.KeyEvent.VK_LEFT);
+			break;
+		case java.awt.event.KeyEvent.VK_RIGHT:
+			robot.keyPress(java.awt.event.KeyEvent.VK_RIGHT);
+			robot.keyRelease(java.awt.event.KeyEvent.VK_RIGHT);
+			break;
 		default:
 			int modififiers = Character.isUpperCase(ch) ? java.awt.event.KeyEvent.SHIFT_DOWN_MASK : 0;
 			KeyboardFocusManager.getCurrentKeyboardFocusManager().dispatchKeyEvent(

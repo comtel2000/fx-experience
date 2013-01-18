@@ -26,7 +26,6 @@ public class MultiKeyButton extends KeyButton {
 							getContext().getButtons().add(button);
 						}
 					}
-
 				}
 			});
 		}
@@ -40,8 +39,8 @@ public class MultiKeyButton extends KeyButton {
 			context.setOnHidden(new EventHandler<WindowEvent>() {
 
 				public void handle(WindowEvent event) {
-					getParent().setEffect(null);
-					getParent().setDisable(false);
+					getParent().getParent().setEffect(null);
+					getParent().getParent().setDisable(false);
 
 				}
 			});
@@ -50,8 +49,8 @@ public class MultiKeyButton extends KeyButton {
 				public void handle(Event event) {
 					context.getButtonPane().setScaleX(((Node) event.getSource()).getParent().getParent().getScaleX());
 					context.getButtonPane().setScaleY(((Node) event.getSource()).getParent().getParent().getScaleY());
-					getParent().setEffect(new BoxBlur());
-					getParent().setDisable(true);
+					getParent().getParent().setEffect(new BoxBlur());
+					getParent().getParent().setDisable(true);
 					setFocused(false);
 					context.show((Node) event.getSource(), Side.TOP, -getPrefWidth(), -getPrefHeight());
 
@@ -63,11 +62,14 @@ public class MultiKeyButton extends KeyButton {
 	}
 
 	public void addExtKeyCode(int extKeyCode) {
-		addExtKeyCode(extKeyCode, null);
+		addExtKeyCode(extKeyCode, null, null);
 	}
 
-	public void addExtKeyCode(int extKeyCode, String label) {
+	public void addExtKeyCode(int extKeyCode, String label, String style) {
 		ShortPressKeyButton button = new ShortPressKeyButton(Character.toString((char) extKeyCode));
+		if (style != null && style.startsWith(".")) {
+			button.getStyleClass().add(style.substring(1));
+		}
 		if (label != null){
 			button.setText(label);
 		}
