@@ -1,7 +1,7 @@
 Maven
 ===
 Add to your maven settings.xml the system dependent property jfx-runtime, something like this:
-
+```xml
 <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
@@ -22,7 +22,7 @@ Add to your maven settings.xml the system dependent property jfx-runtime, someth
     <activeProfile>default</activeProfile>
   </activeProfiles>
 </settings>
-
+```
 License
 ===
 new BSD License
