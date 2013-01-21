@@ -28,6 +28,7 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 
+import org.comtel.javafx.control.KeyBoardBuilder;
 import org.comtel.javafx.control.KeyBoardPopup;
 import org.comtel.javafx.control.KeyBoardPopupBuilder;
 import org.comtel.javafx.robot.RobotFactory;
@@ -70,7 +71,7 @@ public class MainDemo extends Application {
 		pane.getChildren().add(ta);
 		pane.getChildren().add(okButton);
 		pane.getChildren().add(cancelButton);
-
+		//pane.getChildren().add(KeyBoardBuilder.create().addIRobot(RobotFactory.createFXRobot()).build());
 		Scene scene = new Scene(pane, 200, 300);
 
 		// add keyboard scene listener to all text components
@@ -78,11 +79,9 @@ public class MainDemo extends Application {
 			@Override
 			public void changed(ObservableValue<? extends Node> value, Node n1, Node n2) {
 				if (n2 != null && n2 instanceof TextInputControl) {
-					System.err.println("on");
 					setPopupVisible(true, (TextInputControl) n2);
 					
 				} else {
-					System.err.println("off");
 					setPopupVisible(false, null);
 				}
 			}

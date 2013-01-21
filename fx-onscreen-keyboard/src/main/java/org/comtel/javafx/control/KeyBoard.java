@@ -99,7 +99,8 @@ public class KeyBoard extends Region implements EventHandler<KeyButtonEvent> {
 			setScaleX(scale);
 			setScaleY(scale);
 		}
-		layoutLocale = local;
+		
+		layoutLocale = local != null ? local : Locale.getDefault();
 		setId("key-background");
 		// setAutoSizeChildren(true);
 		setFocusTraversable(false);
