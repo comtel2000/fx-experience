@@ -19,11 +19,20 @@ public class FXRobotHandler implements IRobot{
 	@Override
 	public void sendToComponent(Object kb, final char ch, final boolean ctrl) {
 		logger.trace("fire: {}", ch);
-		final Window popup = ((KeyBoard)kb).getScene().getWindow();
-		if (popup != null && popup instanceof Popup) {
+
+		final Window keyboardWindow = ((KeyBoard) kb).getScene().getWindow();
+		if (keyboardWindow != null) {
+			final Scene scene;
+			if (keyboardWindow instanceof Popup) {
+				scene = ((Popup) keyboardWindow).getOwnerWindow().getScene();
+			} else {
+				scene = keyboardWindow.getScene();
+			}
+
 			Platform.runLater(new Runnable() {
+				@Override
 				public void run() {
-					send(((Popup) popup).getOwnerWindow().getScene(), ch, ctrl);
+					send(scene, ch, ctrl);
 				}
 			});
 		}
