@@ -26,7 +26,7 @@
 		<Key codes="" keyLabel="" />
 		<Key codes="-10" keyLabel="▲" />
 		<Key codes="" keyLabel="" />
-		<Key codes="" keyIconStyle=".enter-icon" keyWidth="70"
+		<Key codes="10" keyIconStyle=".enter-icon" keyWidth="70"
 			keyEdgeFlags="right" />
 	</Row>
 

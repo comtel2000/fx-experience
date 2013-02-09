@@ -8,7 +8,6 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
-import org.comtel.javafx.MainDemo;
 import org.comtel.javafx.xml.layout.Keyboard;
 import org.slf4j.LoggerFactory;
 

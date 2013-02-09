@@ -13,7 +13,7 @@ import org.junit.Test;
 public class KeyboardXmlLayoutTest {
 
 	private static KeyboardLayoutHandler handler;
- 
+
 	@BeforeClass
 	public static void open() {
 		handler = new KeyboardLayoutHandler();
@@ -26,7 +26,7 @@ public class KeyboardXmlLayoutTest {
 
 	@Test
 	public void testGetLayout() throws IOException {
-		Keyboard kb = handler.getLayout("/xml/kb-layout.xml");
+		Keyboard kb = handler.getLayout("/xml/default/kb-layout.xml");
 		Assert.assertNotNull(kb);
 		Assert.assertFalse(kb.getRow().isEmpty());
 
@@ -38,4 +38,17 @@ public class KeyboardXmlLayoutTest {
 			}
 		}
 	}
+
+	@Test
+	public void validateLayouts() throws IOException {
+		String[] layouts = new String[] { "kb-layout", "kb-layout-shift", "kb-layout-sym", "kb-layout-sym-shift",
+				"kb-layout-ctrl" };
+		for (String layout : layouts) {
+			Keyboard kb = handler.getLayout("/xml/default/" + layout + ".xml");
+			Assert.assertNotNull(kb);
+			Assert.assertFalse(kb.getRow().isEmpty());
+		}
+
+	}
+
 }

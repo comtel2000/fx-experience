@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Keyboard keyWidth="40" keyHeight="35" horizontalGap="0"
+	verticalGap="0">
+	<Row>
+		<Key codes="-7" keyLabel="EN" keyLabelStyle=".small-style"
+			keyWidth="40" keyEdgeFlags="left" />
+		<Key codes="49" keyLabel="1" />
+		<Key codes="50" keyLabel="2" />
+		<Key codes="51" keyLabel="3" />
+		<Key codes="52" keyLabel="4" />
+		<Key codes="53" keyLabel="5" />
+		<Key codes="54" keyLabel="6" />
+		<Key codes="55" keyLabel="7" />
+		<Key codes="56" keyLabel="8" />
+		<Key codes="57" keyLabel="9" />
+		<Key codes="48" keyLabel="0" />
+		<Key codes="-5" keyIconStyle=".delete-icon" keyWidth="60"
+			keyEdgeFlags="right" isRepeatable="true" />
+	</Row>
+	<Row>
+		<Key codes="-4" keyIconStyle=".tab-icon" keyWidth="80"
+			keyEdgeFlags="left" />
+		<Key codes="113" keyLabel="q" />
+		<Key codes="119" keyLabel="w" />
+		<Key codes="101" keyLabel="e" />
+		<Key codes="114" keyLabel="r" />
+		<Key codes="116" keyLabel="t" />
+		<Key codes="121" keyLabel="y" />
+		<Key codes="117,252,251,250,249" keyLabel="u" />
+		<Key codes="105" keyLabel="i" />
+		<Key codes="111,246,245,244,243,242,248" keyLabel="o" />
+		<Key codes="112" keyLabel="p" keyEdgeFlags="right" />
+	</Row>
+
+	<Row>
+
+		<Key codes="97,228,229,227,226,225,224" keyLabel="a" />
+		<Key codes="115,223" keyLabel="s" />
+		<Key codes="100" keyLabel="d" />
+		<Key codes="102" keyLabel="f" />
+		<Key codes="103" keyLabel="g" />
+		<Key codes="104" keyLabel="h" />
+		<Key codes="106" keyLabel="j" />
+		<Key codes="107" keyLabel="k" />
+		<Key codes="108" keyLabel="l" />
+		<Key codes="45" keyLabel="-" />
+		<Key codes="10" keyIconStyle=".enter-icon" keyWidth="80"
+			keyEdgeFlags="right" />
+	</Row>
+
+	<Row>
+		<Key codes="-1" keyIconStyle=".shift-off-icon" keyWidth="70"
+			isModifier="true" isSticky="true" keyEdgeFlags="left" />
+		<Key codes="122" keyLabel="z" />
+		<Key codes="120" keyLabel="x" />
+		<Key codes="99" keyLabel="c" />
+		<Key codes="118" keyLabel="v" />
+		<Key codes="98" keyLabel="b" />
+		<Key codes="110" keyLabel="n" />
+		<Key codes="109" keyLabel="m" />
+		<Key codes="44" keyLabel="," />
+		<Key codes="46" keyLabel="." />
+		<Key codes="-1" keyIconStyle=".shift-off-icon" keyWidth="70"
+			isModifier="true" isSticky="true" keyEdgeFlags="right" />
+	</Row>
+
+	<Row rowEdgeFlags="bottom">
+		<Key codes="-6" keyLabel="CTRL" keyWidth="80" keyEdgeFlags="left" />
+		<Key codes="-2" keyLabel="?123" keyWidth="80" />
+		<Key codes="32" keyIconStyle=".space-icon" keyWidth="300"
+			isRepeatable="true" />
+		<Key codes="-2" keyLabel="?123" keyWidth="80" />
+		<Key codes="-3" keyIconStyle=".done-icon" keyWidth="60"
+			keyEdgeFlags="right" />
+	</Row>
+</Keyboard>
+    

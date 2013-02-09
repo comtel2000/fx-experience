@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Keyboard keyWidth="40" keyHeight="35" horizontalGap="0"
+	verticalGap="0">
+	<Row>
+		<Key codes="-7" keyLabel="EN" keyLabelStyle=".small-style"
+			keyWidth="40" keyEdgeFlags="left" />
+		<Key codes="126" keyLabel="~" />
+		<Key codes="177" keyLabel="±" />
+		<Key codes="215" keyLabel="×" />
+		<Key codes="247" keyLabel="÷" />
+		<Key codes="8226" keyLabel="•" />
+		<Key codes="176" keyLabel="°" />
+		<Key codes="96" keyLabel="`" />
+		<Key codes="180" keyLabel="´" />
+		<Key codes="123" keyLabel="{" />
+		<Key codes="125" keyLabel="}" />
+		<Key codes="-5" keyIconStyle=".delete-icon" keyWidth="60"
+			keyEdgeFlags="right" isRepeatable="true" />
+	</Row>
+	<Row>
+		<Key codes="-4" keyIconStyle=".tab-icon" keyWidth="60"
+			keyEdgeFlags="left" />
+		<Key codes="169" keyLabel="©" />
+		<Key codes="163" keyLabel="£" />
+		<Key codes="8364" keyLabel="€" />
+		<Key codes="94" keyLabel="^" />
+		<Key codes="174" keyLabel="®" />
+		<Key codes="165" keyLabel="¥" />
+		<Key codes="95" keyLabel="_" />
+		<Key codes="43" keyLabel="+" />
+		<Key codes="91" keyLabel="[" />
+		<Key codes="93" keyLabel="]" />
+		<Key codes="10" keyIconStyle=".enter-icon" keyWidth="80"
+			keyEdgeFlags="right" />
+	</Row>
+
+	<Row>
+		<Key codes="-1" keyIconStyle=".shift-on-icon"
+			keyWidth="70" isModifier="true" isSticky="true" keyEdgeFlags="left" />
+		<Key codes="161" keyLabel="¡" />
+		<Key codes="60" keyLabel="&lt;" />
+		<Key codes="62" keyLabel="&gt;" />
+		<Key codes="162" keyLabel="¢" />
+		<Key codes="124" keyLabel="|" />
+		<Key codes="92" keyLabel="\" />
+		<Key codes="191" keyLabel="¿" />
+		<Key codes="59" keyLabel=";" />
+		<Key codes="58" keyLabel=":" />
+		<Key codes="-1" keyIconStyle=".shift-on-icon"
+			keyWidth="70" keyEdgeFlags="right" />
+	</Row>
+	<Row rowEdgeFlags="bottom">
+		<Key codes="-6" keyLabel="CTRL" isModifier="true" keyWidth="80" keyEdgeFlags="left" />
+		<Key codes="-2" keyLabel="ABC" isModifier="true" keyWidth="80" />
+		<Key codes="32" keyIconStyle=".space-icon" keyWidth="300"
+			isRepeatable="true" />
+		<Key codes="-2" keyLabel="ABC" isModifier="true" keyWidth="80" />
+		<Key codes="-3" keyIconStyle=".done-icon" keyWidth="60"
+			keyEdgeFlags="right" />
+	</Row>
+</Keyboard>

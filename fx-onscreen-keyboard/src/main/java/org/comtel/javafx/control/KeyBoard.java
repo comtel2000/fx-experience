@@ -39,24 +39,10 @@ import org.comtel.javafx.xml.KeyboardLayoutHandler;
 import org.comtel.javafx.xml.layout.Keyboard;
 import org.slf4j.LoggerFactory;
 
-public class KeyBoard extends Region implements EventHandler<KeyButtonEvent> {
+public class KeyBoard extends Region implements StandardKeyCode, EventHandler<KeyButtonEvent> {
 
 	private final static org.slf4j.Logger logger = LoggerFactory.getLogger(KeyBoard.class);
 
-	private static final int SHIFT_DOWN = -1;
-	private static final int SYMBOL_DOWN = -2;
-	private static final int CLOSE = -3;
-	private static final int TAB = -4;
-	private static final int BACK_SPACE = -5;
-	private static final int CTRL_DOWN = -6;
-	private static final int LOCALE_SWITCH = -7;
-	private static final int DELETE = -8;
-	
-	private static final int ARROW_UP = -10;
-	private static final int ARROW_DOWN = -11;
-	private static final int ARROW_LEFT = -12;
-	private static final int ARROW_RIGHT = -13;
-	
 	private Path layerPath;
 	private Region qwertyKeyboardPane;
 	private Region qwertyShiftedKeyboardPane;
@@ -72,7 +58,7 @@ public class KeyBoard extends Region implements EventHandler<KeyButtonEvent> {
 
 	private SimpleDoubleProperty minScaleProperty = new SimpleDoubleProperty(0.5);
 	private SimpleDoubleProperty maxScaleProperty = new SimpleDoubleProperty(5.0);
-	
+
 	private EventHandler<? super Event> closeEventHandler;
 
 	private double mousePressedX;
@@ -81,9 +67,6 @@ public class KeyBoard extends Region implements EventHandler<KeyButtonEvent> {
 	private final List<IRobot> robotHandler = new ArrayList<>();
 	private Locale layoutLocale;
 
-	/**
-	 * @param layerpath
-	 */
 	public KeyBoard(Path layerpath) {
 		this(layerpath, 1.0, Locale.getDefault());
 	}
@@ -91,7 +74,14 @@ public class KeyBoard extends Region implements EventHandler<KeyButtonEvent> {
 	public KeyBoard(Path layerpath, Locale local) {
 		this(layerpath, 1.0, local);
 	}
-	
+
+	/**
+	 * create KeyBoard Region with layer XML root path, intial scale and locale
+	 * 
+	 * @param layerpath
+	 * @param scale
+	 * @param local
+	 */
 	public KeyBoard(Path layerpath, double scale, Locale local) {
 		layerPath = layerpath;
 		if (scale != 1.0) {
@@ -99,12 +89,12 @@ public class KeyBoard extends Region implements EventHandler<KeyButtonEvent> {
 			setScaleX(scale);
 			setScaleY(scale);
 		}
-		
+
 		layoutLocale = local != null ? local : Locale.getDefault();
 		setId("key-background");
 		// setAutoSizeChildren(true);
 		setFocusTraversable(false);
-		
+
 		init();
 
 		scaleProperty.addListener(new ChangeListener<Number>() {
@@ -145,7 +135,7 @@ public class KeyBoard extends Region implements EventHandler<KeyButtonEvent> {
 
 		shiftProperty.addListener(new ChangeListener<Boolean>() {
 			public void changed(ObservableValue<? extends Boolean> arg0, Boolean arg1, Boolean arg2) {
-				if (ctrlProperty.get()){
+				if (ctrlProperty.get()) {
 					logger.warn("ignore in ctrl mode");
 					return;
 				}
@@ -155,9 +145,9 @@ public class KeyBoard extends Region implements EventHandler<KeyButtonEvent> {
 
 		ctrlProperty.addListener(new ChangeListener<Boolean>() {
 			public void changed(ObservableValue<? extends Boolean> arg0, Boolean arg1, Boolean arg2) {
-				if (arg2){
+				if (arg2) {
 					setKeyboardLayer(KeyboardLayer.CTRL);
-				}else{
+				} else {
 					setKeyboardLayer(symbolProperty.get() ? KeyboardLayer.SYMBOL : KeyboardLayer.QWERTY);
 				}
 			}
@@ -165,7 +155,7 @@ public class KeyBoard extends Region implements EventHandler<KeyButtonEvent> {
 
 		symbolProperty.addListener(new ChangeListener<Boolean>() {
 			public void changed(ObservableValue<? extends Boolean> arg0, Boolean arg1, Boolean arg2) {
-				if (ctrlProperty.get()){
+				if (ctrlProperty.get()) {
 					logger.warn("ignore in ctrl mode");
 					return;
 				}
@@ -182,7 +172,7 @@ public class KeyBoard extends Region implements EventHandler<KeyButtonEvent> {
 		if (layerPath == null) {
 			String xmlPath = "/xml/default" + (local.getLanguage().equals("en") ? "" : "/" + local.getLanguage());
 			logger.warn("use default embedded layouts path: {}", xmlPath);
-			
+
 			qwertyKeyboardPane = createKeyboardPane(handler.getLayout(xmlPath + "/kb-layout.xml"));
 			qwertyShiftedKeyboardPane = createKeyboardPane(handler.getLayout(xmlPath + "/kb-layout-shift.xml"));
 			qwertyCtrlKeyboardPane = createKeyboardPane(handler.getLayout(xmlPath + "/kb-layout-ctrl.xml"));
@@ -215,7 +205,7 @@ public class KeyBoard extends Region implements EventHandler<KeyButtonEvent> {
 		}
 
 	}
-	
+
 	public Map<Locale, Path> getAvailableLocales() {
 
 		Map<Locale, Path> localList = new HashMap<>();
@@ -294,9 +284,9 @@ public class KeyBoard extends Region implements EventHandler<KeyButtonEvent> {
 
 		GridPane rPane = new GridPane();
 		rPane.setAlignment(Pos.CENTER);
-		//pane.setPrefSize(600, 200);
-		
-		if (layout.getVerticalGap() != null){
+		// pane.setPrefSize(600, 200);
+
+		if (layout.getVerticalGap() != null) {
 			rPane.setVgap(layout.getVerticalGap());
 		}
 		rPane.setId("key-background-row");
@@ -316,40 +306,40 @@ public class KeyBoard extends Region implements EventHandler<KeyButtonEvent> {
 			int colIdx = 0;
 			GridPane colPane = new GridPane();
 			colPane.setId("key-background-column");
-			//gridRow.setVgap(20);
-			//gridRow.setPrefWidth(Region.USE_COMPUTED_SIZE);
-			
+			// gridRow.setVgap(20);
+			// gridRow.setPrefWidth(Region.USE_COMPUTED_SIZE);
+
 			RowConstraints rc = new RowConstraints();
 			rc.setPrefHeight(defaultKeyHeight);
-			
-			if (row.getRowEdgeFlags()!= null){
-				if (row.getRowEdgeFlags().equals("bottom")){
+
+			if (row.getRowEdgeFlags() != null) {
+				if (row.getRowEdgeFlags().equals("bottom")) {
 					rc.setValignment(VPos.BOTTOM);
 				}
-				if (row.getRowEdgeFlags().equals("top")){
+				if (row.getRowEdgeFlags().equals("top")) {
 					rc.setValignment(VPos.TOP);
 				}
 			}
 			for (Keyboard.Row.Key key : row.getKey()) {
-				
-				if (key.getHorizontalGap() != null){
+
+				if (key.getHorizontalGap() != null) {
 					colPane.setHgap(key.getHorizontalGap());
-				}else if (layout.getHorizontalGap() != null){
+				} else if (layout.getHorizontalGap() != null) {
 					colPane.setHgap(layout.getHorizontalGap());
 				}
 				ColumnConstraints cc = new ColumnConstraints();
 				cc.setHgrow(Priority.SOMETIMES);
-				
+
 				MultiKeyButton button = new MultiKeyButton();
 				button.setFocusTraversable(false);
 				button.setOnShortPressed(this);
-				
+
 				button.setMinHeight(10);
 				button.setPrefHeight(40);
 				button.setMaxWidth(600);
-				
+
 				cc.setFillWidth(true);
-				
+
 				if (key.getCodes() != null) {
 					String[] codes = key.getCodes().split(",");
 					if (codes.length > 0 && !codes[0].isEmpty()) {
@@ -364,10 +354,12 @@ public class KeyBoard extends Region implements EventHandler<KeyButtonEvent> {
 							}
 						}
 					}
-					if (button.getKeyCode() == LOCALE_SWITCH){
-						button.addExtKeyCode(LOCALE_SWITCH, Locale.ENGLISH.getLanguage().toUpperCase(Locale.ENGLISH), key.getKeyLabelStyle());
-						for (Locale l : getAvailableLocales().keySet()){
-							button.addExtKeyCode(LOCALE_SWITCH, l.getLanguage().toUpperCase(Locale.ENGLISH), key.getKeyLabelStyle());
+					if (button.getKeyCode() == LOCALE_SWITCH) {
+						button.addExtKeyCode(LOCALE_SWITCH, Locale.ENGLISH.getLanguage().toUpperCase(Locale.ENGLISH),
+								key.getKeyLabelStyle());
+						for (Locale l : getAvailableLocales().keySet()) {
+							button.addExtKeyCode(LOCALE_SWITCH, l.getLanguage().toUpperCase(Locale.ENGLISH),
+									key.getKeyLabelStyle());
 						}
 					}
 				}
@@ -395,7 +387,7 @@ public class KeyBoard extends Region implements EventHandler<KeyButtonEvent> {
 				}
 
 				button.setText(key.getKeyLabel());
-				
+
 				if (button.isContextAvailable() && button.getGraphic() == null) {
 					Label icon = new Label();
 					icon.getStyleClass().add("extend-style");
@@ -405,13 +397,12 @@ public class KeyBoard extends Region implements EventHandler<KeyButtonEvent> {
 				if (key.getKeyWidth() != null) {
 					int p = key.getKeyWidth();
 					cc.setPrefWidth(p);
-					//cc.setPercentWidth(p);
+					// cc.setPercentWidth(p);
 				} else {
 					cc.setPrefWidth(defaultKeyWidth);
-					//cc.setPercentWidth(defaultKeyWidth);
+					// cc.setPercentWidth(defaultKeyWidth);
 				}
 
-				
 				if (key.getKeyEdgeFlags() != null) {
 					if (key.getKeyEdgeFlags().equals("right")) {
 						cc.setHalignment(HPos.RIGHT);
@@ -420,7 +411,7 @@ public class KeyBoard extends Region implements EventHandler<KeyButtonEvent> {
 					} else {
 						cc.setHalignment(HPos.CENTER);
 					}
-				}else{
+				} else {
 					cc.setHalignment(HPos.CENTER);
 				}
 				// use space button as drag pane
@@ -457,19 +448,19 @@ public class KeyBoard extends Region implements EventHandler<KeyButtonEvent> {
 
 				colPane.add(button, colIdx, 0);
 				colPane.getColumnConstraints().add(cc);
-				
-				//logger.info("btn: {} {}", button.getText(), cc);
+
+				// logger.info("btn: {} {}", button.getText(), cc);
 				colIdx++;
 			}
 			colPane.getRowConstraints().add(rc);
-			//colPane.setGridLinesVisible(true);
+			// colPane.setGridLinesVisible(true);
 			rPane.add(colPane, 0, rowIdx);
 			rowIdx++;
 		}
-		
+
 		return rPane;
 	}
-	
+
 	public boolean isShifted() {
 		return shiftProperty.get();
 	}
@@ -555,9 +546,9 @@ public class KeyBoard extends Region implements EventHandler<KeyButtonEvent> {
 		}
 	}
 
-
 	/**
 	 * send keyEvent to iRobot implementation
+	 * 
 	 * @param ch
 	 * @param ctrl
 	 */
@@ -568,12 +559,12 @@ public class KeyBoard extends Region implements EventHandler<KeyButtonEvent> {
 		if (ctrl) {
 			switch (Character.toUpperCase(ch)) {
 			case java.awt.event.KeyEvent.VK_MINUS:
-				if (scaleProperty.get() > minScaleProperty.get()){
+				if (scaleProperty.get() > minScaleProperty.get()) {
 					scaleProperty.set(scaleProperty.get() - 0.1d);
 				}
 				return;
 			case 0x2B:
-				if (scaleProperty.get() < maxScaleProperty.get()){
+				if (scaleProperty.get() < maxScaleProperty.get()) {
 					scaleProperty.set(scaleProperty.get() + 0.1d);
 				}
 				return;
@@ -584,7 +575,7 @@ public class KeyBoard extends Region implements EventHandler<KeyButtonEvent> {
 			logger.error("no robot handler available");
 			return;
 		}
-		for (IRobot robot : robotHandler){
+		for (IRobot robot : robotHandler) {
 			robot.sendToComponent(this, ch, ctrl);
 		}
 
@@ -597,7 +588,7 @@ public class KeyBoard extends Region implements EventHandler<KeyButtonEvent> {
 	public void removeRobotHandler(IRobot robot) {
 		robotHandler.remove(robot);
 	}
-	
+
 	public void setOnKeyboardCloseButton(EventHandler<? super Event> value) {
 		closeEventHandler = value;
 	}
@@ -614,21 +605,20 @@ public class KeyBoard extends Region implements EventHandler<KeyButtonEvent> {
 	public void setScale(double scale) {
 		scaleProperty.set(scale);
 	}
-	
+
 	public double getMinimumScale() {
 		return minScaleProperty.get();
 	}
-	
-	public void setMinimumScale(double min){
+
+	public void setMinimumScale(double min) {
 		minScaleProperty.set(min);
 	}
-	
+
 	public double getMaximumScale() {
 		return maxScaleProperty.get();
 	}
 
-	
-	public void setMaximumScale(double max){
+	public void setMaximumScale(double max) {
 		maxScaleProperty.set(max);
 	}
 

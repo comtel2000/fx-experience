@@ -23,6 +23,17 @@ Add to your maven settings.xml the system dependent property jfx-runtime, someth
   </activeProfiles>
 </settings>
 ```
+
+Demo
+===
+build jar and start demo main class:
+
+Swing Demo App:
+org.comtel.javafx.SwingMainDemo
+
+JavaFX Demo App:
+org.comtel.javafx.MainDemo
+
 License
 ===
 new BSD License
