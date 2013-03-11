@@ -476,74 +476,81 @@ public class KeyBoard extends Region implements StandardKeyCode, EventHandler<Ke
 	public void handle(KeyButtonEvent event) {
 		event.consume();
 		KeyButtonEvent kbEvent = (KeyButtonEvent) event;
-		if (kbEvent.getEventType().equals(KeyButtonEvent.SHORT_PRESSED)) {
-			KeyButton kb = (KeyButton) kbEvent.getSource();
-			switch (kb.getKeyCode()) {
-			case SHIFT_DOWN:
-				// switch shifted
-				shiftProperty.set(!shiftProperty.get());
-				break;
-			case SYMBOL_DOWN:
-				// switch sym / qwerty
-				symbolProperty.set(!symbolProperty.get());
-				break;
-			case CLOSE:
-				if (closeEventHandler == null) {
-					System.exit(0);
-				} else {
-					closeEventHandler.handle(new KeyButtonEvent(KeyButtonEvent.ANY));
-				}
-				break;
-			case TAB:
-				sendToComponent((char) java.awt.event.KeyEvent.VK_TAB, ctrlProperty.get());
-				break;
-			case BACK_SPACE:
-				sendToComponent((char) java.awt.event.KeyEvent.VK_BACK_SPACE, ctrlProperty.get());
-				break;
-			case DELETE:
-				sendToComponent((char) java.awt.event.KeyEvent.VK_DELETE, ctrlProperty.get());
-				break;
-			case CTRL_DOWN:
-				// switch ctrl
-				ctrlProperty.set(!ctrlProperty.get());
-				break;
-			case LOCALE_SWITCH:
-				try {
-					Locale l = new Locale(kb.getText());
-					setLayoutLocale(l);
-				} catch (IOException | URISyntaxException e) {
-					logger.error(e.getMessage(), e);
-				}
-				if (ctrlProperty.get()) {
-					ctrlProperty.set(false);
-				} else if (symbolProperty.get()) {
-					symbolProperty.set(false);
-				} else {
-					setKeyboardLayer(KeyboardLayer.QWERTY);
-				}
-				break;
-			case ARROW_UP:
-				sendToComponent((char) java.awt.event.KeyEvent.VK_UP, ctrlProperty.get());
-				break;
-			case ARROW_DOWN:
-				sendToComponent((char) java.awt.event.KeyEvent.VK_DOWN, ctrlProperty.get());
-				break;
-			case ARROW_LEFT:
-				sendToComponent((char) java.awt.event.KeyEvent.VK_LEFT, ctrlProperty.get());
-				break;
-			case ARROW_RIGHT:
-				sendToComponent((char) java.awt.event.KeyEvent.VK_RIGHT, ctrlProperty.get());
-				break;
-			default:
-				// logger.debug(java.awt.event.KeyEvent.getKeyText(kb.getKeyCode()));
-				if (kb.getKeyCode() > -1) {
-					sendToComponent((char) kb.getKeyCode(), ctrlProperty.get());
-				} else {
-					logger.warn("key code: {} not supported", kb.getKeyCode());
-				}
-				break;
-			}
+		if (!kbEvent.getEventType().equals(KeyButtonEvent.SHORT_PRESSED)) {
+			logger.warn("ignore non short pressed events");
+			return;
 		}
+		KeyButton kb = (KeyButton) kbEvent.getSource();
+		switch (kb.getKeyCode()) {
+		case SHIFT_DOWN:
+			// switch shifted
+			shiftProperty.set(!shiftProperty.get());
+			break;
+		case SYMBOL_DOWN:
+			// switch sym / qwerty
+			symbolProperty.set(!symbolProperty.get());
+			break;
+		case CLOSE:
+			if (closeEventHandler == null) {
+				System.exit(0);
+			} else {
+				closeEventHandler.handle(new KeyButtonEvent(KeyButtonEvent.ANY));
+			}
+			break;
+		case TAB:
+			sendToComponent((char) java.awt.event.KeyEvent.VK_TAB, true);
+			break;
+		case BACK_SPACE:
+			sendToComponent((char) java.awt.event.KeyEvent.VK_BACK_SPACE, true);
+			break;
+		case DELETE:
+			sendToComponent((char) java.awt.event.KeyEvent.VK_DELETE, true);
+			break;
+		case CTRL_DOWN:
+			// switch ctrl
+			ctrlProperty.set(!ctrlProperty.get());
+			break;
+		case LOCALE_SWITCH:
+			try {
+				Locale l = new Locale(kb.getText());
+				setLayoutLocale(l);
+			} catch (IOException | URISyntaxException e) {
+				logger.error(e.getMessage(), e);
+			}
+			if (ctrlProperty.get()) {
+				ctrlProperty.set(false);
+			} else if (symbolProperty.get()) {
+				symbolProperty.set(false);
+			} else {
+				setKeyboardLayer(KeyboardLayer.QWERTY);
+			}
+			break;
+		case ENTER:
+			sendToComponent((char) java.awt.event.KeyEvent.VK_ENTER, true);
+			break;
+		case ARROW_UP:
+			sendToComponent((char) java.awt.event.KeyEvent.VK_UP, true);
+			break;
+		case ARROW_DOWN:
+			sendToComponent((char) java.awt.event.KeyEvent.VK_DOWN, true);
+			break;
+		case ARROW_LEFT:
+			sendToComponent((char) java.awt.event.KeyEvent.VK_LEFT, true);
+			break;
+		case ARROW_RIGHT:
+			sendToComponent((char) java.awt.event.KeyEvent.VK_RIGHT, true);
+			break;
+		default:
+			// logger.debug(java.awt.event.KeyEvent.getKeyText(kb.getKeyCode()));
+			if (kb.getKeyCode() > -1) {
+				sendToComponent((char) kb.getKeyCode(), ctrlProperty.get());
+			} else {
+				logger.debug("unknown key code: {}", kb.getKeyCode());
+				sendToComponent((char) kb.getKeyCode(), true);
+			}
+			break;
+		}
+
 	}
 
 	/**

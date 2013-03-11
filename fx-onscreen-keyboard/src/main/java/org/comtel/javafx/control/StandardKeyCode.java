@@ -10,7 +10,7 @@ public interface StandardKeyCode {
 	final int CTRL_DOWN = -6;
 	final int LOCALE_SWITCH = -7;
 	final int DELETE = -8;
-
+	final int ENTER = -9;
 	final int ARROW_UP = -10;
 	final int ARROW_DOWN = -11;
 	final int ARROW_LEFT = -12;

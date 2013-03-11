@@ -65,65 +65,70 @@ public class AWTRobotHandler implements IRobot {
 				robot.keyRelease(java.awt.event.KeyEvent.VK_CONTROL);
 				return;
 			}
+
+			switch (ch) {
+			case java.awt.event.KeyEvent.VK_ENTER:
+				robot.keyPress(java.awt.event.KeyEvent.VK_ENTER);
+				robot.keyRelease(java.awt.event.KeyEvent.VK_ENTER);
+				return;
+			case java.awt.event.KeyEvent.VK_BACK_SPACE:
+				robot.keyPress(java.awt.event.KeyEvent.VK_BACK_SPACE);
+				robot.keyRelease(java.awt.event.KeyEvent.VK_BACK_SPACE);
+				return;
+			case java.awt.event.KeyEvent.VK_DELETE:
+				robot.keyPress(java.awt.event.KeyEvent.VK_DELETE);
+				robot.keyRelease(java.awt.event.KeyEvent.VK_DELETE);
+				return;
+			case java.awt.event.KeyEvent.VK_ESCAPE:
+				robot.keyPress(java.awt.event.KeyEvent.VK_ESCAPE);
+				robot.keyRelease(java.awt.event.KeyEvent.VK_ESCAPE);
+				return;
+			case java.awt.event.KeyEvent.VK_SPACE:
+				robot.keyPress(java.awt.event.KeyEvent.VK_SPACE);
+				robot.keyRelease(java.awt.event.KeyEvent.VK_SPACE);
+				return;
+			case java.awt.event.KeyEvent.VK_TAB:
+				robot.keyPress(java.awt.event.KeyEvent.VK_TAB);
+				robot.keyRelease(java.awt.event.KeyEvent.VK_TAB);
+				return;
+			case java.awt.event.KeyEvent.VK_UP:
+				robot.keyPress(java.awt.event.KeyEvent.VK_UP);
+				robot.keyRelease(java.awt.event.KeyEvent.VK_UP);
+				return;
+			case java.awt.event.KeyEvent.VK_DOWN:
+				robot.keyPress(java.awt.event.KeyEvent.VK_DOWN);
+				robot.keyRelease(java.awt.event.KeyEvent.VK_DOWN);
+				return;
+			case java.awt.event.KeyEvent.VK_LEFT:
+				robot.keyPress(java.awt.event.KeyEvent.VK_LEFT);
+				robot.keyRelease(java.awt.event.KeyEvent.VK_LEFT);
+				return;
+			case java.awt.event.KeyEvent.VK_RIGHT:
+				robot.keyPress(java.awt.event.KeyEvent.VK_RIGHT);
+				robot.keyRelease(java.awt.event.KeyEvent.VK_RIGHT);
+				return;
+			}
 		}
 
-		switch (ch) {
-		case java.awt.event.KeyEvent.VK_ENTER:
-			robot.keyPress(java.awt.event.KeyEvent.VK_ENTER);
-			robot.keyRelease(java.awt.event.KeyEvent.VK_ENTER);
-			break;
-		case java.awt.event.KeyEvent.VK_BACK_SPACE:
-			robot.keyPress(java.awt.event.KeyEvent.VK_BACK_SPACE);
-			robot.keyRelease(java.awt.event.KeyEvent.VK_BACK_SPACE);
-			break;
-		case java.awt.event.KeyEvent.VK_DELETE:
-			robot.keyPress(java.awt.event.KeyEvent.VK_DELETE);
-			robot.keyRelease(java.awt.event.KeyEvent.VK_DELETE);
-			break;
-		case java.awt.event.KeyEvent.VK_ESCAPE:
-			robot.keyPress(java.awt.event.KeyEvent.VK_ESCAPE);
-			robot.keyRelease(java.awt.event.KeyEvent.VK_ESCAPE);
-			break;
-		case java.awt.event.KeyEvent.VK_SPACE:
-			robot.keyPress(java.awt.event.KeyEvent.VK_SPACE);
-			robot.keyRelease(java.awt.event.KeyEvent.VK_SPACE);
-			break;
-		case java.awt.event.KeyEvent.VK_TAB:
-			robot.keyPress(java.awt.event.KeyEvent.VK_TAB);
-			robot.keyRelease(java.awt.event.KeyEvent.VK_TAB);
-			break;
-		case java.awt.event.KeyEvent.VK_UP:
-			robot.keyPress(java.awt.event.KeyEvent.VK_UP);
-			robot.keyRelease(java.awt.event.KeyEvent.VK_UP);
-			break;
-		case java.awt.event.KeyEvent.VK_DOWN:
-			robot.keyPress(java.awt.event.KeyEvent.VK_DOWN);
-			robot.keyRelease(java.awt.event.KeyEvent.VK_DOWN);
-			break;
-		case java.awt.event.KeyEvent.VK_LEFT:
-			robot.keyPress(java.awt.event.KeyEvent.VK_LEFT);
-			robot.keyRelease(java.awt.event.KeyEvent.VK_LEFT);
-			break;
-		case java.awt.event.KeyEvent.VK_RIGHT:
-			robot.keyPress(java.awt.event.KeyEvent.VK_RIGHT);
-			robot.keyRelease(java.awt.event.KeyEvent.VK_RIGHT);
-			break;
-		default:
-			int modififiers = Character.isUpperCase(ch) ? java.awt.event.KeyEvent.SHIFT_DOWN_MASK : 0;
-			KeyboardFocusManager.getCurrentKeyboardFocusManager().dispatchKeyEvent(
-					new java.awt.event.KeyEvent(c, java.awt.event.KeyEvent.KEY_PRESSED, System.currentTimeMillis(),
-							modififiers, java.awt.event.KeyEvent.VK_UNDEFINED, ch,
-							java.awt.event.KeyEvent.KEY_LOCATION_STANDARD));
-			KeyboardFocusManager.getCurrentKeyboardFocusManager().dispatchKeyEvent(
-					new java.awt.event.KeyEvent(c, java.awt.event.KeyEvent.KEY_TYPED, System.currentTimeMillis(),
-							modififiers, java.awt.event.KeyEvent.VK_UNDEFINED, ch,
-							java.awt.event.KeyEvent.KEY_LOCATION_UNKNOWN));
-			KeyboardFocusManager.getCurrentKeyboardFocusManager().dispatchKeyEvent(
-					new java.awt.event.KeyEvent(c, java.awt.event.KeyEvent.KEY_RELEASED, System.currentTimeMillis(),
-							modififiers, java.awt.event.KeyEvent.VK_UNDEFINED, ch,
-							java.awt.event.KeyEvent.KEY_LOCATION_STANDARD));
-			break;
+		if (Character.isWhitespace(ch)){
+			robot.keyPress(ch);
+			robot.keyRelease(ch);
+			return;
 		}
+		
+		int modififiers = Character.isUpperCase(ch) ? java.awt.event.KeyEvent.SHIFT_DOWN_MASK : 0;
+		KeyboardFocusManager.getCurrentKeyboardFocusManager().dispatchKeyEvent(
+				new java.awt.event.KeyEvent(c, java.awt.event.KeyEvent.KEY_PRESSED, System.currentTimeMillis(),
+						modififiers, java.awt.event.KeyEvent.VK_UNDEFINED, ch,
+						java.awt.event.KeyEvent.KEY_LOCATION_STANDARD));
+		KeyboardFocusManager.getCurrentKeyboardFocusManager().dispatchKeyEvent(
+				new java.awt.event.KeyEvent(c, java.awt.event.KeyEvent.KEY_TYPED, System.currentTimeMillis(),
+						modififiers, java.awt.event.KeyEvent.VK_UNDEFINED, ch,
+						java.awt.event.KeyEvent.KEY_LOCATION_UNKNOWN));
+		KeyboardFocusManager.getCurrentKeyboardFocusManager().dispatchKeyEvent(
+				new java.awt.event.KeyEvent(c, java.awt.event.KeyEvent.KEY_RELEASED, System.currentTimeMillis(),
+						modififiers, java.awt.event.KeyEvent.VK_UNDEFINED, ch,
+						java.awt.event.KeyEvent.KEY_LOCATION_STANDARD));
 
 	}
 

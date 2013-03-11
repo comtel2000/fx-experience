@@ -12,10 +12,10 @@ import javafx.stage.Window;
 import com.sun.javafx.robot.FXRobot;
 import com.sun.javafx.robot.FXRobotFactory;
 
-public class FXRobotHandler implements IRobot{
+public class FXRobotHandler implements IRobot {
 
 	private final static org.slf4j.Logger logger = LoggerFactory.getLogger(FXRobotHandler.class);
-	
+
 	@Override
 	public void sendToComponent(Object kb, final char ch, final boolean ctrl) {
 		logger.trace("fire: {}", ch);
@@ -71,65 +71,64 @@ public class FXRobotHandler implements IRobot{
 				robot.keyRelease(KeyCode.CONTROL);
 				return;
 			}
+			switch (ch) {
+			case java.awt.event.KeyEvent.VK_ENTER:
+				robot.keyPress(KeyCode.ENTER);
+				robot.keyType(KeyCode.ENTER, Character.toString(ch));
+				robot.keyRelease(KeyCode.ENTER);
+				return;
+			case java.awt.event.KeyEvent.VK_BACK_SPACE:
+				robot.keyPress(KeyCode.BACK_SPACE);
+				robot.keyType(KeyCode.BACK_SPACE, Character.toString(ch));
+				robot.keyRelease(KeyCode.BACK_SPACE);
+				return;
+			case java.awt.event.KeyEvent.VK_DELETE:
+				robot.keyPress(KeyCode.DELETE);
+				robot.keyType(KeyCode.DELETE, Character.toString(ch));
+				robot.keyRelease(KeyCode.DELETE);
+				return;
+			case java.awt.event.KeyEvent.VK_ESCAPE:
+				robot.keyPress(KeyCode.ESCAPE);
+				robot.keyType(KeyCode.ESCAPE, Character.toString(ch));
+				robot.keyRelease(KeyCode.ESCAPE);
+				return;
+			case java.awt.event.KeyEvent.VK_SPACE:
+				robot.keyPress(KeyCode.SPACE);
+				robot.keyType(KeyCode.SPACE, " ");
+				robot.keyRelease(KeyCode.SPACE);
+				return;
+			case java.awt.event.KeyEvent.VK_TAB:
+				robot.keyPress(KeyCode.TAB);
+				robot.keyType(KeyCode.TAB, Character.toString(ch));
+				robot.keyRelease(KeyCode.TAB);
+				return;
+			case java.awt.event.KeyEvent.VK_UP:
+				robot.keyPress(KeyCode.UP);
+				robot.keyType(KeyCode.UP, "");
+				robot.keyRelease(KeyCode.UP);
+				return;
+			case java.awt.event.KeyEvent.VK_DOWN:
+				robot.keyPress(KeyCode.DOWN);
+				robot.keyType(KeyCode.DOWN, "");
+				robot.keyRelease(KeyCode.DOWN);
+				return;
+			case java.awt.event.KeyEvent.VK_LEFT:
+				robot.keyPress(KeyCode.LEFT);
+				robot.keyType(KeyCode.LEFT, "");
+				robot.keyRelease(KeyCode.LEFT);
+				return;
+			case java.awt.event.KeyEvent.VK_RIGHT:
+				robot.keyPress(KeyCode.RIGHT);
+				robot.keyType(KeyCode.RIGHT, "");
+				robot.keyRelease(KeyCode.RIGHT);
+				return;
+			}
 
 		}
-		switch (ch) {
-		case java.awt.event.KeyEvent.VK_ENTER:
-			robot.keyPress(KeyCode.ENTER);
-			robot.keyType(KeyCode.ENTER, Character.toString(ch));
-			robot.keyRelease(KeyCode.ENTER);
-			break;
-		case java.awt.event.KeyEvent.VK_BACK_SPACE:
-			robot.keyPress(KeyCode.BACK_SPACE);
-			robot.keyType(KeyCode.BACK_SPACE, Character.toString(ch));
-			robot.keyRelease(KeyCode.BACK_SPACE);
-			break;
-		case java.awt.event.KeyEvent.VK_DELETE:
-			robot.keyPress(KeyCode.DELETE);
-			robot.keyType(KeyCode.DELETE, Character.toString(ch));
-			robot.keyRelease(KeyCode.DELETE);
-			break;
-		case java.awt.event.KeyEvent.VK_ESCAPE:
-			robot.keyPress(KeyCode.ESCAPE);
-			robot.keyType(KeyCode.ESCAPE, Character.toString(ch));
-			robot.keyRelease(KeyCode.ESCAPE);
-			break;
-		case java.awt.event.KeyEvent.VK_SPACE:
-			robot.keyPress(KeyCode.SPACE);
-			robot.keyType(KeyCode.SPACE, " ");
-			robot.keyRelease(KeyCode.SPACE);
-			break;
-		case java.awt.event.KeyEvent.VK_TAB:
-			robot.keyPress(KeyCode.TAB);
-			robot.keyType(KeyCode.TAB, Character.toString(ch));
-			robot.keyRelease(KeyCode.TAB);
-			break;
-		case java.awt.event.KeyEvent.VK_UP:
-			robot.keyPress(KeyCode.UP);
-			robot.keyType(KeyCode.UP, "");
-			robot.keyRelease(KeyCode.UP);
-			break;
-		case java.awt.event.KeyEvent.VK_DOWN:
-			robot.keyPress(KeyCode.DOWN);
-			robot.keyType(KeyCode.DOWN, "");
-			robot.keyRelease(KeyCode.DOWN);
-			break;
-		case java.awt.event.KeyEvent.VK_LEFT:
-			robot.keyPress(KeyCode.LEFT);
-			robot.keyType(KeyCode.LEFT, "");
-			robot.keyRelease(KeyCode.LEFT);
-			break;
-		case java.awt.event.KeyEvent.VK_RIGHT:
-			robot.keyPress(KeyCode.RIGHT);
-			robot.keyType(KeyCode.RIGHT, "");
-			robot.keyRelease(KeyCode.RIGHT);
-			break;
-		default:
-			robot.keyPress(KeyCode.UNDEFINED);
-			robot.keyType(KeyCode.UNDEFINED, Character.toString(ch));
-			robot.keyRelease(KeyCode.UNDEFINED);
-			break;
-		}
+
+		robot.keyPress(KeyCode.UNDEFINED);
+		robot.keyType(KeyCode.UNDEFINED, Character.toString(ch));
+		robot.keyRelease(KeyCode.UNDEFINED);
 
 	}
 
