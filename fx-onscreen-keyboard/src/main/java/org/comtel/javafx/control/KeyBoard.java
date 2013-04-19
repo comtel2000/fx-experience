@@ -333,7 +333,7 @@ public class KeyBoard extends Region implements StandardKeyCode, EventHandler<Ke
 				MultiKeyButton button = new MultiKeyButton();
 				button.setFocusTraversable(false);
 				button.setOnShortPressed(this);
-
+				button.setCache(true);
 				button.setMinHeight(10);
 				button.setPrefHeight(40);
 				button.setMaxWidth(600);

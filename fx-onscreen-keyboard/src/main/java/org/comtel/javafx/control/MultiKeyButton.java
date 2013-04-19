@@ -73,6 +73,9 @@ public class MultiKeyButton extends KeyButton {
 		if (label != null){
 			button.setText(label);
 		}
+		button.setFocusTraversable(false);
+		button.setCache(true);
+		
 		//TODO: add to css style
 		button.setPrefWidth(40);
 		button.setPrefHeight(40);
