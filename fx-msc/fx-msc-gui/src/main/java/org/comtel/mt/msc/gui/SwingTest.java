@@ -202,8 +202,14 @@ public class SwingTest extends JFrame implements VdmaMessageProcessor {
 		for (int i = 0; i < imgIntArray.length; i++) {
 			imgIntArray[i] = image[i];
 		}
+		
+		int sample = 1;
+		if (image.length == 76800) {
+			sample = 2;
+		} else if (image.length == 19200) {
+			sample = 3;
+		}
 
-		int sample = 640 * 480 / image.length;
 		BufferedImage bufferedImage = new BufferedImage(640 / sample, 480 / sample, BufferedImage.TYPE_BYTE_GRAY);
 		WritableRaster myRaster = bufferedImage.getRaster();
 		myRaster.setPixels(0, 0, bufferedImage.getWidth(), bufferedImage.getHeight(), imgIntArray);

@@ -10,21 +10,36 @@ import java.util.ResourceBundle;
 
 import javafx.application.Platform;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
-import javafx.scene.layout.StackPane;
+import jfxtras.labs.scene.control.gauge.Gauge;
+import jfxtras.labs.scene.control.gauge.Lcd;
+import jfxtras.labs.scene.control.gauge.LcdBuilder;
+import jfxtras.labs.scene.control.gauge.LcdDesign;
+import jfxtras.labs.scene.control.gauge.StyleModel;
+import jfxtras.labs.scene.control.gauge.StyleModelBuilder;
+import jfxtras.labs.scene.control.window.CloseIcon;
+import jfxtras.labs.scene.control.window.MinimizeIcon;
+import jfxtras.labs.scene.control.window.Window;
 
 import org.comtel.mt.msc.gui.Main;
 import org.comtel.mt.msc.gui.communication.VdmaChannelReaderThread;
+import org.comtel.mt.msc.gui.communication.VdmaChannelReaderThread2;
 import org.comtel.mt.msc.gui.communication.VdmaChannelWriterThread;
 import org.comtel.mt.msc.gui.communication.VdmaMessageProcessor;
 import org.slf4j.LoggerFactory;
@@ -45,11 +60,15 @@ public class MscImageController implements Initializable, AutoCloseable, VdmaMes
 	private Label statusLabel;
 
 	@FXML
-	private StackPane viewGroup;
+	private Group viewGroup;
+
+	private StyleModel STYLE_MODEL_1 = StyleModelBuilder.create().lcdDesign(LcdDesign.STANDARD_GREEN)
+			.lcdValueFont(Gauge.LcdFont.LCD).lcdUnitStringVisible(true).lcdThresholdVisible(true).build();
 	
 	private ImageView imageView = new ImageView();
 	
 	private ImageViewPane imageViewPane = new ImageViewPane();
+	private Window window = new Window("MSC");
 	
 	private final static org.slf4j.Logger logger = LoggerFactory.getLogger(Main.class);
 
@@ -57,10 +76,16 @@ public class MscImageController implements Initializable, AutoCloseable, VdmaMes
 
 	private final SimpleStringProperty status = new SimpleStringProperty();
 
+	private final SimpleIntegerProperty imageCount = new SimpleIntegerProperty();
+	
 	private final SimpleObjectProperty<Image> ovlImage = new SimpleObjectProperty<>();
 
 	private final SimpleBooleanProperty connected = new SimpleBooleanProperty(false);
 
+	private final ObservableList<Image> imageList = FXCollections.observableArrayList();
+	
+	private final SimpleIntegerProperty imageListIndex = new SimpleIntegerProperty();
+	
 	private VdmaChannelReaderThread readerThread;
 	private VdmaChannelWriterThread writerThread;
 
@@ -100,6 +125,9 @@ public class MscImageController implements Initializable, AutoCloseable, VdmaMes
 		}
 
 		connected.set(true);
+		if (window.isMinimized()){
+			window.setMinimized(false);
+		}
 		status.set("connected");
 		return true;
 	}
@@ -134,6 +162,22 @@ public class MscImageController implements Initializable, AutoCloseable, VdmaMes
 		return true;
 	}
 
+	@FXML
+	public void showPrevious() {
+		if (imageListIndex.get() > 0){
+			imageListIndex.set(imageListIndex.get() - 1);
+			ovlImage.set(imageList.get(imageListIndex.get()));
+		}
+	}
+	
+	@FXML
+	public void showNext() {
+		if (imageListIndex.get() < imageList.size() - 1){
+			imageListIndex.set(imageListIndex.get() + 1);
+			ovlImage.set(imageList.get(imageListIndex.get()));
+		}
+	}
+	
 	@Override
 	public void processXML(byte[] xml) {
 		logger.info("xml received: {}", xml.length);
@@ -149,7 +193,12 @@ public class MscImageController implements Initializable, AutoCloseable, VdmaMes
 			imgIntArray[i] = image[i];
 		}
 
-		int sample = 640 * 480 / image.length;
+		int sample = 1;
+		if (image.length == 76800) {
+			sample = 2;
+		} else if (image.length == 19200) {
+			sample = 3;
+		}
 
 		BufferedImage bufferedImage = new BufferedImage(640 / sample, 480 / sample, BufferedImage.TYPE_BYTE_GRAY);
 		WritableRaster myRaster = bufferedImage.getRaster();
@@ -166,6 +215,12 @@ public class MscImageController implements Initializable, AutoCloseable, VdmaMes
 			@Override
 			public void run() {
 				status.set("image size: " + fxImage.getWidth() + "/" + fxImage.getHeight());
+				if (imageList.size() > 10){
+					imageList.remove(0);
+				}
+				imageList.add(fxImage);
+				imageListIndex.set(imageList.size() - 1);
+				
 				ovlImage.set(fxImage);
 			}
 		});
@@ -186,10 +241,49 @@ public class MscImageController implements Initializable, AutoCloseable, VdmaMes
 		imageView.setPreserveRatio(true);
 
 		imageView.imageProperty().bind(ovlImage);
+		ovlImage.addListener(new ChangeListener<Image>() {
+			@Override
+			public void changed(ObservableValue<? extends Image> observable, Image oldValue, Image newValue) {
+				if(newValue != null){
+					imageCount.set(imageCount.get() + 1);
+				}else{
+					imageCount.set(0);
+				}
+				
+			}
+		});
+		Lcd lcd1 = LcdBuilder.create().styleModel(STYLE_MODEL_1).threshold(40).bargraphVisible(true)
+				.minMeasuredValueVisible(true).minMeasuredValueDecimals(3).maxMeasuredValueVisible(true)
+				.maxMeasuredValueDecimals(3).formerValueVisible(true).title("images").unit("").build();
+		lcd1.valueProperty().bind(imageCount);
+		
+		lcd1.setPrefSize(150, 70);
+		window.titleProperty().bind(ipAddress);
+//		w.setLayoutX(10);
+//		w.setLayoutY(10);
+		window.setPrefSize(640, 480);
+		window.minimizedProperty().addListener(new ChangeListener<Boolean>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+				if (newValue){
+					disconnect();
+				}
+			}
+		});
+		
+		//window.getLeftIcons().add(new CloseIcon(window));
+		window.getRightIcons().add(new MinimizeIcon(window));
+		window.getContentPane().getChildren().add(imageViewPane);
+//		imageView.fitWidthProperty().bind(w.widthProperty());
+//		imageView.fitHeightProperty().bind(w.heightProperty());
+		
 		imageViewPane.setImageView(imageView);
 		imageViewPane.setPrefSize(640, 480);
+
 		
-		viewGroup.getChildren().add(imageViewPane);
+		viewGroup.getChildren().add(window);
+		//viewGroup.getChildren().add(lcd1);
 	}
 
 	@Override
