@@ -3,7 +3,11 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.comtel.mt</groupId>
 	<artifactId>fx-msc-gui</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.3-SNAPSHOT</version>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<javac.src.version>1.7</javac.src.version>
+	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>com.oracle</groupId>
@@ -22,6 +26,12 @@
   		<artifactId>jfxtras-labs</artifactId>
   		<version>2.2-r4</version>
   	</dependency>
+  	<dependency>
+  		<groupId>com.fasterxml</groupId>
+  		<artifactId>aalto-xml</artifactId>
+  		<version>0.9.9-SNAPSHOT</version>
+  		<type>bundle</type>
+  	</dependency>
 	</dependencies>
 		<build>
 		<plugins>
@@ -35,7 +45,6 @@
 							<filtering>false</filtering>
 							<directory>${basedir}/src/main/resources</directory>
 							<excludes>
-								<exclude>**/*.svg</exclude>
 							</excludes>
 						</resource>
 					</resources>
@@ -73,4 +82,5 @@
 			</plugin>
 		</plugins>
 	</build>
+		<name>MSC FX GUI</name>
 </project>

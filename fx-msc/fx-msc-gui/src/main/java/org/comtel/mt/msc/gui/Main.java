@@ -18,12 +18,15 @@ public class Main extends Application {
 
 	@Override
 	public void start(Stage stage) throws Exception {
-		stage.setTitle("FX MSC GUI (" + System.getProperty("javafx.runtime.version") + ")");
+		stage.setTitle("MSC FX GUI (" + System.getProperty("javafx.runtime.version") + ")");
 		stage.setResizable(true);
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("view/MscImageView.fxml"));
 		Parent root = (Parent) fxmlLoader.load();
 		controller = fxmlLoader.getController();
 		Scene scene = new Scene(root);
+		String css = this.getClass().getResource("main.css").toExternalForm();
+		scene.getStylesheets().add(css);
+		
 		stage.setScene(scene);
 		stage.show();
 

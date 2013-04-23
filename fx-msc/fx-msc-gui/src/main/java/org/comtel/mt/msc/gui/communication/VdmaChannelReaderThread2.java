@@ -3,7 +3,6 @@ package org.comtel.mt.msc.gui.communication;
 import java.io.ByteArrayOutputStream;
 import java.io.CharArrayWriter;
 import java.io.IOException;
-import java.io.StringWriter;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
 import java.net.StandardSocketOptions;
@@ -25,7 +24,7 @@ public class VdmaChannelReaderThread2 extends Thread {
 	private final static int LF = 10;
 	private SocketAddress socketAdr;
 	private final AtomicBoolean running = new AtomicBoolean(false);
-	private final int MAX_XML_CMD_LENGTH = 25;
+
 	private final VdmaMessageProcessor processor;
 
 	public final boolean isRunning() {
@@ -51,96 +50,90 @@ public class VdmaChannelReaderThread2 extends Thread {
 	@Override
 	public void run() {
 		running.set(true);
-		char chr = 0;
-		CharArrayWriter strBuffer = new CharArrayWriter();
-		ByteArrayOutputStream dataBuffer = new ByteArrayOutputStream(76800);
-		CharArrayWriter xmlTagBuffer = new CharArrayWriter(MAX_XML_CMD_LENGTH + 1);
-		String xmlTagString, imageData;
-		boolean dataStream = false;
-		boolean mscVideoMain = false;
-		boolean mscStreamEnd = false;
-		
 		try (ServerSocketChannel serverSocket = ServerSocketChannel.open()) {
 			serverSocket.configureBlocking(true);
 			serverSocket.bind(socketAdr);
 
 			ByteBuffer buffer = ByteBuffer.allocateDirect(BUFFER_SIZE);
+			boolean receiveImage = false;
+			boolean receiveTag = false;
+			boolean sampleData = false;
+			int maxImageWidth = 640;
+			int maxImageHeight = 480;
+			int imageSize = 76800;
+
+			long time = 0;
+
+			ByteArrayOutputStream imageStream = new ByteArrayOutputStream(76800);
+
+			ByteArrayOutputStream xmlStream = new ByteArrayOutputStream(1024);
+			CharArrayWriter tagStream = new CharArrayWriter(1024);
 
 			try (SocketChannel socket = serverSocket.accept()) {
-				socket.configureBlocking(true);
+				// socket.configureBlocking(true);
 				socket.setOption(StandardSocketOptions.SO_KEEPALIVE, true);
 				while (running.get() && socket.read(buffer) > 0) {
 
 					buffer.flip();
 
 					while (buffer.hasRemaining()) {
-						chr = (char)buffer.get();
-						if (chr == (byte) 6 && !dataStream && !mscVideoMain) {
+						if (xmlStream.size() == 0) {
+							time = System.currentTimeMillis();
+						}
+						int b = buffer.get();
+						if (sampleData) {
+							int sample = Character.getNumericValue(b);
+							imageSize = (maxImageWidth / sample) * (maxImageHeight / sample);
+							logger.debug("sample: {} -> imageSize: {}", sample, imageSize);
+							sampleData = false;
 							continue;
-						} else if (chr == '<') {
-							xmlTagBuffer.reset();
-							xmlTagBuffer.append(chr);
-						} else if (chr == '>') {
-							xmlTagString = xmlTagBuffer.append(chr).toString();
-							xmlTagBuffer.reset();
-							if (!dataStream && mscVideoMain && xmlTagString.equals("<data>")) {
-								dataStream = true;
-								strBuffer.append(chr);
-								continue;
-							} else if (!mscVideoMain && xmlTagString.equals("</page>")) {
-								if (strBuffer.toString().endsWith("BSP_VIDEO_MAIN</page"))
-									mscVideoMain = true;
-							} else if (mscVideoMain && xmlTagString.equals("</data>")) {
-								strBuffer.append("Placeholder for Image</data>");
-								dataBuffer.write(chr);
-								dataStream = false;
-								mscVideoMain = false;
-								continue;
-							} else if (xmlTagString.equals("</MSC_GUI>")) {
-								mscStreamEnd = true;
-							}
-							// System.err.println(xmlTagBuffer.toString());
+						}
+						if (receiveImage && imageStream.size() < imageSize) {
+							imageStream.write(b);
+							continue;
+						}
+						xmlStream.write(b);
 
-							// add to xml command
-						} else if (xmlTagBuffer.size() > 0 && xmlTagBuffer.size() < MAX_XML_CMD_LENGTH) {
-
-							if (dataStream && Character.isWhitespace(chr)){
-								xmlTagBuffer.reset();
+						if (!receiveTag && b == '<') {
+							receiveTag = true;
+							tagStream.write(b);
+							continue;
+						}
+						if (receiveTag){
+							if (b == '<'){
+								tagStream.reset();
 							}
-							else{
-								xmlTagBuffer.append(chr);
-							}
+							tagStream.write(b);
 						}
 
-						// switch between "BSP_VIDEO_MAIN" image and xml
-						// data
-						if (dataStream) {
-							dataBuffer.write(chr);
-						} else{
-							strBuffer.append(chr);
-						}
-						if (mscStreamEnd) { // finished transfer
-							mscStreamEnd = false;
-							mscVideoMain = false;
-							//
-							if (dataBuffer.size() > 0) { // contains image
-								
-								
-								byte[] data = dataBuffer.toByteArray();
-								byte[] image = Arrays.copyOf(data, data.length - 7);
-
-								System.out.println("image size: " + image.length);
-								processor.processImage(image);
-
-								dataBuffer.reset();
-
-							} else { // contains only xml data
-								processor.processXML(strBuffer.toString().getBytes());
+						if (receiveTag && b == '>') {
+							String tag = tagStream.toString();
+							tagStream.reset();
+							receiveTag = false;
+							if (tag.equals("<sample>")) {
+								sampleData = true;
+								continue;
 							}
-							strBuffer.reset();
-							xmlTagBuffer.reset();
+							if (!receiveImage && tag.equals("<data>")) {
+								receiveImage = true;
+							} else if (receiveImage && tag.equals("</data>")) {
+								receiveImage = false;
+							} else if (!receiveImage && tag.equals("</MSC_GUI>")) {
+								time = System.currentTimeMillis() - time;
+								logger.debug("XML size: {} received in {} ms", xmlStream.size(), time);
+								if (imageStream.size() > 0) {
+									processor.processXML(xmlStream.toByteArray(), imageStream.toByteArray());
+									imageStream.reset();
+								} else {
+									processor.processXML(xmlStream.toByteArray());
+								}
+								logger.debug("xml final size: {}", xmlStream.size());
+
+								xmlStream.reset();
+							}
 						}
 					}
+					// logger.warn("partial xml size: {}", xmlStream.size());
 					buffer.clear();
 				}
 			}

@@ -1,14 +1,18 @@
 package org.comtel.mt.msc.gui;
 
+import java.awt.AlphaComposite;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.FlowLayout;
+import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.image.BufferedImage;
 import java.awt.image.WritableRaster;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
@@ -28,9 +32,16 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 
-import org.comtel.mt.msc.gui.communication.VdmaChannelReaderThread;
+import org.comtel.mt.msc.gui.AspectRatioTool.AR;
 import org.comtel.mt.msc.gui.communication.VdmaChannelWriterThread;
 import org.comtel.mt.msc.gui.communication.VdmaMessageProcessor;
+import org.comtel.mt.msc.gui.communication.VdmaXmlChannelReaderThread;
+import org.comtel.mt.msc.gui.model.MscGuiContext;
+import org.comtel.mt.msc.gui.model.jaxb.MSCGUI;
+import org.comtel.mt.msc.gui.model.jaxb.MSCGUI.DrawFrame;
+import org.comtel.mt.msc.gui.model.jaxb.MSCGUI.DrawRectArea;
+import org.comtel.mt.msc.gui.model.jaxb.MSCGUI.PriStrBsp;
+import org.comtel.mt.msc.gui.model.jaxb.MSCGUI.SndPICtoGUI;
 import org.slf4j.LoggerFactory;
 
 public class SwingTest extends JFrame implements VdmaMessageProcessor {
@@ -38,6 +49,8 @@ public class SwingTest extends JFrame implements VdmaMessageProcessor {
 	private static final long serialVersionUID = 1L;
 
 	private final static org.slf4j.Logger logger = LoggerFactory.getLogger(SwingTest.class);
+
+	private final MscGuiContext loader = new MscGuiContext();
 
 	private final SimpleStringProperty ipAddress = new SimpleStringProperty("192.168.100.217");
 
@@ -47,7 +60,7 @@ public class SwingTest extends JFrame implements VdmaMessageProcessor {
 
 	private final SimpleBooleanProperty connected = new SimpleBooleanProperty(false);
 
-	private VdmaChannelReaderThread readerThread;
+	private VdmaXmlChannelReaderThread readerThread;
 	private VdmaChannelWriterThread writerThread;
 
 	private final JLabel imageLabel = new JLabel();
@@ -148,7 +161,7 @@ public class SwingTest extends JFrame implements VdmaMessageProcessor {
 			writerThread.open(adr);
 
 			logger.debug("start reader..");
-			readerThread = new VdmaChannelReaderThread(this);
+			readerThread = new VdmaXmlChannelReaderThread(this);
 			readerThread.open(port);
 		} catch (IOException e) {
 			status.set(e.getMessage());
@@ -195,27 +208,71 @@ public class SwingTest extends JFrame implements VdmaMessageProcessor {
 	}
 
 	@Override
-	public void processImage(byte[] image) {
+	public void processXML(byte[] xml, byte[] image) {
 		logger.info("image received: {}", image.length);
 
 		int[] imgIntArray = new int[image.length];
 		for (int i = 0; i < imgIntArray.length; i++) {
 			imgIntArray[i] = image[i];
 		}
-		
-		int sample = 1;
-		if (image.length == 76800) {
-			sample = 2;
-		} else if (image.length == 19200) {
-			sample = 3;
-		}
 
-		BufferedImage bufferedImage = new BufferedImage(640 / sample, 480 / sample, BufferedImage.TYPE_BYTE_GRAY);
+		int height = AspectRatioTool.getHeight(image.length, AR.FOUR_THREE);
+		int width = image.length / height;
+
+		BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_BYTE_GRAY);
 		WritableRaster myRaster = bufferedImage.getRaster();
 		myRaster.setPixels(0, 0, bufferedImage.getWidth(), bufferedImage.getHeight(), imgIntArray);
+		MSCGUI gui = null;
 
+		try {
+			gui = loader.get(new ByteArrayInputStream(xml));
+		} catch (IOException e) {
+			logger.error(e.getMessage(), e);
+		}
+
+		Graphics2D g = (Graphics2D) bufferedImage.getGraphics();
+		drawComponents(g, gui);
+		g.dispose();
 		ovlImage.set(bufferedImage);
 
+	}
+
+	private void drawComponents(Graphics2D g, MSCGUI gui) {
+
+		SndPICtoGUI pic = gui.getSndPICtoGUI();
+		// g.setWidth(pic.getDx());
+		// g.setHeight(pic.getDy());
+		g.setComposite(AlphaComposite.Clear);
+		
+		for (DrawRectArea e : gui.getDrawRectArea()) {
+			logger.debug("draw rect: {},{},{},{}", e.getPx(), e.getPy(), e.getDx(), e.getDy());
+			g.clearRect(e.getPx(), e.getPy(), e.getDx(), e.getDy());
+		}
+		g.setPaintMode();
+		g.setColor(Color.YELLOW);
+		
+		for (DrawFrame e : gui.getDrawFrame()) {
+			logger.debug("draw frame: {},{},{},{}", e.getPx(), e.getPy(), e.getDx(), e.getDy());
+			// g.setLineWidth(e.getThickn());
+			// g.setStroke(Stroke(e.getCol()));
+			g.drawRect(e.getPx(), e.getPy(), e.getDx(), e.getDy());
+		}
+		for (PriStrBsp e : gui.getPriStrBsp()) {
+			logger.debug("draw text: {},{}", e.getPx(), e.getPy());
+
+			// g.setTextBaseline(VPos.TOP);
+			// g.setFont(getFont(e.getSize()));
+			//
+			// FontMetrics fm =
+			// Toolkit.getToolkit().getFontLoader().getFontMetrics(g.getFont());
+			// g.setFill(Color.web(e.getBgcol()));
+			// g.fillRect(e.getPx(), e.getPy(),
+			// fm.computeStringWidth(e.getString()), fm.getLineHeight());
+			//
+			// g.setFill(Color.web(e.getFgcol()));
+			//
+			// g.fillText(e.getString(), e.getPx(), e.getPy());
+		}
 	}
 
 	public static void main(String[] args) {

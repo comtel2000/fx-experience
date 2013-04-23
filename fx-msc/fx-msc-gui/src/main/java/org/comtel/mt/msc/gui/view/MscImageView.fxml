@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
@@ -11,15 +12,23 @@
   <!-- TODO Add Nodes -->
   <children>
     <BorderPane prefHeight="600.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <bottom>
+        <Label fx:id="statusLabel" alignment="CENTER_RIGHT" contentDisplay="LEFT" prefWidth="283.0" text="Label" wrapText="true" />
+      </bottom>
       <top>
-        <ToolBar prefHeight="60.0" prefWidth="798.0">
+        <ToolBar prefHeight="60.0" prefWidth="610.0">
           <items>
+            <AnchorPane fx:id="menuPane" mouseTransparent="true" prefHeight="50.0" prefWidth="160.0">
+              <padding>
+                <Insets right="10.0" />
+              </padding>
+            </AnchorPane>
             <TextField fx:id="ipTextField" prefWidth="109.0" promptText="IP" text="192.168.100.217" />
             <Button id="" fx:id="connectButton" mnemonicParsing="false" onAction="#connect" prefWidth="78.0" text="connect" />
             <Button id="" fx:id="disconnectButton" contentDisplay="LEFT" mnemonicParsing="false" onAction="#disconnect" prefWidth="86.0" text="disconnect" textAlignment="LEFT" />
             <Button id="" contentDisplay="LEFT" mnemonicParsing="false" onAction="#showPrevious" prefWidth="48.0" text="&lt;" textAlignment="LEFT" />
             <Button id="" contentDisplay="LEFT" mnemonicParsing="false" onAction="#showNext" prefWidth="48.0" text="&gt;" textAlignment="LEFT" />
-            <Label fx:id="statusLabel" alignment="CENTER_RIGHT" contentDisplay="LEFT" prefWidth="283.0" text="Label" wrapText="true" />
+            <ToggleButton fx:id="dataViewButton" mnemonicParsing="false" selected="false" text="data layer" />
           </items>
         </ToolBar>
       </top>

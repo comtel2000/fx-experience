@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema attributeFormDefault="unqualified"
+	elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="MSC_GUI">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="MNURelease" maxOccurs="1">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element type="xs:int" name="MID" />
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="MNUToTop" maxOccurs="1">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element type="xs:int" name="MID" />
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="SndPICtoGUI" maxOccurs="1">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element type="xs:string" name="page" />
+							<xs:element type="xs:int" name="sample" />
+							<xs:element type="xs:int" name="px" />
+							<xs:element type="xs:int" name="py" />
+							<xs:element type="xs:int" name="dx" />
+							<xs:element type="xs:int" name="dy" />
+							<xs:element type="xs:string" name="data" />
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="DrawRectArea" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element type="xs:int" name="px" />
+							<xs:element type="xs:int" name="py" />
+							<xs:element type="xs:int" name="dx" />
+							<xs:element type="xs:int" name="dy" />
+							<xs:element type="xs:string" name="col" />
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="DrawFrame" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element type="xs:int" name="px" />
+							<xs:element type="xs:int" name="py" />
+							<xs:element type="xs:int" name="dx" />
+							<xs:element type="xs:int" name="dy" />
+							<xs:element type="xs:int" name="thickn" />
+							<xs:element type="xs:string" name="col" />
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="PriStrBsp" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element type="xs:int" name="px" />
+							<xs:element type="xs:int" name="py" />
+							<xs:element type="xs:int" name="size" minOccurs="0" />
+							<xs:element type="xs:string" name="string" minOccurs="0" />
+							<xs:element type="xs:string" name="fgcol" minOccurs="0" />
+							<xs:element type="xs:string" name="bgcol" minOccurs="0" />
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="MNUInitButton" maxOccurs="1">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element type="xs:int" name="MID" />
+							<xs:element type="xs:int" name="px" />
+							<xs:element type="xs:int" name="py" />
+							<xs:element type="textType" name="text" />
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:complexType name="textType">
+		<xs:sequence>
+			<xs:element type="xs:string" name="text0" />
+			<xs:element type="xs:string" name="text1" />
+			<xs:element type="xs:string" name="text2" />
+			<xs:element type="xs:string" name="text3" />
+			<xs:element type="xs:string" name="text4" />
+			<xs:element type="xs:string" name="text5" />
+			<xs:element type="xs:string" name="text6" />
+			<xs:element type="xs:string" name="text7" />
+			<xs:element type="xs:string" name="text8" />
+			<xs:element type="xs:string" name="text9" />
+			<xs:element type="xs:string" name="text10" />
+			<xs:element type="xs:string" name="text11" />
+			<xs:element type="xs:string" name="text12" />
+			<xs:element type="xs:string" name="text13" />
+			<xs:element type="xs:string" name="text14" />
+			<xs:element type="xs:string" name="text15" />
+			<xs:element type="xs:string" name="text16" />
+			<xs:element type="xs:string" name="text17" />
+			<xs:element type="xs:string" name="text18" />
+			<xs:element type="xs:string" name="text19" />
+			<xs:element type="xs:string" name="text20" />
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

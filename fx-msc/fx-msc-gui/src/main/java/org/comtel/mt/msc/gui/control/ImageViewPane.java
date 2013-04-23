@@ -1,4 +1,4 @@
-package org.comtel.mt.msc.gui.view;
+package org.comtel.mt.msc.gui.control;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;

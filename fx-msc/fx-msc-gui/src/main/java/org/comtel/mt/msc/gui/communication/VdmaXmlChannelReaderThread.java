@@ -9,19 +9,24 @@ import java.nio.ByteBuffer;
 import java.nio.channels.ClosedByInterruptException;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
-import java.util.Arrays;
-import java.util.Observable;
-import java.util.Observer;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.slf4j.LoggerFactory;
 
-public class VdmaChannelReaderThread extends Thread {
-	private final static org.slf4j.Logger logger = LoggerFactory.getLogger(VdmaChannelReaderThread.class);
+public class VdmaXmlChannelReaderThread extends Thread implements AutoCloseable{
+	private final static org.slf4j.Logger logger = LoggerFactory.getLogger(VdmaXmlChannelReaderThread.class);
 
 	private final static int BUFFER_SIZE = 8 * 1024;
-	private final static int LF = 10;
+
+	private final String START_DATA = "<data>";
+	private final String END_DATA = "</data>";
+
+	private final String START_SAMPLE = "<sample>";
+
+	private final String END_MSC_GUI = "</MSC_GUI>";
+
 	private SocketAddress socketAdr;
+	
 	private final AtomicBoolean running = new AtomicBoolean(false);
 
 	private final VdmaMessageProcessor processor;
@@ -30,8 +35,8 @@ public class VdmaChannelReaderThread extends Thread {
 		return running.get();
 	}
 
-	public VdmaChannelReaderThread(VdmaMessageProcessor processor) {
-		setName("MSCChannelReaderThread");
+	public VdmaXmlChannelReaderThread(VdmaMessageProcessor processor) {
+		setName("MSCReaderThread");
 		this.processor = processor;
 	}
 
@@ -60,75 +65,92 @@ public class VdmaChannelReaderThread extends Thread {
 			int maxImageWidth = 640;
 			int maxImageHeight = 480;
 			int imageSize = 76800;
-			
+
 			long time = 0;
-			ByteArrayOutputStream imageStream = new ByteArrayOutputStream(76800);
-			ByteArrayOutputStream xmlStream = new ByteArrayOutputStream(1024);
+
+			ByteBuffer imgBuffer = ByteBuffer.allocateDirect(maxImageWidth * maxImageHeight);
+			// ByteArrayOutputStream imageStream = new
+			// ByteArrayOutputStream(76800);
+			ByteArrayOutputStream xmlStream = new ByteArrayOutputStream(4096);
 			ByteArrayOutputStream tagStream = new ByteArrayOutputStream(1024);
 
 			try (SocketChannel socket = serverSocket.accept()) {
-				//socket.configureBlocking(true);
+				socket.configureBlocking(true);
 				socket.setOption(StandardSocketOptions.SO_KEEPALIVE, true);
+				socket.setOption(StandardSocketOptions.TCP_NODELAY, true);
+				socket.setOption(StandardSocketOptions.SO_RCVBUF, BUFFER_SIZE);
+
 				while (running.get() && socket.read(buffer) > 0) {
 
 					buffer.flip();
 
 					while (buffer.hasRemaining()) {
-						if (xmlStream.size()==0){
+						if (xmlStream.size() == 0) {
 							time = System.currentTimeMillis();
 						}
 						int b = buffer.get();
-						if (sampleData){
+						// System.err.print((char)b);
+						if (sampleData) {
 							int sample = Character.getNumericValue(b);
 							imageSize = (maxImageWidth / sample) * (maxImageHeight / sample);
 							logger.debug("sample: {} -> imageSize: {}", sample, imageSize);
 							sampleData = false;
+							imgBuffer.clear();
+							imgBuffer.limit(imageSize);
 							continue;
 						}
-						if (receiveImage && imageStream.size() < imageSize) {
-							imageStream.write(b);
+						if (receiveImage && imgBuffer.hasRemaining()) {
+							imgBuffer.put((byte) b);
 							continue;
 						}
 						xmlStream.write(b);
-						
-						if (!receiveTag && b == '<'){
+
+						if (!receiveTag && b == '<') {
 							receiveTag = true;
 							tagStream.write(b);
 							continue;
 						}
-						if (receiveTag){
+						if (receiveTag) {
 							tagStream.write(b);
 						}
-						
+
 						if (receiveTag && b == '>') {
 							String tag = tagStream.toString();
 							tagStream.reset();
 							receiveTag = false;
-							if (tag.equals("<sample>")){
+
+							switch (tag) {
+							case START_SAMPLE:
 								sampleData = true;
-								continue;
-							}
-							if (!receiveImage && tag.equals("<data>")) {
+								break;
+							case START_DATA:
 								receiveImage = true;
-							} else if (receiveImage && tag.equals("</data>")) {
+								break;
+							case END_DATA:
 								receiveImage = false;
-							} else if (!receiveImage && tag.equals("</MSC_GUI>")) {
+								break;
+							case END_MSC_GUI:
 								time = System.currentTimeMillis() - time;
 								logger.debug("XML size: {} received in {} ms", xmlStream.size(), time);
-								
-								if (imageStream.size() > 0){
-									processor.processXML(xmlStream.toByteArray(), imageStream.toByteArray());
-									imageStream.reset();
-								}else{
+
+								if (imgBuffer.position() > 0) {
+									imgBuffer.flip();
+									byte[] image = new byte[imgBuffer.limit()];
+									imgBuffer.get(image);
+									processor.processXML(xmlStream.toByteArray(), image);
+								} else {
 									processor.processXML(xmlStream.toByteArray());
 								}
 								logger.debug("xml final size: {}", xmlStream.size());
-								// System.err.println(xmlStream.toString());
 								xmlStream.reset();
+								break;
+							default:
+								break;
 							}
+
 						}
 					}
-					//logger.warn("partial xml size: {}", xmlStream.size());
+					logger.trace("partial xml size: {}", xmlStream.size());
 					buffer.clear();
 				}
 			}
