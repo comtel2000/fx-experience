@@ -18,8 +18,6 @@ import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 
-import org.codehaus.stax2.XMLInputFactory2;
-import org.codehaus.stax2.XMLStreamReader2;
 import org.slf4j.LoggerFactory;
 
 public class VdmaXmlStreamReaderThread extends Thread implements XMLStreamConstants{
@@ -89,7 +87,7 @@ public class VdmaXmlStreamReaderThread extends Thread implements XMLStreamConsta
 				socket.setOption(StandardSocketOptions.SO_KEEPALIVE, true);
 				
 				  
-				XMLInputFactory inputFactory = XMLInputFactory2.newInstance();
+				XMLInputFactory inputFactory = XMLInputFactory.newInstance();
 				XMLStreamReader streamReader = inputFactory.createXMLStreamReader(new InputStreamReader(socket.socket().getInputStream(), "ISO-8859-1"));
 				XMLStreamReader reader = inputFactory.createFilteredReader(streamReader, filter);
 

@@ -8,21 +8,14 @@ import java.io.InputStreamReader;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
 import java.net.StandardSocketOptions;
-import java.nio.ByteBuffer;
 import java.nio.channels.ClosedByInterruptException;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import javax.xml.stream.StreamFilter;
-import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
-import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.XMLStreamReader;
 
-import org.codehaus.stax2.XMLInputFactory2;
-import org.codehaus.stax2.XMLStreamReader2;
 import org.slf4j.LoggerFactory;
 
 public class VdmaStreamReaderThreadOrg extends Thread implements XMLStreamConstants {

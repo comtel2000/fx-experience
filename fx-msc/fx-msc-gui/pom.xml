@@ -21,20 +21,22 @@
 			<artifactId>logback-classic</artifactId>
 			<version>1.0.11</version>
 		</dependency>
-  	<dependency>
-  		<groupId>org.jfxtras</groupId>
-  		<artifactId>jfxtras-labs</artifactId>
-  		<version>2.2-r4</version>
-  	</dependency>
-  	<dependency>
-  		<groupId>com.fasterxml</groupId>
-  		<artifactId>aalto-xml</artifactId>
-  		<version>0.9.9-SNAPSHOT</version>
-  		<type>bundle</type>
-  	</dependency>
+		<dependency>
+			<groupId>org.jfxtras</groupId>
+			<artifactId>jfxtras-labs</artifactId>
+			<version>2.2-r4</version>
+		</dependency>
 	</dependencies>
-		<build>
+	<build>
 		<plugins>
+			<plugin>
+				<groupId>com.zenjava</groupId>
+				<artifactId>javafx-maven-plugin</artifactId>
+				<version>1.5</version>
+				<configuration>
+					<mainClass>org.comtel.mt.msc.gui.Main</mainClass>
+				</configuration>
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -53,34 +55,10 @@
 				</configuration>
 
 			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-assembly-plugin</artifactId>
-				<version>2.3</version>
-				<executions>
-					<execution>
-						<id>make-assembly</id> <!-- this is used for inheritance merges -->
-						<phase>package</phase> <!-- bind to the packaging phase -->
-						<goals>
-							<goal>single</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<descriptorRefs>
-						<descriptorRef>jar-with-dependencies</descriptorRef>
-					</descriptorRefs>
-					<archive>
-						<manifest>
-							<mainClass>org.comtel.mt.msc.gui.Main</mainClass>
-							<addDefaultImplementationEntries>
-								true
-							</addDefaultImplementationEntries>
-						</manifest>
-					</archive>
-				</configuration>
-			</plugin>
 		</plugins>
 	</build>
-		<name>MSC FX GUI</name>
+	<name>MSC FX GUI</name>
+	<organization>
+		<name>comtel</name>
+	</organization>
 </project>
