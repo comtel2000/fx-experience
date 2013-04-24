@@ -17,6 +17,13 @@
 	</repositories>
 	<dependencies>
 		<dependency>
+			<groupId>com.oracle</groupId>
+			<artifactId>javafx-runtime</artifactId>
+			<version>2.2</version>
+			<scope>system</scope>
+			<systemPath>${env.JAVAFX_HOME}/../lib/jfxrt.jar</systemPath>
+		</dependency>
+		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.10</version>
