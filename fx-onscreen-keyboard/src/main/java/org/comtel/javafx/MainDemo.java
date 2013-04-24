@@ -93,8 +93,9 @@ public class MainDemo extends Application {
 				System.exit(0);
 			}
 		});
-		popup.show(stage);
+		
 		stage.setScene(scene);
+		popup.show(stage);
 		stage.show();
 
 	}
