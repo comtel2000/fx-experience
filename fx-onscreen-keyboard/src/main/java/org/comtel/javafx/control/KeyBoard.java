@@ -370,6 +370,9 @@ public class KeyBoard extends Region implements StandardKeyCode, EventHandler<Ke
 				if (key.getKeyIconStyle() != null && key.getKeyIconStyle().startsWith(".")) {
 					logger.trace("Load css style: {}", key.getKeyIconStyle());
 					Label icon = new Label();
+					//do not reduce css shape quality JavaFX8
+					//icon.setCacheShape(false);
+					
 					icon.getStyleClass().add(key.getKeyIconStyle().substring(1));
 					button.setContentDisplay(ContentDisplay.BOTTOM);
 					button.setGraphic(icon);
@@ -416,23 +419,23 @@ public class KeyBoard extends Region implements StandardKeyCode, EventHandler<Ke
 				}
 				// use space button as drag pane
 				if (button.getKeyCode() == java.awt.event.KeyEvent.VK_SPACE) {
-					button.addEventHandler(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
 
-						public void handle(MouseEvent event) {
-							mousePressedX = event.getSceneX();
-							mousePressedY = event.getSceneY();
+					button.setOnMousePressed(new EventHandler<MouseEvent>() {
+						@Override
+						public void handle(MouseEvent mouseEvent) {
+							mousePressedX = getScene().getWindow().getX() - mouseEvent.getScreenX();
+							mousePressedY = getScene().getWindow().getY() - mouseEvent.getScreenY();
 						}
 					});
 
-					button.addEventHandler(MouseEvent.MOUSE_DRAGGED, new EventHandler<MouseEvent>() {
-
-						public void handle(MouseEvent event) {
-							event.consume();
-							getScene().getWindow().setX(event.getScreenX() - mousePressedX);
-							getScene().getWindow().setY(event.getScreenY() - mousePressedY);
-
+					button.setOnMouseDragged(new EventHandler<MouseEvent>() {
+						@Override
+						public void handle(MouseEvent mouseEvent) {
+							getScene().getWindow().setX(mouseEvent.getScreenX() + mousePressedX);
+							getScene().getWindow().setY(mouseEvent.getScreenY() + mousePressedY);
 						}
 					});
+
 				}
 				if (button.getKeyCode() == BACK_SPACE || button.getKeyCode() == DELETE) {
 					button.setOnLongPressed(new EventHandler<Event>() {
