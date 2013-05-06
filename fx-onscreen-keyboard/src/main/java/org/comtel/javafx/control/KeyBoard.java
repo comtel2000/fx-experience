@@ -367,30 +367,38 @@ public class KeyBoard extends Region implements StandardKeyCode, EventHandler<Ke
 				if (key.getKeyLabelStyle() != null && key.getKeyLabelStyle().startsWith(".")) {
 					button.getStyleClass().add(key.getKeyLabelStyle().substring(1));
 				}
-				if (key.getKeyIconStyle() != null && key.getKeyIconStyle().startsWith(".")) {
-					logger.trace("Load css style: {}", key.getKeyIconStyle());
-					Label icon = new Label();
-					//do not reduce css shape quality JavaFX8
-					//icon.setCacheShape(false);
-					
-					icon.getStyleClass().add(key.getKeyIconStyle().substring(1));
-					button.setContentDisplay(ContentDisplay.BOTTOM);
-					button.setGraphic(icon);
+				if (key.getKeyIconStyle() != null) {
+					if (key.getKeyIconStyle().startsWith(".")) {
+						logger.trace("Load css style: {}", key.getKeyIconStyle());
+						Label icon = new Label();
+						// do not reduce css shape quality JavaFX8
+						// icon.setCacheShape(false);
+						//icon.setSnapToPixel(true);
+						icon.getStyleClass().add(key.getKeyIconStyle().substring(1));
+						button.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+						button.setGraphic(icon);
 
-				} else if (key.getKeyIconStyle() != null && key.getKeyIconStyle().startsWith("@")) {
+					} else if (key.getKeyIconStyle().startsWith("@")) {
 
-					InputStream is = KeyBoard.class.getResourceAsStream(key.getKeyIconStyle().replace("@", "/")
-							+ ".png");
-					Image image = new Image(is);
-					if (!image.isError()) {
-						button.setGraphic(new ImageView(image));
-					} else {
-						logger.error("Image: {} not found", key.getKeyIconStyle());
+						InputStream is = KeyBoard.class.getResourceAsStream(key.getKeyIconStyle().replace("@", "/")
+								+ ".png");
+						Image image = new Image(is);
+						if (!image.isError()) {
+							button.setGraphic(new ImageView(image));
+						} else {
+							logger.error("Image: {} not found", key.getKeyIconStyle());
+						}
 					}
 				}
-
-				button.setText(key.getKeyLabel());
-
+				if (key.getKeyLabel() != null){
+					if (key.getKeyLabel().length() > 2 && key.getKeyLabel().startsWith("\\u")){
+						int uniCode = Integer.valueOf(key.getKeyLabel().substring(2), 16);
+						button.setText(Character.toString((char)uniCode));
+					}else{
+						button.setText(key.getKeyLabel());
+					}
+				}
+				
 				if (button.isContextAvailable() && button.getGraphic() == null) {
 					Label icon = new Label();
 					icon.getStyleClass().add("extend-style");
@@ -420,19 +428,21 @@ public class KeyBoard extends Region implements StandardKeyCode, EventHandler<Ke
 				// use space button as drag pane
 				if (button.getKeyCode() == java.awt.event.KeyEvent.VK_SPACE) {
 
-					button.setOnMousePressed(new EventHandler<MouseEvent>() {
-						@Override
+					button.addEventHandler(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
+
 						public void handle(MouseEvent mouseEvent) {
 							mousePressedX = getScene().getWindow().getX() - mouseEvent.getScreenX();
 							mousePressedY = getScene().getWindow().getY() - mouseEvent.getScreenY();
 						}
 					});
 
-					button.setOnMouseDragged(new EventHandler<MouseEvent>() {
-						@Override
+					button.addEventHandler(MouseEvent.MOUSE_DRAGGED, new EventHandler<MouseEvent>() {
+
 						public void handle(MouseEvent mouseEvent) {
+							mouseEvent.consume();
 							getScene().getWindow().setX(mouseEvent.getScreenX() + mousePressedX);
 							getScene().getWindow().setY(mouseEvent.getScreenY() + mousePressedY);
+
 						}
 					});
 
@@ -476,6 +486,7 @@ public class KeyBoard extends Region implements StandardKeyCode, EventHandler<Ke
 		return ctrlProperty.get();
 	}
 
+	@Override
 	public void handle(KeyButtonEvent event) {
 		event.consume();
 		KeyButtonEvent kbEvent = (KeyButtonEvent) event;
@@ -495,6 +506,7 @@ public class KeyBoard extends Region implements StandardKeyCode, EventHandler<Ke
 			break;
 		case CLOSE:
 			if (closeEventHandler == null) {
+				logger.warn("shutdown..");
 				System.exit(0);
 			} else {
 				closeEventHandler.handle(new KeyButtonEvent(KeyButtonEvent.ANY));
