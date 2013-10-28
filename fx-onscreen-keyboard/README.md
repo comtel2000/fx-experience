@@ -1,6 +1,15 @@
 fx-onscreen-keyboard
 ===
-JavaFX 8 branch
+JavaFX 8 branch (JDK8)
+(JavaFX 2.x should work but is not longer supported)
+
+Layouts
+===
+
+![num block ctrl] (src/test/resources/screenshots/num_block.png)
+
+![num block] (src/test/resources/screenshots/num_block_ctrl.png)
+
 
 Demo
 ===
