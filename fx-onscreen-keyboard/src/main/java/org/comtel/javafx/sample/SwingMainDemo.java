@@ -1,4 +1,4 @@
-package org.comtel.javafx;
+package org.comtel.javafx.sample;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -8,6 +8,9 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.net.URISyntaxException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Locale;
 
 import javafx.animation.Animation;
@@ -20,6 +23,7 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.text.Font;
 import javafx.util.Duration;
 
 import javax.swing.JApplet;
@@ -49,6 +53,10 @@ public class SwingMainDemo extends JApplet {
 	}
 
 	public void init() {
+		
+		String fontUrl = this.getClass().getResource("/font/FontKeyboardFX.ttf").toExternalForm();
+		Font f = Font.loadFont(fontUrl, -1);
+		System.err.println(f);
 		
 		UIManager.put("TextFieldUI", KeyboardTextFieldUI.class.getName());
 		UIManager.put("TextAreaUI", KeyboardTextAreaUI.class.getName());
@@ -113,8 +121,16 @@ public class SwingMainDemo extends JApplet {
 
 		javafxPanel.setScene(scene);
 		scene.getStylesheets().add(css);
+
+		Path numblockLayout = null;
+		try {
+			numblockLayout = Paths.get(this.getClass().getResource("/xml/numblock").toURI());
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+		}
+		
 		fxKeyboardPopup = KeyBoardPopupBuilder.create().initLocale(Locale.ENGLISH)
-				.addIRobot(RobotFactory.createAWTRobot()).build();
+				.addIRobot(RobotFactory.createAWTRobot()).layerPath(numblockLayout).build();
 		fxKeyboardPopup.getKeyBoard().setOnKeyboardCloseButton(new EventHandler<Event>() {
 			public void handle(Event event) {
 				setKeyboardVisible(false, null);

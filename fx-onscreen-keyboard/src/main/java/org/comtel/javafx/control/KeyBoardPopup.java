@@ -5,15 +5,15 @@ import javafx.stage.Popup;
 
 public class KeyBoardPopup extends Popup {
 
-	private final KeyBoard keyboard;
+	private final KeyboardPane keyboard;
 
 	private Scene owner = null;
 	
-	public final KeyBoard getKeyBoard() {
+	public final KeyboardPane getKeyBoard() {
 		return keyboard;
 	}
 
-	public KeyBoardPopup(KeyBoard panel) {
+	public KeyBoardPopup(KeyboardPane panel) {
 		keyboard = panel;
 		getContent().add(panel);
 	}

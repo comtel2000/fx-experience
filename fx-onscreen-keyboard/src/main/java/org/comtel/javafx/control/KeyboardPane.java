@@ -29,9 +29,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.RowConstraints;
+import javafx.scene.transform.Scale;
 
 import org.comtel.javafx.event.KeyButtonEvent;
 import org.comtel.javafx.robot.IRobot;
@@ -39,9 +41,9 @@ import org.comtel.javafx.xml.KeyboardLayoutHandler;
 import org.comtel.javafx.xml.layout.Keyboard;
 import org.slf4j.LoggerFactory;
 
-public class KeyBoard extends Region implements StandardKeyCode, EventHandler<KeyButtonEvent> {
+public class KeyboardPane extends Region implements StandardKeyCode, EventHandler<KeyButtonEvent> {
 
-	private final static org.slf4j.Logger logger = LoggerFactory.getLogger(KeyBoard.class);
+	private final static org.slf4j.Logger logger = LoggerFactory.getLogger(KeyboardPane.class);
 
 	private Path layerPath;
 	private Region qwertyKeyboardPane;
@@ -54,9 +56,10 @@ public class KeyBoard extends Region implements StandardKeyCode, EventHandler<Ke
 	private SimpleBooleanProperty shiftProperty = new SimpleBooleanProperty(false);
 	private SimpleBooleanProperty ctrlProperty = new SimpleBooleanProperty(false);
 
-	private SimpleDoubleProperty scaleProperty = new SimpleDoubleProperty(1.0);
+	private final double SCALE_OFFSET = 0.2;
+	private final SimpleDoubleProperty scaleProperty = new SimpleDoubleProperty(1.0);
 
-	private SimpleDoubleProperty minScaleProperty = new SimpleDoubleProperty(0.5);
+	private SimpleDoubleProperty minScaleProperty = new SimpleDoubleProperty(0.7);
 	private SimpleDoubleProperty maxScaleProperty = new SimpleDoubleProperty(5.0);
 
 	private EventHandler<? super Event> closeEventHandler;
@@ -67,11 +70,11 @@ public class KeyBoard extends Region implements StandardKeyCode, EventHandler<Ke
 	private final List<IRobot> robotHandler = new ArrayList<>();
 	private Locale layoutLocale;
 
-	public KeyBoard(Path layerpath) {
+	public KeyboardPane(Path layerpath) {
 		this(layerpath, 1.0, Locale.getDefault());
 	}
 
-	public KeyBoard(Path layerpath, Locale local) {
+	public KeyboardPane(Path layerpath, Locale local) {
 		this(layerpath, 1.0, local);
 	}
 
@@ -82,28 +85,29 @@ public class KeyBoard extends Region implements StandardKeyCode, EventHandler<Ke
 	 * @param scale
 	 * @param local
 	 */
-	public KeyBoard(Path layerpath, double scale, Locale local) {
+	public KeyboardPane(Path layerpath, double scale, Locale local) {
 		layerPath = layerpath;
-		if (scale != 1.0) {
-			scaleProperty.set(scale);
-			setScaleX(scale);
-			setScaleY(scale);
-		}
+		// setScaleShape(true);
 
 		layoutLocale = local != null ? local : Locale.getDefault();
 		setId("key-background");
-		// setAutoSizeChildren(true);
+
 		setFocusTraversable(false);
 
 		init();
 
+		if (scale != 1.0) {
+			scaleProperty.set(scale);
+			getTransforms().setAll(new Scale(scaleProperty.get(), scaleProperty.get(), 1, 0, 0, 0));
+		}
+
 		scaleProperty.addListener(new ChangeListener<Number>() {
 			@Override
-			public void changed(ObservableValue<? extends Number> arg0, Number arg1, Number arg2) {
-				setScaleX(arg2.doubleValue());
-				setScaleY(arg2.doubleValue());
+			public void changed(ObservableValue<? extends Number> arg0, Number arg1, Number s) {
+				getTransforms().setAll(new Scale(s.doubleValue(), s.doubleValue(), 1, 0, 0, 0));
 			}
 		});
+
 		// setOnKeyPressed(new EventHandler<KeyEvent>() {
 		//
 		// public void handle(KeyEvent e) {
@@ -173,11 +177,18 @@ public class KeyBoard extends Region implements StandardKeyCode, EventHandler<Ke
 			String xmlPath = "/xml/default" + (local.getLanguage().equals("en") ? "" : "/" + local.getLanguage());
 			logger.warn("use default embedded layouts path: {}", xmlPath);
 
+			getChildren().clear();
+
 			qwertyKeyboardPane = createKeyboardPane(handler.getLayout(xmlPath + "/kb-layout.xml"));
 			qwertyShiftedKeyboardPane = createKeyboardPane(handler.getLayout(xmlPath + "/kb-layout-shift.xml"));
 			qwertyCtrlKeyboardPane = createKeyboardPane(handler.getLayout(xmlPath + "/kb-layout-ctrl.xml"));
 			symbolKeyboardPane = createKeyboardPane(handler.getLayout(xmlPath + "/kb-layout-sym.xml"));
 			symbolShiftedKeyboardPane = createKeyboardPane(handler.getLayout(xmlPath + "/kb-layout-sym-shift.xml"));
+
+			getChildren().addAll(qwertyKeyboardPane, qwertyShiftedKeyboardPane, qwertyCtrlKeyboardPane, symbolKeyboardPane, symbolShiftedKeyboardPane);
+			for (javafx.scene.Node node : getChildren()) {
+				node.setVisible(false);
+			}
 			return;
 		}
 
@@ -193,15 +204,17 @@ public class KeyBoard extends Region implements StandardKeyCode, EventHandler<Ke
 		}
 
 		if (path != null) {
+			getChildren().clear();
+
 			qwertyKeyboardPane = createKeyboardPane(handler.getLayout(path.resolve("kb-layout.xml").toUri().toURL()));
-			qwertyShiftedKeyboardPane = createKeyboardPane(handler.getLayout(path.resolve("kb-layout-shift.xml")
-					.toUri().toURL()));
-			qwertyCtrlKeyboardPane = createKeyboardPane(handler.getLayout(path.resolve("kb-layout-ctrl.xml").toUri()
-					.toURL()));
-			symbolKeyboardPane = createKeyboardPane(handler
-					.getLayout(path.resolve("kb-layout-sym.xml").toUri().toURL()));
-			symbolShiftedKeyboardPane = createKeyboardPane(handler.getLayout(path.resolve("kb-layout-sym-shift.xml")
-					.toUri().toURL()));
+			qwertyShiftedKeyboardPane = createKeyboardPane(handler.getLayout(path.resolve("kb-layout-shift.xml").toUri().toURL()));
+			qwertyCtrlKeyboardPane = createKeyboardPane(handler.getLayout(path.resolve("kb-layout-ctrl.xml").toUri().toURL()));
+			symbolKeyboardPane = createKeyboardPane(handler.getLayout(path.resolve("kb-layout-sym.xml").toUri().toURL()));
+			symbolShiftedKeyboardPane = createKeyboardPane(handler.getLayout(path.resolve("kb-layout-sym-shift.xml").toUri().toURL()));
+			getChildren().addAll(qwertyKeyboardPane, qwertyShiftedKeyboardPane, qwertyCtrlKeyboardPane, symbolKeyboardPane, symbolShiftedKeyboardPane);
+			for (javafx.scene.Node node : getChildren()) {
+				node.setVisible(false);
+			}
 		}
 
 	}
@@ -219,8 +232,7 @@ public class KeyBoard extends Region implements StandardKeyCode, EventHandler<Ke
 				for (Path entry : stream) {
 					if (entry.toFile().isDirectory()) {
 						for (Locale l : Locale.getAvailableLocales()) {
-							if (entry.getFileName().toString()
-									.equals(l.getLanguage() + (l.getCountry().isEmpty() ? "" : "_" + l.getCountry()))) {
+							if (entry.getFileName().toString().equals(l.getLanguage() + (l.getCountry().isEmpty() ? "" : "_" + l.getCountry()))) {
 								localList.put(l, entry);
 								break;
 							}
@@ -256,27 +268,10 @@ public class KeyBoard extends Region implements StandardKeyCode, EventHandler<Ke
 			break;
 		}
 
-		getChildren().clear();
-		getChildren().add(pane);
-
-		// if (getChildren().isEmpty()){
-		// qwertyKeyboardPane.setVisible(false);
-		// getChildren().add(qwertyKeyboardPane);
-		// qwertyShiftedKeyboardPane.setVisible(false);
-		// getChildren().add(qwertyShiftedKeyboardPane);
-		//
-		// symbolKeyboardPane.setVisible(false);
-		// getChildren().add(symbolKeyboardPane);
-		// symbolShiftedKeyboardPane.setVisible(false);
-		// getChildren().add(symbolShiftedKeyboardPane);
-		//
-		// qwertyCtrlKeyboardPane.setVisible(false);
-		// getChildren().add(qwertyCtrlKeyboardPane);
-		// }
-		// for (javafx.scene.Node node : getChildren()){
-		// node.setVisible(false);
-		// }
-		// pane.setVisible(true);
+		for (javafx.scene.Node node : getChildren()) {
+			node.setVisible(false);
+		}
+		pane.setVisible(true);
 
 	}
 
@@ -306,8 +301,8 @@ public class KeyBoard extends Region implements StandardKeyCode, EventHandler<Ke
 			int colIdx = 0;
 			GridPane colPane = new GridPane();
 			colPane.setId("key-background-column");
-			// gridRow.setVgap(20);
-			// gridRow.setPrefWidth(Region.USE_COMPUTED_SIZE);
+			// colPane.setVgap(20);
+			// colPane.setPrefWidth(Region.USE_COMPUTED_SIZE);
 
 			RowConstraints rc = new RowConstraints();
 			rc.setPrefHeight(defaultKeyHeight);
@@ -320,6 +315,7 @@ public class KeyBoard extends Region implements StandardKeyCode, EventHandler<Ke
 					rc.setValignment(VPos.TOP);
 				}
 			}
+			int rowWidth = 0;
 			for (Keyboard.Row.Key key : row.getKey()) {
 
 				if (key.getHorizontalGap() != null) {
@@ -329,117 +325,120 @@ public class KeyBoard extends Region implements StandardKeyCode, EventHandler<Ke
 				}
 				ColumnConstraints cc = new ColumnConstraints();
 				cc.setHgrow(Priority.SOMETIMES);
+				cc.setFillWidth(true);
+				cc.setPrefWidth(key.getKeyWidth() != null ? key.getKeyWidth() : defaultKeyWidth);
 
-				MultiKeyButton button = new MultiKeyButton();
+				if (key.getCodes() == null || key.getCodes().isEmpty()) {
+					// add placeholder
+					Pane placeholder = new Pane();
+					colPane.add(placeholder, colIdx, 0);
+					colPane.getColumnConstraints().add(cc);
+
+					logger.trace("placeholder: {}", cc);
+					colIdx++;
+					rowWidth += cc.getPrefWidth();
+					continue;
+				}
+
+				MultiKeyButton button = new MultiKeyButton(scaleProperty);
 				button.setFocusTraversable(false);
 				button.setOnShortPressed(this);
 				button.setCache(true);
+
 				button.setMinHeight(10);
-				button.setPrefHeight(40);
-				button.setMaxWidth(600);
+				button.setPrefHeight(defaultKeyHeight);
+				button.setPrefWidth(defaultKeyWidth);
+				button.setMaxWidth(defaultKeyWidth * 100);
 
-				cc.setFillWidth(true);
-
-				if (key.getCodes() != null) {
-					String[] codes = key.getCodes().split(",");
-					if (codes.length > 0 && !codes[0].isEmpty()) {
-						int keyCode = Integer.valueOf(codes[0]);
-						button.setKeyCode(keyCode);
-					}
-					if (codes.length > 1) {
-						for (String code : codes) {
-							int keyCode = Integer.valueOf(code);
-							if (keyCode != button.getKeyCode()) {
-								button.addExtKeyCode(keyCode);
-							}
-						}
-					}
-					if (button.getKeyCode() == LOCALE_SWITCH) {
-						button.addExtKeyCode(LOCALE_SWITCH, Locale.ENGLISH.getLanguage().toUpperCase(Locale.ENGLISH),
-								key.getKeyLabelStyle());
-						for (Locale l : getAvailableLocales().keySet()) {
-							button.addExtKeyCode(LOCALE_SWITCH, l.getLanguage().toUpperCase(Locale.ENGLISH),
-									key.getKeyLabelStyle());
+				String[] codes = key.getCodes().split(",");
+				if (codes.length > 0 && !codes[0].isEmpty()) {
+					int keyCode = Integer.valueOf(codes[0]);
+					button.setKeyCode(keyCode);
+				}
+				if (codes.length > 1) {
+					for (String code : codes) {
+						int keyCode = Integer.valueOf(code);
+						if (keyCode != button.getKeyCode()) {
+							button.addExtKeyCode(keyCode);
 						}
 					}
 				}
 
 				if (key.getKeyLabelStyle() != null && key.getKeyLabelStyle().startsWith(".")) {
-					button.getStyleClass().add(key.getKeyLabelStyle().substring(1));
-				}
-				if (key.getKeyIconStyle() != null) {
-					if (key.getKeyIconStyle().startsWith(".")) {
-						logger.trace("Load css style: {}", key.getKeyIconStyle());
-						Label icon = new Label();
-						// do not reduce css shape quality JavaFX8
-						// icon.setCacheShape(false);
-						//icon.setSnapToPixel(true);
-						icon.getStyleClass().add(key.getKeyIconStyle().substring(1));
-						button.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
-						button.setGraphic(icon);
-
-					} else if (key.getKeyIconStyle().startsWith("@")) {
-
-						InputStream is = KeyBoard.class.getResourceAsStream(key.getKeyIconStyle().replace("@", "/")
-								+ ".png");
-						Image image = new Image(is);
-						if (!image.isError()) {
-							button.setGraphic(new ImageView(image));
-						} else {
-							logger.error("Image: {} not found", key.getKeyIconStyle());
-						}
+					for (String style : key.getKeyLabelStyle().split(";")) {
+						button.getStyleClass().add(style.substring(1));
 					}
 				}
-				if (key.getKeyLabel() != null){
-					if (key.getKeyLabel().length() > 2 && key.getKeyLabel().startsWith("\\u")){
-						int uniCode = Integer.valueOf(key.getKeyLabel().substring(2), 16);
-						button.setText(Character.toString((char)uniCode));
-					}else{
-						button.setText(key.getKeyLabel());
+
+				if (button.getKeyCode() == LOCALE_SWITCH) {
+					button.addExtKeyCode(LOCALE_SWITCH, Locale.ENGLISH.getLanguage().toUpperCase(Locale.ENGLISH), button.getStyleClass());
+					for (Locale l : getAvailableLocales().keySet()) {
+						button.addExtKeyCode(LOCALE_SWITCH, l.getLanguage().toUpperCase(Locale.ENGLISH), button.getStyleClass());
 					}
 				}
-				
-				if (button.isContextAvailable() && button.getGraphic() == null) {
+
+				if (key.getKeyIconStyle() != null && key.getKeyIconStyle().startsWith(".")) {
+					logger.trace("Load css style: {}", key.getKeyIconStyle());
 					Label icon = new Label();
-					icon.getStyleClass().add("extend-style");
+					// icon.setSnapToPixel(true);
+					// do not reduce css shape quality JavaFX8
+					// icon.setCacheShape(false);
+
+					for (String style : key.getKeyIconStyle().split(";")) {
+						icon.getStyleClass().add(style.substring(1));
+					}
+					icon.setMaxSize(40, 40);
+					button.setContentDisplay(ContentDisplay.CENTER);
 					button.setGraphic(icon);
+
+				} else if (key.getKeyIconStyle() != null && key.getKeyIconStyle().startsWith("@")) {
+
+					InputStream is = KeyboardPane.class.getResourceAsStream(key.getKeyIconStyle().replace("@", "/") + ".png");
+					Image image = new Image(is);
+					if (!image.isError()) {
+						button.setGraphic(new ImageView(image));
+					} else {
+						logger.error("Image: {} not found", key.getKeyIconStyle());
+					}
 				}
 
-				if (key.getKeyWidth() != null) {
-					int p = key.getKeyWidth();
-					cc.setPrefWidth(p);
-					// cc.setPercentWidth(p);
-				} else {
-					cc.setPrefWidth(defaultKeyWidth);
-					// cc.setPercentWidth(defaultKeyWidth);
+				button.setText(key.getKeyLabel());
+
+				if (button.isContextAvailable() && button.getGraphic() == null) {
+					button.getStyleClass().add("extend-style");
 				}
 
 				if (key.getKeyEdgeFlags() != null) {
 					if (key.getKeyEdgeFlags().equals("right")) {
 						cc.setHalignment(HPos.RIGHT);
+						button.setAlignment(Pos.BASELINE_RIGHT);
 					} else if (key.getKeyEdgeFlags().equals("left")) {
 						cc.setHalignment(HPos.LEFT);
+						button.setAlignment(Pos.BASELINE_LEFT);
 					} else {
 						cc.setHalignment(HPos.CENTER);
 					}
 				} else {
 					cc.setHalignment(HPos.CENTER);
+					button.setAlignment(Pos.BASELINE_CENTER);
 				}
+
 				// use space button as drag pane
 				if (button.getKeyCode() == java.awt.event.KeyEvent.VK_SPACE) {
 
-					button.addEventHandler(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
+					button.setOnMouseMoved(new EventHandler<MouseEvent>() {
 
-						public void handle(MouseEvent mouseEvent) {
-							mousePressedX = getScene().getWindow().getX() - mouseEvent.getScreenX();
-							mousePressedY = getScene().getWindow().getY() - mouseEvent.getScreenY();
+						@Override
+						public void handle(MouseEvent event) {
+							mousePressedX = getScene().getWindow().getX() - event.getScreenX();
+							mousePressedY = getScene().getWindow().getY() - event.getScreenY();
 						}
 					});
 
-					button.addEventHandler(MouseEvent.MOUSE_DRAGGED, new EventHandler<MouseEvent>() {
-
+					button.setOnMouseDragged(new EventHandler<MouseEvent>() {
+						@Override
 						public void handle(MouseEvent mouseEvent) {
-							mouseEvent.consume();
+
 							getScene().getWindow().setX(mouseEvent.getScreenX() + mousePressedX);
 							getScene().getWindow().setY(mouseEvent.getScreenY() + mousePressedY);
 
@@ -462,15 +461,18 @@ public class KeyBoard extends Region implements StandardKeyCode, EventHandler<Ke
 				colPane.add(button, colIdx, 0);
 				colPane.getColumnConstraints().add(cc);
 
-				// logger.info("btn: {} {}", button.getText(), cc);
+				logger.trace("btn: {} {}", button.getText(), cc);
 				colIdx++;
+				rowWidth += cc.getPrefWidth();
 			}
+			logger.info("row[{}] - {}", rowIdx, rowWidth);
 			colPane.getRowConstraints().add(rc);
 			// colPane.setGridLinesVisible(true);
 			rPane.add(colPane, 0, rowIdx);
 			rowIdx++;
 		}
 
+		logger.debug("-----end pane-----");
 		return rPane;
 	}
 
@@ -486,7 +488,6 @@ public class KeyBoard extends Region implements StandardKeyCode, EventHandler<Ke
 		return ctrlProperty.get();
 	}
 
-	@Override
 	public void handle(KeyButtonEvent event) {
 		event.consume();
 		KeyButtonEvent kbEvent = (KeyButtonEvent) event;
@@ -506,7 +507,6 @@ public class KeyBoard extends Region implements StandardKeyCode, EventHandler<Ke
 			break;
 		case CLOSE:
 			if (closeEventHandler == null) {
-				logger.warn("shutdown..");
 				System.exit(0);
 			} else {
 				closeEventHandler.handle(new KeyButtonEvent(KeyButtonEvent.ANY));
@@ -582,12 +582,12 @@ public class KeyBoard extends Region implements StandardKeyCode, EventHandler<Ke
 			switch (Character.toUpperCase(ch)) {
 			case java.awt.event.KeyEvent.VK_MINUS:
 				if (scaleProperty.get() > minScaleProperty.get()) {
-					scaleProperty.set(scaleProperty.get() - 0.1d);
+					scaleProperty.set(scaleProperty.get() - SCALE_OFFSET);
 				}
 				return;
 			case 0x2B:
 				if (scaleProperty.get() < maxScaleProperty.get()) {
-					scaleProperty.set(scaleProperty.get() + 0.1d);
+					scaleProperty.set(scaleProperty.get() + SCALE_OFFSET);
 				}
 				return;
 			}

@@ -1,5 +1,6 @@
 package org.comtel.javafx.control;
 
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -7,7 +8,7 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Side;
 import javafx.scene.Node;
-import javafx.scene.effect.BoxBlur;
+import javafx.scene.transform.Scale;
 import javafx.stage.WindowEvent;
 
 public class MultiKeyButton extends KeyButton {
@@ -15,6 +16,12 @@ public class MultiKeyButton extends KeyButton {
 	private ObservableList<KeyButton> extKeyCodes;
 	private MultiKeyPopup context;
 
+	private final SimpleDoubleProperty scaleProperty;
+	
+	public MultiKeyButton(SimpleDoubleProperty scaleProperty) {
+		this.scaleProperty = scaleProperty;
+	}
+	
 	public ObservableList<KeyButton> getExtKeyCodes() {
 		if (extKeyCodes == null) {
 			extKeyCodes = FXCollections.observableArrayList();
@@ -47,9 +54,10 @@ public class MultiKeyButton extends KeyButton {
 			setOnLongPressed(new EventHandler<Event>() {
 
 				public void handle(Event event) {
-					context.getButtonPane().setScaleX(((Node) event.getSource()).getParent().getParent().getScaleX());
-					context.getButtonPane().setScaleY(((Node) event.getSource()).getParent().getParent().getScaleY());
-					getParent().getParent().setEffect(new BoxBlur());
+
+					context.getButtonPane().getTransforms().setAll(new Scale(scaleProperty.get(),scaleProperty.get(),1,0,0,0));
+					
+					//getParent().getParent().setEffect(new BoxBlur());
 					getParent().getParent().setDisable(true);
 					setFocused(false);
 					context.show((Node) event.getSource(), Side.TOP, -getPrefWidth(), -getPrefHeight());
@@ -65,20 +73,23 @@ public class MultiKeyButton extends KeyButton {
 		addExtKeyCode(extKeyCode, null, null);
 	}
 
-	public void addExtKeyCode(int extKeyCode, String label, String style) {
+	public void addExtKeyCode(int extKeyCode, String label, ObservableList<String> styleClasses) {
 		ShortPressKeyButton button = new ShortPressKeyButton(Character.toString((char) extKeyCode));
-		if (style != null && style.startsWith(".")) {
-			button.getStyleClass().add(style.substring(1));
+		
+		if (styleClasses != null) {
+			button.getStyleClass().addAll(styleClasses);
+		}else{
+			button.setId("key-context-button");
 		}
 		if (label != null){
 			button.setText(label);
 		}
 		button.setFocusTraversable(false);
-		button.setCache(true);
 		
 		//TODO: add to css style
-		button.setPrefWidth(40);
-		button.setPrefHeight(40);
+		button.setPrefWidth(this.getPrefWidth());
+		button.setPrefHeight(this.getPrefHeight());
+
 		
 		button.setKeyCode(extKeyCode);
 		button.setOnShortPressed(getOnShortPressed());

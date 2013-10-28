@@ -5,6 +5,7 @@
 			<xsd:sequence>
 				<xsd:element name="Row" maxOccurs="unbounded" minOccurs="1">
 					<xsd:complexType>
+					
 						<xsd:sequence>
 							<xsd:element name="Key" maxOccurs="unbounded"
 								minOccurs="1">
@@ -33,6 +34,7 @@
 
 							</xsd:element>
 						</xsd:sequence>
+
 						<xsd:attribute name="rowEdgeFlags">
 							<xsd:simpleType>
 								<xsd:restriction base="xsd:string">

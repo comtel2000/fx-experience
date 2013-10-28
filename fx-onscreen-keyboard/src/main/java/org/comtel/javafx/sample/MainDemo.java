@@ -1,4 +1,4 @@
-package org.comtel.javafx;
+package org.comtel.javafx.sample;
 
 import java.util.Locale;
 
@@ -22,6 +22,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.text.Font;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -41,8 +42,25 @@ public class MainDemo extends Application {
 		stage.setTitle("FX Keyboard (" + System.getProperty("javafx.runtime.version") + ")");
 		stage.setResizable(true);
 
-		popup = KeyBoardPopupBuilder.create().initLocale(Locale.ENGLISH).addIRobot(RobotFactory.createFXRobot())
+
+		String fontUrl = this.getClass().getResource("/font/FontKeyboardFX.ttf").toExternalForm();
+		Font f = Font.loadFont(fontUrl, -1);
+		System.err.println(f);
+		
+		/*
+		Path numblockLayout = null;
+		try {
+			numblockLayout = Paths.get(this.getClass().getResource("/xml/numblock").toURI());
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+		}
+		popup = KeyBoardPopupBuilder.create().initScale(1.0).initLocale(Locale.ENGLISH).addIRobot(RobotFactory.createFXRobot()).layerPath(numblockLayout)
 				.build();
+		*/
+		
+		popup = KeyBoardPopupBuilder.create().initScale(1.0).initLocale(Locale.ENGLISH).addIRobot(RobotFactory.createFXRobot()).build();
+		
+		
 		popup.getKeyBoard().setOnKeyboardCloseButton(new EventHandler<Event>() {
 			public void handle(Event event) {
 				setPopupVisible(false, null);

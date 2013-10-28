@@ -156,6 +156,7 @@ public class KeyButton extends Button implements LongPressable {
 		if (onLongPressed == null) {
 			onLongPressed = new SimpleObjectProperty<EventHandler<? super KeyButtonEvent>>() {
 
+				@SuppressWarnings("unchecked")
 				@Override
 				protected void invalidated() {
 					setEventHandler(KeyButtonEvent.LONG_PRESSED, (EventHandler<? super Event>) get());
@@ -177,6 +178,7 @@ public class KeyButton extends Button implements LongPressable {
 		if (onShortPressed == null) {
 			onShortPressed = new SimpleObjectProperty<EventHandler<? super KeyButtonEvent>>() {
 
+				@SuppressWarnings("unchecked")
 				@Override
 				protected void invalidated() {
 					setEventHandler(KeyButtonEvent.SHORT_PRESSED, (EventHandler<? super Event>) get());

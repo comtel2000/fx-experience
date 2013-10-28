@@ -2,11 +2,10 @@ package org.comtel.javafx;
 
 import java.io.IOException;
 
-import junit.framework.Assert;
-
 import org.comtel.javafx.xml.KeyboardLayoutHandler;
 import org.comtel.javafx.xml.layout.Keyboard;
 import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 

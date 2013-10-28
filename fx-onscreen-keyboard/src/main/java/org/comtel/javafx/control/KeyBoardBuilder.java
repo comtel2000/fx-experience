@@ -9,7 +9,7 @@ import javafx.util.Builder;
 
 import org.comtel.javafx.robot.IRobot;
 
-public class KeyBoardBuilder implements Builder<KeyBoard> {
+public class KeyBoardBuilder implements Builder<KeyboardPane> {
 
 	private Path layerPath;
 	private Locale initLocale;
@@ -43,8 +43,8 @@ public class KeyBoardBuilder implements Builder<KeyBoard> {
 		return this;
 	}
 
-	public KeyBoard build() {
-		KeyBoard keyBoard = new KeyBoard(layerPath, initLocale);
+	public KeyboardPane build() {
+		KeyboardPane keyBoard = new KeyboardPane(layerPath, initLocale);
 		if (initScale > 0.0){
 			keyBoard.setScale(initScale);
 		}

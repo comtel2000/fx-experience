@@ -1,6 +1,6 @@
 package org.comtel.javafx.robot;
 
-import org.comtel.javafx.control.KeyBoard;
+import org.comtel.javafx.control.KeyboardPane;
 import org.slf4j.LoggerFactory;
 
 import javafx.application.Platform;
@@ -20,7 +20,7 @@ public class FXRobotHandler implements IRobot {
 	public void sendToComponent(Object kb, final char ch, final boolean ctrl) {
 		logger.trace("fire: {}", ch);
 
-		final Window keyboardWindow = ((KeyBoard) kb).getScene().getWindow();
+		final Window keyboardWindow = ((KeyboardPane) kb).getScene().getWindow();
 		if (keyboardWindow != null) {
 			final Scene scene;
 			if (keyboardWindow instanceof Popup) {
