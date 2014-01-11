@@ -32,14 +32,14 @@
 }
 
 #key-button {
-	-fx-font-size: 1.3em;
+	-fx-font-size: 1.2em;
 	-fx-font-family: "sans-serif";
 	-fx-text-fill: white;
 	-fx-background-color: rgb(60, 66, 80);
 }
 
 #key-context-button {
-	-fx-font-size: 1.3em;
+	-fx-font-size: 1.2em;
 	-fx-font-family: "sans-serif";
 	-fx-text-fill: white;
 	-fx-background-color: rgb(60, 66, 80);
@@ -77,18 +77,18 @@
 
 #key-button.button.font-fxkeyboard {
 	-fx-font-family: FontKeyboardFX;
-	-fx-font-size: 1.3em;
+	-fx-font-size: 1.2em;
 }
 
 #key-button.button.font-fxkeyboard-alpha {
 	-fx-font-family: FontKeyboardFX;
-	-fx-font-size: 1.3em;
+	-fx-font-size: 1.2em;
 	-fx-text-fill: rgba(250, 250, 250, 0.3);
 }
 
 #key-button.button.font-awesome {
 	-fx-font-family: FontAwesome;
-	-fx-font-size: 1.3em;
+	-fx-font-size: 1.1em;
 }
 
 #key-button.button .label {
