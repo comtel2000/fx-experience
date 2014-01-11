@@ -465,14 +465,14 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
 				colIdx++;
 				rowWidth += cc.getPrefWidth();
 			}
-			logger.info("row[{}] - {}", rowIdx, rowWidth);
+			logger.trace("row[{}] - {}", rowIdx, rowWidth);
 			colPane.getRowConstraints().add(rc);
 			// colPane.setGridLinesVisible(true);
 			rPane.add(colPane, 0, rowIdx);
 			rowIdx++;
 		}
 
-		logger.debug("-----end pane-----");
+		logger.trace("-----end pane-----");
 		return rPane;
 	}
 
