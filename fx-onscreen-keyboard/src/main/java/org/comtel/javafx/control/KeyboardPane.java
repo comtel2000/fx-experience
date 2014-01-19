@@ -430,6 +430,7 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
 
 						@Override
 						public void handle(MouseEvent event) {
+							//on Double.isNaN(getScene().getWindow().getX()) init window position
 							mousePressedX = getScene().getWindow().getX() - event.getScreenX();
 							mousePressedY = getScene().getWindow().getY() - event.getScreenY();
 						}
@@ -438,7 +439,6 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
 					button.setOnMouseDragged(new EventHandler<MouseEvent>() {
 						@Override
 						public void handle(MouseEvent mouseEvent) {
-
 							getScene().getWindow().setX(mouseEvent.getScreenX() + mousePressedX);
 							getScene().getWindow().setY(mouseEvent.getScreenY() + mousePressedY);
 
@@ -465,14 +465,14 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
 				colIdx++;
 				rowWidth += cc.getPrefWidth();
 			}
-			logger.info("row[{}] - {}", rowIdx, rowWidth);
+			logger.trace("row[{}] - {}", rowIdx, rowWidth);
 			colPane.getRowConstraints().add(rc);
 			// colPane.setGridLinesVisible(true);
 			rPane.add(colPane, 0, rowIdx);
 			rowIdx++;
 		}
 
-		logger.debug("-----end pane-----");
+		logger.trace("-----end pane-----");
 		return rPane;
 	}
 
