@@ -21,6 +21,7 @@
 		</repository>
 	</repositories>
 	<dependencies>
+	<!-- 
 		<dependency>
 			<groupId>com.oracle</groupId>
 			<artifactId>javafx-runtime</artifactId>
@@ -28,6 +29,7 @@
 			<scope>system</scope>
 			<systemPath>${javafx.runtime.jar}</systemPath>
 		</dependency>
+		 -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
