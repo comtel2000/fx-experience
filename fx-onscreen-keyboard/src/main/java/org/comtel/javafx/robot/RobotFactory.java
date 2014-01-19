@@ -9,4 +9,8 @@ public class RobotFactory {
 	public static IRobot createAWTRobot(){
 		return new AWTRobotHandler();
 	}
+	
+	public static IRobot createNativeAsciiRobot(){
+		return new NativeAsciiRobotHandler();
+	}
 }
