@@ -1,19 +1,16 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.comtel.javafx</groupId>
 	<artifactId>fx-onscreen-keyboard</artifactId>
 	<version>1.0.9-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>fx-onscreen-keyboard</name>
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<maven.compiler.source>1.7</maven.compiler.source>
-		<maven.compiler.target>1.7</maven.compiler.target>
-		<slf4j.version>1.7.5</slf4j.version>
-		<junit.version>4.11</junit.version>
-		<javafx.runtime.jar>${java.home}/lib/jfxrt.jar</javafx.runtime.jar>
-	</properties>
+	<parent>
+		<groupId>org.comtel.javafx</groupId>
+		<artifactId>fx-experience</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+
 	<repositories>
 		<repository>
 			<id>oss.sonatype.org</id>
@@ -21,6 +18,7 @@
 		</repository>
 	</repositories>
 	<dependencies>
+	<!-- 
 		<dependency>
 			<groupId>com.oracle</groupId>
 			<artifactId>javafx-runtime</artifactId>
@@ -28,6 +26,7 @@
 			<scope>system</scope>
 			<systemPath>${javafx.runtime.jar}</systemPath>
 		</dependency>
+		 -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -46,7 +45,7 @@
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>
-
+    
 	<build>
 		<plugins>
 			<plugin>

@@ -4,6 +4,8 @@ import java.awt.AWTException;
 import java.awt.Component;
 import java.awt.KeyboardFocusManager;
 import java.awt.Robot;
+import java.awt.event.KeyEvent;
+
 import static java.awt.event.KeyEvent.*;
 
 import javax.swing.SwingUtilities;
