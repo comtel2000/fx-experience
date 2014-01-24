@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/comtel2000/fx-experience.png)](https://travis-ci.org/comtel2000/fx-experience)
+[![Build Status](https://travis-ci.org/comtel2000/fx-experience.png?branch=master)](https://travis-ci.org/comtel2000/fx-experience)
 
 fx-experience
 =============
