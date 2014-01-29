@@ -61,12 +61,12 @@
 
 	<Row rowEdgeFlags="bottom">
 		<Key codes="-6" keyLabel="CTRL" keyLabelStyle=".small-style"
-			keyWidth="50" />
+			keyWidth="60" />
 		<Key codes="-2" keyLabel="ABC" keyLabelStyle=".small-style"
 			keyWidth="50" />
 			<Key codes="-12" keyLabel="◄" keyLabelStyle=".small-style" />
 		<Key codes="32" keyLabel="3" keyLabelStyle=".font-fxkeyboard-alpha"
-			keyWidth="175" isRepeatable="true" />
+			keyWidth="170" isRepeatable="true" />
 			<Key codes="-13" keyLabel="►" keyLabelStyle=".small-style" />
 		<Key codes="-7" keyLabel="EN" keyLabelStyle=".small-style"
 			keyWidth="40" />
