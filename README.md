@@ -13,6 +13,7 @@ fx-onscreen-keyboard
 
 ![num block] (fx-onscreen-keyboard/doc/num_block_ctrl.png)
 
+![layout ru] (fx-onscreen-keyboard/doc/layout_ru.png)
 
 License
 =======
