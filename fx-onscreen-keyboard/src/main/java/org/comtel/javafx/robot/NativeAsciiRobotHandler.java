@@ -2,15 +2,16 @@ package org.comtel.javafx.robot;
 
 import java.awt.AWTException;
 import java.awt.Robot;
+import java.awt.Toolkit;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.StringSelection;
 import java.awt.event.KeyEvent;
-
-import javafx.scene.input.Clipboard;
-import javafx.scene.input.ClipboardContent;
 
 import org.slf4j.LoggerFactory;
 
 /**
- * native OS support<p>
+ * native OS support
+ * <p>
  * dirty unicode char support only by transfer over OS clipboard..
  * 
  * @author comtel
@@ -21,17 +22,16 @@ public class NativeAsciiRobotHandler implements IRobot {
 	private final static org.slf4j.Logger logger = LoggerFactory.getLogger(NativeAsciiRobotHandler.class);
 
 	private final int controlKeyEvent;
-	String clipboardRecovered;
 
 	public NativeAsciiRobotHandler() {
-		String osName = System.getProperty("os.name");      
-		if (osName.startsWith("Mac")){
+		String osName = System.getProperty("os.name");
+		if (osName.startsWith("Mac")) {
 			controlKeyEvent = KeyEvent.VK_META;
-		}else{
+		} else {
 			controlKeyEvent = KeyEvent.VK_CONTROL;
 		}
 	}
-	
+
 	@Override
 	public void sendToComponent(Object kb, char ch, boolean ctrl) {
 		logger.trace("fire: {}", ch);
@@ -119,15 +119,17 @@ public class NativeAsciiRobotHandler implements IRobot {
 			}
 		}
 
+		int keyCode = KeyEvent.getExtendedKeyCodeForChar((int) ch);
 		if (Character.isWhitespace(ch)) {
-			robot.keyPress(ch);
-			robot.keyRelease(ch);
+			robot.keyPress(keyCode);
+			robot.keyRelease(keyCode);
 			return;
 		}
-
+		if (KeyEvent.VK_UNDEFINED == keyCode || keyCode > 10000) {
+			clipboardTransfer(robot, ch);
+			return;
+		}
 		boolean isUpperCase = Character.isUpperCase(ch);
-		int keyCode = KeyEvent.getExtendedKeyCodeForChar(ch);
-		System.err.println("key code: " + keyCode);
 
 		if (isUpperCase) {
 			robot.keyPress(KeyEvent.VK_SHIFT);
@@ -136,8 +138,13 @@ public class NativeAsciiRobotHandler implements IRobot {
 			robot.keyPress(keyCode);
 			robot.keyRelease(keyCode);
 		} catch (IllegalArgumentException e) {
-			logger.error(e.getMessage() + " " + ch);
+			logger.warn(e.getMessage() + String.format(" %s (%s)", keyCode, ch));
+			if (isUpperCase) {
+				robot.keyRelease(KeyEvent.VK_SHIFT);
+			}
 			clipboardTransfer(robot, ch);
+			return;
+
 		}
 		if (isUpperCase) {
 			robot.keyRelease(KeyEvent.VK_SHIFT);
@@ -145,44 +152,38 @@ public class NativeAsciiRobotHandler implements IRobot {
 
 	}
 
+	/**
+	 * does not work for extended codepage signs
+	 */
+	private void winAltDump(Robot robot, int ch) {
+		robot.keyPress(KeyEvent.VK_ALT);
+		for (int i = 3; i >= 0; --i) {
+			int vk = ch / (int) (Math.pow(10, i)) % 10 + KeyEvent.VK_NUMPAD0;
+			logger.debug("{} - {}", vk, KeyEvent.getKeyText(vk));
+			robot.keyPress(vk);
+			robot.keyRelease(vk);
+		}
+		robot.keyRelease(KeyEvent.VK_ALT);
+	}
+
 	private void clipboardTransfer(Robot robot, char ch) {
-		final String clipboardRecovered = Clipboard.getSystemClipboard().getString();
+		try {
+			StringSelection stringSelection = new StringSelection(Character.toString(ch));
+			java.awt.datatransfer.Clipboard clpbrd = Toolkit.getDefaultToolkit().getSystemClipboard();
+			Object recover = clpbrd.getData(DataFlavor.stringFlavor);
+			clpbrd.setContents(stringSelection, null);
 
-		ClipboardContent content = new ClipboardContent();
-		content.putString(Character.toString(ch));
-		Clipboard.getSystemClipboard().setContent(content);
+			robot.keyPress(controlKeyEvent);
+			robot.keyPress(KeyEvent.VK_V);
+			robot.keyRelease(KeyEvent.VK_V);
+			robot.keyRelease(controlKeyEvent);
+			robot.delay(50);
 
-		robot.keyPress(controlKeyEvent);
-		robot.keyPress(KeyEvent.VK_V);
-		robot.keyRelease(KeyEvent.VK_V);
-		robot.keyRelease(controlKeyEvent);
-
-		// ClipboardContent recover = new ClipboardContent();
-		// recover.putString(clipboardRecovered != null ? clipboardRecovered :
-		// "");
-		// Clipboard.getSystemClipboard().setContent(recover);
-
-		// Thread recoverThread = new Thread(new Runnable() {
-		//
-		// @Override
-		// public void run() {
-		// try {
-		// Thread.sleep(200);
-		// } catch (final InterruptedException e) {
-		// }
-		// ClipboardContent recover = new ClipboardContent();
-		// recover.putString(clipboardRecovered != null ? clipboardRecovered :
-		// "");
-		// Clipboard.getSystemClipboard().setContent(recover);
-		//
-		// }
-		// });
-		// recoverThread.setDaemon(true);
-		// recoverThread.start();
-
-		// recover old content
-		// clipboard.setContent(Collections.singletonMap(DataFormat.PLAIN_TEXT,
-		// content != null ? content : ""));
+			StringSelection recoverSelection = new StringSelection(recover != null ? recover.toString() : "");
+			clpbrd.setContents(recoverSelection, null);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+		}
 	}
 
 }
