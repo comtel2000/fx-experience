@@ -34,8 +34,8 @@ public class AwtStandAloneApp extends JApplet {
 	private static int posY = 100;
 
 	private static Locale locale;
-	private static String  xmlPath;
-	
+	private static String xmlPath;
+
 	private static final long serialVersionUID = 1L;
 
 	private KeyBoardPopup fxKeyboardPopup;
@@ -80,7 +80,7 @@ public class AwtStandAloneApp extends JApplet {
 		javafxPanel.setScene(scene);
 		scene.getStylesheets().add(this.getClass().getResource("/css/KeyboardButtonStyle.css").toExternalForm());
 
-		if (xmlPath == null){
+		if (xmlPath == null) {
 			xmlPath = "/xml/numblock";
 		}
 		Path path = null;
@@ -89,14 +89,14 @@ public class AwtStandAloneApp extends JApplet {
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 		}
-		if (locale ==  null){
+		if (locale == null) {
 			locale = Locale.getDefault();
 		}
 
 		fxKeyboardPopup = KeyBoardPopupBuilder.create().initLocale(locale).addIRobot(RobotFactory.createNativeAsciiRobot()).layerPath(path).build();
 
 		fxKeyboardPopup.getKeyBoard().setOnKeyboardCloseButton(e -> System.exit(0));
-		
+
 		fxKeyboardPopup.setOwner(scene);
 		setKeyboardVisible(true, new Point(posX, posY));
 	}
