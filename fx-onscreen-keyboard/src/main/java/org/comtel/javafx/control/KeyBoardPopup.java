@@ -8,7 +8,7 @@ public class KeyBoardPopup extends Popup {
 	private final KeyboardPane keyboard;
 
 	private Scene owner = null;
-	
+
 	public final KeyboardPane getKeyBoard() {
 		return keyboard;
 	}
@@ -24,9 +24,9 @@ public class KeyBoardPopup extends Popup {
 
 	public void setVisible(boolean b) {
 		if (b) {
-			if (owner != null){
+			if (owner != null) {
 				super.show(owner.getWindow());
-			}else{
+			} else {
 				super.show(this.getOwnerWindow());
 			}
 		} else {

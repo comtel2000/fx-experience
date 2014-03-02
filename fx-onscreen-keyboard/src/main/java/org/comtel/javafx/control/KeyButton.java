@@ -66,6 +66,7 @@ public class KeyButton extends Button implements LongPressable {
 	protected void initEventListener() {
 		timer.setOnFinished(new EventHandler<ActionEvent>() {
 
+			@Override
 			public void handle(ActionEvent event) {
 				fireLongPressed();
 			}
@@ -83,6 +84,7 @@ public class KeyButton extends Button implements LongPressable {
 
 		setOnMouseClicked(new EventHandler<MouseEvent>() {
 
+			@Override
 			public void handle(MouseEvent event) {
 				logger.trace("{} clicked: {}", keyCode, timer.getCurrentRate());
 
@@ -101,6 +103,7 @@ public class KeyButton extends Button implements LongPressable {
 
 		setOnMousePressed(new EventHandler<MouseEvent>() {
 
+			@Override
 			public void handle(MouseEvent event) {
 				logger.trace("{} pressed: {}", keyCode, timer.getCurrentRate());
 				if (event.getButton().equals(MouseButton.PRIMARY)) {
@@ -112,6 +115,7 @@ public class KeyButton extends Button implements LongPressable {
 
 		setOnMouseDragged(new EventHandler<MouseEvent>() {
 
+			@Override
 			public void handle(MouseEvent event) {
 				logger.trace("{} dragged: {}", keyCode, timer.getCurrentRate());
 
@@ -144,14 +148,17 @@ public class KeyButton extends Button implements LongPressable {
 		fireEvent(new KeyButtonEvent(this, KeyButtonEvent.SHORT_PRESSED));
 	}
 
+	@Override
 	public final void setOnLongPressed(EventHandler<? super KeyButtonEvent> eventhandler) {
 		onLongPressedProperty().set(eventhandler);
 	}
 
+	@Override
 	public final EventHandler<? super KeyButtonEvent> getOnLongPressed() {
 		return onLongPressedProperty().get();
 	}
 
+	@Override
 	public final ObjectProperty<EventHandler<? super KeyButtonEvent>> onLongPressedProperty() {
 		if (onLongPressed == null) {
 			onLongPressed = new SimpleObjectProperty<EventHandler<? super KeyButtonEvent>>() {
@@ -166,14 +173,17 @@ public class KeyButton extends Button implements LongPressable {
 		return onLongPressed;
 	}
 
+	@Override
 	public final void setOnShortPressed(EventHandler<? super KeyButtonEvent> eventhandler) {
 		onShortPressedProperty().set(eventhandler);
 	}
 
+	@Override
 	public final EventHandler<? super KeyButtonEvent> getOnShortPressed() {
 		return onShortPressedProperty().get();
 	}
 
+	@Override
 	public final ObjectProperty<EventHandler<? super KeyButtonEvent>> onShortPressedProperty() {
 		if (onShortPressed == null) {
 			onShortPressed = new SimpleObjectProperty<EventHandler<? super KeyButtonEvent>>() {

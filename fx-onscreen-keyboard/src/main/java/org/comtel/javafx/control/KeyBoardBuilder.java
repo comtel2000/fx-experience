@@ -34,18 +34,19 @@ public class KeyBoardBuilder implements Builder<KeyboardPane> {
 	}
 
 	public KeyBoardBuilder initScale(double scale) {
-		initScale  = scale;
+		initScale = scale;
 		return this;
 	}
-	
+
 	public KeyBoardBuilder addIRobot(IRobot robot) {
 		iRobots.add(robot);
 		return this;
 	}
 
+	@Override
 	public KeyboardPane build() {
 		KeyboardPane keyBoard = new KeyboardPane(layerPath, initLocale);
-		if (initScale > 0.0){
+		if (initScale > 0.0) {
 			keyBoard.setScale(initScale);
 		}
 		for (IRobot robot : iRobots) {

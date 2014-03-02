@@ -1,16 +1,18 @@
 package org.comtel.javafx.robot;
 
-import java.awt.event.KeyEvent;
+import static javafx.scene.input.KeyCode.CONTROL;
+import static javafx.scene.input.KeyCode.META;
 
-import org.comtel.javafx.control.KeyboardPane;
-import org.slf4j.LoggerFactory;
+import java.awt.event.KeyEvent;
 
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Popup;
 import javafx.stage.Window;
-import static javafx.scene.input.KeyCode.*;
+
+import org.comtel.javafx.control.KeyboardPane;
+import org.slf4j.LoggerFactory;
 
 import com.sun.javafx.robot.FXRobot;
 import com.sun.javafx.robot.FXRobotFactory;
@@ -22,14 +24,14 @@ public class FXRobotHandler implements IRobot {
 	private final KeyCode controlKeyCode;
 
 	public FXRobotHandler() {
-		String osName = System.getProperty("os.name");      
-		if (osName.toLowerCase().startsWith("mac")){
+		String osName = System.getProperty("os.name");
+		if (osName.toLowerCase().startsWith("mac")) {
 			controlKeyCode = META;
-		}else{
+		} else {
 			controlKeyCode = CONTROL;
 		}
 	}
-	
+
 	@Override
 	public void sendToComponent(Object kb, final char ch, final boolean ctrl) {
 		logger.trace("fire: {}", ch);

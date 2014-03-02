@@ -2,7 +2,6 @@ package org.comtel.javafx;
 
 import java.awt.BorderLayout;
 import java.awt.Point;
-import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.ParseException;
@@ -30,7 +29,6 @@ import org.comtel.javafx.control.KeyBoardPopupBuilder;
 import org.comtel.javafx.robot.RobotFactory;
 import org.slf4j.LoggerFactory;
 
-
 public class AwtStandAloneApp extends JApplet {
 
 	private final static org.slf4j.Logger logger = LoggerFactory.getLogger(AwtStandAloneApp.class);
@@ -39,7 +37,7 @@ public class AwtStandAloneApp extends JApplet {
 	private static String xmlPath = "/xml/numblock";
 	private static int posX = 100;
 	private static int posY = 100;
-	
+
 	private static final long serialVersionUID = 1L;
 
 	private KeyBoardPopup fxKeyboardPopup;
@@ -48,6 +46,7 @@ public class AwtStandAloneApp extends JApplet {
 	public AwtStandAloneApp() {
 	}
 
+	@Override
 	public void init() {
 
 		String fontUrl = this.getClass().getResource("/font/FontKeyboardFX.ttf").toExternalForm();
@@ -73,6 +72,7 @@ public class AwtStandAloneApp extends JApplet {
 
 		// create JavaFX scene
 		Platform.runLater(new Runnable() {
+			@Override
 			public void run() {
 				createScene(javafxPanel);
 			}
@@ -89,7 +89,7 @@ public class AwtStandAloneApp extends JApplet {
 
 		Path path = null;
 		try {
-			if (xmlPath != null && !xmlPath.isEmpty()){
+			if (xmlPath != null && !xmlPath.isEmpty()) {
 				path = Paths.get(this.getClass().getResource(xmlPath).toURI());
 			}
 		} catch (Exception e) {
@@ -98,6 +98,7 @@ public class AwtStandAloneApp extends JApplet {
 
 		fxKeyboardPopup = KeyBoardPopupBuilder.create().initLocale(locale != null ? locale : Locale.getDefault()).addIRobot(RobotFactory.createNativeAsciiRobot()).layerPath(path).build();
 		fxKeyboardPopup.getKeyBoard().setOnKeyboardCloseButton(new EventHandler<Event>() {
+			@Override
 			public void handle(Event event) {
 				System.exit(0);
 				// setKeyboardVisible(false, null);
@@ -111,6 +112,7 @@ public class AwtStandAloneApp extends JApplet {
 		final boolean visible = flag;
 		final Point location = point;
 		Platform.runLater(new Runnable() {
+			@Override
 			public void run() {
 				if (fxKeyboardPopup == null) {
 					return;
@@ -168,8 +170,8 @@ public class AwtStandAloneApp extends JApplet {
 		System.out.println("\t-pos <x,y>\t\tinitial keyboard position");
 		System.out.println("\t-help\t\t\tthis help screen");
 	}
-	
-	private static void parseLocale(String l) throws Exception{
+
+	private static void parseLocale(String l) throws Exception {
 		if (l == null || l.isEmpty()) {
 			throw new ParseException("invalid locale", 0);
 		}
@@ -193,7 +195,7 @@ public class AwtStandAloneApp extends JApplet {
 			posY = Integer.valueOf(pos[1]);
 		}
 	}
-	
+
 	public static void main(String[] args) {
 
 		try {
@@ -202,7 +204,7 @@ public class AwtStandAloneApp extends JApplet {
 					parseLocale(args[++i]);
 				} else if (args[i].equals("-layout")) {
 					xmlPath = args[++i];
-				}  else if (args[i].equals("-pos")) {
+				} else if (args[i].equals("-pos")) {
 					parsePosition(args[++i]);
 				} else {
 					showHelp();
@@ -214,9 +216,10 @@ public class AwtStandAloneApp extends JApplet {
 			showHelp();
 			return;
 		}
-		
+
 		SwingUtilities.invokeLater(new Runnable() {
 
+			@Override
 			public void run() {
 				JApplet applet = new AwtStandAloneApp();
 				applet.init();

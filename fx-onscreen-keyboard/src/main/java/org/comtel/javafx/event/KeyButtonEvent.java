@@ -17,6 +17,7 @@ public class KeyButtonEvent extends Event {
 		super(button, button, type);
 	}
 
+	@Override
 	public String toString() {
 		StringBuilder stringbuilder = new StringBuilder("KeyButtonEvent [");
 		stringbuilder.append("source = ").append(getSource());

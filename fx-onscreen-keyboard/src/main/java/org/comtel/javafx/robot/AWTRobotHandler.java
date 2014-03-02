@@ -1,12 +1,34 @@
 package org.comtel.javafx.robot;
 
+import static java.awt.event.InputEvent.SHIFT_DOWN_MASK;
+import static java.awt.event.KeyEvent.KEY_LOCATION_STANDARD;
+import static java.awt.event.KeyEvent.KEY_LOCATION_UNKNOWN;
+import static java.awt.event.KeyEvent.KEY_PRESSED;
+import static java.awt.event.KeyEvent.KEY_RELEASED;
+import static java.awt.event.KeyEvent.KEY_TYPED;
+import static java.awt.event.KeyEvent.VK_A;
+import static java.awt.event.KeyEvent.VK_BACK_SPACE;
+import static java.awt.event.KeyEvent.VK_C;
+import static java.awt.event.KeyEvent.VK_CONTROL;
+import static java.awt.event.KeyEvent.VK_DELETE;
+import static java.awt.event.KeyEvent.VK_DOWN;
+import static java.awt.event.KeyEvent.VK_ENTER;
+import static java.awt.event.KeyEvent.VK_ESCAPE;
+import static java.awt.event.KeyEvent.VK_LEFT;
+import static java.awt.event.KeyEvent.VK_META;
+import static java.awt.event.KeyEvent.VK_RIGHT;
+import static java.awt.event.KeyEvent.VK_SPACE;
+import static java.awt.event.KeyEvent.VK_TAB;
+import static java.awt.event.KeyEvent.VK_UNDEFINED;
+import static java.awt.event.KeyEvent.VK_UP;
+import static java.awt.event.KeyEvent.VK_V;
+import static java.awt.event.KeyEvent.VK_X;
+
 import java.awt.AWTException;
 import java.awt.Component;
 import java.awt.KeyboardFocusManager;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
-
-import static java.awt.event.KeyEvent.*;
 
 import javax.swing.SwingUtilities;
 
@@ -19,18 +41,19 @@ public class AWTRobotHandler implements IRobot {
 	private final int controlKeyEvent;
 
 	public AWTRobotHandler() {
-		String osName = System.getProperty("os.name");      
-		if (osName.toLowerCase().startsWith("mac")){
+		String osName = System.getProperty("os.name");
+		if (osName.toLowerCase().startsWith("mac")) {
 			controlKeyEvent = VK_META;
-		}else{
+		} else {
 			controlKeyEvent = VK_CONTROL;
 		}
 	}
-	
+
 	@Override
 	public void sendToComponent(Object source, final char ch, final boolean ctrl) {
 		logger.trace("fire: {}", ch);
 		SwingUtilities.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				send(ch, ctrl);
 			}
@@ -124,25 +147,16 @@ public class AWTRobotHandler implements IRobot {
 			}
 		}
 
-		if (Character.isWhitespace(ch)){
+		if (Character.isWhitespace(ch)) {
 			robot.keyPress(ch);
 			robot.keyRelease(ch);
 			return;
 		}
-		
+
 		int modififiers = Character.isUpperCase(ch) ? SHIFT_DOWN_MASK : 0;
-		KeyboardFocusManager.getCurrentKeyboardFocusManager().dispatchKeyEvent(
-				new KeyEvent(c, KEY_PRESSED, System.currentTimeMillis(),
-						modififiers, VK_UNDEFINED, ch,
-						KEY_LOCATION_STANDARD));
-		KeyboardFocusManager.getCurrentKeyboardFocusManager().dispatchKeyEvent(
-				new KeyEvent(c, KEY_TYPED, System.currentTimeMillis(),
-						modififiers, VK_UNDEFINED, ch,
-						KEY_LOCATION_UNKNOWN));
-		KeyboardFocusManager.getCurrentKeyboardFocusManager().dispatchKeyEvent(
-				new KeyEvent(c, KEY_RELEASED, System.currentTimeMillis(),
-						modififiers, VK_UNDEFINED, ch,
-						KEY_LOCATION_STANDARD));
+		KeyboardFocusManager.getCurrentKeyboardFocusManager().dispatchKeyEvent(new KeyEvent(c, KEY_PRESSED, System.currentTimeMillis(), modififiers, VK_UNDEFINED, ch, KEY_LOCATION_STANDARD));
+		KeyboardFocusManager.getCurrentKeyboardFocusManager().dispatchKeyEvent(new KeyEvent(c, KEY_TYPED, System.currentTimeMillis(), modififiers, VK_UNDEFINED, ch, KEY_LOCATION_UNKNOWN));
+		KeyboardFocusManager.getCurrentKeyboardFocusManager().dispatchKeyEvent(new KeyEvent(c, KEY_RELEASED, System.currentTimeMillis(), modififiers, VK_UNDEFINED, ch, KEY_LOCATION_STANDARD));
 
 	}
 

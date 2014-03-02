@@ -138,6 +138,7 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
 		setKeyboardLayer(KeyboardLayer.QWERTY);
 
 		shiftProperty.addListener(new ChangeListener<Boolean>() {
+			@Override
 			public void changed(ObservableValue<? extends Boolean> arg0, Boolean arg1, Boolean arg2) {
 				if (ctrlProperty.get()) {
 					logger.warn("ignore in ctrl mode");
@@ -148,6 +149,7 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
 		});
 
 		ctrlProperty.addListener(new ChangeListener<Boolean>() {
+			@Override
 			public void changed(ObservableValue<? extends Boolean> arg0, Boolean arg1, Boolean arg2) {
 				if (arg2) {
 					setKeyboardLayer(KeyboardLayer.CTRL);
@@ -158,6 +160,7 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
 		});
 
 		symbolProperty.addListener(new ChangeListener<Boolean>() {
+			@Override
 			public void changed(ObservableValue<? extends Boolean> arg0, Boolean arg1, Boolean arg2) {
 				if (ctrlProperty.get()) {
 					logger.warn("ignore in ctrl mode");
@@ -430,7 +433,8 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
 
 						@Override
 						public void handle(MouseEvent event) {
-							//on Double.isNaN(getScene().getWindow().getX()) init window position
+							// on Double.isNaN(getScene().getWindow().getX())
+							// init window position
 							mousePressedX = getScene().getWindow().getX() - event.getScreenX();
 							mousePressedY = getScene().getWindow().getY() - event.getScreenY();
 						}
@@ -488,9 +492,10 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
 		return ctrlProperty.get();
 	}
 
+	@Override
 	public void handle(KeyButtonEvent event) {
 		event.consume();
-		KeyButtonEvent kbEvent = (KeyButtonEvent) event;
+		KeyButtonEvent kbEvent = event;
 		if (!kbEvent.getEventType().equals(KeyButtonEvent.SHORT_PRESSED)) {
 			logger.warn("ignore non short pressed events");
 			return;

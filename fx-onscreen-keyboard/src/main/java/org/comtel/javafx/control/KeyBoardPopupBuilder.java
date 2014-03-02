@@ -3,9 +3,9 @@ package org.comtel.javafx.control;
 import java.nio.file.Path;
 import java.util.Locale;
 
-import org.comtel.javafx.robot.IRobot;
-
 import javafx.util.Builder;
+
+import org.comtel.javafx.robot.IRobot;
 
 public class KeyBoardPopupBuilder implements Builder<KeyBoardPopup> {
 
@@ -28,7 +28,7 @@ public class KeyBoardPopupBuilder implements Builder<KeyBoardPopup> {
 		kb.initLocale(locale);
 		return this;
 	}
-	
+
 	public KeyBoardPopupBuilder initScale(double scale) {
 		kb.initScale(scale);
 		return this;

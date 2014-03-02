@@ -37,12 +37,14 @@ public class MultiKeyPopup extends Popup {
 		buttons = FXCollections.observableArrayList();
 		buttons.addListener(new ListChangeListener<ButtonBase>() {
 
+			@Override
 			public void onChanged(Change<? extends ButtonBase> c) {
 				while (c.next()) {
 					for (ButtonBase button : c.getAddedSubList()) {
 						button.setFocusTraversable(false);
 						button.setOnAction(new EventHandler<ActionEvent>() {
 
+							@Override
 							public void handle(ActionEvent event) {
 								hide();
 							}
@@ -85,8 +87,7 @@ public class MultiKeyPopup extends Popup {
 			// Point2D point2d = Utils.pointRelativeTo(node,
 			// computePrefWidth(-1D), computePrefHeight(-1D), hpos, vpos, d,
 			// d1, true);
-			Point2D point2d = Utils.pointRelativeTo(node, buttonPane.getPrefWidth(), buttonPane.getPrefHeight(), hpos,
-					vpos, d, d1, true);
+			Point2D point2d = Utils.pointRelativeTo(node, buttonPane.getPrefWidth(), buttonPane.getPrefHeight(), hpos, vpos, d, d1, true);
 			super.show(node, point2d.getX(), point2d.getY());
 			return;
 		}
@@ -97,13 +98,14 @@ public class MultiKeyPopup extends Popup {
 	}
 
 	public final EventHandler<ActionEvent> getOnAction() {
-		return (EventHandler<ActionEvent>) onActionProperty().get();
+		return onActionProperty().get();
 	}
 
 	public final ObjectProperty<EventHandler<ActionEvent>> onActionProperty() {
 		return onAction;
 	}
 
+	@Override
 	public void hide() {
 		if (!isShowing()) {
 			return;
@@ -119,7 +121,7 @@ public class MultiKeyPopup extends Popup {
 
 		@Override
 		protected void invalidated() {
-			setEventHandler(ActionEvent.ACTION, (EventHandler<? super ActionEvent>) get());
+			setEventHandler(ActionEvent.ACTION, get());
 		}
 
 	};

@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 public class KeyboardLayoutHandler {
 
 	private final static org.slf4j.Logger logger = LoggerFactory.getLogger(KeyboardLayoutHandler.class);
-	
+
 	private JAXBContext context;
 	private Unmarshaller unmarshaller;
 
@@ -29,22 +29,22 @@ public class KeyboardLayoutHandler {
 
 	public Keyboard getLayout(String file) throws IOException {
 		URL url = KeyboardLayoutHandler.class.getResource(file);
-		if (url != null){
+		if (url != null) {
 			return getLayout(url);
 		}
 		InputStream is = KeyboardLayoutHandler.class.getResourceAsStream(file);
-		if (is != null){
+		if (is != null) {
 			return getLayout(is);
 		}
 		throw new IOException("layout not found on: " + file);
 	}
-	
+
 	/**
 	 * "resources/xml/kb-layout.xml"
 	 * 
 	 * @param url
 	 * @return
-	 * @throws IOException 
+	 * @throws IOException
 	 */
 	public Keyboard getLayout(URL url) throws IOException {
 
@@ -59,7 +59,7 @@ public class KeyboardLayoutHandler {
 		}
 		return null;
 	}
-	
+
 	public Keyboard getLayout(InputStream is) throws IOException {
 
 		Object obj = null;

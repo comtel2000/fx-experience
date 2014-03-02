@@ -42,26 +42,24 @@ public class MainDemo extends Application {
 		stage.setTitle("FX Keyboard (" + System.getProperty("javafx.runtime.version") + ")");
 		stage.setResizable(true);
 
-
 		String fontUrl = this.getClass().getResource("/font/FontKeyboardFX.ttf").toExternalForm();
 		Font f = Font.loadFont(fontUrl, -1);
 		System.err.println(f);
-		
+
 		/*
-		Path numblockLayout = null;
-		try {
-			numblockLayout = Paths.get(this.getClass().getResource("/xml/numblock").toURI());
-		} catch (URISyntaxException e) {
-			e.printStackTrace();
-		}
-		popup = KeyBoardPopupBuilder.create().initScale(1.0).initLocale(Locale.ENGLISH).addIRobot(RobotFactory.createFXRobot()).layerPath(numblockLayout)
-				.build();
-		*/
-		
+		 * Path numblockLayout = null; try { numblockLayout =
+		 * Paths.get(this.getClass().getResource("/xml/numblock").toURI()); }
+		 * catch (URISyntaxException e) { e.printStackTrace(); } popup =
+		 * KeyBoardPopupBuilder
+		 * .create().initScale(1.0).initLocale(Locale.ENGLISH
+		 * ).addIRobot(RobotFactory.createFXRobot()).layerPath(numblockLayout)
+		 * .build();
+		 */
+
 		popup = KeyBoardPopupBuilder.create().initScale(1.0).initLocale(Locale.ENGLISH).addIRobot(RobotFactory.createFXRobot()).build();
-		
-		
+
 		popup.getKeyBoard().setOnKeyboardCloseButton(new EventHandler<Event>() {
+			@Override
 			public void handle(Event event) {
 				setPopupVisible(false, null);
 			}
@@ -87,7 +85,7 @@ public class MainDemo extends Application {
 		pane.getChildren().add(ta);
 		pane.getChildren().add(okButton);
 		pane.getChildren().add(cancelButton);
-		//pane.getChildren().add(KeyBoardBuilder.create().addIRobot(RobotFactory.createFXRobot()).build());
+		// pane.getChildren().add(KeyBoardBuilder.create().addIRobot(RobotFactory.createFXRobot()).build());
 		Scene scene = new Scene(pane, 200, 300);
 
 		// add keyboard scene listener to all text components
@@ -96,7 +94,7 @@ public class MainDemo extends Application {
 			public void changed(ObservableValue<? extends Node> value, Node n1, Node n2) {
 				if (n2 != null && n2 instanceof TextInputControl) {
 					setPopupVisible(true, (TextInputControl) n2);
-					
+
 				} else {
 					setPopupVisible(false, null);
 				}
@@ -107,11 +105,12 @@ public class MainDemo extends Application {
 		scene.getStylesheets().add(css);
 		stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 
+			@Override
 			public void handle(WindowEvent event) {
 				System.exit(0);
 			}
 		});
-		
+
 		stage.setScene(scene);
 		popup.show(stage);
 		stage.show();
@@ -128,10 +127,8 @@ public class MainDemo extends Application {
 			public void run() {
 				if (b) {
 					if (textNode != null) {
-						Rectangle2D textNodeBounds = new Rectangle2D(textNode.getScene().getWindow().getX()
-								+ textNode.getLocalToSceneTransform().getTx(), textNode.getScene().getWindow().getY()
-								+ textNode.getLocalToSceneTransform().getTy(), textNode.getWidth(), textNode
-								.getHeight());
+						Rectangle2D textNodeBounds = new Rectangle2D(textNode.getScene().getWindow().getX() + textNode.getLocalToSceneTransform().getTx(), textNode.getScene().getWindow().getY()
+								+ textNode.getLocalToSceneTransform().getTy(), textNode.getWidth(), textNode.getHeight());
 
 						Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
 						if (textNodeBounds.getMinX() + popup.getWidth() > screenBounds.getMaxX()) {
@@ -152,11 +149,11 @@ public class MainDemo extends Application {
 				if (fadeAnimation != null) {
 					fadeAnimation.stop();
 				}
-				if (!b){
+				if (!b) {
 					popup.hide();
 					return;
 				}
-				if (popup.isShowing()){
+				if (popup.isShowing()) {
 					return;
 				}
 				popup.getKeyBoard().setOpacity(0.0);
@@ -182,8 +179,6 @@ public class MainDemo extends Application {
 						popup.show(popup.getOwnerWindow());
 					}
 				}
-
-				
 
 			}
 		});

@@ -119,7 +119,7 @@ public class NativeAsciiRobotHandler implements IRobot {
 			}
 		}
 
-		int keyCode = KeyEvent.getExtendedKeyCodeForChar((int) ch);
+		int keyCode = KeyEvent.getExtendedKeyCodeForChar(ch);
 		if (Character.isWhitespace(ch)) {
 			robot.keyPress(keyCode);
 			robot.keyRelease(keyCode);

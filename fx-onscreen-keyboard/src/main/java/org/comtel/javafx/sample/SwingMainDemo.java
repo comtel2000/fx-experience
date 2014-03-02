@@ -52,26 +52,27 @@ public class SwingMainDemo extends JApplet {
 	public SwingMainDemo() {
 	}
 
+	@Override
 	public void init() {
-		
+
 		String fontUrl = this.getClass().getResource("/font/FontKeyboardFX.ttf").toExternalForm();
 		Font f = Font.loadFont(fontUrl, -1);
 		System.err.println(f);
-		
+
 		UIManager.put("TextFieldUI", KeyboardTextFieldUI.class.getName());
 		UIManager.put("TextAreaUI", KeyboardTextAreaUI.class.getName());
-		
-		//register global onscreen keyboard focus listener
+
+		// register global onscreen keyboard focus listener
 		FocusListener fl = createFocusListener();
-		//register global onscreen keyboard mouse(double)clicked listener
+		// register global onscreen keyboard mouse(double)clicked listener
 		MouseListener ml = createMouseListener();
-		
+
 		KeyboardTextFieldUI.setFocusListener(fl);
 		KeyboardTextFieldUI.setMouseListener(ml);
 
 		KeyboardTextAreaUI.setFocusListener(fl);
 		KeyboardTextAreaUI.setMouseListener(ml);
-		
+
 		JPanel panel = new JPanel();
 		panel.setPreferredSize(new Dimension(800, 400));
 		panel.setLayout(new FlowLayout(FlowLayout.LEFT, 20, 20));
@@ -79,7 +80,7 @@ public class SwingMainDemo extends JApplet {
 		panel.add(new JTextField(50));
 		panel.add(new JTextField(50));
 		panel.add(new JTextArea(2, 50));
-		
+
 		panel.add(new JButton("Ok"));
 		panel.add(new JButton("Cancel"));
 
@@ -96,13 +97,14 @@ public class SwingMainDemo extends JApplet {
 		fxKeyboard.getContentPane().add(javafxPanel);
 		fxKeyboard.setFocusable(false);
 		fxKeyboard.setBackground(null);
-		
+
 		// fxKeyboard.pack();
 		// fxKeyboard.setLocationByPlatform(true);
 		// fxKeyboard.setVisible(false);
 
 		// create JavaFX scene
 		Platform.runLater(new Runnable() {
+			@Override
 			public void run() {
 				createScene(javafxPanel);
 				System.out.println("JavaFX: " + System.getProperty("javafx.runtime.version"));
@@ -113,7 +115,7 @@ public class SwingMainDemo extends JApplet {
 
 	public void createScene(JFXPanel javafxPanel) {
 
-		//set default embedded css style
+		// set default embedded css style
 		String css = this.getClass().getResource("/css/KeyboardButtonStyle.css").toExternalForm();
 
 		// create empty scene
@@ -128,10 +130,10 @@ public class SwingMainDemo extends JApplet {
 		} catch (URISyntaxException e) {
 			e.printStackTrace();
 		}
-		
-		fxKeyboardPopup = KeyBoardPopupBuilder.create().initLocale(Locale.ENGLISH)
-				.addIRobot(RobotFactory.createAWTRobot()).layerPath(numblockLayout).build();
+
+		fxKeyboardPopup = KeyBoardPopupBuilder.create().initLocale(Locale.ENGLISH).addIRobot(RobotFactory.createAWTRobot()).layerPath(numblockLayout).build();
 		fxKeyboardPopup.getKeyBoard().setOnKeyboardCloseButton(new EventHandler<Event>() {
+			@Override
 			public void handle(Event event) {
 				setKeyboardVisible(false, null);
 			}
@@ -144,6 +146,7 @@ public class SwingMainDemo extends JApplet {
 		final boolean visible = flag;
 		final Point location = point;
 		Platform.runLater(new Runnable() {
+			@Override
 			public void run() {
 				if (fxKeyboardPopup == null) {
 					return;
@@ -216,6 +219,7 @@ public class SwingMainDemo extends JApplet {
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 
+			@Override
 			public void run() {
 				JFrame frame = new JFrame("Swing FX Keyboard");
 				frame.setResizable(false);
@@ -237,9 +241,12 @@ public class SwingMainDemo extends JApplet {
 
 	private FocusListener createFocusListener() {
 		FocusListener l = new FocusListener() {
+			@Override
 			public void focusLost(FocusEvent e) {
 				setKeyboardVisible(false, null);
 			}
+
+			@Override
 			public void focusGained(FocusEvent e) {
 				setKeyboardVisible(true, e.getComponent().getLocationOnScreen());
 			}
@@ -249,14 +256,25 @@ public class SwingMainDemo extends JApplet {
 
 	private MouseListener createMouseListener() {
 		return new MouseListener() {
-			@Override public void mouseReleased(MouseEvent e) {}
-			@Override public void mousePressed(MouseEvent e) {}
-			@Override public void mouseExited(MouseEvent e) {}
-			@Override public void mouseEntered(MouseEvent e) {}
-			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+			}
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (e.getClickCount() == 2){
+				if (e.getClickCount() == 2) {
 					setKeyboardVisible(true, e.getComponent().getLocationOnScreen());
 				}
 			}

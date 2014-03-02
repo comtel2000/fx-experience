@@ -23,7 +23,7 @@ public class KeyboardTextFieldUI extends BasicTextFieldUI {
 	public KeyboardTextFieldUI() {
 		super();
 	}
-	
+
 	/**
 	 * send only mouseClicked events
 	 * 
@@ -49,12 +49,14 @@ public class KeyboardTextFieldUI extends BasicTextFieldUI {
 	private FocusListener createFocusListener() {
 		FocusListener l = new FocusListener() {
 
+			@Override
 			public void focusLost(FocusEvent e) {
 				if (fl != null) {
 					fl.focusLost(e);
 				}
 			}
 
+			@Override
 			public void focusGained(FocusEvent e) {
 				if (fl != null) {
 					fl.focusGained(e);
@@ -66,11 +68,23 @@ public class KeyboardTextFieldUI extends BasicTextFieldUI {
 
 	public MouseListener createMouseListener() {
 		return new MouseListener() {
-			public void mouseReleased(MouseEvent e) {/* nothing to do */}
-			public void mouseEntered(MouseEvent e) {/* nothing to do */}
-			public void mouseExited(MouseEvent e) {/* nothing to do */}
-			public void mousePressed(MouseEvent e) {/* nothing to do */}
-			
+			@Override
+			public void mouseReleased(MouseEvent e) {/* nothing to do */
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {/* nothing to do */
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {/* nothing to do */
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {/* nothing to do */
+			}
+
+			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (ml != null) {
 					ml.mouseClicked(e);
