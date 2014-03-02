@@ -12,9 +12,6 @@ import javafx.animation.FadeTransition;
 import javafx.animation.Transition;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
-import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.text.Font;
@@ -33,11 +30,12 @@ public class AwtStandAloneApp extends JApplet {
 
 	private final static org.slf4j.Logger logger = LoggerFactory.getLogger(AwtStandAloneApp.class);
 
-	private static Locale locale;
-	private static String xmlPath = "/xml/numblock";
 	private static int posX = 100;
 	private static int posY = 100;
 
+	private static Locale locale;
+	private static String  xmlPath;
+	
 	private static final long serialVersionUID = 1L;
 
 	private KeyBoardPopup fxKeyboardPopup;
@@ -71,12 +69,7 @@ public class AwtStandAloneApp extends JApplet {
 		fxKeyboard.setLocationByPlatform(true);
 
 		// create JavaFX scene
-		Platform.runLater(new Runnable() {
-			@Override
-			public void run() {
-				createScene(javafxPanel);
-			}
-		});
+		Platform.runLater(() -> createScene(javafxPanel));
 
 	}
 
@@ -87,23 +80,23 @@ public class AwtStandAloneApp extends JApplet {
 		javafxPanel.setScene(scene);
 		scene.getStylesheets().add(this.getClass().getResource("/css/KeyboardButtonStyle.css").toExternalForm());
 
+		if (xmlPath == null){
+			xmlPath = "/xml/numblock";
+		}
 		Path path = null;
 		try {
-			if (xmlPath != null && !xmlPath.isEmpty()) {
-				path = Paths.get(this.getClass().getResource(xmlPath).toURI());
-			}
+			path = Paths.get(this.getClass().getResource("/xml/numblock").toURI());
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 		}
+		if (locale ==  null){
+			locale = Locale.getDefault();
+		}
 
-		fxKeyboardPopup = KeyBoardPopupBuilder.create().initLocale(locale != null ? locale : Locale.getDefault()).addIRobot(RobotFactory.createNativeAsciiRobot()).layerPath(path).build();
-		fxKeyboardPopup.getKeyBoard().setOnKeyboardCloseButton(new EventHandler<Event>() {
-			@Override
-			public void handle(Event event) {
-				System.exit(0);
-				// setKeyboardVisible(false, null);
-			}
-		});
+		fxKeyboardPopup = KeyBoardPopupBuilder.create().initLocale(locale).addIRobot(RobotFactory.createNativeAsciiRobot()).layerPath(path).build();
+
+		fxKeyboardPopup.getKeyBoard().setOnKeyboardCloseButton(e -> System.exit(0));
+		
 		fxKeyboardPopup.setOwner(scene);
 		setKeyboardVisible(true, new Point(posX, posY));
 	}
@@ -130,11 +123,6 @@ public class AwtStandAloneApp extends JApplet {
 						return;
 					}
 					transition.stop();
-					transition.setOnFinished(new EventHandler<ActionEvent>() {
-						@Override
-						public void handle(ActionEvent arg0) {
-						}
-					});
 
 					fxKeyboardPopup.getKeyBoard().setOpacity(0.0);
 					fxKeyboardPopup.setVisible(true);
@@ -147,12 +135,7 @@ public class AwtStandAloneApp extends JApplet {
 						return;
 					}
 					transition.stop();
-					transition.setOnFinished(new EventHandler<ActionEvent>() {
-						@Override
-						public void handle(ActionEvent arg0) {
-							fxKeyboardPopup.setVisible(false);
-						}
-					});
+					transition.setOnFinished((e) -> fxKeyboardPopup.setVisible(false));
 
 					((FadeTransition) transition).setFromValue(1.0f);
 					((FadeTransition) transition).setToValue(0.0f);

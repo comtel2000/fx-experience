@@ -79,9 +79,7 @@ public class MultiKeyPopup extends Popup {
 		}
 
 		Event.fireEvent(this, new Event(Menu.ON_SHOWING));
-		if (buttonPane.getChildren().size() == 0) {
-			return;
-		} else {
+		if (!buttonPane.getChildren().isEmpty()) {
 			HPos hpos = side != Side.LEFT ? side != Side.RIGHT ? HPos.CENTER : HPos.RIGHT : HPos.LEFT;
 			VPos vpos = side != Side.TOP ? side != Side.BOTTOM ? VPos.CENTER : VPos.BOTTOM : VPos.TOP;
 			// Point2D point2d = Utils.pointRelativeTo(node,
@@ -89,7 +87,6 @@ public class MultiKeyPopup extends Popup {
 			// d1, true);
 			Point2D point2d = Utils.pointRelativeTo(node, buttonPane.getPrefWidth(), buttonPane.getPrefHeight(), hpos, vpos, d, d1, true);
 			super.show(node, point2d.getX(), point2d.getY());
-			return;
 		}
 	}
 
@@ -107,13 +104,10 @@ public class MultiKeyPopup extends Popup {
 
 	@Override
 	public void hide() {
-		if (!isShowing()) {
-			return;
-		} else {
+		if (isShowing()) {
 			Event.fireEvent(this, new Event(Menu.ON_HIDING));
 			super.hide();
 			Event.fireEvent(this, new Event(Menu.ON_HIDDEN));
-			return;
 		}
 	}
 

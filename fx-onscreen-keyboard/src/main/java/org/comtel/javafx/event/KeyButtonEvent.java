@@ -7,7 +7,7 @@ import org.comtel.javafx.control.KeyButton;
 
 public class KeyButtonEvent extends Event {
 
-	private static final long serialVersionUID = 65116620766495525L;
+	private static final long serialVersionUID = 647301812232489628L;
 
 	public KeyButtonEvent(EventType<Event> type) {
 		super(type);
