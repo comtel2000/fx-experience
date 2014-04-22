@@ -1,28 +1,7 @@
 package org.comtel.javafx.robot;
 
 import static java.awt.event.InputEvent.SHIFT_DOWN_MASK;
-import static java.awt.event.KeyEvent.KEY_LOCATION_STANDARD;
-import static java.awt.event.KeyEvent.KEY_LOCATION_UNKNOWN;
-import static java.awt.event.KeyEvent.KEY_PRESSED;
-import static java.awt.event.KeyEvent.KEY_RELEASED;
-import static java.awt.event.KeyEvent.KEY_TYPED;
-import static java.awt.event.KeyEvent.VK_A;
-import static java.awt.event.KeyEvent.VK_BACK_SPACE;
-import static java.awt.event.KeyEvent.VK_C;
-import static java.awt.event.KeyEvent.VK_CONTROL;
-import static java.awt.event.KeyEvent.VK_DELETE;
-import static java.awt.event.KeyEvent.VK_DOWN;
-import static java.awt.event.KeyEvent.VK_ENTER;
-import static java.awt.event.KeyEvent.VK_ESCAPE;
-import static java.awt.event.KeyEvent.VK_LEFT;
-import static java.awt.event.KeyEvent.VK_META;
-import static java.awt.event.KeyEvent.VK_RIGHT;
-import static java.awt.event.KeyEvent.VK_SPACE;
-import static java.awt.event.KeyEvent.VK_TAB;
-import static java.awt.event.KeyEvent.VK_UNDEFINED;
-import static java.awt.event.KeyEvent.VK_UP;
-import static java.awt.event.KeyEvent.VK_V;
-import static java.awt.event.KeyEvent.VK_X;
+import static java.awt.event.KeyEvent.*;
 
 import java.awt.AWTException;
 import java.awt.Component;
@@ -101,6 +80,19 @@ public class AWTRobotHandler implements IRobot {
 				robot.keyRelease(VK_V);
 				robot.keyRelease(controlKeyEvent);
 				return;
+			case VK_Z:
+				robot.keyPress(controlKeyEvent);
+				robot.keyPress(VK_Z);
+				robot.keyRelease(VK_Z);
+				robot.keyRelease(controlKeyEvent);
+				return;
+			case VK_Y:
+				robot.keyPress(controlKeyEvent);
+				robot.keyPress(VK_Y);
+				robot.keyRelease(VK_Y);
+				robot.keyRelease(controlKeyEvent);
+				return;
+
 			}
 
 			switch (ch) {
@@ -154,9 +146,11 @@ public class AWTRobotHandler implements IRobot {
 		}
 
 		int modififiers = Character.isUpperCase(ch) ? SHIFT_DOWN_MASK : 0;
-		KeyboardFocusManager.getCurrentKeyboardFocusManager().dispatchKeyEvent(new KeyEvent(c, KEY_PRESSED, System.currentTimeMillis(), modififiers, VK_UNDEFINED, ch, KEY_LOCATION_STANDARD));
-		KeyboardFocusManager.getCurrentKeyboardFocusManager().dispatchKeyEvent(new KeyEvent(c, KEY_TYPED, System.currentTimeMillis(), modififiers, VK_UNDEFINED, ch, KEY_LOCATION_UNKNOWN));
-		KeyboardFocusManager.getCurrentKeyboardFocusManager().dispatchKeyEvent(new KeyEvent(c, KEY_RELEASED, System.currentTimeMillis(), modififiers, VK_UNDEFINED, ch, KEY_LOCATION_STANDARD));
+		KeyboardFocusManager kfm = KeyboardFocusManager.getCurrentKeyboardFocusManager();
+		
+		kfm.dispatchKeyEvent(new KeyEvent(c, KEY_PRESSED, System.currentTimeMillis(), modififiers, VK_UNDEFINED, ch, KEY_LOCATION_STANDARD));
+		kfm.dispatchKeyEvent(new KeyEvent(c, KEY_TYPED, System.currentTimeMillis(), modififiers, VK_UNDEFINED, ch, KEY_LOCATION_UNKNOWN));
+		kfm.dispatchKeyEvent(new KeyEvent(c, KEY_RELEASED, System.currentTimeMillis(), modififiers, VK_UNDEFINED, ch, KEY_LOCATION_STANDARD));
 
 	}
 

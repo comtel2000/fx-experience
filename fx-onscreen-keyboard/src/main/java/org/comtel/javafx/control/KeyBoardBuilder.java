@@ -13,10 +13,11 @@ public class KeyBoardBuilder implements Builder<KeyboardPane> {
 
 	private Path layerPath;
 	private Locale initLocale;
-	private List<IRobot> iRobots = new ArrayList<>();
+	private List<IRobot> iRobots;
 	private double initScale = 0.0;
 
 	protected KeyBoardBuilder() {
+		iRobots = new ArrayList<>(2);
 	}
 
 	public static KeyBoardBuilder create() {
@@ -52,6 +53,8 @@ public class KeyBoardBuilder implements Builder<KeyboardPane> {
 		for (IRobot robot : iRobots) {
 			keyBoard.addRobotHandler(robot);
 		}
+		iRobots.clear();
+		iRobots = null;
 		return keyBoard;
 	}
 

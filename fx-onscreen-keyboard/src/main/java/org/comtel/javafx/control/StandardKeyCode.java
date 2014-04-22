@@ -15,4 +15,6 @@ public interface StandardKeyCode {
 	final int ARROW_DOWN = -11;
 	final int ARROW_LEFT = -12;
 	final int ARROW_RIGHT = -13;
+	final int UNDO = -14;
+	final int REDO = -15;
 }

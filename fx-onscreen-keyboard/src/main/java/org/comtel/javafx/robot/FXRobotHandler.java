@@ -86,6 +86,20 @@ public class FXRobotHandler implements IRobot {
 				robot.keyRelease(KeyCode.V);
 				robot.keyRelease(controlKeyCode);
 				return;
+			case KeyEvent.VK_Z:
+				robot.keyPress(controlKeyCode);
+				robot.keyPress(KeyCode.Z);
+				robot.keyType(KeyCode.Z, "");
+				robot.keyRelease(KeyCode.Z);
+				robot.keyRelease(controlKeyCode);
+				return;
+			case KeyEvent.VK_Y:
+				robot.keyPress(controlKeyCode);
+				robot.keyPress(KeyCode.Y);
+				robot.keyType(KeyCode.Y, "");
+				robot.keyRelease(KeyCode.Y);
+				robot.keyRelease(controlKeyCode);
+				return;
 			}
 			switch (ch) {
 			case KeyEvent.VK_ENTER:
@@ -141,7 +155,6 @@ public class FXRobotHandler implements IRobot {
 			}
 
 		}
-
 		robot.keyPress(KeyCode.UNDEFINED);
 		robot.keyType(KeyCode.UNDEFINED, Character.toString(ch));
 		robot.keyRelease(KeyCode.UNDEFINED);

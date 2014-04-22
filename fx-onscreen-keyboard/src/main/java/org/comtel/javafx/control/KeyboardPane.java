@@ -355,12 +355,11 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
 
 				String[] codes = key.getCodes().split(",");
 				if (codes.length > 0 && !codes[0].isEmpty()) {
-					int keyCode = Integer.valueOf(codes[0]);
-					button.setKeyCode(keyCode);
+					button.setKeyCode(parseInt(codes[0]));
 				}
 				if (codes.length > 1) {
 					for (String code : codes) {
-						int keyCode = Integer.valueOf(code);
+						int keyCode = parseInt(code);
 						if (keyCode != button.getKeyCode()) {
 							button.addExtKeyCode(keyCode);
 						}
@@ -480,6 +479,10 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
 		return rPane;
 	}
 
+	private static int parseInt(String i) {
+		return i.startsWith("0x") ? Integer.parseInt(i.substring(2), 16) : Integer.parseInt(i);
+	}
+	
 	public boolean isShifted() {
 		return shiftProperty.get();
 	}
@@ -560,6 +563,13 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
 		case ARROW_RIGHT:
 			sendToComponent((char) java.awt.event.KeyEvent.VK_RIGHT, true);
 			break;
+		case UNDO:
+			sendToComponent((char) java.awt.event.KeyEvent.VK_Z, true);
+			break;
+		case REDO:
+			sendToComponent((char) java.awt.event.KeyEvent.VK_Y, true);
+			break;
+			
 		default:
 			// logger.debug(java.awt.event.KeyEvent.getKeyText(kb.getKeyCode()));
 			if (kb.getKeyCode() > -1) {

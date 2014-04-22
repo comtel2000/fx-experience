@@ -1,5 +1,8 @@
 package org.comtel.javafx.robot;
 
+import static java.awt.event.KeyEvent.VK_Y;
+import static java.awt.event.KeyEvent.VK_Z;
+
 import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.Toolkit;
@@ -71,6 +74,18 @@ public class NativeAsciiRobotHandler implements IRobot {
 				robot.keyPress(controlKeyEvent);
 				robot.keyPress(KeyEvent.VK_V);
 				robot.keyRelease(KeyEvent.VK_V);
+				robot.keyRelease(controlKeyEvent);
+				return;
+			case VK_Z:
+				robot.keyPress(controlKeyEvent);
+				robot.keyPress(VK_Z);
+				robot.keyRelease(VK_Z);
+				robot.keyRelease(controlKeyEvent);
+				return;
+			case VK_Y:
+				robot.keyPress(controlKeyEvent);
+				robot.keyPress(VK_Y);
+				robot.keyRelease(VK_Y);
 				robot.keyRelease(controlKeyEvent);
 				return;
 			}
