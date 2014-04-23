@@ -12,6 +12,8 @@ screenshots
 
 ![layout ru] (doc/layout_ru.png)
 
+[![video](http://img.youtube.com/vi/CD9lS_HZ4fA/0.jpg)](http://youtu.be/CD9lS_HZ4fA)
+
 demo
 ====
 build jar and start demo main class:
