@@ -60,7 +60,8 @@
 	<Row rowEdgeFlags="bottom">
 		<Key codes="-6" keyLabel="CTRL" keyLabelStyle=".small-style"
 			keyWidth="60" />
-		<Key codes="" keyWidth="50" />
+		<Key codes="-14" keyLabel="UNDO" keyLabelStyle=".small-style"
+			keyWidth="50" />>
 		<Key codes="32" keyLabel="3" keyLabelStyle=".font-fxkeyboard-alpha"
 			keyWidth="255" isRepeatable="true" />
 		<Key codes="-7" keyLabel="EN" keyLabelStyle=".small-style"

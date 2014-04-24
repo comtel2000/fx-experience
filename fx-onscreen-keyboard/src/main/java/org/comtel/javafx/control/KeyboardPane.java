@@ -425,9 +425,9 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
 					button.setAlignment(Pos.BASELINE_CENTER);
 				}
 
-				// use space button as drag pane
-				if (button.getKeyCode() == java.awt.event.KeyEvent.VK_SPACE) {
-
+				switch (button.getKeyCode()) {
+				case java.awt.event.KeyEvent.VK_SPACE:
+					// use space button as drag pane
 					button.setOnMouseMoved(new EventHandler<MouseEvent>() {
 
 						@Override
@@ -447,9 +447,9 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
 
 						}
 					});
-
-				}
-				if (button.getKeyCode() == BACK_SPACE || button.getKeyCode() == DELETE) {
+					break;
+				case BACK_SPACE:
+				case DELETE:
 					button.setOnLongPressed(new EventHandler<Event>() {
 
 						@Override
@@ -459,6 +459,7 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
 							sendToComponent((char) java.awt.event.KeyEvent.VK_DELETE, ctrlProperty.get());
 						}
 					});
+					break;
 				}
 
 				colPane.add(button, colIdx, 0);

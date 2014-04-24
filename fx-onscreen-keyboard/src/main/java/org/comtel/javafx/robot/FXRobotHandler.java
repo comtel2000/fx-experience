@@ -2,12 +2,13 @@ package org.comtel.javafx.robot;
 
 import static javafx.scene.input.KeyCode.CONTROL;
 import static javafx.scene.input.KeyCode.META;
-
-import java.awt.event.KeyEvent;
-
 import javafx.application.Platform;
+import javafx.event.EventTarget;
+import javafx.event.EventType;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Popup;
 import javafx.stage.Window;
 
@@ -55,110 +56,79 @@ public class FXRobotHandler implements IRobot {
 	}
 
 	private void send(Scene scene, char ch, boolean ctrl) {
-		FXRobot robot = FXRobotFactory.createRobot(scene);
+		Node focusNode = scene.focusOwnerProperty().get();
+
+		if (focusNode == null) {
+			logger.error("no focus owner");
+			return;
+		}
 		if (ctrl) {
-			switch (Character.toUpperCase(ch)) {
-			case KeyEvent.VK_A:
-				robot.keyPress(controlKeyCode);
-				robot.keyPress(KeyCode.A);
-				robot.keyType(KeyCode.A, "");
-				robot.keyRelease(KeyCode.A);
-				robot.keyRelease(controlKeyCode);
+			switch (ch) {
+			case java.awt.event.KeyEvent.VK_ENTER:
+				focusNode.fireEvent(createKeyEvent(focusNode, KeyEvent.KEY_PRESSED, Character.toString(ch), KeyCode.ENTER, false));
+				focusNode.fireEvent(createKeyEvent(focusNode, KeyEvent.KEY_RELEASED, Character.toString(ch), KeyCode.ENTER, false));
 				return;
-			case KeyEvent.VK_X:
-				robot.keyPress(controlKeyCode);
-				robot.keyPress(KeyCode.X);
-				robot.keyType(KeyCode.X, "");
-				robot.keyRelease(KeyCode.X);
-				robot.keyRelease(controlKeyCode);
+			case java.awt.event.KeyEvent.VK_BACK_SPACE:
+				focusNode.fireEvent(createKeyEvent(focusNode, KeyEvent.KEY_PRESSED, Character.toString(ch), KeyCode.BACK_SPACE, false));
+				focusNode.fireEvent(createKeyEvent(focusNode, KeyEvent.KEY_RELEASED, Character.toString(ch), KeyCode.BACK_SPACE, false));
 				return;
-			case KeyEvent.VK_C:
-				robot.keyPress(controlKeyCode);
-				robot.keyPress(KeyCode.C);
-				robot.keyType(KeyCode.C, "");
-				robot.keyRelease(KeyCode.C);
-				robot.keyRelease(controlKeyCode);
+			case java.awt.event.KeyEvent.VK_DELETE:
+				focusNode.fireEvent(createKeyEvent(focusNode, KeyEvent.KEY_PRESSED, Character.toString(ch), KeyCode.DELETE, false));
+				focusNode.fireEvent(createKeyEvent(focusNode, KeyEvent.KEY_RELEASED, Character.toString(ch), KeyCode.DELETE, false));
 				return;
-			case KeyEvent.VK_V:
-				robot.keyPress(controlKeyCode);
-				robot.keyPress(KeyCode.V);
-				robot.keyType(KeyCode.V, "");
-				robot.keyRelease(KeyCode.V);
-				robot.keyRelease(controlKeyCode);
+			case java.awt.event.KeyEvent.VK_ESCAPE:
+				focusNode.fireEvent(createKeyEvent(focusNode, KeyEvent.KEY_PRESSED, Character.toString(ch), KeyCode.ESCAPE, false));
+				focusNode.fireEvent(createKeyEvent(focusNode, KeyEvent.KEY_RELEASED, Character.toString(ch), KeyCode.ESCAPE, false));
 				return;
-			case KeyEvent.VK_Z:
-				robot.keyPress(controlKeyCode);
-				robot.keyPress(KeyCode.Z);
-				robot.keyType(KeyCode.Z, "");
-				robot.keyRelease(KeyCode.Z);
-				robot.keyRelease(controlKeyCode);
+			case java.awt.event.KeyEvent.VK_SPACE:
+				focusNode.fireEvent(createKeyEvent(focusNode, KeyEvent.KEY_PRESSED, Character.toString(ch), KeyCode.SPACE, false));
+				focusNode.fireEvent(createKeyEvent(focusNode, KeyEvent.KEY_RELEASED, Character.toString(ch), KeyCode.SPACE, false));
 				return;
-			case KeyEvent.VK_Y:
-				robot.keyPress(controlKeyCode);
-				robot.keyPress(KeyCode.Y);
-				robot.keyType(KeyCode.Y, "");
-				robot.keyRelease(KeyCode.Y);
-				robot.keyRelease(controlKeyCode);
+			case java.awt.event.KeyEvent.VK_TAB:
+				focusNode.fireEvent(createKeyEvent(focusNode, KeyEvent.KEY_PRESSED, Character.toString(ch), KeyCode.TAB, false));
+				focusNode.fireEvent(createKeyEvent(focusNode, KeyEvent.KEY_RELEASED, Character.toString(ch), KeyCode.TAB, false));
+				return;
+			case java.awt.event.KeyEvent.VK_UP:
+				focusNode.fireEvent(createKeyEvent(focusNode, KeyEvent.KEY_PRESSED, Character.toString(ch), KeyCode.UP, false));
+				focusNode.fireEvent(createKeyEvent(focusNode, KeyEvent.KEY_RELEASED, Character.toString(ch), KeyCode.UP, false));
+				return;
+			case java.awt.event.KeyEvent.VK_DOWN:
+				focusNode.fireEvent(createKeyEvent(focusNode, KeyEvent.KEY_PRESSED, Character.toString(ch), KeyCode.DOWN, false));
+				focusNode.fireEvent(createKeyEvent(focusNode, KeyEvent.KEY_RELEASED, Character.toString(ch), KeyCode.DOWN, false));
+				return;
+			case java.awt.event.KeyEvent.VK_LEFT:
+				focusNode.fireEvent(createKeyEvent(focusNode, KeyEvent.KEY_PRESSED, Character.toString(ch), KeyCode.LEFT, false));
+				focusNode.fireEvent(createKeyEvent(focusNode, KeyEvent.KEY_RELEASED, Character.toString(ch), KeyCode.LEFT, false));
+				return;
+			case java.awt.event.KeyEvent.VK_RIGHT:
+				focusNode.fireEvent(createKeyEvent(focusNode, KeyEvent.KEY_PRESSED, Character.toString(ch), KeyCode.RIGHT, false));
+				focusNode.fireEvent(createKeyEvent(focusNode, KeyEvent.KEY_RELEASED, Character.toString(ch), KeyCode.RIGHT, false));
 				return;
 			}
-			switch (ch) {
-			case KeyEvent.VK_ENTER:
-				robot.keyPress(KeyCode.ENTER);
-				robot.keyType(KeyCode.ENTER, Character.toString(ch));
-				robot.keyRelease(KeyCode.ENTER);
-				return;
-			case KeyEvent.VK_BACK_SPACE:
-				robot.keyPress(KeyCode.BACK_SPACE);
-				robot.keyType(KeyCode.BACK_SPACE, Character.toString(ch));
-				robot.keyRelease(KeyCode.BACK_SPACE);
-				return;
-			case KeyEvent.VK_DELETE:
-				robot.keyPress(KeyCode.DELETE);
-				robot.keyType(KeyCode.DELETE, Character.toString(ch));
-				robot.keyRelease(KeyCode.DELETE);
-				return;
-			case KeyEvent.VK_ESCAPE:
-				robot.keyPress(KeyCode.ESCAPE);
-				robot.keyType(KeyCode.ESCAPE, Character.toString(ch));
-				robot.keyRelease(KeyCode.ESCAPE);
-				return;
-			case KeyEvent.VK_SPACE:
-				robot.keyPress(KeyCode.SPACE);
-				robot.keyType(KeyCode.SPACE, " ");
-				robot.keyRelease(KeyCode.SPACE);
-				return;
-			case KeyEvent.VK_TAB:
-				robot.keyPress(KeyCode.TAB);
-				robot.keyType(KeyCode.TAB, Character.toString(ch));
-				robot.keyRelease(KeyCode.TAB);
-				return;
-			case KeyEvent.VK_UP:
-				robot.keyPress(KeyCode.UP);
-				robot.keyType(KeyCode.UP, "");
-				robot.keyRelease(KeyCode.UP);
-				return;
-			case KeyEvent.VK_DOWN:
-				robot.keyPress(KeyCode.DOWN);
-				robot.keyType(KeyCode.DOWN, "");
-				robot.keyRelease(KeyCode.DOWN);
-				return;
-			case KeyEvent.VK_LEFT:
-				robot.keyPress(KeyCode.LEFT);
-				robot.keyType(KeyCode.LEFT, "");
-				robot.keyRelease(KeyCode.LEFT);
-				return;
-			case KeyEvent.VK_RIGHT:
-				robot.keyPress(KeyCode.RIGHT);
-				robot.keyType(KeyCode.RIGHT, "");
-				robot.keyRelease(KeyCode.RIGHT);
+
+			KeyCode fxKeyCode = getKeyCode(ch);
+			if (fxKeyCode != null) {
+				focusNode.fireEvent(createKeyEvent(focusNode, KeyEvent.KEY_PRESSED, Character.toString(ch), fxKeyCode, ctrl));
+				focusNode.fireEvent(createKeyEvent(focusNode, KeyEvent.KEY_RELEASED, Character.toString(ch), fxKeyCode, ctrl));
 				return;
 			}
 
 		}
-		robot.keyPress(KeyCode.UNDEFINED);
-		robot.keyType(KeyCode.UNDEFINED, Character.toString(ch));
-		robot.keyRelease(KeyCode.UNDEFINED);
 
+		focusNode.fireEvent(createKeyEvent(focusNode, KeyEvent.KEY_PRESSED, Character.toString(ch), KeyCode.UNDEFINED, ctrl));
+		if (Character.toString(ch) != KeyEvent.CHAR_UNDEFINED) {
+			focusNode.fireEvent(createKeyEvent(focusNode, KeyEvent.KEY_TYPED, Character.toString(ch), KeyCode.UNDEFINED, ctrl));
+		}
+		focusNode.fireEvent(createKeyEvent(focusNode, KeyEvent.KEY_RELEASED, Character.toString(ch), KeyCode.UNDEFINED, ctrl));
+	}
+
+	private KeyCode getKeyCode(char c) {
+		return KeyCode.getKeyCode(Character.toString(Character.toUpperCase(c)));
+
+	}
+
+	private KeyEvent createKeyEvent(EventTarget target, EventType<KeyEvent> eventType, String character, KeyCode code, boolean ctrl) {
+		return new KeyEvent(eventType, character, code.toString(), code, false, ctrl && controlKeyCode == CONTROL, false, ctrl && controlKeyCode == META);
 	}
 
 }

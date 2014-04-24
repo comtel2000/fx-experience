@@ -1,14 +1,35 @@
 package org.comtel.javafx.robot;
 
+import static java.awt.event.KeyEvent.VK_A;
+import static java.awt.event.KeyEvent.VK_ALT;
+import static java.awt.event.KeyEvent.VK_BACK_SPACE;
+import static java.awt.event.KeyEvent.VK_C;
+import static java.awt.event.KeyEvent.VK_CONTROL;
+import static java.awt.event.KeyEvent.VK_DELETE;
+import static java.awt.event.KeyEvent.VK_DOWN;
+import static java.awt.event.KeyEvent.VK_ENTER;
+import static java.awt.event.KeyEvent.VK_ESCAPE;
+import static java.awt.event.KeyEvent.VK_LEFT;
+import static java.awt.event.KeyEvent.VK_META;
+import static java.awt.event.KeyEvent.VK_NUMPAD0;
+import static java.awt.event.KeyEvent.VK_RIGHT;
+import static java.awt.event.KeyEvent.VK_SHIFT;
+import static java.awt.event.KeyEvent.VK_SPACE;
+import static java.awt.event.KeyEvent.VK_TAB;
+import static java.awt.event.KeyEvent.VK_UNDEFINED;
+import static java.awt.event.KeyEvent.VK_UP;
+import static java.awt.event.KeyEvent.VK_V;
+import static java.awt.event.KeyEvent.VK_X;
 import static java.awt.event.KeyEvent.VK_Y;
 import static java.awt.event.KeyEvent.VK_Z;
+import static java.awt.event.KeyEvent.getExtendedKeyCodeForChar;
+import static java.awt.event.KeyEvent.getKeyText;
 
 import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.Toolkit;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.StringSelection;
-import java.awt.event.KeyEvent;
 
 import org.slf4j.LoggerFactory;
 
@@ -29,9 +50,9 @@ public class NativeAsciiRobotHandler implements IRobot {
 	public NativeAsciiRobotHandler() {
 		String osName = System.getProperty("os.name");
 		if (osName.startsWith("Mac")) {
-			controlKeyEvent = KeyEvent.VK_META;
+			controlKeyEvent = VK_META;
 		} else {
-			controlKeyEvent = KeyEvent.VK_CONTROL;
+			controlKeyEvent = VK_CONTROL;
 		}
 	}
 
@@ -51,103 +72,54 @@ public class NativeAsciiRobotHandler implements IRobot {
 		}
 
 		if (ctrl) {
-			switch (Character.toUpperCase(ch)) {
-			case KeyEvent.VK_A:
-				robot.keyPress(controlKeyEvent);
-				robot.keyPress(KeyEvent.VK_A);
-				robot.keyRelease(KeyEvent.VK_A);
-				robot.keyRelease(controlKeyEvent);
+			switch (ch) {
+			case VK_ENTER:
+			case VK_BACK_SPACE:
+			case VK_DELETE:
+			case VK_ESCAPE:
+			case VK_SPACE:
+			case VK_TAB:
+			case VK_UP:
+			case VK_DOWN:
+			case VK_LEFT:
+			case VK_RIGHT:
+				robot.keyPress(ch);
+				robot.keyRelease(ch);
 				return;
-			case KeyEvent.VK_X:
-				robot.keyPress(controlKeyEvent);
-				robot.keyPress(KeyEvent.VK_X);
-				robot.keyRelease(KeyEvent.VK_X);
-				robot.keyRelease(controlKeyEvent);
-				return;
-			case KeyEvent.VK_C:
-				robot.keyPress(controlKeyEvent);
-				robot.keyPress(KeyEvent.VK_C);
-				robot.keyRelease(KeyEvent.VK_C);
-				robot.keyRelease(controlKeyEvent);
-				return;
-			case KeyEvent.VK_V:
-				robot.keyPress(controlKeyEvent);
-				robot.keyPress(KeyEvent.VK_V);
-				robot.keyRelease(KeyEvent.VK_V);
-				robot.keyRelease(controlKeyEvent);
-				return;
+			}
+			
+			int upperCase = Character.toUpperCase(ch);
+			switch (upperCase) {
+			case VK_A:
+			case VK_X:
+			case VK_C:
+			case VK_V:
 			case VK_Z:
-				robot.keyPress(controlKeyEvent);
-				robot.keyPress(VK_Z);
-				robot.keyRelease(VK_Z);
-				robot.keyRelease(controlKeyEvent);
-				return;
 			case VK_Y:
 				robot.keyPress(controlKeyEvent);
-				robot.keyPress(VK_Y);
-				robot.keyRelease(VK_Y);
+				robot.keyPress(upperCase);
+				robot.keyRelease(upperCase);
 				robot.keyRelease(controlKeyEvent);
 				return;
 			}
 
-			switch (ch) {
-			case KeyEvent.VK_ENTER:
-				robot.keyPress(KeyEvent.VK_ENTER);
-				robot.keyRelease(KeyEvent.VK_ENTER);
-				return;
-			case KeyEvent.VK_BACK_SPACE:
-				robot.keyPress(KeyEvent.VK_BACK_SPACE);
-				robot.keyRelease(KeyEvent.VK_BACK_SPACE);
-				return;
-			case KeyEvent.VK_DELETE:
-				robot.keyPress(KeyEvent.VK_DELETE);
-				robot.keyRelease(KeyEvent.VK_DELETE);
-				return;
-			case KeyEvent.VK_ESCAPE:
-				robot.keyPress(KeyEvent.VK_ESCAPE);
-				robot.keyRelease(KeyEvent.VK_ESCAPE);
-				return;
-			case KeyEvent.VK_SPACE:
-				robot.keyPress(KeyEvent.VK_SPACE);
-				robot.keyRelease(KeyEvent.VK_SPACE);
-				return;
-			case KeyEvent.VK_TAB:
-				robot.keyPress(KeyEvent.VK_TAB);
-				robot.keyRelease(KeyEvent.VK_TAB);
-				return;
-			case KeyEvent.VK_UP:
-				robot.keyPress(KeyEvent.VK_UP);
-				robot.keyRelease(KeyEvent.VK_UP);
-				return;
-			case KeyEvent.VK_DOWN:
-				robot.keyPress(KeyEvent.VK_DOWN);
-				robot.keyRelease(KeyEvent.VK_DOWN);
-				return;
-			case KeyEvent.VK_LEFT:
-				robot.keyPress(KeyEvent.VK_LEFT);
-				robot.keyRelease(KeyEvent.VK_LEFT);
-				return;
-			case KeyEvent.VK_RIGHT:
-				robot.keyPress(KeyEvent.VK_RIGHT);
-				robot.keyRelease(KeyEvent.VK_RIGHT);
-				return;
-			}
+
 		}
 
-		int keyCode = KeyEvent.getExtendedKeyCodeForChar(ch);
+		int keyCode = getExtendedKeyCodeForChar(ch);
 		if (Character.isWhitespace(ch)) {
 			robot.keyPress(keyCode);
 			robot.keyRelease(keyCode);
 			return;
 		}
-		if (KeyEvent.VK_UNDEFINED == keyCode || keyCode > 10000) {
+		if (VK_UNDEFINED == keyCode || keyCode > 10000) {
 			clipboardTransfer(robot, ch);
 			return;
 		}
 		boolean isUpperCase = Character.isUpperCase(ch);
 
 		if (isUpperCase) {
-			robot.keyPress(KeyEvent.VK_SHIFT);
+			robot.keyPress(VK_SHIFT);
 		}
 		try {
 			robot.keyPress(keyCode);
@@ -155,14 +127,14 @@ public class NativeAsciiRobotHandler implements IRobot {
 		} catch (IllegalArgumentException e) {
 			logger.warn(e.getMessage() + String.format(" %s (%s)", keyCode, ch));
 			if (isUpperCase) {
-				robot.keyRelease(KeyEvent.VK_SHIFT);
+				robot.keyRelease(VK_SHIFT);
 			}
 			clipboardTransfer(robot, ch);
 			return;
 
 		}
 		if (isUpperCase) {
-			robot.keyRelease(KeyEvent.VK_SHIFT);
+			robot.keyRelease(VK_SHIFT);
 		}
 
 	}
@@ -171,14 +143,14 @@ public class NativeAsciiRobotHandler implements IRobot {
 	 * does not work for extended codepage signs
 	 */
 	private void winAltDump(Robot robot, int ch) {
-		robot.keyPress(KeyEvent.VK_ALT);
+		robot.keyPress(VK_ALT);
 		for (int i = 3; i >= 0; --i) {
-			int vk = ch / (int) (Math.pow(10, i)) % 10 + KeyEvent.VK_NUMPAD0;
-			logger.debug("{} - {}", vk, KeyEvent.getKeyText(vk));
+			int vk = ch / (int) (Math.pow(10, i)) % 10 + VK_NUMPAD0;
+			logger.debug("{} - {}", vk, getKeyText(vk));
 			robot.keyPress(vk);
 			robot.keyRelease(vk);
 		}
-		robot.keyRelease(KeyEvent.VK_ALT);
+		robot.keyRelease(VK_ALT);
 	}
 
 	private void clipboardTransfer(Robot robot, char ch) {
@@ -189,8 +161,8 @@ public class NativeAsciiRobotHandler implements IRobot {
 			clpbrd.setContents(stringSelection, null);
 
 			robot.keyPress(controlKeyEvent);
-			robot.keyPress(KeyEvent.VK_V);
-			robot.keyRelease(KeyEvent.VK_V);
+			robot.keyPress(VK_V);
+			robot.keyRelease(VK_V);
 			robot.keyRelease(controlKeyEvent);
 			robot.delay(50);
 
