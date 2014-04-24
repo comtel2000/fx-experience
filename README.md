@@ -15,6 +15,8 @@ fx-onscreen-keyboard
 
 ![layout ru] (fx-onscreen-keyboard/doc/layout_ru.png)
 
+[![video](http://img.youtube.com/vi/CD9lS_HZ4fA/0.jpg)](http://youtu.be/CD9lS_HZ4fA)
+
 License
 =======
 new BSD License
