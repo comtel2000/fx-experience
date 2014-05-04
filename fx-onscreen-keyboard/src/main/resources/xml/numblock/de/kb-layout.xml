@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Keyboard horizontalGap="0"
-	keyHeight="30"
-	keyWidth="40"
-	verticalGap="0">
+<Keyboard horizontalGap="0" keyHeight="30" keyWidth="40" verticalGap="0">
 	<Row>
 		<Key codes="113" keyLabel="q" />
 		<Key codes="119" keyLabel="w" />
@@ -14,8 +11,7 @@
 		<Key codes="105" keyLabel="i" />
 		<Key codes="111,246,245,244,243,242,248" keyLabel="o" />
 		<Key codes="112" keyLabel="p" />
-		<Key codes="-5" keyLabel="!" keyLabelStyle=".font-fxkeyboard" isRepeatable="true"
-			/>
+		<Key codes="-5" keyLabel="!" keyLabelStyle=".font-fxkeyboard" isRepeatable="true" />
 		<Key codes="" keyWidth="5" />
 		<Key codes="55" keyLabel="7" />
 		<Key codes="56" keyLabel="8" />
@@ -39,8 +35,7 @@
 		<Key codes="54" keyLabel="6" />
 	</Row>
 	<Row>
-		<Key codes="-1" keyLabel="I" keyLabelStyle=".font-fxkeyboard" keyWidth="40" isModifier="true"
-			isSticky="true" />
+		<Key codes="-1" keyLabel="I" keyLabelStyle=".font-fxkeyboard" keyWidth="40" isModifier="true" isSticky="true" />
 		<Key codes="121" keyLabel="y" />
 		<Key codes="120" keyLabel="x" />
 		<Key codes="99" keyLabel="c" />
@@ -50,30 +45,24 @@
 		<Key codes="109" keyLabel="m" />
 		<Key codes="44" keyLabel="," />
 		<Key codes="46" keyLabel="." />
-		<Key codes="-1" keyLabel="I" keyLabelStyle=".font-fxkeyboard" keyWidth="40" isModifier="true"
-			isSticky="true" />
+		<Key codes="-1" keyLabel="I" keyLabelStyle=".font-fxkeyboard" keyWidth="40" isModifier="true" isSticky="true" />
 		<Key codes="" keyWidth="5" />
 		<Key codes="49" keyLabel="1" />
 		<Key codes="50" keyLabel="2" />
 		<Key codes="51" keyLabel="3" />
 	</Row>
 	<Row rowEdgeFlags="bottom">
-		<Key codes="-6" keyLabel="CTRL" keyLabelStyle=".small-style"
-			keyWidth="60" />
-		<Key codes="-2" keyLabel="?$#" keyLabelStyle=".small-style"
-			keyWidth="50" />
+		<Key codes="-6" keyLabel="CTRL" keyLabelStyle=".small-style" keyWidth="60" />
+		<Key codes="-2" keyLabel="?$#" keyLabelStyle=".small-style" keyWidth="50" />
 		<Key codes="-12" keyLabel="◄" keyLabelStyle=".small-style" />
-		<Key codes="32" keyLabel="3" keyLabelStyle=".font-fxkeyboard-alpha" keyWidth="170"
-			isRepeatable="true" />
+		<Key codes="32" keyLabel="3" keyLabelStyle=".font-fxkeyboard-alpha" keyWidth="170" isRepeatable="true" />
 		<Key codes="-13" keyLabel="►" keyLabelStyle=".small-style" />
-		<Key codes="-7" keyLabel="DE" keyLabelStyle=".small-style"
-			keyWidth="40" />
-		<Key codes="-4" keyLabel="TAB" keyLabelStyle=".small-style"
-			keyWidth="50" />
+		<Key codes="-7" keyLabel="DE" keyLabelStyle=".small-style" keyWidth="40" />
+		<Key codes="-4" keyLabel="TAB" keyLabelStyle=".small-style" keyWidth="50" />
 		<Key codes="" keyWidth="5" />
 		<Key codes="48" keyLabel="0" />
-		<Key codes="45" keyLabel="-" />	
-		<Key codes="-3" keyLabel="2" keyLabelStyle=".font-fxkeyboard"/>
+		<Key codes="45" keyLabel="-" />
+		<Key codes="-3" keyLabel="2" keyLabelStyle=".font-fxkeyboard" />
 	</Row>
 </Keyboard>
     

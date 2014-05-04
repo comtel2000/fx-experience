@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Keyboard keyWidth="40" keyHeight="30" horizontalGap="0"
-	verticalGap="0">
+<Keyboard keyWidth="40" keyHeight="30" horizontalGap="0" verticalGap="0">
 
 	<Row>
 		<Key codes="1081" keyLabel="й" />
@@ -15,8 +14,7 @@
 		<Key codes="1079" keyLabel="з" />
 		<Key codes="1093" keyLabel="х" />
 		<Key codes="1098" keyLabel="ъ" />
-		<Key codes="-5" keyLabel="!" keyLabelStyle=".font-fxkeyboard"
-			keyEdgeFlags="right" isRepeatable="true" />
+		<Key codes="-5" keyLabel="!" keyLabelStyle=".font-fxkeyboard" isRepeatable="true" />
 	</Row>
 
 	<Row>
@@ -32,13 +30,11 @@
 		<Key codes="1076" keyLabel="д" />
 		<Key codes="1078" keyLabel="ж" />
 		<Key codes="1101" keyLabel="э" />
-		<Key codes="-9" keyLabel="ENTER" keyLabelStyle=".small-style"
-			keyWidth="70" keyEdgeFlags="right" />
+		<Key codes="-9" keyLabel="ENTER" keyLabelStyle=".small-style" keyWidth="70" />
 	</Row>
 
 	<Row>
-		<Key codes="-1" keyLabel="I" keyLabelStyle=".font-fxkeyboard"
-			keyWidth="40" isModifier="true" isSticky="true" keyEdgeFlags="left" />
+		<Key codes="-1" keyLabel="I" keyLabelStyle=".font-fxkeyboard" keyWidth="40" isModifier="true" isSticky="true" />
 		<Key codes="1103" keyLabel="я" />
 		<Key codes="1095" keyLabel="ч" />
 		<Key codes="1089" keyLabel="с" />
@@ -50,21 +46,15 @@
 		<Key codes="1102" keyLabel="ю" />
 		<Key codes="44" keyLabel="," />
 		<Key codes="46" keyLabel="." />
-		<Key codes="-1" keyLabel="I" keyLabelStyle=".font-fxkeyboard"
-			keyWidth="40" isModifier="true" isSticky="true" keyEdgeFlags="right" />
+		<Key codes="-1" keyLabel="I" keyLabelStyle=".font-fxkeyboard" keyWidth="40" isModifier="true" isSticky="true" />
 	</Row>
 
 	<Row rowEdgeFlags="bottom">
-		<Key codes="-6" keyLabel="CTRL" keyLabelStyle=".small-style"
-			keyWidth="70" keyEdgeFlags="left" />
-		<Key codes="-2" keyLabel="?123" keyLabelStyle=".small-style"
-			keyWidth="70" />
-		<Key codes="32" keyLabel="3" keyLabelStyle=".font-fxkeyboard-alpha"
-			keyWidth="280" isRepeatable="true" />
-		<Key codes="-7" keyLabel="RU" keyLabelStyle=".small-style"
-			keyWidth="50" />
-		<Key codes="-3" keyLabel="2" keyLabelStyle=".font-fxkeyboard"
-			keyWidth="50" />
+		<Key codes="-6" keyLabel="CTRL" keyLabelStyle=".small-style" keyWidth="70" />
+		<Key codes="-2" keyLabel="?123" keyLabelStyle=".small-style" keyWidth="70" />
+		<Key codes="32" keyLabel="3" keyLabelStyle=".font-fxkeyboard-alpha" keyWidth="280" isRepeatable="true" />
+		<Key codes="-7" keyLabel="RU" keyLabelStyle=".small-style" keyWidth="50" />
+		<Key codes="-3" keyLabel="2" keyLabelStyle=".font-fxkeyboard" keyWidth="50" />
 	</Row>
 </Keyboard>
     
