@@ -1,4 +1,4 @@
-package org.comtel.javafx.sample;
+package org.comtel.samples;
 
 import java.util.Locale;
 
