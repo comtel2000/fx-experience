@@ -19,12 +19,12 @@ demo
 build jar and start demo main class:
 
 Swing Demo App:
-org.comtel.javafx.sample.SwingMainDemo
+org.comtel.sample.SwingMainDemo
 
 JavaFX Demo App:
-org.comtel.javafx.sample.MainDemo
+org.comtel.sample.MainDemo
 
 Stand alone App (beta):
-org.comtel.javafx.FxStandAloneApp
+org.comtel.sample.FxStandAloneApp
 
-org.comtel.javafx.AwtStandAloneApp
+org.comtel.sample.AwtStandAloneApp

@@ -1,4 +1,4 @@
-package org.comtel.javafx;
+package org.comtel.samples;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;

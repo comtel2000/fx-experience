@@ -1,4 +1,4 @@
-package org.comtel.javafx;
+package org.comtel.samples;
 
 import java.awt.BorderLayout;
 import java.awt.Point;
