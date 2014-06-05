@@ -5,10 +5,10 @@ import java.awt.event.MouseListener;
 
 import javax.swing.JComponent;
 import javax.swing.plaf.ComponentUI;
-import javax.swing.plaf.basic.BasicTextAreaUI;
+import javax.swing.plaf.basic.BasicEditorPaneUI;
 import javax.swing.text.JTextComponent;
 
-public class KeyboardTextAreaUI extends BasicTextAreaUI {
+public class KeyboardEditorPaneUI extends BasicEditorPaneUI {
 
 	private static FocusListener fl = null;
 	private static MouseListener ml = null;
@@ -17,16 +17,16 @@ public class KeyboardTextAreaUI extends BasicTextAreaUI {
 		fl = l;
 	}
 
+	public KeyboardEditorPaneUI() {
+		super();
+	}
+
 	public static void setMouseListener(MouseListener l) {
 		ml = l;
 	}
 
-	public KeyboardTextAreaUI() {
-		super();
-	}
-
 	public static ComponentUI createUI(JComponent c) {
-		return new KeyboardTextAreaUI();
+		return new KeyboardEditorPaneUI();
 	}
 
 	@Override
@@ -41,4 +41,6 @@ public class KeyboardTextAreaUI extends BasicTextAreaUI {
 		}
 		super.installUI(c);
 	}
+
+
 }

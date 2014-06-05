@@ -5,10 +5,10 @@ import java.awt.event.MouseListener;
 
 import javax.swing.JComponent;
 import javax.swing.plaf.ComponentUI;
-import javax.swing.plaf.basic.BasicTextAreaUI;
+import javax.swing.plaf.basic.BasicPasswordFieldUI;
 import javax.swing.text.JTextComponent;
 
-public class KeyboardTextAreaUI extends BasicTextAreaUI {
+public class KeyboardPasswordFieldUI extends BasicPasswordFieldUI {
 
 	private static FocusListener fl = null;
 	private static MouseListener ml = null;
@@ -20,13 +20,13 @@ public class KeyboardTextAreaUI extends BasicTextAreaUI {
 	public static void setMouseListener(MouseListener l) {
 		ml = l;
 	}
-
-	public KeyboardTextAreaUI() {
+	
+	public KeyboardPasswordFieldUI() {
 		super();
 	}
 
 	public static ComponentUI createUI(JComponent c) {
-		return new KeyboardTextAreaUI();
+		return new KeyboardPasswordFieldUI();
 	}
 
 	@Override

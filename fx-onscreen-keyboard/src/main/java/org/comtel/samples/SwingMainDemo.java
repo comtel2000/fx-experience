@@ -4,10 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Point;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -28,19 +24,21 @@ import javafx.util.Duration;
 
 import javax.swing.JApplet;
 import javax.swing.JButton;
+import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JWindow;
 import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
 
 import org.comtel.javafx.control.KeyBoardPopup;
 import org.comtel.javafx.control.KeyBoardPopupBuilder;
 import org.comtel.javafx.robot.RobotFactory;
-import org.comtel.swing.ui.KeyboardTextAreaUI;
-import org.comtel.swing.ui.KeyboardTextFieldUI;
+import org.comtel.swing.ui.EventCallback;
+import org.comtel.swing.ui.KeyboardUIManagerTool;
 
 public class SwingMainDemo extends JApplet {
 
@@ -56,31 +54,33 @@ public class SwingMainDemo extends JApplet {
 	public void init() {
 
 		String fontUrl = this.getClass().getResource("/font/FontKeyboardFX.ttf").toExternalForm();
-		Font f = Font.loadFont(fontUrl, -1);
-		System.err.println(f);
+		Font.loadFont(fontUrl, -1);
 
-		UIManager.put("TextFieldUI", KeyboardTextFieldUI.class.getName());
-		UIManager.put("TextAreaUI", KeyboardTextAreaUI.class.getName());
+		KeyboardUIManagerTool.installKeyboardDefaults(new EventCallback() {
 
-		// register global onscreen keyboard focus listener
-		FocusListener fl = createFocusListener();
-		// register global onscreen keyboard mouse(double)clicked listener
-		MouseListener ml = createMouseListener();
+			@Override
+			public void openKeyboard(Point p) {
+				setKeyboardVisible(true, p);
+			}
 
-		KeyboardTextFieldUI.setFocusListener(fl);
-		KeyboardTextFieldUI.setMouseListener(ml);
-
-		KeyboardTextAreaUI.setFocusListener(fl);
-		KeyboardTextAreaUI.setMouseListener(ml);
+			@Override
+			public void closeKeyboard() {
+				setKeyboardVisible(false, null);
+			}
+		});
 
 		JPanel panel = new JPanel();
 		panel.setPreferredSize(new Dimension(800, 400));
-		panel.setLayout(new FlowLayout(FlowLayout.LEFT, 20, 20));
+		FlowLayout layout = new FlowLayout(FlowLayout.LEADING, 20, 20);
+		panel.setLayout(layout);
 
-		panel.add(new JTextField(50));
-		panel.add(new JTextField(50));
-		panel.add(new JTextArea(2, 50));
-
+		int line = 70;
+		panel.add(new JTextField(line));
+		panel.add(new JTextField(line));
+		panel.add(new JPasswordField(line));
+		panel.add(new JTextArea(4, line));
+		panel.add(new JEditorPane());
+		panel.add(new JSeparator());
 		panel.add(new JButton("Ok"));
 		panel.add(new JButton("Cancel"));
 
@@ -239,45 +239,4 @@ public class SwingMainDemo extends JApplet {
 		});
 	}
 
-	private FocusListener createFocusListener() {
-		FocusListener l = new FocusListener() {
-			@Override
-			public void focusLost(FocusEvent e) {
-				setKeyboardVisible(false, null);
-			}
-
-			@Override
-			public void focusGained(FocusEvent e) {
-				setKeyboardVisible(true, e.getComponent().getLocationOnScreen());
-			}
-		};
-		return l;
-	}
-
-	private MouseListener createMouseListener() {
-		return new MouseListener() {
-			@Override
-			public void mouseReleased(MouseEvent e) {
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-			}
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				if (e.getClickCount() == 2) {
-					setKeyboardVisible(true, e.getComponent().getLocationOnScreen());
-				}
-			}
-		};
-	}
 }

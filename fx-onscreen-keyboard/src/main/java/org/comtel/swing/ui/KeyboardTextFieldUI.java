@@ -1,8 +1,6 @@
 package org.comtel.swing.ui;
 
-import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.JComponent;
@@ -13,24 +11,17 @@ import javax.swing.text.JTextComponent;
 public class KeyboardTextFieldUI extends BasicTextFieldUI {
 
 	private static FocusListener fl = null;
-
 	private static MouseListener ml = null;
 
 	public static void setFocusListener(FocusListener l) {
 		fl = l;
 	}
+	public static void setMouseListener(MouseListener l) {
+		ml = l;
+	}
 
 	public KeyboardTextFieldUI() {
 		super();
-	}
-
-	/**
-	 * send only mouseClicked events
-	 * 
-	 * @param l
-	 */
-	public static void setMouseListener(MouseListener l) {
-		ml = l;
 	}
 
 	public static ComponentUI createUI(JComponent c) {
@@ -40,56 +31,13 @@ public class KeyboardTextFieldUI extends BasicTextFieldUI {
 	@Override
 	public void installUI(JComponent c) {
 		if (c instanceof JTextComponent) {
-			((JTextComponent) c).addFocusListener(createFocusListener());
-			((JTextComponent) c).addMouseListener(createMouseListener());
+			if (fl != null) {
+				((JTextComponent) c).addFocusListener(fl);
+			}
+			if (ml != null) {
+				((JTextComponent) c).addMouseListener(ml);
+			}
 		}
 		super.installUI(c);
-	}
-
-	private FocusListener createFocusListener() {
-		FocusListener l = new FocusListener() {
-
-			@Override
-			public void focusLost(FocusEvent e) {
-				if (fl != null) {
-					fl.focusLost(e);
-				}
-			}
-
-			@Override
-			public void focusGained(FocusEvent e) {
-				if (fl != null) {
-					fl.focusGained(e);
-				}
-			}
-		};
-		return l;
-	}
-
-	public MouseListener createMouseListener() {
-		return new MouseListener() {
-			@Override
-			public void mouseReleased(MouseEvent e) {/* nothing to do */
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {/* nothing to do */
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {/* nothing to do */
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {/* nothing to do */
-			}
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				if (ml != null) {
-					ml.mouseClicked(e);
-				}
-			}
-		};
 	}
 }
