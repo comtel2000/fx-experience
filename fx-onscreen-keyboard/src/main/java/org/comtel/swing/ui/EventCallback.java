@@ -4,9 +4,6 @@ import java.awt.Point;
 
 public interface EventCallback {
 
-	void openKeyboard(Point p);
-	
-	void closeKeyboard();
+	void setKeyboardVisible(Point p, boolean vis);
 
-	
 }

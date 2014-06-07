@@ -44,12 +44,12 @@ public class KeyboardUIManagerTool {
 		FocusListener l = new FocusListener() {
 			@Override
 			public void focusLost(FocusEvent e) {
-				c.closeKeyboard();
+				c.setKeyboardVisible(null, false);
 			}
 
 			@Override
 			public void focusGained(FocusEvent e) {
-				c.openKeyboard(e.getComponent().getLocationOnScreen());
+				c.setKeyboardVisible(e.getComponent().getLocationOnScreen(), true);
 			}
 		};
 		return l;
@@ -76,7 +76,7 @@ public class KeyboardUIManagerTool {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2) {
-					c.openKeyboard(e.getComponent().getLocationOnScreen());
+					c.setKeyboardVisible(e.getComponent().getLocationOnScreen(), true);
 				}
 			}
 		};
