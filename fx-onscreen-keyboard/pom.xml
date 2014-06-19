@@ -5,13 +5,13 @@
 	<version>8.0.9-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>fx-onscreen-keyboard</name>
-	
+
 	<parent>
 		<groupId>org.comtel.javafx</groupId>
 		<artifactId>fx-experience</artifactId>
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
-	
+
 	<repositories>
 		<repository>
 			<id>oss.sonatype.org</id>
@@ -19,15 +19,6 @@
 		</repository>
 	</repositories>
 	<dependencies>
-	<!-- 
-		<dependency>
-			<groupId>com.oracle</groupId>
-			<artifactId>javafx-runtime</artifactId>
-			<version>RELEASE</version>
-			<scope>system</scope>
-			<systemPath>${javafx.runtime.jar}</systemPath>
-		</dependency>
-		 -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -46,9 +37,38 @@
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>
-    
+
 	<build>
 		<plugins>
+			<plugin>
+				<groupId>com.zenjava</groupId>
+				<artifactId>javafx-maven-plugin</artifactId>
+				<version>1.5</version>
+				<configuration>
+					<mainClass>org.comtel.mt.msc.gui.Main</mainClass>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>jaxb2-maven-plugin</artifactId>
+				<version>1.6</version>
+				<executions>
+					<execution>
+						<id>xjc</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>xjc</goal>
+						</goals>
+						<configuration>
+							<schemaDirectory>${basedir}/src/main/resources/xml</schemaDirectory>
+							<schemaFiles>kb-layout.xsd</schemaFiles>
+							<outputDirectory>${basedir}/src/main/java/</outputDirectory>
+							<packageName>org.comtel.javafx.xml.layout</packageName>
+							<clearOutputDir>false</clearOutputDir>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -92,43 +112,15 @@
 					</archive>
 				</configuration>
 			</plugin>
-			<!--  
-			<plugin>
-				<groupId>org.bluestemsoftware.open.maven.plugin</groupId>
-				<artifactId>launch4j-plugin</artifactId>
-				<version>1.5.0.0</version>
-				<executions>
-					<execution>
-						<id>launch4j</id>
-						<phase>package</phase>
-						<goals>
-							<goal>launch4j</goal>
-						</goals>
-						<configuration>
-							<dontWrapJar>false</dontWrapJar>
-							<headerType>gui</headerType>
-							<outfile>target/${project.name}-${project.version}.exe</outfile>
-							<jar>target/${project.artifactId}-${project.version}-jar-with-dependencies.jar</jar>
-							<errTitle>${project.name}</errTitle>
-							<jre>
-								<minVersion>1.8.0</minVersion>>
-							</jre>
-							<versionInfo>
-								<fileVersion>1.0.0.0</fileVersion>
-								<txtFileVersion>1.0.0.0</txtFileVersion>
-								<fileDescription>${project.name}</fileDescription>
-								<copyright>(c)omtel 2014</copyright>
-								<productVersion>1.0.0.0</productVersion>
-								<txtProductVersion>1.0.0.0</txtProductVersion>
-								<productName>${project.name}</productName>
-								<internalName>${project.artifactId}</internalName>
-								<originalFilename>${project.name}-${project.version}.exe</originalFilename>
-							</versionInfo>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			-->
+			<!-- <plugin> <groupId>org.bluestemsoftware.open.maven.plugin</groupId> <artifactId>launch4j-plugin</artifactId> <version>1.5.0.0</version> 
+				<executions> <execution> <id>launch4j</id> <phase>package</phase> <goals> <goal>launch4j</goal> </goals> <configuration> 
+				<dontWrapJar>false</dontWrapJar> <headerType>gui</headerType> <outfile>target/${project.name}-${project.version}.exe</outfile> 
+				<jar>target/${project.artifactId}-${project.version}-jar-with-dependencies.jar</jar> <errTitle>${project.name}</errTitle> 
+				<jre> <minVersion>1.8.0</minVersion>> </jre> <versionInfo> <fileVersion>1.0.0.0</fileVersion> <txtFileVersion>1.0.0.0</txtFileVersion> 
+				<fileDescription>${project.name}</fileDescription> <copyright>(c)omtel 2014</copyright> <productVersion>1.0.0.0</productVersion> 
+				<txtProductVersion>1.0.0.0</txtProductVersion> <productName>${project.name}</productName> <internalName>${project.artifactId}</internalName> 
+				<originalFilename>${project.name}-${project.version}.exe</originalFilename> </versionInfo> </configuration> </execution> 
+				</executions> </plugin> -->
 		</plugins>
 	</build>
 </project>
