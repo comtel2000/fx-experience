@@ -41,14 +41,6 @@
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>com.zenjava</groupId>
-				<artifactId>javafx-maven-plugin</artifactId>
-				<version>1.5</version>
-				<configuration>
-					<mainClass>org.comtel.mt.msc.gui.Main</mainClass>
-				</configuration>
-			</plugin>
-			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>jaxb2-maven-plugin</artifactId>
 				<version>1.6</version>
