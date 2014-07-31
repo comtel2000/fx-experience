@@ -96,7 +96,7 @@
 					</descriptorRefs>
 					<archive>
 						<manifest>
-							<mainClass>org.comtel.javafx.AwtStandAloneApp</mainClass>
+							<mainClass>org.comtel.samples.AwtStandAloneApp</mainClass>
 							<addDefaultImplementationEntries>
 								true
 							</addDefaultImplementationEntries>
