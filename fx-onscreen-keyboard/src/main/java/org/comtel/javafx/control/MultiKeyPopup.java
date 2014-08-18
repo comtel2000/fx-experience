@@ -65,6 +65,10 @@ public class MultiKeyPopup extends Popup {
 		return buttonPane;
 	}
 
+	public ObservableList<String> getStylesheets() {
+		return buttonPane.getStylesheets();
+	}
+	
 	public void setPaneStyle(String value) {
 		buttonPane.setStyle(value);
 	}

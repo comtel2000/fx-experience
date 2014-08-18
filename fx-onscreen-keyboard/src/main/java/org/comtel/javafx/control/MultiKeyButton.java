@@ -1,6 +1,8 @@
 package org.comtel.javafx.control;
 
-import javafx.beans.property.SimpleDoubleProperty;
+import java.util.Collection;
+
+import javafx.beans.property.DoubleProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -16,10 +18,12 @@ public class MultiKeyButton extends KeyButton {
 	private ObservableList<KeyButton> extKeyCodes;
 	private MultiKeyPopup context;
 
-	private final SimpleDoubleProperty scaleProperty;
-
-	public MultiKeyButton(SimpleDoubleProperty scaleProperty) {
+	private final DoubleProperty scaleProperty;
+	private final Collection<String> styles;
+	
+	public MultiKeyButton(DoubleProperty scaleProperty, Collection<String> styles) {
 		this.scaleProperty = scaleProperty;
+		this.styles = styles;
 	}
 
 	public ObservableList<KeyButton> getExtKeyCodes() {
@@ -44,6 +48,8 @@ public class MultiKeyButton extends KeyButton {
 		if (context == null) {
 
 			context = new MultiKeyPopup();
+			context.getStylesheets().addAll(styles);
+			
 			context.setOnHidden(new EventHandler<WindowEvent>() {
 
 				@Override
@@ -57,14 +63,12 @@ public class MultiKeyButton extends KeyButton {
 
 				@Override
 				public void handle(Event event) {
-
 					context.getButtonPane().getTransforms().setAll(new Scale(scaleProperty.get(), scaleProperty.get(), 1, 0, 0, 0));
 
 					// getParent().getParent().setEffect(new BoxBlur());
 					getParent().getParent().setDisable(true);
 					setFocused(false);
 					context.show((Node) event.getSource(), Side.TOP, -getPrefWidth(), -getPrefHeight());
-
 				}
 			});
 

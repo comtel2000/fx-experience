@@ -4,9 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Point;
-import java.net.URISyntaxException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Locale;
 
 import javafx.animation.Animation;
@@ -16,7 +13,6 @@ import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.text.Font;
 import javafx.util.Duration;
 
 import javax.swing.JApplet;
@@ -31,6 +27,7 @@ import javax.swing.JTextField;
 import javax.swing.JWindow;
 import javax.swing.SwingUtilities;
 
+import org.comtel.javafx.control.DefaultLayers;
 import org.comtel.javafx.control.KeyBoardPopup;
 import org.comtel.javafx.control.KeyBoardPopupBuilder;
 import org.comtel.javafx.robot.RobotFactory;
@@ -45,9 +42,6 @@ public class SwingMainDemo extends JApplet {
 
 	@Override
 	public void init() {
-
-		String fontUrl = this.getClass().getResource("/font/FontKeyboardFX.ttf").toExternalForm();
-		Font.loadFont(fontUrl, -1);
 
 		KeyboardUIManagerTool.installKeyboardDefaults((point, visible) -> setKeyboardVisible(visible, point));
 
@@ -94,23 +88,13 @@ public class SwingMainDemo extends JApplet {
 
 	public void createScene(JFXPanel javafxPanel) {
 
-		// set default embedded css style
-		String css = this.getClass().getResource("/css/KeyboardButtonStyle.css").toExternalForm();
-
 		// create empty scene
 		Scene scene = new Scene(new Group(), 0, 0);
 
 		javafxPanel.setScene(scene);
-		scene.getStylesheets().add(css);
 
-		Path numblockLayout = null;
-		try {
-			numblockLayout = Paths.get(this.getClass().getResource("/xml/numblock").toURI());
-		} catch (URISyntaxException e) {
-			e.printStackTrace();
-		}
-
-		fxKeyboardPopup = KeyBoardPopupBuilder.create().initLocale(Locale.ENGLISH).addIRobot(RobotFactory.createAWTRobot()).layerPath(numblockLayout).build();
+		fxKeyboardPopup = KeyBoardPopupBuilder.create().initLocale(Locale.ENGLISH).addIRobot(RobotFactory.createAWTRobot()).layer(DefaultLayers.NUMBLOCK).build();
+		
 		fxKeyboardPopup.getKeyBoard().setOnKeyboardCloseButton((event) -> setKeyboardVisible(false, null));
 		fxKeyboardPopup.setOwner(scene);
 

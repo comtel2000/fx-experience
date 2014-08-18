@@ -39,6 +39,16 @@ public class KeyBoardPopupBuilder implements Builder<KeyBoardPopup> {
 		return this;
 	}
 
+	public KeyBoardPopupBuilder layer(DefaultLayers l) {
+		kb.layer(l);
+		return this;
+	}
+	
+	public KeyBoardPopupBuilder style(String css) {
+		kb.style(css);
+		return this;
+	}
+	
 	@Override
 	public KeyBoardPopup build() {
 		KeyBoardPopup popup = new KeyBoardPopup(kb.build());

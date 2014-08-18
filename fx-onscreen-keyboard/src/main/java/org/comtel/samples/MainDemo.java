@@ -19,7 +19,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.text.Font;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -40,12 +39,7 @@ public class MainDemo extends Application {
 		stage.setTitle("FX Keyboard (" + System.getProperty("javafx.runtime.version") + ")");
 		stage.setResizable(true);
 
-		// load xml layout symbol font
-		String fontUrl = this.getClass().getResource("/font/FontKeyboardFX.ttf").toExternalForm();
-		Font.loadFont(fontUrl, -1);
-
 		popup = KeyBoardPopupBuilder.create().initScale(1.0).initLocale(Locale.ENGLISH).addIRobot(RobotFactory.createFXRobot()).build();
-
 		popup.getKeyBoard().setOnKeyboardCloseButton(event -> setPopupVisible(false, null));
 
 		FlowPane pane = new FlowPane();
@@ -90,7 +84,6 @@ public class MainDemo extends Application {
 			}
 		});
 
-		scene.getStylesheets().add(getClass().getResource("/css/KeyboardButtonStyle.css").toExternalForm());
 		stage.setOnCloseRequest((event) -> System.exit(0));
 
 		stage.setScene(scene);

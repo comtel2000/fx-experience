@@ -21,6 +21,7 @@ import javax.swing.JApplet;
 import javax.swing.JWindow;
 import javax.swing.SwingUtilities;
 
+import org.comtel.javafx.control.DefaultLayers;
 import org.comtel.javafx.control.KeyBoardPopup;
 import org.comtel.javafx.control.KeyBoardPopupBuilder;
 import org.comtel.javafx.robot.RobotFactory;
@@ -76,25 +77,18 @@ public class AwtStandAloneApp extends JApplet {
 	public void createScene(JFXPanel javafxPanel) {
 
 		Scene scene = new Scene(new Group(), 0, 0);
-
 		javafxPanel.setScene(scene);
-		scene.getStylesheets().add(this.getClass().getResource("/css/KeyboardButtonStyle.css").toExternalForm());
-
-		if (xmlPath == null) {
-			xmlPath = "/xml/numblock";
-		}
+		
 		Path path = null;
 		try {
-			path = Paths.get(this.getClass().getResource("/xml/numblock").toURI());
+			if (xmlPath != null){
+				path = Paths.get(this.getClass().getResource(xmlPath).toURI());
+			}
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 		}
-		if (locale == null) {
-			locale = Locale.getDefault();
-		}
 
-		fxKeyboardPopup = KeyBoardPopupBuilder.create().initLocale(locale).addIRobot(RobotFactory.createNativeAsciiRobot()).layerPath(path).build();
-
+		fxKeyboardPopup = KeyBoardPopupBuilder.create().initLocale(locale).addIRobot(RobotFactory.createNativeAsciiRobot()).layerPath(path).layer(DefaultLayers.NUMBLOCK).build();
 		fxKeyboardPopup.getKeyBoard().setOnKeyboardCloseButton(e -> System.exit(0));
 
 		fxKeyboardPopup.setOwner(scene);
