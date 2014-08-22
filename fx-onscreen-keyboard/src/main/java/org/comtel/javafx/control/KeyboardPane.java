@@ -101,7 +101,7 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
 			getStylesheets().add(this.getClass().getResource(DEFAULT_CSS).toExternalForm());
 		}
 
-		if (layerPathProperty == null) {
+		if (layerPathProperty.get() == null) {
 			String fontUrl = FxStandAloneApp.class.getResource(DEFAULT_FONT_URL).toExternalForm();
 			Font.loadFont(fontUrl, -1);
 		}
