@@ -14,7 +14,10 @@ import java.util.Map;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.ReadOnlyBooleanProperty;
+import javafx.beans.property.ReadOnlyBooleanWrapper;
 import javafx.beans.property.ReadOnlyDoubleProperty;
+import javafx.beans.property.ReadOnlyDoubleWrapper;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -57,21 +60,23 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
 
 	private final String DEFAULT_CSS = "/css/KeyboardButtonStyle.css";
 	private final String DEFAULT_FONT_URL = "/font/FontKeyboardFX.ttf";
-	
+
 	private final StringProperty keyBoardStyleProperty = new SimpleStringProperty();
-	
+
 	private Region qwertyKeyboardPane;
 	private Region qwertyShiftedKeyboardPane;
 	private Region symbolKeyboardPane;
 	private Region symbolShiftedKeyboardPane;
 	private Region qwertyCtrlKeyboardPane;
-	
+
 	private final BooleanProperty symbolProperty = new SimpleBooleanProperty(false);
 	private final BooleanProperty shiftProperty = new SimpleBooleanProperty(false);
 	private final BooleanProperty ctrlProperty = new SimpleBooleanProperty(false);
 
+	private final BooleanProperty spaceKeyMoveProperty = new SimpleBooleanProperty(true);
+
 	private final DoubleProperty scaleOffsetProperty = new SimpleDoubleProperty(0.2);
-	
+
 	private final DoubleProperty scaleProperty = new SimpleDoubleProperty(1.0);
 	private final DoubleProperty minScaleProperty = new SimpleDoubleProperty(0.7);
 	private final DoubleProperty maxScaleProperty = new SimpleDoubleProperty(5.0);
@@ -95,7 +100,7 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
 
 	public void load() throws MalformedURLException, IOException, URISyntaxException {
 
-		if (keyBoardStyleProperty.get() != null){
+		if (keyBoardStyleProperty.get() != null) {
 			getStylesheets().add(keyBoardStyleProperty.get());
 		} else {
 			getStylesheets().add(this.getClass().getResource(DEFAULT_CSS).toExternalForm());
@@ -105,7 +110,7 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
 			String fontUrl = FxStandAloneApp.class.getResource(DEFAULT_FONT_URL).toExternalForm();
 			Font.loadFont(fontUrl, -1);
 		}
-		
+
 		setLayoutLocale(localeProperty.get());
 		setKeyboardLayer(KeyboardLayer.QWERTY);
 
@@ -194,7 +199,7 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
 			symbolKeyboardPane = createKeyboardPane(handler.getLayout(xmlPath + "kb-layout-sym.xml"));
 			symbolShiftedKeyboardPane = createKeyboardPane(handler.getLayout(xmlPath + "kb-layout-sym-shift.xml"));
 			getChildren().addAll(qwertyKeyboardPane, qwertyShiftedKeyboardPane, qwertyCtrlKeyboardPane, symbolKeyboardPane, symbolShiftedKeyboardPane);
-			
+
 			for (javafx.scene.Node node : getChildren()) {
 				node.setVisible(false);
 			}
@@ -220,7 +225,7 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
 			symbolKeyboardPane = createKeyboardPane(handler.getLayout(path.resolve("kb-layout-sym.xml").toUri().toURL()));
 			symbolShiftedKeyboardPane = createKeyboardPane(handler.getLayout(path.resolve("kb-layout-sym-shift.xml").toUri().toURL()));
 			getChildren().addAll(qwertyKeyboardPane, qwertyShiftedKeyboardPane, qwertyCtrlKeyboardPane, symbolKeyboardPane, symbolShiftedKeyboardPane);
-			
+
 			for (javafx.scene.Node node : getChildren()) {
 				node.setVisible(false);
 			}
@@ -432,26 +437,9 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
 
 				switch (button.getKeyCode()) {
 				case java.awt.event.KeyEvent.VK_SPACE:
-					// use space button as drag pane
-					button.setOnMouseMoved(new EventHandler<MouseEvent>() {
+					button.setOnMouseMoved(new MouseMovedHandler());
+					button.setOnMouseDragged(new MouseDraggedHandler());
 
-						@Override
-						public void handle(MouseEvent event) {
-							// on Double.isNaN(getScene().getWindow().getX())
-							// init window position
-							mousePressedX = getScene().getWindow().getX() - event.getScreenX();
-							mousePressedY = getScene().getWindow().getY() - event.getScreenY();
-						}
-					});
-
-					button.setOnMouseDragged(new EventHandler<MouseEvent>() {
-						@Override
-						public void handle(MouseEvent mouseEvent) {
-							getScene().getWindow().setX(mouseEvent.getScreenX() + mousePressedX);
-							getScene().getWindow().setY(mouseEvent.getScreenY() + mousePressedY);
-
-						}
-					});
 					break;
 				case BACK_SPACE:
 				case DELETE:
@@ -665,7 +653,7 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
 	}
 
 	public ReadOnlyDoubleProperty scaleProperty() {
-		return scaleProperty;
+		return ReadOnlyDoubleWrapper.readOnlyDoubleProperty(scaleProperty);
 	}
 
 	public void setScaleOffset(double offset) {
@@ -673,11 +661,11 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
 	}
 
 	public ReadOnlyDoubleProperty scaleOffsetProperty() {
-		return scaleOffsetProperty;
+		return ReadOnlyDoubleWrapper.readOnlyDoubleProperty(scaleOffsetProperty);
 	}
-	
+
 	public ReadOnlyDoubleProperty minScaleProperty() {
-		return minScaleProperty;
+		return ReadOnlyDoubleWrapper.readOnlyDoubleProperty(minScaleProperty);
 	}
 
 	public void setMinimumScale(double min) {
@@ -685,7 +673,7 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
 	}
 
 	public ReadOnlyDoubleProperty maxScaleProperty() {
-		return maxScaleProperty;
+		return ReadOnlyDoubleWrapper.readOnlyDoubleProperty(maxScaleProperty);
 	}
 
 	public void setMaximumScale(double max) {
@@ -699,5 +687,36 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
 	public void setKeyBoardStyle(String css) {
 		keyBoardStyleProperty.set(css);
 	}
-	
+
+	public BooleanProperty spaceKeyMoveProperty() {
+		return spaceKeyMoveProperty;
+	}
+
+	public void setSpaceKeyMove(boolean m) {
+		spaceKeyMoveProperty.set(m);
+	}
+
+	class MouseMovedHandler implements EventHandler<MouseEvent> {
+		@Override
+		public void handle(MouseEvent event) {
+			// on
+			// Double.isNaN(getScene().getWindow().getX())
+			// init window position
+			if (spaceKeyMoveProperty.get()) {
+				mousePressedX = getScene().getWindow().getX() - event.getScreenX();
+				mousePressedY = getScene().getWindow().getY() - event.getScreenY();
+			}
+		}
+	}
+
+	class MouseDraggedHandler implements EventHandler<MouseEvent> {
+		@Override
+		public void handle(MouseEvent mouseEvent) {
+			if (spaceKeyMoveProperty.get()) {
+				getScene().getWindow().setX(mouseEvent.getScreenX() + mousePressedX);
+				getScene().getWindow().setY(mouseEvent.getScreenY() + mousePressedY);
+			}
+		}
+	}
+
 }

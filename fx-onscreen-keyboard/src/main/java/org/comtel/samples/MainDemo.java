@@ -2,6 +2,8 @@ package org.comtel.samples;
 
 import java.util.Locale;
 
+import javax.swing.ButtonGroup;
+
 import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
 import javafx.animation.ParallelTransition;
@@ -12,13 +14,16 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.Separator;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputControl;
+import javafx.scene.control.ToolBar;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -41,11 +46,8 @@ public class MainDemo extends Application {
 
 		popup = KeyBoardPopupBuilder.create().initScale(1.0).initLocale(Locale.ENGLISH).addIRobot(RobotFactory.createFXRobot()).build();
 		popup.getKeyBoard().setOnKeyboardCloseButton(event -> setPopupVisible(false, null));
-
-		FlowPane pane = new FlowPane();
-		pane.setVgap(20);
-		pane.setHgap(20);
-		pane.setPrefWrapLength(100);
+		
+		VBox pane = new VBox(20);
 
 		Button okButton = new Button("Ok");
 		okButton.setDefaultButton(true);
@@ -53,17 +55,22 @@ public class MainDemo extends Application {
 		Button cancelButton = new Button("Cancel");
 		cancelButton.setCancelButton(true);
 
+		CheckBox spaceKeyMoveCb = new CheckBox("Movable");
+		spaceKeyMoveCb.setSelected(true);
+		popup.getKeyBoard().spaceKeyMoveProperty().bind(spaceKeyMoveCb.selectedProperty());
+		
+		pane.getChildren().add(new ToolBar(okButton, cancelButton, spaceKeyMoveCb));
 		pane.getChildren().add(new Label("Text1"));
 		pane.getChildren().add(new TextField(""));
 		pane.getChildren().add(new TextArea(""));
 		pane.getChildren().add(new Label("Password"));
 		pane.getChildren().add(new PasswordField());
-		pane.getChildren().add(okButton);
-		pane.getChildren().add(cancelButton);
+		
+		
 
 		// pane.getChildren().add(KeyBoardBuilder.create().addIRobot(RobotFactory.createFXRobot()).build());
 
-		Scene scene = new Scene(pane, 400, 300);
+		Scene scene = new Scene(pane, 600, 400);
 
 		// add keyboard scene listener to all text components
 		scene.focusOwnerProperty().addListener((value, n1, n2) -> {
