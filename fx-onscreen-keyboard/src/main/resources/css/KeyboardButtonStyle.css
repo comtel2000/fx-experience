@@ -1,4 +1,9 @@
 
+@font-face {
+    font-family: 'FontKeyboardFX';
+    src: url('../font/FontKeyboardFX.ttf');
+}
+
 #key-background {
 	-fx-background-color:rgb(220.0,220.0,220.0);
 	-fx-background-radius:5.0;

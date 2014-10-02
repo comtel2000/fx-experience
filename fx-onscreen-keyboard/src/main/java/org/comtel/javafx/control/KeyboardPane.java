@@ -14,8 +14,6 @@ import java.util.Map;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.ReadOnlyBooleanProperty;
-import javafx.beans.property.ReadOnlyBooleanWrapper;
 import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.beans.property.ReadOnlyDoubleWrapper;
 import javafx.beans.property.ReadOnlyObjectProperty;
@@ -54,6 +52,8 @@ import org.comtel.javafx.xml.layout.Keyboard;
 import org.comtel.samples.FxStandAloneApp;
 import org.slf4j.LoggerFactory;
 
+import com.sun.javafx.css.StyleManager;
+
 public class KeyboardPane extends Region implements StandardKeyCode, EventHandler<KeyButtonEvent> {
 
 	private final static org.slf4j.Logger logger = LoggerFactory.getLogger(KeyboardPane.class);
@@ -61,7 +61,7 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
 	private final String DEFAULT_CSS = "/css/KeyboardButtonStyle.css";
 	private final String DEFAULT_FONT_URL = "/font/FontKeyboardFX.ttf";
 
-	private final StringProperty keyBoardStyleProperty = new SimpleStringProperty();
+	private final StringProperty keyBoardStyleProperty = new SimpleStringProperty(DEFAULT_CSS);
 
 	private Region qwertyKeyboardPane;
 	private Region qwertyShiftedKeyboardPane;
@@ -98,18 +98,14 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
 		setFocusTraversable(false);
 	}
 
+	@Override
+	public String getUserAgentStylesheet() {
+		return keyBoardStyleProperty.get();
+	}
+	
 	public void load() throws MalformedURLException, IOException, URISyntaxException {
 
-		if (keyBoardStyleProperty.get() != null) {
-			getStylesheets().add(keyBoardStyleProperty.get());
-		} else {
-			getStylesheets().add(this.getClass().getResource(DEFAULT_CSS).toExternalForm());
-		}
-
-		if (layerPathProperty.get() == null) {
-			String fontUrl = FxStandAloneApp.class.getResource(DEFAULT_FONT_URL).toExternalForm();
-			Font.loadFont(fontUrl, -1);
-		}
+		getStylesheets().add(keyBoardStyleProperty.get());
 
 		setLayoutLocale(localeProperty.get());
 		setKeyboardLayer(KeyboardLayer.QWERTY);
