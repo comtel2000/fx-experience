@@ -42,24 +42,20 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.RowConstraints;
-import javafx.scene.text.Font;
 import javafx.scene.transform.Scale;
 
 import org.comtel.javafx.event.KeyButtonEvent;
 import org.comtel.javafx.robot.IRobot;
 import org.comtel.javafx.xml.KeyboardLayoutHandler;
 import org.comtel.javafx.xml.layout.Keyboard;
-import org.comtel.samples.FxStandAloneApp;
 import org.slf4j.LoggerFactory;
-
-import com.sun.javafx.css.StyleManager;
 
 public class KeyboardPane extends Region implements StandardKeyCode, EventHandler<KeyButtonEvent> {
 
 	private final static org.slf4j.Logger logger = LoggerFactory.getLogger(KeyboardPane.class);
 
 	private final String DEFAULT_CSS = "/css/KeyboardButtonStyle.css";
-	private final String DEFAULT_FONT_URL = "/font/FontKeyboardFX.ttf";
+	//private final String DEFAULT_FONT_URL = "/font/FontKeyboardFX.ttf";
 
 	private final StringProperty keyBoardStyleProperty = new SimpleStringProperty(DEFAULT_CSS);
 
@@ -98,7 +94,7 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
 		setFocusTraversable(false);
 	}
 
-	@Override
+	//@Override
 	public String getUserAgentStylesheet() {
 		return keyBoardStyleProperty.get();
 	}
