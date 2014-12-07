@@ -1,9 +1,8 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.comtel.javafx</groupId>
 	<artifactId>fx-experience</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>1</version>
 	<packaging>pom</packaging>
 	<name>fx-experience</name>
 	<properties>
@@ -13,13 +12,19 @@
 		<slf4j.version>1.7.5</slf4j.version>
 		<junit.version>4.11</junit.version>
 	</properties>
-
+	<description>Collection of JavaFX styled components.</description>
 	<licenses>
 		<license>
 			<name>The New BSD License</name>
 			<url>http://www.opensource.org/licenses/bsd-license.html</url>
 		</license>
 	</licenses>
+	<scm>
+		<connection>scm:git:git@github.com:comtel2000/fx-experience.git</connection>
+		<url>scm:git:git@github.com:comtel2000/fx-experience.git</url>
+		<developerConnection>scm:git:git@github.com:comtel2000/fx-experience.git</developerConnection>
+		<tag>HEAD</tag>
+	</scm>
 	<modules>
 		<module>fx-onscreen-keyboard</module>
 	</modules>
