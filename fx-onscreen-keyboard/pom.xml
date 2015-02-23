@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>fx-onscreen-keyboard</artifactId>
-	<version>8.1.0</version>
+	<version>8.1.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>fx-onscreen-keyboard</name>
 	<description>JavaFX on-screen keyboard component with xml layout configuration.</description>
