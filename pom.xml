@@ -13,6 +13,11 @@
 		<junit.version>4.11</junit.version>
 	</properties>
 	<description>Collection of JavaFX styled components.</description>
+	<parent>
+		<groupId>org.sonatype.oss</groupId>
+		<artifactId>oss-parent</artifactId>
+		<version>9</version>
+	</parent>
 	<licenses>
 		<license>
 			<name>The New BSD License</name>
