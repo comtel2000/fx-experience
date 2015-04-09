@@ -1,36 +1,161 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.comtel.javafx</groupId>
-	<artifactId>fx-experience</artifactId>
-	<version>1</version>
-	<packaging>pom</packaging>
-	<name>fx-experience</name>
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<maven.compiler.source>1.8</maven.compiler.source>
-		<maven.compiler.target>1.8</maven.compiler.target>
-		<slf4j.version>1.7.5</slf4j.version>
-		<junit.version>4.11</junit.version>
-	</properties>
-	<description>Collection of JavaFX styled components.</description>
 	<parent>
 		<groupId>org.sonatype.oss</groupId>
 		<artifactId>oss-parent</artifactId>
 		<version>9</version>
 	</parent>
+	<groupId>org.comtel2000</groupId>
+	<artifactId>fx-parent</artifactId>
+	<version>8.1.1-SNAPSHOT</version>
+
+	<packaging>pom</packaging>
+
+	<name>fx-experience</name>
+	<description>Collection of JavaFX styled components.</description>
+	<url>http://comtel2000.org</url>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+	</properties>
+
+
+	<modules>
+		<module>fx-onscreen-keyboard</module>
+		<module>fx-onscreen-keyboard-swing</module>
+		<module>fx-onscreen-keyboard-samples</module>
+	</modules>
+
+	<inceptionYear>2014</inceptionYear>
+	<organization>
+		<name>comtel2000</name>
+		<url>http://comtel2000.org</url>
+	</organization>
+	<developers>
+		<developer>
+			<name>J.Zimmermann</name>
+			<email>comtel2000@gmail.com</email>
+			<organization>comtel2000</organization>
+			<organizationUrl>http://comtel2000.org</organizationUrl>
+		</developer>
+	</developers>
+
+
 	<licenses>
 		<license>
-			<name>The New BSD License</name>
-			<url>http://www.opensource.org/licenses/bsd-license.html</url>
+			<name>The BSD 3-Clause License</name>
+			<url>http://opensource.org/licenses/BSD-3-Clause</url>
+			<distribution>repo</distribution>
 		</license>
 	</licenses>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>4.12</version>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-api</artifactId>
+				<version>1.7.10</version>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-simple</artifactId>
+				<version>1.7.10</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>license-maven-plugin</artifactId>
+				<version>1.8</version>
+				<configuration>
+					<verbose>true</verbose>
+				</configuration>
+				<executions>
+					<execution>
+						<id>add-license-headers</id>
+						<goals>
+							<goal>update-file-header</goal>
+						</goals>
+						<phase>process-sources</phase>
+						<configuration>
+							<licenseName>bsd_3</licenseName>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>2.2.1</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar-no-fork</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.10.2</version>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-gpg-plugin</artifactId>
+				<version>1.5</version>
+				<executions>
+					<execution>
+						<id>sign-artifacts</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>sign</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>2.5</version>
+				<configuration>
+					<autoVersionSubmodules>true</autoVersionSubmodules>
+					<useReleaseProfile>false</useReleaseProfile>
+					<releaseProfiles>ossrh</releaseProfiles>
+					<goals>deploy</goals>
+					<tagNameFormat>${project.version}</tagNameFormat>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
 	<scm>
 		<connection>scm:git:git@github.com:comtel2000/fx-experience.git</connection>
-		<url>scm:git:git@github.com:comtel2000/fx-experience.git</url>
+		<url>git:git@github.com:comtel2000/fx-experience.git</url>
 		<developerConnection>scm:git:git@github.com:comtel2000/fx-experience.git</developerConnection>
 		<tag>HEAD</tag>
 	</scm>
-	<modules>
-		<module>fx-onscreen-keyboard</module>
-	</modules>
+	<ciManagement>
+		<system>Travis CI</system>
+		<url>https://travis-ci.org/comtel2000/fx-experience/</url>
+	</ciManagement>
 </project>
