@@ -136,8 +136,7 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
 		setFocusTraversable(false);
 	}
 
-	// @Override
-	@Override
+	// @Override (JDK 8u40 or later)
 	public String getUserAgentStylesheet() {
 		return keyBoardStyleProperty.get();
 	}
