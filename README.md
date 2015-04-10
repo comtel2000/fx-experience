@@ -1,5 +1,5 @@
 # fx-onscreen-keyboard
-[![Build Status](https://travis-ci.org/comtel2000/fx-experience.png?branch=master)](https://travis-ci.org/comtel2000/fx-experience)  [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.comtel2000/fx-parent/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.comtel2000/fx-parent)  [![License](https://img.shields.io/badge/license-BSD_3_clause-blue.svg)](http://opensource.org/licenses/BSD-3-Clause)  [![Language](https://img.shields.io/badge/language-Java_8-red.svg)](http://www.oracle.com/technetwork/java)
+[![Build Status](https://travis-ci.org/comtel2000/fx-experience.png?branch=master)](https://travis-ci.org/comtel2000/fx-experience)  [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.comtel2000/fx-parent/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.comtel2000/fx-parent)  [![License](https://img.shields.io/badge/license-BSD_3_clause-blue.svg)](http://opensource.org/licenses/BSD-3-Clause)
 
 JavaFX on-screen keyboard component with xml layout configuration
 
