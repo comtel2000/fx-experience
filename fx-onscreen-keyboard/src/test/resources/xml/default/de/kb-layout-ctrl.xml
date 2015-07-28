@@ -23,7 +23,7 @@
 
 	<Row>
 		<Key codes="43" keyLabel="A" keyLabelStyle=".font-fxkeyboard" keyWidth="50" />
-		<Key codes="97" keyLabel="SELECT ALL" keyLabelStyle=".small-style" keyWidth="120" />
+		<Key codes="97" keyLabel="ALLES MARKIEREN" keyLabelStyle=".small-style" keyWidth="120" />
 		<Key codes="" keyLabel="" />
 		<Key codes="" keyLabel="" />
 		<Key codes="" keyLabel="" />
@@ -34,9 +34,9 @@
 
 	<Row>
 		<Key codes="45" keyLabel="@" keyLabelStyle=".font-fxkeyboard" keyWidth="50" isModifier="true" isSticky="true" />
-		<Key codes="120" keyLabel="CUT" keyLabelStyle=".small-style" keyWidth="60" />
-		<Key codes="99" keyLabel="COPY" keyLabelStyle=".small-style" keyWidth="70" />
-		<Key codes="118" keyLabel="PASTE" keyLabelStyle=".small-style" keyWidth="70" />
+		<Key codes="120" keyLabel="AUSSCHNEIDEN" keyLabelStyle=".small-style" keyWidth="60" />
+		<Key codes="99" keyLabel="KOPIEREN" keyLabelStyle=".small-style" keyWidth="70" />
+		<Key codes="118" keyLabel="EINFÜGEN" keyLabelStyle=".small-style" keyWidth="70" />
 		<Key codes="-12" keyLabel="◄" keyLabelStyle=".small-style" />
 		<Key codes="-11" keyLabel="▼" keyLabelStyle=".small-style" />
 		<Key codes="-13" keyLabel="►" keyLabelStyle=".small-style" />
@@ -44,10 +44,10 @@
 	</Row>
 
 	<Row rowEdgeFlags="bottom">
-		<Key codes="-6" keyLabel="CTRL" keyLabelStyle=".small-style" keyWidth="50" />
+		<Key codes="-6" keyLabel="STRG" keyLabelStyle=".small-style" keyWidth="50" />
 		<Key codes="" keyWidth="50" />
 		<Key codes="32" keyLabel="3" keyLabelStyle=".font-fxkeyboard-alpha" keyWidth="240" isRepeatable="true" />
-		<Key codes="-7" keyLabel="EN" keyLabelStyle=".small-style" keyWidth="50" />
+		<Key codes="-7" keyLabel="DE" keyLabelStyle=".small-style" keyWidth="50" />
 		<Key codes="-3" keyLabel="2" keyLabelStyle=".font-fxkeyboard" keyWidth="50" />
 	</Row>
 

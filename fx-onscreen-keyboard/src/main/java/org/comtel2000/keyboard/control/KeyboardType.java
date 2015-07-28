@@ -1,8 +1,8 @@
-package org.comtel2000.swing.ui;
+package org.comtel2000.keyboard.control;
 
 /*
  * #%L
- * fx-onscreen-keyboard-swing
+ * fx-onscreen-keyboard
  * %%
  * Copyright (C) 2014 - 2015 comtel2000
  * %%
@@ -33,10 +33,7 @@ package org.comtel2000.swing.ui;
  * #L%
  */
 
-import java.awt.Component;
+public enum KeyboardType {
 
-public interface EventCallback {
-
-	void call(Component component, boolean vis);
-
+	TEXT, TEXT_SHIFT, SYMBOL, SYMBOL_SHIFT, CTRL, NUMERIC, EMAIL, URL
 }

@@ -36,6 +36,7 @@ package org.comtel2000.keyboard.xml;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -48,14 +49,25 @@ public class KeyboardLayoutHandler {
 
 	private final static org.slf4j.Logger logger = LoggerFactory.getLogger(KeyboardLayoutHandler.class);
 
+	private ConcurrentHashMap<String, Keyboard> layoutStringCache;;
+	private ConcurrentHashMap<URL, Keyboard> layoutURLCache;
 	private JAXBContext context;
 
 	private Unmarshaller unmarshaller;
 
 	public KeyboardLayoutHandler() {
+		this(false);
+	}
+
+	public KeyboardLayoutHandler(boolean cached) {
 		try {
 			context = JAXBContext.newInstance(new Class[] { Keyboard.class });
 			unmarshaller = context.createUnmarshaller();
+
+			if (cached) {
+				layoutStringCache = new ConcurrentHashMap<>(8);
+				layoutURLCache = new ConcurrentHashMap<>(8);
+			}
 		} catch (JAXBException e) {
 			logger.error(e.getMessage(), e);
 		}
@@ -71,10 +83,26 @@ public class KeyboardLayoutHandler {
 	 *             If this String path could not be read
 	 */
 	public Keyboard getLayout(String file) throws IOException {
+		if (layoutStringCache != null) {
+			return layoutStringCache.computeIfAbsent(file, f -> {
+				URL url = KeyboardLayoutHandler.class.getResource(f);
+				try {
+					if (url != null) {
+						return getLayout(url);
+					}
+					return getLayout(KeyboardLayoutHandler.class.getResourceAsStream(f));
+				} catch (Exception e) {
+					logger.error("file: " + String.valueOf(f) + " can not be read", e);
+				}
+				return null;
+			});
+		}
+
 		URL url = KeyboardLayoutHandler.class.getResource(file);
 		if (url != null) {
 			return getLayout(url);
 		}
+
 		InputStream is = KeyboardLayoutHandler.class.getResourceAsStream(file);
 		if (is != null) {
 			return getLayout(is);
@@ -92,6 +120,21 @@ public class KeyboardLayoutHandler {
 	 *             If this URL could not be read
 	 */
 	public Keyboard getLayout(URL url) throws IOException {
+
+		if (layoutURLCache != null) {
+			return layoutURLCache.computeIfAbsent(url, u -> {
+				Object obj = null;
+				try {
+					obj = unmarshaller.unmarshal(u);
+				} catch (JAXBException e) {
+					logger.error("file: " + String.valueOf(u) + " can not be read", e);
+				}
+				if (obj != null && obj instanceof Keyboard) {
+					return (Keyboard) obj;
+				}
+				return null;
+			});
+		}
 
 		Object obj = null;
 		try {
@@ -114,7 +157,7 @@ public class KeyboardLayoutHandler {
 	 * @throws IOException
 	 *             If this InputStream could not be read
 	 */
-	public Keyboard getLayout(InputStream is) throws IOException {
+	private Keyboard getLayout(InputStream is) throws IOException {
 
 		Object obj = null;
 		try {

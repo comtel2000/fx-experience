@@ -1,5 +1,8 @@
 package org.comtel2000.keyboard.control;
 
+import java.util.Collections;
+import java.util.HashMap;
+
 /*
  * #%L
  * fx-onscreen-keyboard
@@ -33,46 +36,154 @@ package org.comtel2000.keyboard.control;
  * #L%
  */
 
-import javafx.scene.Scene;
-import javafx.stage.Popup;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Objects;
 
-public class KeyBoardPopup extends Popup {
+import javafx.animation.Animation;
+import javafx.animation.FadeTransition;
+import javafx.animation.ParallelTransition;
+import javafx.animation.ScaleTransition;
+import javafx.event.Event;
+import javafx.event.EventHandler;
+import javafx.geometry.Rectangle2D;
+import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.control.TextInputControl;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Popup;
+import javafx.stage.Screen;
+import javafx.stage.Stage;
+import javafx.util.Duration;
+
+public class KeyBoardPopup extends Popup implements VkProperties {
 
 	private final KeyboardPane keyboard;
 
-	private Scene owner = null;
+	private Scene owner;
+
+	private Animation animation;
+
+	public final static EventHandler<? super Event> DEFAULT_CLOSE_HANDLER = (event) -> {
+		if (event.getSource() instanceof Node){
+			((Node)event.getSource()).getScene().getWindow().hide();
+		}
+	};
+	
+	public KeyBoardPopup(final KeyboardPane panel) {
+		keyboard = Objects.requireNonNull(panel);
+		getContent().add(keyboard);
+	}
 
 	public final KeyboardPane getKeyBoard() {
 		return keyboard;
-	}
-
-	public KeyBoardPopup(KeyboardPane panel) {
-		keyboard = panel;
-		getContent().add(panel);
 	}
 
 	public boolean isVisible() {
 		return isShowing();
 	}
 
-	public void setVisible(boolean b) {
-		if (b) {
-			if (owner != null) {
-				super.show(owner.getWindow());
-			} else {
-				super.show(this.getOwnerWindow());
-			}
-		} else {
-			hide();
-		}
-
+	public void setVisible(final boolean visible) {
+		setVisible(visible, null);
 	}
 
-	public Scene getOwner() {
+	public Scene getRegisteredScene() {
 		return owner;
 	}
 
-	public void setOwner(Scene owner) {
-		this.owner = owner;
+	public void registerScene(final Scene scene) {
+		owner = Objects.requireNonNull(scene);
+	}
+
+	public void addFocusListener(final Scene scene) {
+		registerScene(scene);
+		scene.focusOwnerProperty().addListener((value, n1, n2) -> {
+			if (n2 != null && n2 instanceof TextInputControl) {
+				setVisible(true, (TextInputControl) n2);
+			} else {
+				setVisible(false, null);
+			}
+		});
+	}
+
+	public void addDoubleClickEventFilter(final Stage stage) {
+		Objects.requireNonNull(stage).addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
+			if (event.getClickCount() == 2 && stage.getScene() != null) {
+				Node node = stage.getScene().getFocusOwner();
+				if (node != null && node instanceof TextInputControl) {
+					setVisible(true, (TextInputControl) node);
+				}
+			}
+		});
+	}
+
+	void setVisible(final boolean visible, final TextInputControl textNode) {
+		if (visible && textNode != null) {
+			Map<String, String> vkProps = getVkProperties(textNode);
+			if (vkProps.isEmpty()) {
+				getKeyBoard().setKeyboardType(KeyboardType.TEXT);
+			} else {
+				getKeyBoard().setKeyboardType(vkProps.getOrDefault(VK_TYPE, VK_TYPE_TEXT));
+				if (vkProps.containsKey(VK_LOCALE)) {
+					getKeyBoard().switchLocale(new Locale(vkProps.get(VK_LOCALE)));
+				}
+			}
+			Rectangle2D textNodeBounds = new Rectangle2D(textNode.getScene().getWindow().getX() + textNode.getLocalToSceneTransform().getTx(),
+					textNode.getScene().getWindow().getY() + textNode.getLocalToSceneTransform().getTy(), textNode.getWidth(), textNode.getHeight());
+			Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+			if (textNodeBounds.getMinX() + getWidth() > screenBounds.getMaxX()) {
+				setX(screenBounds.getMaxX() - getWidth());
+			} else {
+				setX(textNodeBounds.getMinX());
+			}
+			if (textNodeBounds.getMaxY() + getHeight() > screenBounds.getMaxY()) {
+				setY(textNodeBounds.getMinY() - getHeight() + 20);
+			} else {
+				setY(textNodeBounds.getMaxY() + 40);
+			}
+		}
+
+		if (animation != null) {
+			animation.stop();
+		}
+		getKeyBoard().setOpacity(0.0);
+
+		FadeTransition fade = new FadeTransition(Duration.seconds(.1), getKeyBoard());
+		fade.setToValue(visible ? 1.0 : 0.0);
+		fade.setOnFinished(e -> animation = null);
+
+		ScaleTransition scale = new ScaleTransition(Duration.seconds(.1), getKeyBoard());
+		scale.setToX(visible ? 1 : 0.8);
+		scale.setToY(visible ? 1 : 0.8);
+		ParallelTransition tx = new ParallelTransition(fade, scale);
+		animation = tx;
+		if (visible && !isShowing()) {
+			// initial start
+			super.show(owner != null ? owner.getWindow() : getOwnerWindow());
+		}
+		tx.play();
+	}
+
+	private Map<String, String> getVkProperties(Node node) {
+		if (node.hasProperties()) {
+			Map<String, String> vkProps = new HashMap<>(3);
+			node.getProperties().forEach((key, value) -> {
+				if (key.toString().startsWith("vk")) {
+					vkProps.put(String.valueOf(key), String.valueOf(value));
+				}
+			});
+			return vkProps;
+		}
+		if (node.getParent() != null && node.getParent().hasProperties()) {
+			Map<String, String> vkProps = new HashMap<>(3);
+			node.getParent().getProperties().forEach((key, value) -> {
+				if (key.toString().startsWith("vk")) {
+					vkProps.put(String.valueOf(key), String.valueOf(value));
+				}
+			});
+			return vkProps;
+		}
+		return Collections.emptyMap();
+
 	}
 }

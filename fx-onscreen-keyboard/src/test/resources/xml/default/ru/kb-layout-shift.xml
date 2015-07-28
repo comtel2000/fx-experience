@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- #%L fx-onscreen-keyboard %% Copyright (C) 2014 - 2015 comtel2000 %% Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met: 1. Redistributions of source code must 
+	retain the above copyright notice, this list of conditions and the following disclaimer. 2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other 
+	materials provided with the distribution. 3. Neither the name of the comtel2000 nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission. THIS SOFTWARE IS PROVIDED 
+	BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER 
+	OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER 
+	CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. #L% -->
+
+<Keyboard keyWidth="40" keyHeight="30" horizontalGap="0" verticalGap="0">
+
+	<Row>
+		<Key codes="1049" keyLabel="Й" />
+		<Key codes="1062" keyLabel="Ц" />
+		<Key codes="1059" keyLabel="У" />
+		<Key codes="1050" keyLabel="К" />
+		<Key codes="1045" keyLabel="Е" />
+		<Key codes="1053" keyLabel="Н" />
+		<Key codes="1043" keyLabel="Г" />
+		<Key codes="1064" keyLabel="Ш" />
+		<Key codes="1065" keyLabel="Щ" />
+		<Key codes="1047" keyLabel="З" />
+		<Key codes="1061" keyLabel="Х" />
+		<Key codes="1066" keyLabel="Ъ" />
+		<Key codes="-5" keyLabel="!" keyWidth="40" keyLabelStyle=".font-fxkeyboard" keyEdgeFlags="right" isRepeatable="true" />
+	</Row>
+
+	<Row>
+		<Key codes="" keyWidth="10" />
+		<Key codes="1060" keyLabel="Ф" />
+		<Key codes="1067" keyLabel="Ы" />
+		<Key codes="1042" keyLabel="В" />
+		<Key codes="1040" keyLabel="А" />
+		<Key codes="1055" keyLabel="П" />
+		<Key codes="1056" keyLabel="Р" />
+		<Key codes="1054,1254" keyLabel="О" />
+		<Key codes="1051" keyLabel="Л" />
+		<Key codes="1044" keyLabel="Д" />
+		<Key codes="1046" keyLabel="Ж" />
+		<Key codes="1069" keyLabel="Э" />
+		<Key codes="-9" keyLabel="ENTER" keyLabelStyle=".small-style" keyWidth="70" keyEdgeFlags="right" />
+	</Row>
+
+	<Row>
+		<Key codes="-1" keyLabel="J" keyLabelStyle=".font-fxkeyboard" keyWidth="40" isModifier="true" isSticky="true" keyEdgeFlags="left" />
+		<Key codes="1071" keyLabel="Я" />
+		<Key codes="1063" keyLabel="Ч" />
+		<Key codes="1057" keyLabel="С" />
+		<Key codes="1052" keyLabel="М" />
+		<Key codes="1048" keyLabel="И" />
+		<Key codes="1058" keyLabel="Т" />
+		<Key codes="1068" keyLabel="Ь" />
+		<Key codes="1041" keyLabel="Б" />
+		<Key codes="1070" keyLabel="Ю" />
+		<Key codes="59" keyLabel=";" />
+		<Key codes="58" keyLabel=":" />
+		<Key codes="-1" keyLabel="J" keyLabelStyle=".font-fxkeyboard" keyWidth="40" isModifier="true" isSticky="true" keyEdgeFlags="right" />
+	</Row>
+
+	<Row rowEdgeFlags="bottom">
+		<Key codes="-6" keyLabel="CTRL" keyLabelStyle=".small-style" keyWidth="70" keyEdgeFlags="left" />
+		<Key codes="-2" keyLabel="?123" keyLabelStyle=".small-style" keyWidth="70" />
+		<Key codes="32" keyLabel="3" keyLabelStyle=".font-fxkeyboard-alpha" keyWidth="280" isRepeatable="true" />
+		<Key codes="-7" keyLabel="RU" keyLabelStyle=".small-style" keyWidth="50" />
+		<Key codes="-3" keyLabel="2" keyLabelStyle=".font-fxkeyboard" keyWidth="50" />
+	</Row>
+</Keyboard>
+    

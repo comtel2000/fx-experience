@@ -51,9 +51,7 @@ import org.comtel2000.swing.robot.NativeAsciiRobotHandler;
 
 public class StandAloneApp extends Application {
 
-	private int posX = 0;
-
-	private int posY = 0;
+	private int posX = 0, posY = 0;
 
 	@Override
 	public void start(Stage stage) throws MalformedURLException, IOException, URISyntaxException {
@@ -62,28 +60,25 @@ public class StandAloneApp extends Application {
 		stage.setResizable(false);
 		stage.initStyle(StageStyle.UNDECORATED);
 
-		//KeyBoardPopup popup = KeyBoardPopupBuilder.create().initScale(1.0).initLocale(Locale.ENGLISH).addIRobot(new NativeAsciiRobotHandler()).layer(DefaultLayer.NUMBLOCK).build();
-
 		KeyboardPane kb = new KeyboardPane();
-
 		kb.setScale(1.0);
 		kb.setLocale(Locale.ENGLISH);
 		kb.setLayer(DefaultLayer.NUMBLOCK);
 		kb.addRobotHandler(new NativeAsciiRobotHandler());
+		kb.setOnKeyboardCloseButton(e -> System.exit(0));
 		kb.load();
-		
+				
 		KeyBoardPopup popup = new KeyBoardPopup(kb);
+		popup.setX(posX);
+		popup.setY(posY);
 
 		Scene scene = new Scene(new Group(), 1, 1);
-		stage.setOnCloseRequest(e -> System.exit(0));
-
 		stage.setScene(scene);
 		stage.show();
 
-		popup.getScene().getWindow().setX(posX);
-		popup.getScene().getWindow().setY(posY);
-
-		popup.show(stage);
+		popup.registerScene(scene);
+		popup.setVisible(true);
+		// popup.show(stage);
 
 	}
 

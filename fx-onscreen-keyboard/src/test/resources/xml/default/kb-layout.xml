@@ -6,23 +6,8 @@
 	OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER 
 	CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. #L% -->
 
-<Keyboard keyWidth="40" keyHeight="35" horizontalGap="0" verticalGap="0">
+<Keyboard keyWidth="40" keyHeight="30" horizontalGap="0" verticalGap="0">
 	<Row>
-		<Key codes="-7" keyLabel="EN" keyLabelStyle=".small-style" keyWidth="40" keyEdgeFlags="left" />
-		<Key codes="49" keyLabel="1" />
-		<Key codes="50" keyLabel="2" />
-		<Key codes="51" keyLabel="3" />
-		<Key codes="52" keyLabel="4" />
-		<Key codes="53" keyLabel="5" />
-		<Key codes="54" keyLabel="6" />
-		<Key codes="55" keyLabel="7" />
-		<Key codes="56" keyLabel="8" />
-		<Key codes="57" keyLabel="9" />
-		<Key codes="48" keyLabel="0" />
-		<Key codes="-5" keyIconStyle=".delete-icon" keyWidth="60" keyEdgeFlags="right" isRepeatable="true" />
-	</Row>
-	<Row>
-		<Key codes="-4" keyIconStyle=".tab-icon" keyWidth="80" keyEdgeFlags="left" />
 		<Key codes="113" keyLabel="q" />
 		<Key codes="119" keyLabel="w" />
 		<Key codes="101" keyLabel="e" />
@@ -32,11 +17,12 @@
 		<Key codes="117,252,251,250,249" keyLabel="u" />
 		<Key codes="105" keyLabel="i" />
 		<Key codes="111,246,245,244,243,242,248" keyLabel="o" />
-		<Key codes="112" keyLabel="p" keyEdgeFlags="right" />
+		<Key codes="112" keyLabel="p" />
+		<Key codes="-5" keyLabel="!" keyLabelStyle=".font-fxkeyboard" isRepeatable="true" />
 	</Row>
 
 	<Row>
-
+		<Key codes="" keyWidth="10" />
 		<Key codes="97,228,229,227,226,225,224" keyLabel="a" />
 		<Key codes="115,223" keyLabel="s" />
 		<Key codes="100" keyLabel="d" />
@@ -46,12 +32,11 @@
 		<Key codes="106" keyLabel="j" />
 		<Key codes="107" keyLabel="k" />
 		<Key codes="108" keyLabel="l" />
-		<Key codes="45" keyLabel="-" />
-		<Key codes="10" keyIconStyle=".enter-icon" keyWidth="80" keyEdgeFlags="right" />
+		<Key codes="-9" keyLabel="ENTER" keyLabelStyle=".small-style" keyWidth="70" />
 	</Row>
 
 	<Row>
-		<Key codes="-1" keyIconStyle=".shift-off-icon" keyWidth="70" isModifier="true" isSticky="true" keyEdgeFlags="left" />
+		<Key codes="-1" keyLabel="I" keyLabelStyle=".font-fxkeyboard" keyWidth="40" isModifier="true" isSticky="true" />
 		<Key codes="122" keyLabel="z" />
 		<Key codes="120" keyLabel="x" />
 		<Key codes="99" keyLabel="c" />
@@ -61,15 +46,15 @@
 		<Key codes="109" keyLabel="m" />
 		<Key codes="44" keyLabel="," />
 		<Key codes="46" keyLabel="." />
-		<Key codes="-1" keyIconStyle=".shift-off-icon" keyWidth="70" isModifier="true" isSticky="true" keyEdgeFlags="right" />
+		<Key codes="-1" keyLabel="I" keyLabelStyle=".font-fxkeyboard" isModifier="true" isSticky="true" />
 	</Row>
 
 	<Row rowEdgeFlags="bottom">
-		<Key codes="-6" keyLabel="CTRL" keyWidth="80" keyEdgeFlags="left" />
-		<Key codes="-2" keyLabel="?123" keyWidth="80" />
-		<Key codes="32" keyIconStyle=".space-icon" keyWidth="300" isRepeatable="true" />
-		<Key codes="-2" keyLabel="?123" keyWidth="80" />
-		<Key codes="-3" keyIconStyle=".done-icon" keyWidth="60" keyEdgeFlags="right" />
+		<Key codes="-6" keyLabel="CTRL" keyLabelStyle=".small-style" keyWidth="50" />
+		<Key codes="-2" keyLabel="?123" keyLabelStyle=".small-style" keyWidth="50" />
+		<Key codes="32" keyLabel="3" keyLabelStyle=".font-fxkeyboard-alpha" keyWidth="240" isRepeatable="true" />
+		<Key codes="-7" keyLabel="EN" keyLabelStyle=".small-style" keyWidth="50" />
+		<Key codes="-3" keyLabel="2" keyLabelStyle=".font-fxkeyboard" keyWidth="50" />
 	</Row>
 </Keyboard>
     

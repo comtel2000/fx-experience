@@ -34,21 +34,10 @@ package org.comtel2000.samples.swing;
  */
 
 import java.awt.BorderLayout;
-import java.awt.Point;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.ParseException;
 import java.util.Locale;
-
-import javafx.animation.Animation;
-import javafx.animation.FadeTransition;
-import javafx.animation.Transition;
-import javafx.application.Platform;
-import javafx.embed.swing.JFXPanel;
-import javafx.scene.Group;
-import javafx.scene.Scene;
-import javafx.scene.text.Font;
-import javafx.util.Duration;
 
 import javax.swing.JApplet;
 import javax.swing.JWindow;
@@ -60,23 +49,23 @@ import org.comtel2000.keyboard.control.KeyBoardPopupBuilder;
 import org.comtel2000.swing.robot.NativeAsciiRobotHandler;
 import org.slf4j.LoggerFactory;
 
+import javafx.application.Platform;
+import javafx.embed.swing.JFXPanel;
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.text.Font;
+
 public class StandAloneApp extends JApplet {
 
 	private final static org.slf4j.Logger logger = LoggerFactory.getLogger(StandAloneApp.class);
 
 	private static int posX = 100;
-
 	private static int posY = 100;
-
 	private static Locale locale;
-
 	private static String xmlPath;
+	private static String vkType;
 
 	private static final long serialVersionUID = 1L;
-
-	private KeyBoardPopup fxKeyboardPopup;
-
-	private Transition transition;
 
 	public StandAloneApp() {
 	}
@@ -124,53 +113,15 @@ public class StandAloneApp extends JApplet {
 			logger.error(e.getMessage(), e);
 		}
 
-		fxKeyboardPopup = KeyBoardPopupBuilder.create().initLocale(locale).addIRobot(new NativeAsciiRobotHandler()).layerPath(path).layer(DefaultLayer.NUMBLOCK).build();
-		fxKeyboardPopup.getKeyBoard().setOnKeyboardCloseButton(e -> System.exit(0));
-
-		fxKeyboardPopup.setOwner(scene);
-		setKeyboardVisible(true, new Point(posX, posY));
-	}
-
-	public void setKeyboardVisible(boolean flag, Point point) {
-		final boolean visible = flag;
-		final Point location = point;
-		Platform.runLater(() -> {
-			if (fxKeyboardPopup == null) {
-				return;
-			}
-			if (location != null) {
-				fxKeyboardPopup.setX(location.getX());
-				fxKeyboardPopup.setY(location.getY());
-			}
-
-			if (transition == null) {
-				transition = new FadeTransition(Duration.seconds(0.1), fxKeyboardPopup.getKeyBoard());
-			}
-			if (visible) {
-				if (fxKeyboardPopup.isVisible() && transition.getStatus() == Animation.Status.STOPPED) {
-					return;
-				}
-				transition.stop();
-
-				fxKeyboardPopup.getKeyBoard().setOpacity(0.0);
-				fxKeyboardPopup.setVisible(true);
-				((FadeTransition) transition).setFromValue(0.0f);
-				((FadeTransition) transition).setToValue(1.0f);
-				transition.play();
-
-			} else {
-				if (!fxKeyboardPopup.isVisible() && transition.getStatus() == Animation.Status.STOPPED) {
-					return;
-				}
-				transition.stop();
-				transition.setOnFinished((e) -> fxKeyboardPopup.setVisible(false));
-
-				((FadeTransition) transition).setFromValue(1.0f);
-				((FadeTransition) transition).setToValue(0.0f);
-				transition.play();
-
-			}
-		});
+		KeyBoardPopup popup = KeyBoardPopupBuilder.create().initLocale(locale).addIRobot(new NativeAsciiRobotHandler()).layerPath(path).layer(DefaultLayer.NUMBLOCK).build();
+		if (vkType != null) {
+			popup.getKeyBoard().setKeyboardType(vkType);
+		}
+		popup.getKeyBoard().setOnKeyboardCloseButton(e -> System.exit(0));
+		popup.registerScene(scene);
+		popup.setX(posX);
+		popup.setY(posY);
+		popup.setVisible(true);
 	}
 
 	private static void showHelp() {
@@ -178,6 +129,7 @@ public class StandAloneApp extends JApplet {
 		System.out.println("\t-lang <locale>\t\tsetting keyboard language (en,de,ru,..)");
 		System.out.println("\t-layout <path>\t\tpath to custom layout xml");
 		System.out.println("\t-pos <x,y>\t\tinitial keyboard position");
+		System.out.println("\t-type <type>\t\tvkType like numeric, email, url, text(default)");
 		System.out.println("\t-help\t\t\tthis help screen");
 	}
 
@@ -216,6 +168,8 @@ public class StandAloneApp extends JApplet {
 					xmlPath = args[++i];
 				} else if (args[i].equals("-pos")) {
 					parsePosition(args[++i]);
+				} else if (args[i].equals("-type")) {
+					vkType = args[++i];
 				} else {
 					showHelp();
 					return;

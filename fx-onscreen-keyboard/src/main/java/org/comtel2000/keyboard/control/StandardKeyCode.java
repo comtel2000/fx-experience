@@ -35,33 +35,39 @@ package org.comtel2000.keyboard.control;
 
 public interface StandardKeyCode {
 
-	final int SHIFT_DOWN = -1;
+	int SHIFT_DOWN = -1;
 
-	final int SYMBOL_DOWN = -2;
+	int SYMBOL_DOWN = -2;
 
-	final int CLOSE = -3;
+	int CLOSE = -3;
 
-	final int TAB = -4;
+	int TAB = -4;
 
-	final int BACK_SPACE = -5;
+	int BACK_SPACE = -5;
 
-	final int CTRL_DOWN = -6;
+	int CTRL_DOWN = -6;
 
-	final int LOCALE_SWITCH = -7;
+	int LOCALE_SWITCH = -7;
 
-	final int DELETE = -8;
+	int DELETE = -8;
 
-	final int ENTER = -9;
+	int ENTER = -9;
 
-	final int ARROW_UP = -10;
+	int ARROW_UP = -10;
 
-	final int ARROW_DOWN = -11;
+	int ARROW_DOWN = -11;
 
-	final int ARROW_LEFT = -12;
+	int ARROW_LEFT = -12;
 
-	final int ARROW_RIGHT = -13;
+	int ARROW_RIGHT = -13;
 
-	final int UNDO = -14;
+	int UNDO = -14;
 
-	final int REDO = -15;
+	int REDO = -15;
+	
+	int NUMERIC_TYPE = -16;
+	
+	int EMAIL_TYPE = -17;
+	
+	int URL_TYPE = -18;
 }

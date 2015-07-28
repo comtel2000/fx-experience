@@ -1,5 +1,7 @@
 package org.comtel2000.keyboard;
 
+import java.io.File;
+
 /*
  * #%L
  * fx-onscreen-keyboard
@@ -34,6 +36,13 @@ package org.comtel2000.keyboard;
  */
 
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Locale;
 
 import org.comtel2000.keyboard.xml.KeyboardLayoutHandler;
 import org.comtel2000.keyboard.xml.layout.Keyboard;
@@ -78,7 +87,22 @@ public class KeyboardXmlLayoutTest {
 			Assert.assertNotNull(kb);
 			Assert.assertFalse(kb.getRow().isEmpty());
 		}
-
 	}
 
+	@Test
+	public void validateUrls() throws IOException, URISyntaxException {
+
+		URL url = KeyboardLayoutHandler.class.getResource("/xml/default");
+		Path defaultPath = Paths.get(url.toURI());
+		try (DirectoryStream<Path> stream = Files.newDirectoryStream(defaultPath)) {
+			stream.forEach(p -> {
+				if (Files.isDirectory(p)){
+					Locale l = new Locale(p.getFileName().toString());
+					System.err.println(l);
+				}
+			});
+		}
+		Assert.assertNotNull(url);
+
+	}
 }

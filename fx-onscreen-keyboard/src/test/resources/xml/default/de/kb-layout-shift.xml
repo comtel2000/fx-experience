@@ -7,49 +7,55 @@
 	CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. #L% -->
 
 <Keyboard keyWidth="40" keyHeight="30" horizontalGap="0" verticalGap="0">
+
 	<Row>
-		<Key codes="-112" keyLabel="F1" keyLabelStyle=".small-style" />
-		<Key codes="-113" keyLabel="F2" keyLabelStyle=".small-style" />
-		<Key codes="-114" keyLabel="F3" keyLabelStyle=".small-style" />
-		<Key codes="-115" keyLabel="F4" keyLabelStyle=".small-style" />
-		<Key codes="-116" keyLabel="F5" keyLabelStyle=".small-style" />
-		<Key codes="-117" keyLabel="F6" keyLabelStyle=".small-style" />
-		<Key codes="-118" keyLabel="F7" keyLabelStyle=".small-style" />
-		<Key codes="-119" keyLabel="F8" keyLabelStyle=".small-style" />
-		<Key codes="-120" keyLabel="F9" keyLabelStyle=".small-style" />
-		<Key codes="-121" keyLabel="F10" keyLabelStyle=".small-style" />
+
+		<Key codes="81" keyLabel="Q" />
+		<Key codes="87" keyLabel="W" />
+		<Key codes="69" keyLabel="E" />
+		<Key codes="82" keyLabel="R" />
+		<Key codes="84" keyLabel="T" />
+		<Key codes="90" keyLabel="Z" />
+		<Key codes="85,220,219,218,217" keyLabel="U" />
+		<Key codes="73" keyLabel="I" />
+		<Key codes="79,214,213,212,211,210,216" keyLabel="O" />
+		<Key codes="80" keyLabel="P" />
 		<Key codes="-5" keyLabel="!" keyLabelStyle=".font-fxkeyboard" isRepeatable="true" />
 	</Row>
 
 	<Row>
-		<Key codes="43" keyLabel="A" keyLabelStyle=".font-fxkeyboard" keyWidth="50" />
-		<Key codes="97" keyLabel="SELECT ALL" keyLabelStyle=".small-style" keyWidth="120" />
-		<Key codes="" keyLabel="" />
-		<Key codes="" keyLabel="" />
-		<Key codes="" keyLabel="" />
-		<Key codes="-10" keyLabel="▲" keyLabelStyle=".small-style" />
-		<Key codes="" keyLabel="" />
-		<Key codes="10" keyLabel="ENTER" keyLabelStyle=".small-style" keyWidth="70" />
+		<Key codes="" keyWidth="10" />
+		<Key codes="65,196,197,195,194,193,192" keyLabel="A" />
+		<Key codes="83,223" keyLabel="S" />
+		<Key codes="68" keyLabel="D" />
+		<Key codes="70" keyLabel="F" />
+		<Key codes="71" keyLabel="G" />
+		<Key codes="72" keyLabel="H" />
+		<Key codes="74" keyLabel="J" />
+		<Key codes="75" keyLabel="K" />
+		<Key codes="76" keyLabel="L" />
+		<Key codes="-9" keyLabel="ENTER" keyLabelStyle=".small-style" keyWidth="70" />
 	</Row>
 
 	<Row>
-		<Key codes="45" keyLabel="@" keyLabelStyle=".font-fxkeyboard" keyWidth="50" isModifier="true" isSticky="true" />
-		<Key codes="120" keyLabel="CUT" keyLabelStyle=".small-style" keyWidth="60" />
-		<Key codes="99" keyLabel="COPY" keyLabelStyle=".small-style" keyWidth="70" />
-		<Key codes="118" keyLabel="PASTE" keyLabelStyle=".small-style" keyWidth="70" />
-		<Key codes="-12" keyLabel="◄" keyLabelStyle=".small-style" />
-		<Key codes="-11" keyLabel="▼" keyLabelStyle=".small-style" />
-		<Key codes="-13" keyLabel="►" keyLabelStyle=".small-style" />
-		<Key codes="" keyWidth="70" />
+		<Key codes="-1" keyLabel="J" keyLabelStyle=".font-fxkeyboard" keyWidth="40" isModifier="true" isSticky="true" />
+		<Key codes="89" keyLabel="Y" />
+		<Key codes="88" keyLabel="X" />
+		<Key codes="67" keyLabel="C" />
+		<Key codes="86" keyLabel="V" />
+		<Key codes="66" keyLabel="B" />
+		<Key codes="78" keyLabel="N" />
+		<Key codes="77" keyLabel="M" />
+		<Key codes="59" keyLabel=";" />
+		<Key codes="58" keyLabel=":" />
+		<Key codes="-1" keyLabel="J" keyLabelStyle=".font-fxkeyboard" keyWidth="40" isModifier="true" isSticky="true" />
 	</Row>
 
 	<Row rowEdgeFlags="bottom">
-		<Key codes="-6" keyLabel="CTRL" keyLabelStyle=".small-style" keyWidth="50" />
-		<Key codes="" keyWidth="50" />
+		<Key codes="-6" keyLabel="STRG" keyLabelStyle=".small-style" keyWidth="50" />
+		<Key codes="-2" keyLabel="?123" keyLabelStyle=".small-style" keyWidth="50" />
 		<Key codes="32" keyLabel="3" keyLabelStyle=".font-fxkeyboard-alpha" keyWidth="240" isRepeatable="true" />
-		<Key codes="-7" keyLabel="EN" keyLabelStyle=".small-style" keyWidth="50" />
+		<Key codes="-7" keyLabel="DE" keyLabelStyle=".small-style" keyWidth="50" />
 		<Key codes="-3" keyLabel="2" keyLabelStyle=".font-fxkeyboard" keyWidth="50" />
 	</Row>
-
 </Keyboard>
-    

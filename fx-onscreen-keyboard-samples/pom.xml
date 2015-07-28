@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>org.comtel2000</groupId>
 		<artifactId>fx-parent</artifactId>
-		<version>8.1.2-SNAPSHOT</version>
+		<version>8.2.0-SNAPSHOT</version>
 	</parent>
 	<artifactId>fx-onscreen-keyboard-samples</artifactId>
 	<name>fx-onscreen-keyboard-samples</name>
@@ -19,7 +19,7 @@
 		<dependency>
 			<groupId>org.comtel2000</groupId>
 			<artifactId>fx-onscreen-keyboard-swing</artifactId>
-			<version>8.1.2-SNAPSHOT</version>
+			<version>8.2.0-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>

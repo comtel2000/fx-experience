@@ -37,12 +37,23 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+
+import org.comtel2000.keyboard.event.KeyButtonEvent;
+import org.comtel2000.keyboard.robot.IRobot;
+import org.comtel2000.keyboard.xml.KeyboardLayoutHandler;
+import org.comtel2000.keyboard.xml.layout.Keyboard;
+import org.slf4j.LoggerFactory;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
@@ -54,9 +65,6 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
@@ -75,32 +83,16 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.transform.Scale;
 
-import org.comtel2000.keyboard.event.KeyButtonEvent;
-import org.comtel2000.keyboard.robot.IRobot;
-import org.comtel2000.keyboard.xml.KeyboardLayoutHandler;
-import org.comtel2000.keyboard.xml.layout.Keyboard;
-import org.slf4j.LoggerFactory;
-
 public class KeyboardPane extends Region implements StandardKeyCode, EventHandler<KeyButtonEvent> {
 
 	private final static org.slf4j.Logger logger = LoggerFactory.getLogger(KeyboardPane.class);
 
 	private final String DEFAULT_CSS = "/css/KeyboardButtonStyle.css";
 
-	// private final String DEFAULT_FONT_URL = "/font/FontKeyboardFX.ttf";
-
 	private final StringProperty keyBoardStyleProperty = new SimpleStringProperty(DEFAULT_CSS);
 
-	private Region qwertyKeyboardPane;
-
-	private Region qwertyShiftedKeyboardPane;
-
-	private Region symbolKeyboardPane;
-
-	private Region symbolShiftedKeyboardPane;
-
-	private Region qwertyCtrlKeyboardPane;
-
+	private final EnumMap<KeyboardType, Region> typeRegionMap = new EnumMap<>(KeyboardType.class);
+	
 	private final BooleanProperty symbolProperty = new SimpleBooleanProperty(false);
 
 	private final BooleanProperty shiftProperty = new SimpleBooleanProperty(false);
@@ -109,6 +101,10 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
 
 	private final BooleanProperty spaceKeyMoveProperty = new SimpleBooleanProperty(true);
 
+	private final BooleanProperty capsLockProperty = new SimpleBooleanProperty(true);
+
+	private final BooleanProperty cacheLayoutProperty = new SimpleBooleanProperty(false);
+	
 	private final DoubleProperty scaleOffsetProperty = new SimpleDoubleProperty(0.2);
 
 	private final DoubleProperty scaleProperty = new SimpleDoubleProperty(1.0);
@@ -122,18 +118,26 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
 	private final ObjectProperty<Path> layerPathProperty = new SimpleObjectProperty<>();
 
 	private final ObjectProperty<Locale> localeProperty = new SimpleObjectProperty<>(Locale.getDefault());
-
+	
+	private final ObjectProperty<Locale> activeLocaleProperty = new SimpleObjectProperty<>();
+	
+	private final ObjectProperty<KeyboardType> activeTypeProperty = new SimpleObjectProperty<>();
+	
 	private EventHandler<? super Event> closeEventHandler;
 
-	private double mousePressedX;
+	private double mousePressedX, mousePressedY;
 
-	private double mousePressedY;
+	private final List<IRobot> robots = new ArrayList<>();
 
-	private final ObservableList<IRobot> robots = FXCollections.observableArrayList();
+	private final Map<Locale, Path> availableLocales = new HashMap<>();
+
+	private final KeyboardLayoutHandler handler;
+
 
 	public KeyboardPane() {
 		setId("key-background");
 		setFocusTraversable(false);
+		handler = new KeyboardLayoutHandler(isCacheLayout());
 	}
 
 	// @Override (JDK 8u40 or later)
@@ -146,168 +150,221 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
 		getStylesheets().add(keyBoardStyleProperty.get());
 
 		setLayoutLocale(localeProperty.get());
-		setKeyboardLayer(KeyboardLayer.QWERTY);
+		setKeyboardType(KeyboardType.TEXT);
 
 		if (scaleProperty.get() != 1.0) {
 			getTransforms().setAll(new Scale(scaleProperty.get(), scaleProperty.get(), 1, 0, 0, 0));
 		}
 
-		registerListener();
-	}
-
-	private void registerListener() {
-
-		shiftProperty.addListener((ChangeListener<Boolean>) (arg0, arg1, arg2) -> {
-			if (ctrlProperty.get()) {
-				logger.warn("ignore in ctrl mode");
-				return;
-			}
-			setKeyboardLayer(symbolProperty.get() ? KeyboardLayer.SYMBOL : KeyboardLayer.QWERTY);
-		});
-
-		ctrlProperty.addListener((ChangeListener<Boolean>) (arg0, arg1, ctrl) -> {
-			if (ctrl) {
-				setKeyboardLayer(KeyboardLayer.CTRL);
-			} else {
-				setKeyboardLayer(symbolProperty.get() ? KeyboardLayer.SYMBOL : KeyboardLayer.QWERTY);
-			}
-		});
-
-		symbolProperty.addListener((ChangeListener<Boolean>) (arg0, arg1, arg2) -> {
-			if (ctrlProperty.get()) {
-				logger.warn("ignore in ctrl mode");
-				return;
-			}
-			setKeyboardLayer(arg2 ? KeyboardLayer.SYMBOL : KeyboardLayer.QWERTY);
-		});
-
-		scaleProperty.addListener((ChangeListener<Number>) (arg0, o, s) -> {
+		scaleProperty.addListener((arg0, o, s) -> {
 			if (o != s) {
 				getTransforms().setAll(new Scale(s.doubleValue(), s.doubleValue(), 1, 0, 0, 0));
 			}
 		});
-
-		// setOnKeyPressed(new EventHandler<KeyEvent>() {
-		//
-		// public void handle(KeyEvent e) {
-		// // e.consume();
-		// switch (e.getCode()) {
-		// case SHIFT:
-		// isShiftDown.set(isShiftDown.get());
-		// break;
-		// // case CONTROL:
-		// // setCtrlDown(!isCtrlDown);
-		// // break;
-		// // case ALT:
-		// // setSymbolDown(!isSymbolDown);
-		// // break;
-		// }
-		// }
-		// });
 	}
 
-	public void setLayoutLocale(Locale local) throws MalformedURLException, IOException, URISyntaxException {
-		logger.debug("try to set keyboard local: {}", local);
-		KeyboardLayoutHandler handler = new KeyboardLayoutHandler();
-
-		if (layerPathProperty.get() == null) {
-			String xmlPath = "/xml/" + layerProperty.get().toString().toLowerCase(Locale.ENGLISH) + (local.getLanguage().equals("en") ? "/" : "/" + local.getLanguage() + "/");
-			logger.info("use embedded layouts path: {}", xmlPath);
-
-			getChildren().clear();
-			qwertyKeyboardPane = createKeyboardPane(handler.getLayout(xmlPath + "kb-layout.xml"));
-			qwertyShiftedKeyboardPane = createKeyboardPane(handler.getLayout(xmlPath + "kb-layout-shift.xml"));
-			qwertyCtrlKeyboardPane = createKeyboardPane(handler.getLayout(xmlPath + "kb-layout-ctrl.xml"));
-			symbolKeyboardPane = createKeyboardPane(handler.getLayout(xmlPath + "kb-layout-sym.xml"));
-			symbolShiftedKeyboardPane = createKeyboardPane(handler.getLayout(xmlPath + "kb-layout-sym-shift.xml"));
-			getChildren().addAll(qwertyKeyboardPane, qwertyShiftedKeyboardPane, qwertyCtrlKeyboardPane, symbolKeyboardPane, symbolShiftedKeyboardPane);
-
-			for (javafx.scene.Node node : getChildren()) {
-				node.setVisible(false);
-			}
+	private void setKeyboardType(boolean ctrl, boolean shift, boolean symbol){
+		if (ctrl) {
+			setKeyboardType(KeyboardType.CTRL);
 			return;
 		}
-
-		Path path = layerPathProperty.get();
-		Map<Locale, Path> localMap = getAvailableLocales();
-		if (localMap.containsKey(local)) {
-			path = localMap.get(local);
-		} else if (localMap.containsKey(new Locale(local.getLanguage()))) {
-			logger.debug("use language compatible locale: {}", local.getLanguage());
-			path = localMap.get(new Locale(local.getLanguage()));
-		} else {
-			logger.warn("locale: {} not available. try to use default", local);
+		if (symbol){
+			setKeyboardType(shift ? KeyboardType.SYMBOL_SHIFT : KeyboardType.SYMBOL);
+			return;
 		}
-
-		if (path != null) {
-			getChildren().clear();
-			qwertyKeyboardPane = createKeyboardPane(handler.getLayout(path.resolve("kb-layout.xml").toUri().toURL()));
-			qwertyShiftedKeyboardPane = createKeyboardPane(handler.getLayout(path.resolve("kb-layout-shift.xml").toUri().toURL()));
-			qwertyCtrlKeyboardPane = createKeyboardPane(handler.getLayout(path.resolve("kb-layout-ctrl.xml").toUri().toURL()));
-			symbolKeyboardPane = createKeyboardPane(handler.getLayout(path.resolve("kb-layout-sym.xml").toUri().toURL()));
-			symbolShiftedKeyboardPane = createKeyboardPane(handler.getLayout(path.resolve("kb-layout-sym-shift.xml").toUri().toURL()));
-			getChildren().addAll(qwertyKeyboardPane, qwertyShiftedKeyboardPane, qwertyCtrlKeyboardPane, symbolKeyboardPane, symbolShiftedKeyboardPane);
-
-			for (javafx.scene.Node node : getChildren()) {
-				node.setVisible(false);
-			}
-		}
-
+		setKeyboardType(shift ? KeyboardType.TEXT_SHIFT : KeyboardType.TEXT);
 	}
-
-	public Map<Locale, Path> getAvailableLocales() {
-
-		Map<Locale, Path> localList = new HashMap<>();
-		if (layerPathProperty.get() == null) {
-			localList.put(new Locale("de"), null);
-			localList.put(new Locale("ru"), null);
-			return localList;
-		}
-		try (DirectoryStream<Path> stream = Files.newDirectoryStream(layerPathProperty.get())) {
-			for (Path entry : stream) {
-				if (entry.toFile().isDirectory()) {
-					for (Locale l : Locale.getAvailableLocales()) {
-						if (entry.getFileName().toString().equals(l.getLanguage() + (l.getCountry().isEmpty() ? "" : "_" + l.getCountry()))) {
-							localList.put(l, entry);
-							break;
-						}
-					}
-				}
+	
+	public void resetLocale(){
+		switchLocale(localeProperty.get());
+	}
+	
+	public void switchLocale(final Locale local){
+		try {
+			if (local.equals(activeLocaleProperty.get())){
+				return;
 			}
-
-		} catch (Exception e) {
+			setLayoutLocale(local);
+			activeTypeProperty.set(null);
+			setKeyboardType(KeyboardType.TEXT);
+		} catch (IOException | URISyntaxException e) {
 			logger.error(e.getMessage(), e);
 		}
+	}
+	
+	public void switchLayer(final DefaultLayer layer){
+		if (layer.equals(layerProperty.get())){
+			return;
+		}
+		try {
+			layerProperty.set(layer);
+			availableLocales.clear();
+			setLayoutLocale(activeLocaleProperty.get());
+			activeTypeProperty.set(null);
+			setKeyboardType(KeyboardType.TEXT);
+		} catch (IOException | URISyntaxException e) {
+			logger.error(e.getMessage(), e);
+		}
+		
+	}
+	
+	
+	private void setLayoutLocale(final Locale local) throws MalformedURLException, IOException, URISyntaxException {
 
-		logger.info("available locales: {}", localList.keySet());
-		return localList;
+		logger.info("try to set keyboard local: {}->{}", activeLocaleProperty.get(), local);
+
+		Map<Locale, Path> localeMap = getAvailableLocales();
+		if (localeMap.containsKey(local)){
+			if (local.equals(activeLocaleProperty.get())){
+				logger.debug("locale already active: {}", local);
+				return;
+			}
+			activeLocaleProperty.set(local);
+		}else if (localeMap.containsKey(Locale.forLanguageTag(local.getLanguage()))){
+			if (Locale.forLanguageTag(local.getLanguage()).equals(activeLocaleProperty.get())){
+				logger.debug("locale language already active: {}", local);
+				return;
+			}
+			activeLocaleProperty.set(Locale.forLanguageTag(local.getLanguage()));
+		}else{
+			if (Locale.ENGLISH.equals(activeLocaleProperty.get())){
+				logger.debug("locale language already active: {}", local);
+				return;
+			}
+			activeLocaleProperty.set(Locale.ENGLISH);
+		}
+		logger.debug("use keyboard local: {}", activeLocaleProperty.get());
+		Path root = localeMap.get(activeLocaleProperty.get());
+		if (root != null) {
+			addTypeRegion(KeyboardType.TEXT, root, "kb-layout.xml");
+			addTypeRegion(KeyboardType.TEXT_SHIFT, root, "kb-layout-shift.xml");
+			addTypeRegion(KeyboardType.SYMBOL, root, "kb-layout-sym.xml");
+			addTypeRegion(KeyboardType.SYMBOL_SHIFT, root, "kb-layout-sym-shift.xml");
+			addTypeRegion(KeyboardType.CTRL, root, "kb-layout-ctrl.xml");
+			addTypeRegion(KeyboardType.NUMERIC, root, "kb-layout-numeric.xml");
+			addTypeRegion(KeyboardType.EMAIL, root, "kb-layout-email.xml");
+			addTypeRegion(KeyboardType.URL, root, "kb-layout-url.xml");
+		}
 	}
 
-	public void setKeyboardLayer(KeyboardLayer layer) {
-		final Region pane;
-		switch (layer) {
-		case QWERTY:
-			pane = shiftProperty.get() ? qwertyShiftedKeyboardPane : qwertyKeyboardPane;
+	private void addTypeRegion(KeyboardType type, Path root, String file) throws MalformedURLException, IOException{
+		Path path = root.resolve(file);
+		if (Files.exists(path)) {
+			logger.info("add layout: {}", path);
+			typeRegionMap.put(type, createKeyboardPane(handler.getLayout(path.toUri().toURL())));
+		}else if ((path = getAvailableLocales().get(Locale.ENGLISH)) != null && Files.exists(path.resolve(file))){
+			path = path.resolve(file);
+			logger.info("add default layout: {}", path);
+			typeRegionMap.put(type, createKeyboardPane(handler.getLayout(path.toUri().toURL())));
+		}
+	}
+	
+	private Map<Locale, Path> getAvailableLocales() {
+		if (!availableLocales.isEmpty()){
+			return availableLocales;
+		}
+		if (layerPathProperty.get() == null) {
+			String layer = layerProperty.get().toString().toLowerCase(Locale.ENGLISH);
+			URL url = KeyboardLayoutHandler.class.getResource("/xml/" + layer);
+			logger.debug("use embedded layer path: {}", url);
+			try {
+				layerPathProperty.set(Paths.get(url.toURI()));
+			} catch (URISyntaxException e) {
+				logger.error(e.getMessage(), e);
+			}
+		}
+		try (DirectoryStream<Path> stream = Files.newDirectoryStream(layerPathProperty.get())) {
+			stream.forEach(p -> {
+				if (Files.isDirectory(p)){
+					Locale l = new Locale(p.getFileName().toString());
+					availableLocales.put(l, p);
+				}
+			});
+		} catch (IOException e) {
+			logger.error(e.getMessage(), e);
+		}
+		logger.debug("locales: {}", availableLocales.keySet());
+		if (!availableLocales.containsKey(localeProperty.get())){
+			logger.debug("use locale not available, use default for: {}", localeProperty.get());
+			availableLocales.put(localeProperty.get(), layerPathProperty.get());
+		}
+		return availableLocales;
+	}
+
+	public void setKeyboardType(String type) {
+		KeyboardType kType;
+		try {
+			kType = type == null || type.isEmpty() ? KeyboardType.TEXT : KeyboardType.valueOf(type.toUpperCase(Locale.ENGLISH));
+		} catch (Exception e) {
+			logger.error("unknown type: {}", type);
+			kType = KeyboardType.TEXT;
+		}
+		setKeyboardType(kType);
+	}
+	
+	public void setKeyboardType(KeyboardType type) {
+		logger.info("try to set type: {}->{}", activeTypeProperty.get(), type);
+		if (type.equals(activeTypeProperty.get())){
+			return;
+		}
+		activeTypeProperty.set(type);
+		Region pane;
+		switch (type) {
+		case NUMERIC:
+			ctrlProperty.set(false);
+			shiftProperty.set(false);
+			symbolProperty.set(false);
+			pane = typeRegionMap.getOrDefault(type, typeRegionMap.get(KeyboardType.SYMBOL));
+			break;
+		case EMAIL:
+			ctrlProperty.set(false);
+			shiftProperty.set(false);
+			symbolProperty.set(false);
+			pane = typeRegionMap.get(type);
+			break;
+		case URL:
+			ctrlProperty.set(false);
+			shiftProperty.set(false);
+			symbolProperty.set(false);
+			pane = typeRegionMap.get(type);
 			break;
 		case SYMBOL:
-			pane = shiftProperty.get() ? symbolShiftedKeyboardPane : symbolKeyboardPane;
+			ctrlProperty.set(false);
+			shiftProperty.set(false);
+			symbolProperty.set(true);
+			pane = typeRegionMap.get(type);
+			break;
+		case SYMBOL_SHIFT:
+			ctrlProperty.set(false);
+			shiftProperty.set(true);
+			symbolProperty.set(true);
+			pane = typeRegionMap.get(type);
 			break;
 		case CTRL:
-			pane = qwertyCtrlKeyboardPane;
+			ctrlProperty.set(true);
+			shiftProperty.set(false);
+			symbolProperty.set(false);
+			pane = typeRegionMap.get(type);
 			break;
-		case NUMBER:
-			pane = qwertyCtrlKeyboardPane;
+		case TEXT_SHIFT:
+			ctrlProperty.set(false);
+			shiftProperty.set(true);
+			symbolProperty.set(false);
+			pane = typeRegionMap.get(type);
 			break;
 		default:
-			pane = qwertyKeyboardPane;
+			ctrlProperty.set(false);
+			shiftProperty.set(false);
+			symbolProperty.set(false);
+			pane = typeRegionMap.get(type);
 			break;
 		}
-
-		for (javafx.scene.Node node : getChildren()) {
-			node.setVisible(false);
+		if (pane == null){
+			pane = typeRegionMap.get(KeyboardType.TEXT);
 		}
-		pane.setVisible(true);
-
+		if (pane != null){
+			getChildren().setAll(pane);
+		}
 	}
 
 	private Region createKeyboardPane(Keyboard layout) {
@@ -405,10 +462,8 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
 				}
 
 				if (button.getKeyCode() == LOCALE_SWITCH) {
-					button.addExtKeyCode(LOCALE_SWITCH, Locale.ENGLISH.getLanguage().toUpperCase(Locale.ENGLISH), button.getStyleClass());
-					for (Locale l : getAvailableLocales().keySet()) {
-						button.addExtKeyCode(LOCALE_SWITCH, l.getLanguage().toUpperCase(Locale.ENGLISH), button.getStyleClass());
-					}
+					getAvailableLocales().keySet().forEach(l ->
+						button.addExtKeyCode(LOCALE_SWITCH, l.getLanguage().toUpperCase(Locale.ENGLISH), button.getStyleClass()));
 				}
 
 				if (key.getKeyIconStyle() != null && key.getKeyIconStyle().startsWith(".")) {
@@ -427,12 +482,15 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
 
 				} else if (key.getKeyIconStyle() != null && key.getKeyIconStyle().startsWith("@")) {
 
-					InputStream is = KeyboardPane.class.getResourceAsStream(key.getKeyIconStyle().replace("@", "/") + ".png");
-					Image image = new Image(is);
-					if (!image.isError()) {
-						button.setGraphic(new ImageView(image));
-					} else {
-						logger.error("Image: {} not found", key.getKeyIconStyle());
+					try (InputStream is = KeyboardPane.class.getResourceAsStream(key.getKeyIconStyle().replace("@", "/") + ".png")) {
+						Image image = new Image(is);
+						if (!image.isError()) {
+							button.setGraphic(new ImageView(image));
+						} else {
+							logger.error("Image: {} not found", key.getKeyIconStyle());
+						}
+					} catch (Exception e) {
+						logger.error(e.getMessage(), e);
 					}
 				}
 
@@ -519,17 +577,21 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
 		switch (kb.getKeyCode()) {
 		case SHIFT_DOWN:
 			// switch shifted
-			shiftProperty.set(!shiftProperty.get());
+			setKeyboardType(ctrlProperty.get(), !shiftProperty.get(), symbolProperty.get());
 			break;
 		case SYMBOL_DOWN:
 			// switch sym / qwerty
-			symbolProperty.set(!symbolProperty.get());
+			setKeyboardType(ctrlProperty.get(), shiftProperty.get(), !symbolProperty.get());
 			break;
 		case CLOSE:
 			if (closeEventHandler == null) {
-				System.exit(0);
+				if (getScene() != null && getScene().getWindow() != null){
+					getScene().getWindow().hide();
+				}else{
+					System.exit(0);
+				}
 			} else {
-				closeEventHandler.handle(new KeyButtonEvent(KeyButtonEvent.ANY));
+				closeEventHandler.handle(event);
 			}
 			break;
 		case TAB:
@@ -544,21 +606,10 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
 		case CTRL_DOWN:
 			// switch ctrl
 			ctrlProperty.set(!ctrlProperty.get());
+			setKeyboardType(ctrlProperty.get(), shiftProperty.get(), symbolProperty.get());
 			break;
 		case LOCALE_SWITCH:
-			try {
-				Locale l = new Locale(kb.getText());
-				setLayoutLocale(l);
-			} catch (IOException | URISyntaxException e) {
-				logger.error(e.getMessage(), e);
-			}
-			if (ctrlProperty.get()) {
-				ctrlProperty.set(false);
-			} else if (symbolProperty.get()) {
-				symbolProperty.set(false);
-			} else {
-				setKeyboardLayer(KeyboardLayer.QWERTY);
-			}
+			switchLocale(Locale.forLanguageTag(kb.getText()));
 			break;
 		case ENTER:
 			sendToComponent((char) java.awt.event.KeyEvent.VK_ENTER, true);
@@ -581,7 +632,15 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
 		case REDO:
 			sendToComponent((char) java.awt.event.KeyEvent.VK_Y, true);
 			break;
-
+		case NUMERIC_TYPE:
+			setKeyboardType(KeyboardType.NUMERIC);
+			break;
+		case EMAIL_TYPE:
+			setKeyboardType(KeyboardType.EMAIL);
+			break;
+		case URL_TYPE:
+			setKeyboardType(KeyboardType.URL);
+			break;
 		default:
 			// logger.debug(java.awt.event.KeyEvent.getKeyText(kb.getKeyCode()));
 			if (kb.getKeyCode() > -1) {
@@ -589,6 +648,9 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
 			} else {
 				logger.debug("unknown key code: {}", kb.getKeyCode());
 				sendToComponent((char) kb.getKeyCode(), true);
+			}
+			if (!capsLockProperty.get() && shiftProperty.get()){
+				setKeyboardType(ctrlProperty.get(), !shiftProperty.get(), symbolProperty.get());
 			}
 			break;
 		}
@@ -603,7 +665,7 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
 	 */
 	private void sendToComponent(char ch, boolean ctrl) {
 
-		logger.trace("send ({})", ch);
+		logger.trace("send ({}) ctrl={}", ch, ctrl);
 
 		if (ctrl) {
 			switch (Character.toUpperCase(ch)) {
@@ -714,6 +776,34 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
 		spaceKeyMoveProperty.set(m);
 	}
 
+	public boolean isSpaceKeyMove() {
+		return spaceKeyMoveProperty().get();
+	}
+	
+	public BooleanProperty capsLockProperty() {
+		return capsLockProperty;
+	}
+
+	public boolean isCapsLock() {
+		return capsLockProperty().get();
+	}
+
+	public void setCapsLock(boolean c) {
+		capsLockProperty().set(c);
+	}
+
+	public BooleanProperty cacheLayoutProperty() {
+		return cacheLayoutProperty;
+	}
+
+	public boolean isCacheLayout() {
+		return cacheLayoutProperty().get();
+	}
+
+	public void setCacheLayout(boolean c) {
+		cacheLayoutProperty().set(c);
+	}
+	
 	class MouseMovedHandler implements EventHandler<MouseEvent> {
 		@Override
 		public void handle(MouseEvent event) {
@@ -736,5 +826,4 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
 			}
 		}
 	}
-
 }

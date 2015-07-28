@@ -35,47 +35,34 @@ package org.comtel2000.samples.fx;
 
 import java.util.Locale;
 
-import javafx.animation.Animation;
-import javafx.animation.FadeTransition;
-import javafx.animation.ParallelTransition;
-import javafx.animation.ScaleTransition;
+import org.comtel2000.keyboard.control.KeyBoardPopup;
+import org.comtel2000.keyboard.control.KeyBoardPopupBuilder;
+import org.comtel2000.keyboard.control.VkProperties;
+import org.comtel2000.keyboard.robot.FXRobotHandler;
+
 import javafx.application.Application;
-import javafx.application.Platform;
-import javafx.geometry.Rectangle2D;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.Separator;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextInputControl;
 import javafx.scene.control.ToolBar;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
-import org.comtel2000.keyboard.control.KeyBoardPopup;
-import org.comtel2000.keyboard.control.KeyBoardPopupBuilder;
-import org.comtel2000.keyboard.robot.FXRobotHandler;
-
-public class MainDemo extends Application {
-
-	private Animation fadeAnimation;
-
-	private KeyBoardPopup popup;
+public class MainDemo extends Application implements VkProperties {
 
 	@Override
 	public void start(Stage stage) {
-
 		stage.setTitle("FX Keyboard (" + System.getProperty("javafx.runtime.version") + ")");
 		stage.setResizable(true);
 
-		popup = KeyBoardPopupBuilder.create().initScale(1.0).initLocale(Locale.ENGLISH).addIRobot(new FXRobotHandler()).build();
-		popup.getKeyBoard().setOnKeyboardCloseButton(event -> setPopupVisible(false, null));
+		KeyBoardPopup popup = KeyBoardPopupBuilder.create().initScale(1.0).initLocale(Locale.ENGLISH).addIRobot(new FXRobotHandler()).build();
+		//popup.getKeyBoard().setOnKeyboardCloseButton(KeyBoardPopup.DEFAULT_CLOSE_HANDLER);
 
 		VBox pane = new VBox(20);
 
@@ -85,97 +72,66 @@ public class MainDemo extends Application {
 		Button cancelButton = new Button("Cancel");
 		cancelButton.setCancelButton(true);
 
-		CheckBox spaceKeyMoveCb = new CheckBox("Movable");
-		spaceKeyMoveCb.setSelected(true);
-		popup.getKeyBoard().spaceKeyMoveProperty().bind(spaceKeyMoveCb.selectedProperty());
-
-		pane.getChildren().add(new ToolBar(okButton, cancelButton, spaceKeyMoveCb));
-		pane.getChildren().add(new Label("Text1"));
-		pane.getChildren().add(new TextField(""));
-		pane.getChildren().add(new TextArea(""));
+		CheckBox spaceKeyMove = new CheckBox("Movable");
+		spaceKeyMove.setSelected(true);
+		popup.getKeyBoard().spaceKeyMoveProperty().bind(spaceKeyMove.selectedProperty());
+		
+		CheckBox capsLock = new CheckBox("CapsLock");
+		capsLock.setSelected(true);
+		popup.getKeyBoard().capsLockProperty().bind(capsLock.selectedProperty());
+		
+		pane.getChildren().add(new ToolBar(okButton, cancelButton, spaceKeyMove, capsLock));
+		
+		pane.getChildren().add(new Label("Text0"));
+		TextField tf0 = new TextField();
+		tf0.setPromptText("text");
+		pane.getChildren().add(tf0);
+		
+		pane.getChildren().add(new Label("Text1 (numeric)"));
+		TextField tf1 = new TextField();
+		tf1.setPromptText("0-9");
+		//Currently, the vkType property supports the following values: numeric, url, email, and text
+		tf1.getProperties().put(VK_TYPE, "numeric");
+		pane.getChildren().add(tf1);
+		
+		pane.getChildren().add(new Label("Text2 (locale 'de')"));
+		TextField tf2 = new TextField();
+		tf2.setPromptText("switch locale to 'DE'");
+		tf2.getProperties().put(VK_LOCALE, "de");
+		pane.getChildren().add(tf2);
+		
+		pane.getChildren().add(new Label("Text3 (email)"));
+		TextField tf3 = new TextField();
+		tf3.setPromptText("email");
+		tf3.getProperties().put(VK_TYPE, VK_TYPE_EMAIL);
+		pane.getChildren().add(tf3);
+		
+		pane.getChildren().add(new Label("Text4 (url)"));
+		TextField tf4 = new TextField();
+		tf4.setPromptText("url");
+		tf4.getProperties().put(VK_TYPE, VK_TYPE_URL);
+		pane.getChildren().add(tf4);
+		
+		ComboBox<String> combo = new ComboBox<>();
+		combo.setEditable(true);
+		combo.getProperties().put(VK_TYPE, VK_TYPE_NUMERIC);
+		pane.getChildren().add(combo);
+		
+		pane.getChildren().add(new TextArea());
 		pane.getChildren().add(new Label("Password"));
 		pane.getChildren().add(new PasswordField());
+		pane.getChildren().add(new Separator());
+		
+		Scene scene = new Scene(pane, 600, 800);
 
-		// pane.getChildren().add(KeyBoardBuilder.create().addIRobot(RobotFactory.createFXRobot()).build());
-
-		Scene scene = new Scene(pane, 600, 400);
-
-		// add keyboard scene listener to all text components
-		scene.focusOwnerProperty().addListener((value, n1, n2) -> {
-			if (n2 != null && n2 instanceof TextInputControl) {
-				setPopupVisible(true, (TextInputControl) n2);
-			} else {
-				setPopupVisible(false, null);
-			}
-		});
-
-		// add double click listener
-		stage.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
-			if (event.getClickCount() == 2) {
-				Node node = scene.getFocusOwner();
-				if (node != null && node instanceof TextInputControl) {
-					setPopupVisible(true, (TextInputControl) node);
-				}
-			}
-		});
-
-		stage.setOnCloseRequest((event) -> System.exit(0));
-
+		stage.setOnCloseRequest(e -> System.exit(0));
 		stage.setScene(scene);
-		popup.show(stage);
+		
+		popup.addDoubleClickEventFilter(stage);
+		popup.addFocusListener(scene);
+		
 		stage.show();
 
-	}
-
-	private void setPopupVisible(final boolean b, final TextInputControl textNode) {
-
-		Platform.runLater(() -> {
-			if (b && textNode != null) {
-				Rectangle2D textNodeBounds = new Rectangle2D(textNode.getScene().getWindow().getX() + textNode.getLocalToSceneTransform().getTx(), textNode.getScene().getWindow().getY()
-						+ textNode.getLocalToSceneTransform().getTy(), textNode.getWidth(), textNode.getHeight());
-
-				Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
-				if (textNodeBounds.getMinX() + popup.getWidth() > screenBounds.getMaxX()) {
-					popup.setX(screenBounds.getMaxX() - popup.getWidth());
-				} else {
-					popup.setX(textNodeBounds.getMinX());
-				}
-
-				if (textNodeBounds.getMaxY() + popup.getHeight() > screenBounds.getMaxY()) {
-					popup.setY(textNodeBounds.getMinY() - popup.getHeight() + 20);
-				} else {
-					popup.setY(textNodeBounds.getMaxY() + 40);
-				}
-			}
-
-			if (fadeAnimation != null) {
-				fadeAnimation.stop();
-			}
-			if (!b) {
-				popup.hide();
-				return;
-			}
-			if (popup.isShowing()) {
-				return;
-			}
-			popup.getKeyBoard().setOpacity(.0);
-
-			FadeTransition fade = new FadeTransition(Duration.seconds(.5), popup.getKeyBoard());
-			fade.setToValue(b ? 1. : .8);
-			// fade.setOnFinished((event) -> fadeAnimation = null);
-
-			ScaleTransition scale = new ScaleTransition(Duration.seconds(.5), popup.getKeyBoard());
-			scale.setToX(b ? 1. : .8);
-			scale.setToY(b ? 1. : .8);
-
-			ParallelTransition tx = new ParallelTransition(fade, scale);
-			fadeAnimation = tx;
-			tx.play();
-			if (b && !popup.isShowing()) {
-				popup.show(popup.getOwnerWindow());
-			}
-
-		});
 	}
 
 	public static void main(String[] args) {
