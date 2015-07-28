@@ -211,7 +211,7 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
 	
 	private void setLayoutLocale(final Locale local) throws MalformedURLException, IOException, URISyntaxException {
 
-		logger.info("try to set keyboard local: {}->{}", activeLocaleProperty.get(), local);
+		logger.debug("try to set keyboard local: {}->{}", activeLocaleProperty.get(), local);
 
 		Map<Locale, Path> localeMap = getAvailableLocales();
 		if (localeMap.containsKey(local)){
@@ -250,11 +250,11 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
 	private void addTypeRegion(KeyboardType type, Path root, String file) throws MalformedURLException, IOException{
 		Path path = root.resolve(file);
 		if (Files.exists(path)) {
-			logger.info("add layout: {}", path);
+			logger.debug("add layout: {}", path);
 			typeRegionMap.put(type, createKeyboardPane(handler.getLayout(path.toUri().toURL())));
 		}else if ((path = getAvailableLocales().get(Locale.ENGLISH)) != null && Files.exists(path.resolve(file))){
 			path = path.resolve(file);
-			logger.info("add default layout: {}", path);
+			logger.debug("add default layout: {}", path);
 			typeRegionMap.put(type, createKeyboardPane(handler.getLayout(path.toUri().toURL())));
 		}
 	}
@@ -303,7 +303,7 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
 	}
 	
 	public void setKeyboardType(KeyboardType type) {
-		logger.info("try to set type: {}->{}", activeTypeProperty.get(), type);
+		logger.debug("try to set type: {}->{}", activeTypeProperty.get(), type);
 		if (type.equals(activeTypeProperty.get())){
 			return;
 		}
