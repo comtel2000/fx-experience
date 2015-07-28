@@ -80,7 +80,7 @@ public class KeyBoardWindow extends JWindow {
 	/**
 	 * must run in FxApplicationThread
 	 * 
-	 * @param popup
+	 * @param popup Keyboard popup
 	 */
 	protected void createScene(final KeyBoardPopup popup) {
 		this.popup = popup;

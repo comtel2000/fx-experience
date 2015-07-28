@@ -33,7 +33,6 @@ package org.comtel2000.swing.control;
  * #L%
  */
 
-
 import java.nio.file.Path;
 import java.util.Locale;
 import java.util.concurrent.CountDownLatch;
@@ -47,6 +46,12 @@ import org.comtel2000.swing.robot.AWTRobotHandler;
 import javafx.application.Platform;
 import javafx.util.Builder;
 
+/**
+ * Swing {@link KeyBoardWindow} builder
+ * 
+ * @author comtel
+ *
+ */
 public class KeyBoardWindowBuilder implements Builder<KeyBoardWindow> {
 
 	private final CountDownLatch latch = new CountDownLatch(1);
@@ -58,7 +63,8 @@ public class KeyBoardWindowBuilder implements Builder<KeyBoardWindow> {
 	}
 
 	/**
-	 * create instance 
+	 * create new instance
+	 * 
 	 * @return this
 	 */
 	public static KeyBoardWindowBuilder create() {
@@ -66,8 +72,10 @@ public class KeyBoardWindowBuilder implements Builder<KeyBoardWindow> {
 	}
 
 	/**
-	 * @see {@link KeyBoardBuilder#layerPath(Path)}
+	 * The own layout location
+	 * 
 	 * @param path
+	 *            the layer location
 	 * @return this
 	 */
 	public KeyBoardWindowBuilder layerPath(Path path) {
@@ -76,8 +84,10 @@ public class KeyBoardWindowBuilder implements Builder<KeyBoardWindow> {
 	}
 
 	/**
-	 * @see {@link KeyBoardBuilder#initLocale(Locale)}
+	 * The initial {@link Locale}
+	 * 
 	 * @param locale
+	 *            initial locale
 	 * @return this
 	 */
 	public KeyBoardWindowBuilder initLocale(Locale locale) {
@@ -86,8 +96,10 @@ public class KeyBoardWindowBuilder implements Builder<KeyBoardWindow> {
 	}
 
 	/**
-	 * @see {@link KeyBoardBuilder#initScale(double)}
+	 * The initial keyboard scale
+	 * 
 	 * @param scale
+	 *            initial size
 	 * @return this
 	 */
 	public KeyBoardWindowBuilder initScale(double scale) {
@@ -96,8 +108,10 @@ public class KeyBoardWindowBuilder implements Builder<KeyBoardWindow> {
 	}
 
 	/**
-	 * @see {@link KeyBoardBuilder#addIRobot(IRobot)}
-	 * @param robot default {@link AWTRobotHandler}
+	 * The robot adapter default {@link AWTRobotHandler}
+	 * 
+	 * @param robot
+	 *            default {@link AWTRobotHandler}
 	 * @return this
 	 */
 	public KeyBoardWindowBuilder addIRobot(IRobot robot) {
@@ -106,8 +120,10 @@ public class KeyBoardWindowBuilder implements Builder<KeyBoardWindow> {
 	}
 
 	/**
-	 * @see {@link KeyBoardBuilder#layer(DefaultLayer)}
+	 * The embedded layout
+	 * 
 	 * @param layer
+	 *            embedded layout layer
 	 * @return this
 	 */
 	public KeyBoardWindowBuilder layer(DefaultLayer layer) {
@@ -116,8 +132,10 @@ public class KeyBoardWindowBuilder implements Builder<KeyBoardWindow> {
 	}
 
 	/**
-	 * @see {@link KeyBoardBuilder#style(String)}
-	 * @param css Style
+	 * The style location and name
+	 * 
+	 * @param css
+	 *            style sheet
 	 * @return this
 	 */
 	public KeyBoardWindowBuilder style(String css) {
