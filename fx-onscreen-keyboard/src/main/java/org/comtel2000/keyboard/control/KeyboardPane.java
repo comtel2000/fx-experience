@@ -1,7 +1,5 @@
 package org.comtel2000.keyboard.control;
 
-import java.io.File;
-
 /*
  * #%L
  * fx-onscreen-keyboard

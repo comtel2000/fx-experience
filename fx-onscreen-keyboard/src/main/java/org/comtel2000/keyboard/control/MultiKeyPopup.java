@@ -1,5 +1,7 @@
 package org.comtel2000.keyboard.control;
 
+import com.sun.javafx.Utils;
+
 /*
  * #%L
  * fx-onscreen-keyboard
@@ -35,7 +37,6 @@ package org.comtel2000.keyboard.control;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -52,11 +53,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.stage.Popup;
 
-import com.sun.javafx.Utils;
-
 public class MultiKeyPopup extends Popup {
-
-	private final ObservableList<ButtonBase> buttons;
 
 	private final TilePane buttonPane;
 
@@ -68,14 +65,14 @@ public class MultiKeyPopup extends Popup {
 		buttonPane.setPrefColumns(3);
 		buttonPane.setFocusTraversable(false);
 
-		buttons = FXCollections.observableArrayList();
-		buttons.addListener((ListChangeListener<ButtonBase>) c -> {
+		buttonPane.getChildren().addListener((ListChangeListener<Node>) c -> {
 			while (c.next()) {
-				for (ButtonBase button : c.getAddedSubList()) {
-					button.setFocusTraversable(false);
-					button.setOnAction(event -> hide());
-					buttonPane.getChildren().add(button);
-				}
+				c.getAddedSubList().forEach(node -> {
+					node.setFocusTraversable(false);
+					if (node instanceof ButtonBase) {
+						((ButtonBase) node).setOnAction(event -> hide());
+					}
+				});
 			}
 		});
 
@@ -94,10 +91,6 @@ public class MultiKeyPopup extends Popup {
 
 	public void setPaneStyle(String value) {
 		buttonPane.setStyle(value);
-	}
-
-	public ObservableList<ButtonBase> getButtons() {
-		return buttons;
 	}
 
 	public void show(Node node, Side side, double d, double d1) {

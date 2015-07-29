@@ -36,16 +36,12 @@ package org.comtel2000.keyboard.control;
 import java.util.Collection;
 
 import javafx.beans.property.DoubleProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.geometry.Side;
 import javafx.scene.Node;
 import javafx.scene.transform.Scale;
 
 public class MultiKeyButton extends KeyButton {
-
-	private ObservableList<KeyButton> extKeyCodes;
 
 	private MultiKeyPopup context;
 
@@ -56,20 +52,6 @@ public class MultiKeyButton extends KeyButton {
 	public MultiKeyButton(DoubleProperty scaleProperty, Collection<String> styles) {
 		this.scaleProperty = scaleProperty;
 		this.styles = styles;
-	}
-
-	public ObservableList<KeyButton> getExtKeyCodes() {
-		if (extKeyCodes == null) {
-			extKeyCodes = FXCollections.observableArrayList();
-			extKeyCodes.addListener((ListChangeListener<KeyButton>) c -> {
-				while (c.next()) {
-					for (KeyButton button : c.getAddedSubList()) {
-						getContext().getButtons().add(button);
-					}
-				}
-			});
-		}
-		return extKeyCodes;
 	}
 
 	public MultiKeyPopup getContext() {
@@ -120,11 +102,11 @@ public class MultiKeyButton extends KeyButton {
 		button.setKeyCode(extKeyCode);
 		button.setOnShortPressed(getOnShortPressed());
 
-		getExtKeyCodes().add(button);
+		getContext().getButtonPane().getChildren().add(button);
 	}
 
 	public boolean isContextAvailable() {
-		return context != null && extKeyCodes != null;
+		return context != null;
 	}
 
 }
