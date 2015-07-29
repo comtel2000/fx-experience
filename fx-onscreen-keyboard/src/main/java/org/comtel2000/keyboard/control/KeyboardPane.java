@@ -1,5 +1,7 @@
 package org.comtel2000.keyboard.control;
 
+import java.io.File;
+
 /*
  * #%L
  * fx-onscreen-keyboard
@@ -36,18 +38,23 @@ package org.comtel2000.keyboard.control;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.DirectoryStream;
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.EnumMap;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import org.comtel2000.keyboard.event.KeyButtonEvent;
 import org.comtel2000.keyboard.robot.IRobot;
@@ -129,7 +136,7 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
 
 	private final List<IRobot> robots = new ArrayList<>();
 
-	private final Map<Locale, Path> availableLocales = new HashMap<>();
+	private final Map<Locale, String> availableLocales = new LinkedHashMap<>();
 
 	private final KeyboardLayoutHandler handler;
 
@@ -213,7 +220,7 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
 
 		logger.debug("try to set keyboard local: {}->{}", activeLocaleProperty.get(), local);
 
-		Map<Locale, Path> localeMap = getAvailableLocales();
+		Map<Locale, String> localeMap = getAvailableLocales();
 		if (localeMap.containsKey(local)){
 			if (local.equals(activeLocaleProperty.get())){
 				logger.debug("locale already active: {}", local);
@@ -228,69 +235,105 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
 			activeLocaleProperty.set(Locale.forLanguageTag(local.getLanguage()));
 		}else{
 			if (Locale.ENGLISH.equals(activeLocaleProperty.get())){
-				logger.debug("locale language already active: {}", local);
+				logger.info("locale language already active: {}", local);
 				return;
 			}
 			activeLocaleProperty.set(Locale.ENGLISH);
 		}
 		logger.debug("use keyboard local: {}", activeLocaleProperty.get());
-		Path root = localeMap.get(activeLocaleProperty.get());
-		if (root != null) {
-			addTypeRegion(KeyboardType.TEXT, root, "kb-layout.xml");
-			addTypeRegion(KeyboardType.TEXT_SHIFT, root, "kb-layout-shift.xml");
-			addTypeRegion(KeyboardType.SYMBOL, root, "kb-layout-sym.xml");
-			addTypeRegion(KeyboardType.SYMBOL_SHIFT, root, "kb-layout-sym-shift.xml");
-			addTypeRegion(KeyboardType.CTRL, root, "kb-layout-ctrl.xml");
-			addTypeRegion(KeyboardType.NUMERIC, root, "kb-layout-numeric.xml");
-			addTypeRegion(KeyboardType.EMAIL, root, "kb-layout-email.xml");
-			addTypeRegion(KeyboardType.URL, root, "kb-layout-url.xml");
-		}
+		String root = localeMap.get(activeLocaleProperty.get());
+
+		addTypeRegion(KeyboardType.TEXT, root, "kb-layout.xml");
+		addTypeRegion(KeyboardType.TEXT_SHIFT, root, "kb-layout-shift.xml");
+		addTypeRegion(KeyboardType.SYMBOL, root, "kb-layout-sym.xml");
+		addTypeRegion(KeyboardType.SYMBOL_SHIFT, root, "kb-layout-sym-shift.xml");
+		addTypeRegion(KeyboardType.CTRL, root, "kb-layout-ctrl.xml");
+		addTypeRegion(KeyboardType.NUMERIC, root, "kb-layout-numeric.xml");
+		addTypeRegion(KeyboardType.EMAIL, root, "kb-layout-email.xml");
+		addTypeRegion(KeyboardType.URL, root, "kb-layout-url.xml");
+
 	}
 
-	private void addTypeRegion(KeyboardType type, Path root, String file) throws MalformedURLException, IOException{
-		Path path = root.resolve(file);
-		if (Files.exists(path)) {
-			logger.debug("add layout: {}", path);
-			typeRegionMap.put(type, createKeyboardPane(handler.getLayout(path.toUri().toURL())));
-		}else if ((path = getAvailableLocales().get(Locale.ENGLISH)) != null && Files.exists(path.resolve(file))){
-			path = path.resolve(file);
-			logger.debug("add default layout: {}", path);
-			typeRegionMap.put(type, createKeyboardPane(handler.getLayout(path.toUri().toURL())));
+	private void addTypeRegion(KeyboardType type, String root, String file) throws MalformedURLException, IOException{
+		URL url = KeyboardLayoutHandler.class.getResource(root + "/" + file);
+		if (url == null && Files.exists(Paths.get(root, file))){
+			url = Paths.get(root, file).toUri().toURL();
+		}
+		if (url != null) {
+			logger.debug("add layout: {}", url);
+			typeRegionMap.put(type, createKeyboardPane(handler.getLayout(url)));
+			return;
+		}
+		String defaultRoot = getAvailableLocales().get(Locale.ENGLISH);
+		if (defaultRoot == null){
+			logger.error("layout: {} / {} not found - no default available", root, file);
+			return;
+		}
+		if ((url = KeyboardLayoutHandler.class.getResource(defaultRoot + "/" + file)) != null){
+			logger.debug("add default layout: {}", url);
+			typeRegionMap.put(type, createKeyboardPane(handler.getLayout(url)));
+			return;
+		}
+		if (Files.exists(Paths.get(defaultRoot, file))){
+			url = Paths.get(defaultRoot, file).toUri().toURL();
+			logger.debug("add default layout: {}", url);
+			typeRegionMap.put(type, createKeyboardPane(handler.getLayout(url)));
+			return;
 		}
 	}
 	
-	private Map<Locale, Path> getAvailableLocales() {
+	private Map<Locale, String> getAvailableLocales() {
 		if (!availableLocales.isEmpty()){
 			return availableLocales;
 		}
 		if (layerPathProperty.get() == null) {
 			String layer = layerProperty.get().toString().toLowerCase(Locale.ENGLISH);
-			URL url = KeyboardLayoutHandler.class.getResource("/xml/" + layer);
+			URL url = Objects.requireNonNull(KeyboardLayoutHandler.class.getResource("/xml/" + layer));
 			logger.debug("use embedded layer path: {}", url);
+			if (url.toExternalForm().contains("!")){
+				availableLocales.put(Locale.ENGLISH, "/xml/" + layer);
+				readJarLocales(url);
+				return availableLocales;
+			}
+			
 			try {
 				layerPathProperty.set(Paths.get(url.toURI()));
 			} catch (URISyntaxException e) {
 				logger.error(e.getMessage(), e);
 			}
 		}
+		availableLocales.put(Locale.ENGLISH, layerPathProperty.get().toString());
 		try (DirectoryStream<Path> stream = Files.newDirectoryStream(layerPathProperty.get())) {
 			stream.forEach(p -> {
 				if (Files.isDirectory(p)){
 					Locale l = new Locale(p.getFileName().toString());
-					availableLocales.put(l, p);
+					availableLocales.put(l, p.toString());
 				}
 			});
 		} catch (IOException e) {
 			logger.error(e.getMessage(), e);
 		}
 		logger.debug("locales: {}", availableLocales.keySet());
-		if (!availableLocales.containsKey(localeProperty.get())){
-			logger.debug("use locale not available, use default for: {}", localeProperty.get());
-			availableLocales.put(localeProperty.get(), layerPathProperty.get());
-		}
 		return availableLocales;
 	}
 
+	private void readJarLocales(URL url) {
+		String[] array = url.toExternalForm().split("!");
+		try (FileSystem fs = FileSystems.newFileSystem(URI.create(array[0]), Collections.emptyMap())) {
+			final Path path = fs.getPath(array[1]);
+			try (DirectoryStream<Path> stream = Files.newDirectoryStream(path)) {
+				stream.forEach(p -> {
+					if (Files.isDirectory(p)) {
+						String lang = p.getFileName().toString().replace("/", "");
+						availableLocales.put(new Locale(lang), array[1] + "/" + lang);
+					}
+				});
+			}
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+		}
+	}
+	
 	public void setKeyboardType(String type) {
 		KeyboardType kType;
 		try {
