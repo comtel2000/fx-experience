@@ -21,7 +21,7 @@
 		<Key codes="1079" keyLabel="з" />
 		<Key codes="1093" keyLabel="х" />
 		<Key codes="1098" keyLabel="ъ" />
-		<Key codes="-5" keyLabel="!" keyLabelStyle=".font-fxkeyboard" isRepeatable="true" />
+		<Key codes="-5" keyLabel="!" keyLabelStyle=".font-fxkeyboard" repeatable="true" />
 	</Row>
 
 	<Row>
@@ -41,7 +41,7 @@
 	</Row>
 
 	<Row>
-		<Key codes="-1" keyLabel="I" keyLabelStyle=".font-fxkeyboard" keyWidth="40" isModifier="true" isSticky="true" />
+		<Key codes="-1" keyLabel="I" keyLabelStyle=".font-fxkeyboard" keyWidth="40" modifier="true" sticky="true" />
 		<Key codes="1103" keyLabel="я" />
 		<Key codes="1095" keyLabel="ч" />
 		<Key codes="1089" keyLabel="с" />
@@ -53,13 +53,13 @@
 		<Key codes="1102" keyLabel="ю" />
 		<Key codes="44" keyLabel="," />
 		<Key codes="46" keyLabel="." />
-		<Key codes="-1" keyLabel="I" keyLabelStyle=".font-fxkeyboard" keyWidth="40" isModifier="true" isSticky="true" />
+		<Key codes="-1" keyLabel="I" keyLabelStyle=".font-fxkeyboard" keyWidth="40" modifier="true" sticky="true" />
 	</Row>
 
 	<Row rowEdgeFlags="bottom">
 		<Key codes="-6" keyLabel="CTRL" keyLabelStyle=".small-style" keyWidth="70" />
 		<Key codes="-2" keyLabel="?123" keyLabelStyle=".small-style" keyWidth="70" />
-		<Key codes="32" keyLabel="3" keyLabelStyle=".font-fxkeyboard-alpha" keyWidth="280" isRepeatable="true" />
+		<Key codes="32" keyLabel="3" keyLabelStyle=".font-fxkeyboard-alpha" movable="true" keyWidth="280" repeatable="true" />
 		<Key codes="-7" keyLabel="RU" keyLabelStyle=".small-style" keyWidth="50" />
 		<Key codes="-3" keyLabel="2" keyLabelStyle=".font-fxkeyboard" keyWidth="50" />
 	</Row>

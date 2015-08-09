@@ -58,6 +58,17 @@ import javafx.util.Duration;
 
 public class KeyBoardPopup extends Popup implements VkProperties {
 
+	enum Visiblity {
+		/** Set position and visible true */
+		SHOW, 
+		
+		/** Set visible false */
+		HIDE, 
+		
+		/** Set positioning only if visible true */
+		POS
+	}
+	
 	private final KeyboardPane keyboard;
 
 	private Scene owner;
@@ -83,8 +94,8 @@ public class KeyBoardPopup extends Popup implements VkProperties {
 		return isShowing();
 	}
 
-	public void setVisible(final boolean visible) {
-		setVisible(visible, null);
+	public void setVisible(boolean visible) {
+		setVisible(visible ? Visiblity.SHOW : Visiblity.HIDE);
 	}
 
 	public Scene getRegisteredScene() {
@@ -96,29 +107,37 @@ public class KeyBoardPopup extends Popup implements VkProperties {
 	}
 
 	public void addFocusListener(final Scene scene) {
+		addFocusListener(scene, false);
+	}
+	
+	public void addFocusListener(final Scene scene, boolean doNotOpen) {
 		registerScene(scene);
 		scene.focusOwnerProperty().addListener((value, n1, n2) -> {
 			if (n2 != null && n2 instanceof TextInputControl) {
-				setVisible(true, (TextInputControl) n2);
+				setVisible(doNotOpen ? Visiblity.POS : Visiblity.SHOW, (TextInputControl) n2);
 			} else {
-				setVisible(false, null);
+				setVisible(Visiblity.HIDE);
 			}
 		});
 	}
-
+	
 	public void addDoubleClickEventFilter(final Stage stage) {
 		Objects.requireNonNull(stage).addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
 			if (event.getClickCount() == 2 && stage.getScene() != null) {
 				Node node = stage.getScene().getFocusOwner();
 				if (node != null && node instanceof TextInputControl) {
-					setVisible(true, (TextInputControl) node);
+					setVisible(Visiblity.SHOW, (TextInputControl) node);
 				}
 			}
 		});
 	}
 
-	void setVisible(final boolean visible, final TextInputControl textNode) {
-		if (visible && textNode != null) {
+	void setVisible(Visiblity visible){
+		setVisible(visible, null);
+	}
+	
+	void setVisible(final Visiblity visible, final TextInputControl textNode) {
+		if ((visible == Visiblity.POS || visible == Visiblity.SHOW) && textNode != null) {
 			Map<String, String> vkProps = getVkProperties(textNode);
 			if (vkProps.isEmpty()) {
 				getKeyBoard().setKeyboardType(KeyboardType.TEXT);
@@ -143,21 +162,24 @@ public class KeyBoardPopup extends Popup implements VkProperties {
 			}
 		}
 
+		if (visible == Visiblity.POS || visible == Visiblity.HIDE && !isShowing()) {
+			return;
+		}
 		if (animation != null) {
 			animation.stop();
 		}
 		getKeyBoard().setOpacity(0.0);
 
 		FadeTransition fade = new FadeTransition(Duration.seconds(.1), getKeyBoard());
-		fade.setToValue(visible ? 1.0 : 0.0);
+		fade.setToValue(visible == Visiblity.SHOW ? 1.0 : 0.0);
 		fade.setOnFinished(e -> animation = null);
 
 		ScaleTransition scale = new ScaleTransition(Duration.seconds(.1), getKeyBoard());
-		scale.setToX(visible ? 1 : 0.8);
-		scale.setToY(visible ? 1 : 0.8);
+		scale.setToX(visible == Visiblity.SHOW ? 1 : 0.8);
+		scale.setToY(visible == Visiblity.SHOW ? 1 : 0.8);
 		ParallelTransition tx = new ParallelTransition(fade, scale);
 		animation = tx;
-		if (visible && !isShowing()) {
+		if (visible == Visiblity.SHOW && !isShowing()) {
 			// initial start
 			super.show(owner != null ? owner.getWindow() : getOwnerWindow());
 		}

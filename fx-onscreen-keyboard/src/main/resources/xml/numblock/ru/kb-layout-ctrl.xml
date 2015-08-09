@@ -20,7 +20,7 @@
 		<Key codes="-120" keyLabel="F9" keyLabelStyle=".small-style" />
 		<Key codes="-121" keyLabel="F10" keyLabelStyle=".small-style" />
 		<Key codes="-122" keyLabel="F11" keyLabelStyle=".small-style" />
-		<Key codes="-5" keyLabel="!" keyLabelStyle=".font-fxkeyboard" isRepeatable="true" />
+		<Key codes="-5" keyLabel="!" keyLabelStyle=".font-fxkeyboard" repeatable="true" />
 	</Row>
 
 	<Row>
@@ -34,7 +34,7 @@
 	</Row>
 
 	<Row>
-		<Key codes="45" keyLabel="@" keyLabelStyle=".font-fxkeyboard" keyWidth="70" isModifier="true" isSticky="true" />
+		<Key codes="45" keyLabel="@" keyLabelStyle=".font-fxkeyboard" keyWidth="70" modifier="true" sticky="true" />
 		<Key codes="120" keyLabel="вырезать" keyLabelStyle=".small-style" keyWidth="60" />
 		<Key codes="99" keyLabel="скопируйте" keyLabelStyle=".small-style" keyWidth="90" />
 		<Key codes="118" keyLabel="паста" keyLabelStyle=".small-style" keyWidth="90" />
@@ -47,7 +47,7 @@
 	<Row rowEdgeFlags="bottom">
 		<Key codes="-6" keyLabel="CTRL" keyLabelStyle=".small-style" keyWidth="70" />
 		<Key codes="-14" keyLabel="отмени́ть" keyLabelStyle=".small-style" keyWidth="70" />
-		<Key codes="32" keyLabel="3" keyLabelStyle=".font-fxkeyboard-alpha" keyWidth="280" isRepeatable="true" />
+		<Key codes="32" keyLabel="3" keyLabelStyle=".font-fxkeyboard-alpha" movable="true" keyWidth="280" repeatable="true" />
 		<Key codes="-7" keyLabel="RU" keyLabelStyle=".small-style" keyWidth="50" />
 		<Key codes="-3" keyLabel="2" keyLabelStyle=".font-fxkeyboard" keyWidth="50" />
 	</Row>

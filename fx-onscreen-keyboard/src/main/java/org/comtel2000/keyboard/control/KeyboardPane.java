@@ -75,6 +75,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
+import javafx.scene.Node;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -483,6 +484,10 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
 				button.setPrefWidth(defaultKeyWidth);
 				button.setMaxWidth(defaultKeyWidth * 100);
 
+				if (Boolean.TRUE == key.isMovable()){
+					installMoveHandler(button);
+					button.getStyleClass().add("movable-style");
+				}
 				String[] codes = key.getCodes().split(",");
 				if (codes.length > 0 && !codes[0].isEmpty()) {
 					button.setKeyCode(parseInt(codes[0]));
@@ -535,8 +540,9 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
 					}
 				}
 
-				button.setText(key.getKeyLabel());
-
+				button.setText(key.getKeyLabel() != null ? key.getKeyLabel() : Character.toString((char)button.getKeyCode()));
+				button.setKeyText(key.getKeyOutputText());
+				
 				if (button.isContextAvailable() && button.getGraphic() == null) {
 					button.getStyleClass().add("extend-style");
 				}
@@ -558,9 +564,7 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
 
 				switch (button.getKeyCode()) {
 				case java.awt.event.KeyEvent.VK_SPACE:
-					button.setOnMouseMoved(new MouseMovedHandler());
-					button.setOnMouseDragged(new MouseDraggedHandler());
-
+					installMoveHandler(button);
 					break;
 				case BACK_SPACE:
 				case DELETE:
@@ -683,8 +687,11 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
 			setKeyboardType(KeyboardType.URL);
 			break;
 		default:
-			// logger.debug(java.awt.event.KeyEvent.getKeyText(kb.getKeyCode()));
-			if (kb.getKeyCode() > -1) {
+			if (kb.getKeyText() != null) {
+				for (int i = 0; i < kb.getKeyText().length(); i++) {
+					sendToComponent(kb.getKeyText().charAt(i), ctrlProperty.get());
+				}
+			}else if (kb.getKeyCode() > -1) {
 				sendToComponent((char) kb.getKeyCode(), ctrlProperty.get());
 			} else {
 				logger.debug("unknown key code: {}", kb.getKeyCode());
@@ -843,6 +850,20 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
 
 	public void setCacheLayout(boolean c) {
 		cacheLayoutProperty().set(c);
+	}
+	
+	private MouseMovedHandler movedHandler;
+	private MouseDraggedHandler draggedHandler;
+	
+	private void installMoveHandler(Node node){
+		if (movedHandler == null){
+			movedHandler = new MouseMovedHandler();
+		}
+		if (draggedHandler == null){
+			draggedHandler = new MouseDraggedHandler();
+		}
+		node.setOnMouseMoved(movedHandler);
+		node.setOnMouseDragged(draggedHandler);
 	}
 	
 	class MouseMovedHandler implements EventHandler<MouseEvent> {

@@ -55,6 +55,8 @@ public class KeyButton extends Button implements LongPressable {
 
 	private final static long DEFAULT_DELAY = 400;
 
+	private String keyText;
+	
 	private int keyCode;
 
 	private final Timeline timer;
@@ -213,6 +215,14 @@ public class KeyButton extends Button implements LongPressable {
 
 	public void setKeyCode(int keyCode) {
 		this.keyCode = keyCode;
+	}
+
+	public String getKeyText() {
+		return keyText;
+	}
+
+	public void setKeyText(String keyText) {
+		this.keyText = keyText;
 	}
 
 }

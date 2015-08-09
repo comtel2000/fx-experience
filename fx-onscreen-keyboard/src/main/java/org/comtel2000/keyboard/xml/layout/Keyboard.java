@@ -2,11 +2,45 @@
 // Diese Datei wurde mit der JavaTM Architecture for XML Binding(JAXB) Reference Implementation, v2.2.7 generiert 
 // Siehe <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Änderungen an dieser Datei gehen bei einer Neukompilierung des Quellschemas verloren. 
-// Generiert: 2015.07.29 um 02:06:53 AM CEST 
+// Generiert: 2015.08.09 um 11:05:44 PM CEST 
 //
 
 
 package org.comtel2000.keyboard.xml.layout;
+
+/*
+ * #%L
+ * fx-onscreen-keyboard
+ * %%
+ * Copyright (C) 2014 - 2015 comtel2000
+ * %%
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted provided that the following conditions are met:
+ * 
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ * 
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
+ * 
+ * 3. Neither the name of the comtel2000 nor the names of its contributors
+ *    may be used to endorse or promote products derived from this software without
+ *    specific prior written permission.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+ * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+ * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+ * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+ * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+ * OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
+ * OF THE POSSIBILITY OF SUCH DAMAGE.
+ * #L%
+ */
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +72,14 @@ import javax.xml.bind.annotation.XmlType;
  *                       &lt;complexContent>
  *                         &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *                           &lt;attribute name="codes" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
+ *                           &lt;attribute name="popupCharacters" type="{http://www.w3.org/2001/XMLSchema}string" />
+ *                           &lt;attribute name="popupKeyboard" type="{http://www.w3.org/2001/XMLSchema}string" />
  *                           &lt;attribute name="keyLabel" type="{http://www.w3.org/2001/XMLSchema}string" />
+ *                           &lt;attribute name="keyOutputText" type="{http://www.w3.org/2001/XMLSchema}string" />
+ *                           &lt;attribute name="movable" type="{http://www.w3.org/2001/XMLSchema}boolean" />
+ *                           &lt;attribute name="sticky" type="{http://www.w3.org/2001/XMLSchema}boolean" />
+ *                           &lt;attribute name="modifier" type="{http://www.w3.org/2001/XMLSchema}boolean" />
+ *                           &lt;attribute name="repeatable" type="{http://www.w3.org/2001/XMLSchema}boolean" />
  *                           &lt;attribute name="keyIconStyle" type="{http://www.w3.org/2001/XMLSchema}string" />
  *                           &lt;attribute name="keyLabelStyle" type="{http://www.w3.org/2001/XMLSchema}string" />
  *                           &lt;attribute name="keyWidth" type="{http://www.w3.org/2001/XMLSchema}int" />
@@ -239,7 +280,14 @@ public class Keyboard {
      *             &lt;complexContent>
      *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
      *                 &lt;attribute name="codes" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
+     *                 &lt;attribute name="popupCharacters" type="{http://www.w3.org/2001/XMLSchema}string" />
+     *                 &lt;attribute name="popupKeyboard" type="{http://www.w3.org/2001/XMLSchema}string" />
      *                 &lt;attribute name="keyLabel" type="{http://www.w3.org/2001/XMLSchema}string" />
+     *                 &lt;attribute name="keyOutputText" type="{http://www.w3.org/2001/XMLSchema}string" />
+     *                 &lt;attribute name="movable" type="{http://www.w3.org/2001/XMLSchema}boolean" />
+     *                 &lt;attribute name="sticky" type="{http://www.w3.org/2001/XMLSchema}boolean" />
+     *                 &lt;attribute name="modifier" type="{http://www.w3.org/2001/XMLSchema}boolean" />
+     *                 &lt;attribute name="repeatable" type="{http://www.w3.org/2001/XMLSchema}boolean" />
      *                 &lt;attribute name="keyIconStyle" type="{http://www.w3.org/2001/XMLSchema}string" />
      *                 &lt;attribute name="keyLabelStyle" type="{http://www.w3.org/2001/XMLSchema}string" />
      *                 &lt;attribute name="keyWidth" type="{http://www.w3.org/2001/XMLSchema}int" />
@@ -347,7 +395,14 @@ public class Keyboard {
          *   &lt;complexContent>
          *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
          *       &lt;attribute name="codes" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
+         *       &lt;attribute name="popupCharacters" type="{http://www.w3.org/2001/XMLSchema}string" />
+         *       &lt;attribute name="popupKeyboard" type="{http://www.w3.org/2001/XMLSchema}string" />
          *       &lt;attribute name="keyLabel" type="{http://www.w3.org/2001/XMLSchema}string" />
+         *       &lt;attribute name="keyOutputText" type="{http://www.w3.org/2001/XMLSchema}string" />
+         *       &lt;attribute name="movable" type="{http://www.w3.org/2001/XMLSchema}boolean" />
+         *       &lt;attribute name="sticky" type="{http://www.w3.org/2001/XMLSchema}boolean" />
+         *       &lt;attribute name="modifier" type="{http://www.w3.org/2001/XMLSchema}boolean" />
+         *       &lt;attribute name="repeatable" type="{http://www.w3.org/2001/XMLSchema}boolean" />
          *       &lt;attribute name="keyIconStyle" type="{http://www.w3.org/2001/XMLSchema}string" />
          *       &lt;attribute name="keyLabelStyle" type="{http://www.w3.org/2001/XMLSchema}string" />
          *       &lt;attribute name="keyWidth" type="{http://www.w3.org/2001/XMLSchema}int" />
@@ -373,8 +428,22 @@ public class Keyboard {
 
             @XmlAttribute(name = "codes", required = true)
             protected String codes;
+            @XmlAttribute(name = "popupCharacters")
+            protected String popupCharacters;
+            @XmlAttribute(name = "popupKeyboard")
+            protected String popupKeyboard;
             @XmlAttribute(name = "keyLabel")
             protected String keyLabel;
+            @XmlAttribute(name = "keyOutputText")
+            protected String keyOutputText;
+            @XmlAttribute(name = "movable")
+            protected Boolean movable;
+            @XmlAttribute(name = "sticky")
+            protected Boolean sticky;
+            @XmlAttribute(name = "modifier")
+            protected Boolean modifier;
+            @XmlAttribute(name = "repeatable")
+            protected Boolean repeatable;
             @XmlAttribute(name = "keyIconStyle")
             protected String keyIconStyle;
             @XmlAttribute(name = "keyLabelStyle")
@@ -411,6 +480,54 @@ public class Keyboard {
             }
 
             /**
+             * Ruft den Wert der popupCharacters-Eigenschaft ab.
+             * 
+             * @return
+             *     possible object is
+             *     {@link String }
+             *     
+             */
+            public String getPopupCharacters() {
+                return popupCharacters;
+            }
+
+            /**
+             * Legt den Wert der popupCharacters-Eigenschaft fest.
+             * 
+             * @param value
+             *     allowed object is
+             *     {@link String }
+             *     
+             */
+            public void setPopupCharacters(String value) {
+                this.popupCharacters = value;
+            }
+
+            /**
+             * Ruft den Wert der popupKeyboard-Eigenschaft ab.
+             * 
+             * @return
+             *     possible object is
+             *     {@link String }
+             *     
+             */
+            public String getPopupKeyboard() {
+                return popupKeyboard;
+            }
+
+            /**
+             * Legt den Wert der popupKeyboard-Eigenschaft fest.
+             * 
+             * @param value
+             *     allowed object is
+             *     {@link String }
+             *     
+             */
+            public void setPopupKeyboard(String value) {
+                this.popupKeyboard = value;
+            }
+
+            /**
              * Ruft den Wert der keyLabel-Eigenschaft ab.
              * 
              * @return
@@ -432,6 +549,126 @@ public class Keyboard {
              */
             public void setKeyLabel(String value) {
                 this.keyLabel = value;
+            }
+
+            /**
+             * Ruft den Wert der keyOutputText-Eigenschaft ab.
+             * 
+             * @return
+             *     possible object is
+             *     {@link String }
+             *     
+             */
+            public String getKeyOutputText() {
+                return keyOutputText;
+            }
+
+            /**
+             * Legt den Wert der keyOutputText-Eigenschaft fest.
+             * 
+             * @param value
+             *     allowed object is
+             *     {@link String }
+             *     
+             */
+            public void setKeyOutputText(String value) {
+                this.keyOutputText = value;
+            }
+
+            /**
+             * Ruft den Wert der movable-Eigenschaft ab.
+             * 
+             * @return
+             *     possible object is
+             *     {@link Boolean }
+             *     
+             */
+            public Boolean isMovable() {
+                return movable;
+            }
+
+            /**
+             * Legt den Wert der movable-Eigenschaft fest.
+             * 
+             * @param value
+             *     allowed object is
+             *     {@link Boolean }
+             *     
+             */
+            public void setMovable(Boolean value) {
+                this.movable = value;
+            }
+
+            /**
+             * Ruft den Wert der sticky-Eigenschaft ab.
+             * 
+             * @return
+             *     possible object is
+             *     {@link Boolean }
+             *     
+             */
+            public Boolean isSticky() {
+                return sticky;
+            }
+
+            /**
+             * Legt den Wert der sticky-Eigenschaft fest.
+             * 
+             * @param value
+             *     allowed object is
+             *     {@link Boolean }
+             *     
+             */
+            public void setSticky(Boolean value) {
+                this.sticky = value;
+            }
+
+            /**
+             * Ruft den Wert der modifier-Eigenschaft ab.
+             * 
+             * @return
+             *     possible object is
+             *     {@link Boolean }
+             *     
+             */
+            public Boolean isModifier() {
+                return modifier;
+            }
+
+            /**
+             * Legt den Wert der modifier-Eigenschaft fest.
+             * 
+             * @param value
+             *     allowed object is
+             *     {@link Boolean }
+             *     
+             */
+            public void setModifier(Boolean value) {
+                this.modifier = value;
+            }
+
+            /**
+             * Ruft den Wert der repeatable-Eigenschaft ab.
+             * 
+             * @return
+             *     possible object is
+             *     {@link Boolean }
+             *     
+             */
+            public Boolean isRepeatable() {
+                return repeatable;
+            }
+
+            /**
+             * Legt den Wert der repeatable-Eigenschaft fest.
+             * 
+             * @param value
+             *     allowed object is
+             *     {@link Boolean }
+             *     
+             */
+            public void setRepeatable(Boolean value) {
+                this.repeatable = value;
             }
 
             /**

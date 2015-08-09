@@ -1,7 +1,16 @@
 # fx-onscreen-keyboard
 [![Build Status](https://travis-ci.org/comtel2000/fx-experience.png?branch=master)](https://travis-ci.org/comtel2000/fx-experience)  [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.comtel2000/fx-parent/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.comtel2000/fx-parent)  [![License](https://img.shields.io/badge/license-BSD--3--Clause-blue.svg)](http://opensource.org/licenses/BSD-3-Clause)
 
-JavaFX on-screen keyboard component with xml layout configuration
+*FXOK* provides a JavaFX based virtual on-screen keyboard component for touch based monitors with xml layout configuration
+
+## Features
+* support multiple key button layouts (numeric, symbol, text, shift)
+* free movable with auto positioning
+* select all, copy, paste, cut buttons
+* resizable by zoom in/out button
+* dynamic text node property definition ('vkType' and 'vkLocale')
+* context popup with additional chars
+* css style
 
 ## Modules
 * fx-onscreen-keyboard (fx components)
