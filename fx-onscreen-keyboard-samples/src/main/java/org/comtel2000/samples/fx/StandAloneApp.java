@@ -2,7 +2,7 @@ package org.comtel2000.samples.fx;
 
 /*
  * #%L
- * fx-onscreen-keyboard
+ * fx-onscreen-keyboard-samples
  * %%
  * Copyright (C) 2014 - 2015 comtel2000
  * %%
@@ -38,16 +38,16 @@ import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.util.Locale;
 
+import org.comtel2000.keyboard.control.DefaultLayer;
+import org.comtel2000.keyboard.control.KeyBoardPopup;
+import org.comtel2000.keyboard.control.KeyboardPane;
+import org.comtel2000.swing.robot.NativeAsciiRobotHandler;
+
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-
-import org.comtel2000.keyboard.control.DefaultLayer;
-import org.comtel2000.keyboard.control.KeyBoardPopup;
-import org.comtel2000.keyboard.control.KeyboardPane;
-import org.comtel2000.swing.robot.NativeAsciiRobotHandler;
 
 public class StandAloneApp extends Application {
 
@@ -67,7 +67,7 @@ public class StandAloneApp extends Application {
 		kb.addRobotHandler(new NativeAsciiRobotHandler());
 		kb.setOnKeyboardCloseButton(e -> System.exit(0));
 		kb.load();
-				
+
 		KeyBoardPopup popup = new KeyBoardPopup(kb);
 		popup.setX(posX);
 		popup.setY(posY);

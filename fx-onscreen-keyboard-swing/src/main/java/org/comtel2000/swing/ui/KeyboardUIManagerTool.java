@@ -1,10 +1,8 @@
 package org.comtel2000.swing.ui;
 
-import java.awt.Component;
-
 /*
  * #%L
- * fx-onscreen-keyboard
+ * fx-onscreen-keyboard-swing
  * %%
  * Copyright (C) 2014 - 2015 comtel2000
  * %%
@@ -35,6 +33,7 @@ import java.awt.Component;
  * #L%
  */
 
+import java.awt.Component;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.MouseEvent;
@@ -100,7 +99,7 @@ public class KeyboardUIManagerTool {
 		SwingCallback callback = new SwingCallback(window);
 		installKeyboardDefaults(createFocusListener(callback), createMouseDoubleClickListener(callback));
 	}
-	
+
 	private static FocusListener createFocusListener(EventCallback c) {
 		FocusListener l = new FocusListener() {
 			@Override
@@ -157,18 +156,18 @@ public class KeyboardUIManagerTool {
 		public void call(final Component comp, final boolean show) {
 
 			if (!window.getKeyBoardPopup().isPresent()) {
-				//keyboard not initialized -> cache position
+				// keyboard not initialized -> cache position
 				initPosition = comp;
 				return;
 			}
 
 			final KeyBoardPopup popup = window.getKeyBoardPopup().get();
 			final Component location;
-			
+
 			if (show && comp == null) {
 				// recover cached component
 				location = initPosition;
-			}else{
+			} else {
 				location = comp;
 			}
 			Platform.runLater(() -> {
@@ -186,7 +185,7 @@ public class KeyboardUIManagerTool {
 						}
 						Object locale = textComponent.getDocument().getProperty(VkProperties.VK_LOCALE);
 						if (locale != null) {
-							popup.getKeyBoard().switchLocale(new Locale((String)locale));
+							popup.getKeyBoard().switchLocale(new Locale((String) locale));
 						}
 					}
 
@@ -199,7 +198,8 @@ public class KeyboardUIManagerTool {
 					if (popup.isVisible() && transition.getStatus() == Animation.Status.STOPPED) {
 						return;
 					}
-					transition.setOnFinished((event) -> {});
+					transition.setOnFinished((event) -> {
+					});
 					transition.stop();
 
 					popup.getKeyBoard().setOpacity(0.0);

@@ -1,7 +1,5 @@
 package org.comtel2000.keyboard.control;
 
-import com.sun.javafx.Utils;
-
 /*
  * #%L
  * fx-onscreen-keyboard
@@ -34,6 +32,8 @@ import com.sun.javafx.Utils;
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
+import com.sun.javafx.Utils;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;

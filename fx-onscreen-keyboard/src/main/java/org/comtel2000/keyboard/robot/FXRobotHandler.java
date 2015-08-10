@@ -35,6 +35,10 @@ package org.comtel2000.keyboard.robot;
 
 import static javafx.scene.input.KeyCode.CONTROL;
 import static javafx.scene.input.KeyCode.META;
+
+import org.comtel2000.keyboard.control.KeyboardPane;
+import org.slf4j.LoggerFactory;
+
 import javafx.application.Platform;
 import javafx.event.EventTarget;
 import javafx.event.EventType;
@@ -44,9 +48,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Popup;
 import javafx.stage.Window;
-
-import org.comtel2000.keyboard.control.KeyboardPane;
-import org.slf4j.LoggerFactory;
 
 public class FXRobotHandler implements IRobot {
 

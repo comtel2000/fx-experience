@@ -36,9 +36,9 @@ package org.comtel2000.keyboard.control;
 import java.nio.file.Path;
 import java.util.Locale;
 
-import javafx.util.Builder;
-
 import org.comtel2000.keyboard.robot.IRobot;
+
+import javafx.util.Builder;
 
 public class KeyBoardPopupBuilder implements Builder<KeyBoardPopup> {
 

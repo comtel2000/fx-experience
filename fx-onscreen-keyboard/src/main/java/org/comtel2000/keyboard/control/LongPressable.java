@@ -1,5 +1,7 @@
 package org.comtel2000.keyboard.control;
 
+import org.comtel2000.keyboard.event.KeyButtonEvent;
+
 /*
  * #%L
  * fx-onscreen-keyboard
@@ -35,8 +37,6 @@ package org.comtel2000.keyboard.control;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.event.EventHandler;
-
-import org.comtel2000.keyboard.event.KeyButtonEvent;
 
 public interface LongPressable {
 

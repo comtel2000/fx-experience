@@ -1,8 +1,5 @@
 package org.comtel2000.keyboard.control;
 
-import java.util.Collections;
-import java.util.HashMap;
-
 /*
  * #%L
  * fx-onscreen-keyboard
@@ -36,6 +33,8 @@ import java.util.HashMap;
  * #L%
  */
 
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -60,15 +59,15 @@ public class KeyBoardPopup extends Popup implements VkProperties {
 
 	enum Visiblity {
 		/** Set position and visible true */
-		SHOW, 
-		
+		SHOW,
+
 		/** Set visible false */
-		HIDE, 
-		
+		HIDE,
+
 		/** Set positioning only if visible true */
 		POS
 	}
-	
+
 	private final KeyboardPane keyboard;
 
 	private Scene owner;
@@ -76,11 +75,11 @@ public class KeyBoardPopup extends Popup implements VkProperties {
 	private Animation animation;
 
 	public final static EventHandler<? super Event> DEFAULT_CLOSE_HANDLER = (event) -> {
-		if (event.getSource() instanceof Node){
-			((Node)event.getSource()).getScene().getWindow().hide();
+		if (event.getSource() instanceof Node) {
+			((Node) event.getSource()).getScene().getWindow().hide();
 		}
 	};
-	
+
 	public KeyBoardPopup(final KeyboardPane panel) {
 		keyboard = Objects.requireNonNull(panel);
 		getContent().add(keyboard);
@@ -109,7 +108,7 @@ public class KeyBoardPopup extends Popup implements VkProperties {
 	public void addFocusListener(final Scene scene) {
 		addFocusListener(scene, false);
 	}
-	
+
 	public void addFocusListener(final Scene scene, boolean doNotOpen) {
 		registerScene(scene);
 		scene.focusOwnerProperty().addListener((value, n1, n2) -> {
@@ -120,7 +119,7 @@ public class KeyBoardPopup extends Popup implements VkProperties {
 			}
 		});
 	}
-	
+
 	public void addDoubleClickEventFilter(final Stage stage) {
 		Objects.requireNonNull(stage).addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
 			if (event.getClickCount() == 2 && stage.getScene() != null) {
@@ -132,10 +131,10 @@ public class KeyBoardPopup extends Popup implements VkProperties {
 		});
 	}
 
-	void setVisible(Visiblity visible){
+	void setVisible(Visiblity visible) {
 		setVisible(visible, null);
 	}
-	
+
 	void setVisible(final Visiblity visible, final TextInputControl textNode) {
 		if ((visible == Visiblity.POS || visible == Visiblity.SHOW) && textNode != null) {
 			Map<String, String> vkProps = getVkProperties(textNode);

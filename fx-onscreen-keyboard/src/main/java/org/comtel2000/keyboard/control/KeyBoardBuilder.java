@@ -38,9 +38,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import javafx.util.Builder;
-
 import org.comtel2000.keyboard.robot.IRobot;
+
+import javafx.util.Builder;
 
 public class KeyBoardBuilder implements Builder<KeyboardPane> {
 

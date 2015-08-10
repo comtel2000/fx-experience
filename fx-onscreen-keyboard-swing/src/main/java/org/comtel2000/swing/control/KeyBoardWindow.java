@@ -33,7 +33,6 @@ package org.comtel2000.swing.control;
  * #L%
  */
 
-
 import java.util.Optional;
 
 import javax.swing.JWindow;
@@ -59,11 +58,11 @@ public class KeyBoardWindow extends JWindow {
 	private final JFXPanel jfxPanel;
 
 	public final static EventHandler<? super Event> DEFAULT_CLOSE_HANDLER = (event) -> {
-		if (event.getSource() instanceof Node){
-			((Node)event.getSource()).getScene().getWindow().hide();
+		if (event.getSource() instanceof Node) {
+			((Node) event.getSource()).getScene().getWindow().hide();
 		}
 	};
-	
+
 	private KeyBoardPopup popup;
 
 	protected KeyBoardWindow() {
@@ -80,7 +79,8 @@ public class KeyBoardWindow extends JWindow {
 	/**
 	 * must run in FxApplicationThread
 	 * 
-	 * @param popup Keyboard popup
+	 * @param popup
+	 *            Keyboard popup
 	 */
 	protected void createScene(final KeyBoardPopup popup) {
 		this.popup = popup;

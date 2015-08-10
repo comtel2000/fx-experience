@@ -44,7 +44,7 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>jaxb2-maven-plugin</artifactId>
-				<version>2.1</version>
+				<version>1.6</version>
 				<executions>
 					<execution>
 						<id>xjc</id>
@@ -54,16 +54,15 @@
 					</execution>
 				</executions>
 				<configuration>
-					<sources>
-						<source>src/main/resources/xml/kb-layout.xsd</source>
-					</sources>
-					<generateEpisode>false</generateEpisode>
+					<arguments>-no-header</arguments>
+					<schemaDirectory>${basedir}/src/main/resources/xml</schemaDirectory>
+					<schemaFiles>kb-layout.xsd</schemaFiles>
+					<outputDirectory>${basedir}/src/main/java/</outputDirectory>
 					<noGeneratedHeaderComments>true</noGeneratedHeaderComments>
 					<outputDirectory>src/main/java/</outputDirectory>
 					<packageName>org.comtel2000.keyboard.xml.layout</packageName>
 					<clearOutputDir>false</clearOutputDir>
 				</configuration>
-
 			</plugin>
 		</plugins>
 	</build>

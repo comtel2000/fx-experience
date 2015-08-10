@@ -94,7 +94,7 @@ public class KeyboardXmlLayoutTest {
 		Path defaultPath = Paths.get(url.toURI());
 		try (DirectoryStream<Path> stream = Files.newDirectoryStream(defaultPath)) {
 			stream.forEach(p -> {
-				if (Files.isDirectory(p)){
+				if (Files.isDirectory(p)) {
 					Locale l = new Locale(p.getFileName().toString());
 					System.err.println(l);
 				}

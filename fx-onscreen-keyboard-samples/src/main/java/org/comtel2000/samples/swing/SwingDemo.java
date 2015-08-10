@@ -2,7 +2,7 @@ package org.comtel2000.samples.swing;
 
 /*
  * #%L
- * fx-onscreen-keyboard
+ * fx-onscreen-keyboard-samples
  * %%
  * Copyright (C) 2014 - 2015 comtel2000
  * %%
@@ -50,7 +50,6 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
 import org.comtel2000.keyboard.control.DefaultLayer;
-import org.comtel2000.keyboard.control.KeyBoardPopup;
 import org.comtel2000.keyboard.control.VkProperties;
 import org.comtel2000.swing.control.KeyBoardWindow;
 import org.comtel2000.swing.control.KeyBoardWindowBuilder;
@@ -65,9 +64,9 @@ public class SwingDemo extends JApplet implements VkProperties {
 	public void init() {
 
 		KeyBoardWindow window = KeyBoardWindowBuilder.create().initLocale(Locale.forLanguageTag("en")).addIRobot(new AWTRobotHandler()).layer(DefaultLayer.NUMBLOCK).build();
-		//window.getKeyBoardPopup().get().getKeyBoard().setOnKeyboardCloseButton(window.getKeyBoardPopup().get().defaultCloseHandler);
+		// window.getKeyBoardPopup().get().getKeyBoard().setOnKeyboardCloseButton(window.getKeyBoardPopup().get().defaultCloseHandler);
 		KeyboardUIManagerTool.installKeyboardDefaults(window);
-		
+
 		JPanel panel = new JPanel();
 		panel.setPreferredSize(new Dimension(800, 400));
 		FlowLayout layout = new FlowLayout(FlowLayout.LEADING, 20, 20);

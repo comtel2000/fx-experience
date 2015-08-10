@@ -1,5 +1,7 @@
 package org.comtel2000.keyboard.event;
 
+import org.comtel2000.keyboard.control.KeyButton;
+
 /*
  * #%L
  * fx-onscreen-keyboard
@@ -36,8 +38,6 @@ package org.comtel2000.keyboard.event;
 import javafx.event.Event;
 import javafx.event.EventType;
 import javafx.scene.input.InputEvent;
-
-import org.comtel2000.keyboard.control.KeyButton;
 
 public class OnScreenKeyEvent extends InputEvent {
 

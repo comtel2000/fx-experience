@@ -2,7 +2,7 @@ package org.comtel2000.samples.swing;
 
 /*
  * #%L
- * fx-onscreen-keyboard
+ * fx-onscreen-keyboard-samples
  * %%
  * Copyright (C) 2014 - 2015 comtel2000
  * %%

@@ -44,20 +44,19 @@ import javafx.beans.property.DoubleProperty;
 import javafx.geometry.Side;
 import javafx.scene.Node;
 import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.transform.Scale;
 import javafx.util.Duration;
 
 public class MultiKeyButton extends KeyButton {
 
 	private final static org.slf4j.Logger logger = LoggerFactory.getLogger(MultiKeyButton.class);
-	
+
 	private MultiKeyPopup context;
 
 	private final Collection<String> styles;
 
 	private final DoubleProperty scaleProperty;
-	
+
 	public MultiKeyButton(DoubleProperty scaleProperty, Collection<String> styles) {
 		super();
 		getStyleClass().add("multi-button");
@@ -67,7 +66,7 @@ public class MultiKeyButton extends KeyButton {
 
 	@Override
 	protected void initEventListener(long delay) {
-		
+
 		buttonDelay = new Timeline(new KeyFrame(new Duration(delay), event -> fireLongPressed()));
 
 		setOnDragDetected(e -> {
@@ -101,7 +100,7 @@ public class MultiKeyButton extends KeyButton {
 		});
 
 	}
-	
+
 	private MultiKeyPopup getContext() {
 		if (context == null) {
 			context = new MultiKeyPopup();
@@ -111,7 +110,7 @@ public class MultiKeyButton extends KeyButton {
 				getParent().getParent().setDisable(false);
 			});
 			setOnLongPressed(event -> {
-				if (context.getButtonPane().getScaleX() != scaleProperty.get()){
+				if (context.getButtonPane().getScaleX() != scaleProperty.get()) {
 					context.getButtonPane().getTransforms().setAll(new Scale(scaleProperty.get(), scaleProperty.get(), 1, 0, 0, 0));
 				}
 				// getParent().getParent().setEffect(new BoxBlur());
@@ -129,7 +128,7 @@ public class MultiKeyButton extends KeyButton {
 		KeyButton button = new ShortPressKeyButton();
 		button.setText(label);
 		button.setKeyCode(extKeyCode);
-		
+
 		if (getStyleClass() != null) {
 			button.getStyleClass().addAll(getStyleClass());
 		} else {
@@ -140,7 +139,6 @@ public class MultiKeyButton extends KeyButton {
 		button.setPrefWidth(this.getPrefWidth());
 		button.setPrefHeight(this.getPrefHeight());
 
-		
 		button.setOnShortPressed(getOnShortPressed());
 
 		getContext().getButtonPane().getChildren().add(button);

@@ -64,12 +64,12 @@ public interface StandardKeyCode {
 	int UNDO = -14;
 
 	int REDO = -15;
-	
+
 	int NUMERIC_TYPE = -16;
-	
+
 	int EMAIL_TYPE = -17;
-	
+
 	int URL_TYPE = -18;
-	
+
 	int CAPS_LOCK = -19;
 }

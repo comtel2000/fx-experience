@@ -33,7 +33,6 @@ package org.comtel2000.keyboard.control;
  * #L%
  */
 
-
 public interface VkProperties {
 
 	String VK_TYPE = "vkType";

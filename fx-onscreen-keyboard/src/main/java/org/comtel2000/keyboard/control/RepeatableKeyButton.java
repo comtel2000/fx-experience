@@ -65,11 +65,11 @@ public class RepeatableKeyButton extends KeyButton {
 			buttonDelay.stop();
 			e.consume();
 		});
-		
+
 		setOnMousePressed(e -> {
 			logger.trace("{} pressed", getKeyCode());
 			if (e.getButton().equals(MouseButton.PRIMARY)) {
-				if (!isMovable()){
+				if (!isMovable()) {
 					fireShortPressed();
 				}
 				buttonDelay.playFromStart();
@@ -79,7 +79,7 @@ public class RepeatableKeyButton extends KeyButton {
 
 		setOnMouseReleased(e -> {
 			logger.trace("{} released", getKeyCode());
-			if (isMovable() && buttonDelay.getStatus() == Status.RUNNING){
+			if (isMovable() && buttonDelay.getStatus() == Status.RUNNING) {
 				fireShortPressed();
 			}
 			buttonDelay.stop();

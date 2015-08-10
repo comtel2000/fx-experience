@@ -164,6 +164,13 @@
 						<version>1.8</version>
 						<configuration>
 							<verbose>true</verbose>
+							<excludes>
+								<exclude>**/*.xml</exclude>
+								<exclude>**/*.xsd</exclude>
+								<exclude>**/xml/layout/*.java</exclude>
+								<exclude>**/src/test/resources/**</exclude>
+								<exclude>**/src/main/resources/**</exclude>
+							</excludes>
 						</configuration>
 						<executions>
 							<execution>

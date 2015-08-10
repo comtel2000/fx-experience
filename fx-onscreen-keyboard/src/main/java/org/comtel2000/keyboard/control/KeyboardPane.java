@@ -475,7 +475,7 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
 					rowWidth += cc.getPrefWidth();
 					continue;
 				}
-				
+
 				String[] codes = key.getCodes().split(",");
 				KeyButton button;
 				if (codes.length > 1 || key.getCodes().equals(Integer.toString(LOCALE_SWITCH))) {
@@ -488,7 +488,7 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
 
 				button.setFocusTraversable(false);
 				button.setOnShortPressed(this);
-				//button.setCache(true);
+				// button.setCache(true);
 
 				button.setMinHeight(10);
 				button.setPrefHeight(defaultKeyHeight);
@@ -507,14 +507,14 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
 						button.getStyleClass().add(style.substring(1));
 					}
 				}
-				
+
 				if (codes.length > 0 && !codes[0].isEmpty()) {
 					button.setKeyCode(parseInt(codes[0]));
 				}
 				if (codes.length > 1) {
 					for (int i = 1; i < codes.length; i++) {
 						int keyCode = parseInt(codes[i]);
-						button.addExtKeyCode(keyCode, Character.toString((char)keyCode));
+						button.addExtKeyCode(keyCode, Character.toString((char) keyCode));
 					}
 				}
 
@@ -576,12 +576,12 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
 					break;
 				case BACK_SPACE:
 				case DELETE:
-					if (!button.isRepeatable()){
-					button.setOnLongPressed(e -> {
-						//e.consume();
-						sendToComponent((char) 97, true);
-						sendToComponent((char) java.awt.event.KeyEvent.VK_DELETE, ctrlProperty.get());
-					});
+					if (!button.isRepeatable()) {
+						button.setOnLongPressed(e -> {
+							// e.consume();
+							sendToComponent((char) 97, true);
+							sendToComponent((char) java.awt.event.KeyEvent.VK_DELETE, ctrlProperty.get());
+						});
 					}
 					break;
 				}

@@ -1,5 +1,7 @@
 package org.comtel2000.keyboard.control;
 
+import org.slf4j.LoggerFactory;
+
 /*
  * #%L
  * fx-onscreen-keyboard
@@ -34,8 +36,6 @@ package org.comtel2000.keyboard.control;
  */
 
 import javafx.scene.input.MouseButton;
-
-import org.slf4j.LoggerFactory;
 
 public class ShortPressKeyButton extends KeyButton {
 

@@ -2,7 +2,7 @@ package org.comtel2000.swing.robot;
 
 /*
  * #%L
- * fx-onscreen-keyboard
+ * fx-onscreen-keyboard-swing
  * %%
  * Copyright (C) 2014 - 2015 comtel2000
  * %%
