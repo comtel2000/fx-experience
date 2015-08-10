@@ -26,7 +26,9 @@
 	<build>
 		<plugins>
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.10.3</version>
 				<executions>
 					<execution>
 						<configuration>
@@ -42,23 +44,26 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>jaxb2-maven-plugin</artifactId>
-				<version>1.6</version>
+				<version>2.1</version>
 				<executions>
 					<execution>
 						<id>xjc</id>
-						<!-- <phase>generate-sources</phase> -->
 						<goals>
 							<goal>xjc</goal>
 						</goals>
-						<configuration>
-							<schemaDirectory>${basedir}/src/main/resources/xml</schemaDirectory>
-							<schemaFiles>kb-layout.xsd</schemaFiles>
-							<outputDirectory>${basedir}/src/main/java/</outputDirectory>
-							<packageName>org.comtel2000.keyboard.xml.layout</packageName>
-							<clearOutputDir>false</clearOutputDir>
-						</configuration>
 					</execution>
 				</executions>
+				<configuration>
+					<sources>
+						<source>src/main/resources/xml/kb-layout.xsd</source>
+					</sources>
+					<generateEpisode>false</generateEpisode>
+					<noGeneratedHeaderComments>true</noGeneratedHeaderComments>
+					<outputDirectory>src/main/java/</outputDirectory>
+					<packageName>org.comtel2000.keyboard.xml.layout</packageName>
+					<clearOutputDir>false</clearOutputDir>
+				</configuration>
+
 			</plugin>
 		</plugins>
 	</build>

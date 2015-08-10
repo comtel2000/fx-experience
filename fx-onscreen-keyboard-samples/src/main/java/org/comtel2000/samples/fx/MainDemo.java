@@ -35,6 +35,7 @@ package org.comtel2000.samples.fx;
 
 import java.util.Locale;
 
+import org.comtel2000.keyboard.control.DefaultLayer;
 import org.comtel2000.keyboard.control.KeyBoardPopup;
 import org.comtel2000.keyboard.control.KeyBoardPopupBuilder;
 import org.comtel2000.keyboard.control.VkProperties;
@@ -74,13 +75,17 @@ public class MainDemo extends Application implements VkProperties {
 
 		CheckBox spaceKeyMove = new CheckBox("Movable");
 		spaceKeyMove.setSelected(true);
-		popup.getKeyBoard().spaceKeyMoveProperty().bind(spaceKeyMove.selectedProperty());
+		popup.getKeyBoard().spaceKeyMoveProperty().bindBidirectional(spaceKeyMove.selectedProperty());
 		
 		CheckBox capsLock = new CheckBox("CapsLock");
 		capsLock.setSelected(true);
-		popup.getKeyBoard().capsLockProperty().bind(capsLock.selectedProperty());
+		popup.getKeyBoard().capsLockProperty().bindBidirectional(capsLock.selectedProperty());
 		
-		pane.getChildren().add(new ToolBar(okButton, cancelButton, spaceKeyMove, capsLock));
+		CheckBox numblock = new CheckBox("NumBlock");
+		numblock.setSelected(false);
+		numblock.selectedProperty().addListener((l, a, b) -> popup.getKeyBoard().switchLayer(b ? DefaultLayer.NUMBLOCK : DefaultLayer.DEFAULT));
+		
+		pane.getChildren().add(new ToolBar(okButton, cancelButton, spaceKeyMove, capsLock, numblock));
 		
 		pane.getChildren().add(new Label("Text0"));
 		TextField tf0 = new TextField();

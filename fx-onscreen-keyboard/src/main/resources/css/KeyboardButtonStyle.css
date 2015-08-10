@@ -36,30 +36,30 @@
 
 #key-background {
 	-fx-background-color: rgb(220.0, 220.0, 220.0);
-	-fx-background-radius: 5.0;
+	-fx-background-radius: 0, 0, 0, 0;
 	-fx-focus-traversable: false;
 	-fx-border-color: rgb(100, 106, 120);
-	-fx-border-width: 1;
-	-fx-border-radius: 5.0;
+	-fx-border-width: 0.5;
+	-fx-border-radius: 0, 0, 0, 0;
 	-fx-padding: 0;
 }
 
 #key-background-row {
 	-fx-padding: 5.0;
-	-fx-vgap: 3.0;
+	-fx-vgap: 2.5;
 }
 
 #key-background-column {
-	-fx-hgap: 3.0;
+	-fx-hgap: 2.5;
 }
 
 #key-context-background {
 	-fx-background-color: rgb(220, 220, 220);
-	-fx-background-radius: 5;
+	-fx-background-radius: 0.0, 0.0, 0.0, 0.0;
 	-fx-focus-traversable: false;
 	-fx-border-color: rgb(100, 106, 120);
 	-fx-border-width: 0.5;
-	-fx-border-radius: 5;
+	-fx-border-radius: 0.0, 0.0, 0.0, 0.0;
 	-fx-opacity: 0.8;
 	-fx-padding: 10;
 	-fx-vgap: 10;
@@ -70,13 +70,16 @@
 	-fx-font-size: 1.2em;
 	-fx-font-family: "sans-serif";
 	-fx-text-fill: white;
+	-fx-background-radius: 0.0, 0.0, 0.0, 0.0;
 	-fx-background-color: rgb(60, 66, 80);
+	-fx-border-width: 0;
 }
 
 #key-context-button {
 	-fx-font-size: 1.2em;
 	-fx-font-family: "sans-serif";
 	-fx-text-fill: white;
+	-fx-background-radius: 0.0, 0.0, 0.0, 0.0;
 	-fx-background-color: rgb(60, 66, 80);
 	-fx-padding: 0 5 0 5;
 }
@@ -88,16 +91,6 @@
 #key-button.button:pressed {
 	-fx-background-color: rgb(110, 116, 130);
 	-fx-text-fill: gray;
-}
-
-#key-button.button.extend-style {
-	/**
-	-fx-background-color: rgb(200, 200, 200);
-	-fx-padding: 2;
-	-fx-shape:
-		"m 92.377221,49.5 -4.11293,3.655981 1.146227,0 2.966703,-2.575805 2.966703,2.575805 1.281076,0 L 92.377221,49.5 z";
-	*/
-	
 }
 
 #key-button.button.small-style {

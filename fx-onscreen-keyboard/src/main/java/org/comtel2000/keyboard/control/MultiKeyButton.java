@@ -35,39 +35,85 @@ package org.comtel2000.keyboard.control;
 
 import java.util.Collection;
 
+import org.slf4j.LoggerFactory;
+
+import javafx.animation.Animation.Status;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.beans.property.DoubleProperty;
-import javafx.collections.ObservableList;
 import javafx.geometry.Side;
 import javafx.scene.Node;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.transform.Scale;
+import javafx.util.Duration;
 
 public class MultiKeyButton extends KeyButton {
 
+	private final static org.slf4j.Logger logger = LoggerFactory.getLogger(MultiKeyButton.class);
+	
 	private MultiKeyPopup context;
-
-	private final DoubleProperty scaleProperty;
 
 	private final Collection<String> styles;
 
+	private final DoubleProperty scaleProperty;
+	
 	public MultiKeyButton(DoubleProperty scaleProperty, Collection<String> styles) {
-		this.scaleProperty = scaleProperty;
+		super();
+		getStyleClass().add("multi-button");
 		this.styles = styles;
+		this.scaleProperty = scaleProperty;
 	}
 
-	public MultiKeyPopup getContext() {
+	@Override
+	protected void initEventListener(long delay) {
+		
+		buttonDelay = new Timeline(new KeyFrame(new Duration(delay), event -> fireLongPressed()));
+
+		setOnDragDetected(e -> {
+			logger.trace("{} drag detected", getKeyCode());
+			if (buttonDelay.getStatus().equals(Status.RUNNING) && buttonDelay.getCurrentRate() > 0) {
+				buttonDelay.stop();
+				fireLongPressed();
+			}
+			e.consume();
+		});
+
+		setOnMouseClicked(event -> {
+			logger.trace("{} clicked: {}", getKeyCode(), buttonDelay.getCurrentRate());
+
+			if (event.getButton().equals(MouseButton.PRIMARY)) {
+				if (buttonDelay.getStatus().equals(Status.RUNNING)) {
+					buttonDelay.stop();
+					fireShortPressed();
+				}
+			}
+			setFocused(false);
+			event.consume();
+		});
+
+		setOnMousePressed(event -> {
+			logger.trace("{} pressed: {}", getKeyCode(), buttonDelay.getCurrentRate());
+			if (event.getButton().equals(MouseButton.PRIMARY)) {
+				buttonDelay.playFromStart();
+			}
+			event.consume();
+		});
+
+	}
+	
+	private MultiKeyPopup getContext() {
 		if (context == null) {
-
 			context = new MultiKeyPopup();
-			context.getStylesheets().addAll(styles);
-
+			context.getStylesheets().setAll(styles);
 			context.setOnHidden(event -> {
 				getParent().getParent().setEffect(null);
 				getParent().getParent().setDisable(false);
-
 			});
 			setOnLongPressed(event -> {
-				context.getButtonPane().getTransforms().setAll(new Scale(scaleProperty.get(), scaleProperty.get(), 1, 0, 0, 0));
-
+				if (context.getButtonPane().getScaleX() != scaleProperty.get()){
+					context.getButtonPane().getTransforms().setAll(new Scale(scaleProperty.get(), scaleProperty.get(), 1, 0, 0, 0));
+				}
 				// getParent().getParent().setEffect(new BoxBlur());
 				getParent().getParent().setDisable(true);
 				setFocused(false);
@@ -78,35 +124,26 @@ public class MultiKeyButton extends KeyButton {
 		return context;
 	}
 
-	public void addExtKeyCode(int extKeyCode) {
-		addExtKeyCode(extKeyCode, null, null);
-	}
-
-	public void addExtKeyCode(int extKeyCode, String label, ObservableList<String> styleClasses) {
-		ShortPressKeyButton button = new ShortPressKeyButton(Character.toString((char) extKeyCode));
-
-		if (styleClasses != null) {
-			button.getStyleClass().addAll(styleClasses);
+	@Override
+	public void addExtKeyCode(int extKeyCode, String label) {
+		KeyButton button = new ShortPressKeyButton();
+		button.setText(label);
+		button.setKeyCode(extKeyCode);
+		
+		if (getStyleClass() != null) {
+			button.getStyleClass().addAll(getStyleClass());
 		} else {
 			button.setId("key-context-button");
 		}
-		if (label != null) {
-			button.setText(label);
-		}
 		button.setFocusTraversable(false);
 
-		// TODO: add to css style
 		button.setPrefWidth(this.getPrefWidth());
 		button.setPrefHeight(this.getPrefHeight());
 
-		button.setKeyCode(extKeyCode);
+		
 		button.setOnShortPressed(getOnShortPressed());
 
 		getContext().getButtonPane().getChildren().add(button);
-	}
-
-	public boolean isContextAvailable() {
-		return context != null;
 	}
 
 }

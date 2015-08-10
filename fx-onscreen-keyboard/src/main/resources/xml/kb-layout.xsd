@@ -1,126 +1,126 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-	<xsd:element name="Keyboard">
-		<xsd:complexType>
-			<xsd:sequence>
-				<xsd:element name="Row" maxOccurs="unbounded" minOccurs="1">
-					<xsd:complexType>
-						<xsd:sequence>
-							<xsd:element name="Key" maxOccurs="unbounded" minOccurs="1">
-								<xsd:complexType>
-									<xsd:attribute name="codes" type="xsd:string" use="required">
-										<xsd:annotation>
-											<xsd:documentation>The unicode value and optional additional comma-separated values to display in the popup keyboard. </xsd:documentation>
-										</xsd:annotation>
-									</xsd:attribute>
-									<xsd:attribute name="popupCharacters" use="optional" type="xsd:string">
-										<xsd:annotation>
-											<xsd:documentation>The unicode comma-separated characters to display in the popup keyboard. </xsd:documentation>
-										</xsd:annotation>
-									</xsd:attribute>
-									<xsd:attribute name="popupKeyboard" use="optional" type="xsd:string">
-										<xsd:annotation>
-											<xsd:documentation>The XML keyboard layout file of any popup keyboard. </xsd:documentation>
-										</xsd:annotation>
-									</xsd:attribute>
-									<xsd:attribute name="keyLabel" use="optional" type="xsd:string">
-										<xsd:annotation>
-											<xsd:documentation>The label to display on the key. </xsd:documentation>
-										</xsd:annotation>
-									</xsd:attribute>
-									<xsd:attribute name="keyOutputText" use="optional" type="xsd:string">
-										<xsd:annotation>
-											<xsd:documentation>The string of characters to output when this key is pressed. </xsd:documentation>
-										</xsd:annotation>
-									</xsd:attribute>
-									<xsd:attribute name="movable" use="optional" type="xsd:boolean">
-										<xsd:annotation>
-											<xsd:documentation>Whether this is a key button to move the keyboard. </xsd:documentation>
-										</xsd:annotation>
-									</xsd:attribute>
-									<xsd:attribute name="sticky" use="optional" type="xsd:boolean">
-										<xsd:annotation>
-											<xsd:documentation>Whether this is a toggle key. </xsd:documentation>
-										</xsd:annotation>
-									</xsd:attribute>
-									<xsd:attribute name="modifier" use="optional" type="xsd:boolean">
-										<xsd:annotation>
-											<xsd:documentation>Whether this is a modifier key such as Alt or Shift. </xsd:documentation>
-										</xsd:annotation>
-									</xsd:attribute>
-									<xsd:attribute name="repeatable" use="optional" type="xsd:boolean">
-										<xsd:annotation>
-											<xsd:documentation>Whether long-pressing on this key will make it repeat. </xsd:documentation>
-										</xsd:annotation>
-									</xsd:attribute>
-									<xsd:attribute name="keyIconStyle" type="xsd:string">
-										<xsd:annotation>
-											<xsd:documentation>The css icon style sheet reference of the key. </xsd:documentation>
-										</xsd:annotation>
-									</xsd:attribute>
-									<xsd:attribute name="keyLabelStyle" type="xsd:string">
-										<xsd:annotation>
-											<xsd:documentation>The css button label style sheet reference of the key. </xsd:documentation>
-										</xsd:annotation>
-									</xsd:attribute>
-									<xsd:attribute name="keyWidth" type="xsd:int">
-										<xsd:annotation>
-											<xsd:documentation>Override the default width of a key, in pixels or percentage of display width. </xsd:documentation>
-										</xsd:annotation>
-									</xsd:attribute>
-									<xsd:attribute name="keyEdgeFlags">
-										<xsd:annotation>
-											<xsd:documentation>Key edge flags. </xsd:documentation>
-										</xsd:annotation>
-										<xsd:simpleType>
-											<xsd:restriction base="xsd:string">
-												<xsd:enumeration value="left" />
-												<xsd:enumeration value="right" />
-											</xsd:restriction>
-										</xsd:simpleType>
-									</xsd:attribute>
-									<xsd:attribute name="horizontalGap" type="xsd:int">
-										<xsd:annotation>
-											<xsd:documentation>Default horizontal gap between keys. </xsd:documentation>
-										</xsd:annotation>
-									</xsd:attribute>
-								</xsd:complexType>
-							</xsd:element>
-						</xsd:sequence>
-						<xsd:attribute name="rowEdgeFlags">
-							<xsd:annotation>
-								<xsd:documentation>Row edge flags. </xsd:documentation>
-							</xsd:annotation>
-							<xsd:simpleType>
-								<xsd:restriction base="xsd:string">
-									<xsd:enumeration value="top" />
-									<xsd:enumeration value="bottom" />
-								</xsd:restriction>
-							</xsd:simpleType>
-						</xsd:attribute>
-					</xsd:complexType>
-				</xsd:element>
-			</xsd:sequence>
-			<xsd:attribute name="keyWidth" type="xsd:int">
-				<xsd:annotation>
-					<xsd:documentation>Default width of a key, in pixels or percentage of display width. </xsd:documentation>
-				</xsd:annotation>
-			</xsd:attribute>
-			<xsd:attribute name="keyHeight" type="xsd:int">
-				<xsd:annotation>
-					<xsd:documentation>Height of the key, not including the gap. </xsd:documentation>
-				</xsd:annotation>
-			</xsd:attribute>
-			<xsd:attribute name="horizontalGap" type="xsd:int">
-				<xsd:annotation>
-					<xsd:documentation>Default horizontal gap between keys. </xsd:documentation>
-				</xsd:annotation>
-			</xsd:attribute>
-			<xsd:attribute name="verticalGap" type="xsd:int">
-				<xsd:annotation>
-					<xsd:documentation>Default vertical gap between rows of keys. </xsd:documentation>
-				</xsd:annotation>
-			</xsd:attribute>
-		</xsd:complexType>
-	</xsd:element>
-</xsd:schema>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xml:lang="en" >
+	<xs:element name="Keyboard">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Row" maxOccurs="unbounded" minOccurs="1">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Key" maxOccurs="unbounded" minOccurs="1">
+								<xs:complexType>
+									<xs:attribute name="codes" type="xs:string" use="required">
+										<xs:annotation>
+											<xs:documentation>The unicode value and optional additional comma-separated values to display in the popup keyboard. </xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="popupCharacters" use="optional" type="xs:string">
+										<xs:annotation>
+											<xs:documentation>The unicode comma-separated characters to display in the popup keyboard. </xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="popupKeyboard" use="optional" type="xs:string">
+										<xs:annotation>
+											<xs:documentation>The XML keyboard layout file of any popup keyboard. </xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="keyLabel" use="optional" type="xs:string">
+										<xs:annotation>
+											<xs:documentation>The label to display on the key. </xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="keyOutputText" use="optional" type="xs:string">
+										<xs:annotation>
+											<xs:documentation>The string of characters to output when this key is pressed. </xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="movable" use="optional" type="xs:boolean">
+										<xs:annotation>
+											<xs:documentation>Whether this is a key button to move the keyboard. </xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="sticky" use="optional" type="xs:boolean">
+										<xs:annotation>
+											<xs:documentation>Whether this is a toggle key. </xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="modifier" use="optional" type="xs:boolean">
+										<xs:annotation>
+											<xs:documentation>Whether this is a modifier key such as Alt or Shift. </xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="repeatable" use="optional" type="xs:boolean">
+										<xs:annotation>
+											<xs:documentation>Whether long-pressing on this key will make it repeat. </xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="keyIconStyle" type="xs:string">
+										<xs:annotation>
+											<xs:documentation>The css icon style sheet reference of the key. </xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="keyLabelStyle" type="xs:string">
+										<xs:annotation>
+											<xs:documentation>The css button label style sheet reference of the key. </xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="keyWidth" type="xs:int">
+										<xs:annotation>
+											<xs:documentation>Override the default width of a key, in pixels or percentage of display width. </xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="keyEdgeFlags">
+										<xs:annotation>
+											<xs:documentation>Key edge flags. </xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:enumeration value="left" />
+												<xs:enumeration value="right" />
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+									<xs:attribute name="horizontalGap" type="xs:int">
+										<xs:annotation>
+											<xs:documentation>Default horizontal gap between keys. </xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="rowEdgeFlags">
+							<xs:annotation>
+								<xs:documentation>Row edge flags. </xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:enumeration value="top" />
+									<xs:enumeration value="bottom" />
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="keyWidth" type="xs:int">
+				<xs:annotation>
+					<xs:documentation>Default width of a key, in pixels or percentage of display width. </xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="keyHeight" type="xs:int">
+				<xs:annotation>
+					<xs:documentation>Height of the key, not including the gap. </xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="horizontalGap" type="xs:int">
+				<xs:annotation>
+					<xs:documentation>Default horizontal gap between keys. </xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="verticalGap" type="xs:int">
+				<xs:annotation>
+					<xs:documentation>Default vertical gap between rows of keys. </xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

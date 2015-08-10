@@ -33,9 +33,8 @@ package org.comtel2000.keyboard.control;
  * #L%
  */
 
-import javafx.animation.Animation.Status;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
+import org.comtel2000.keyboard.event.KeyButtonEvent;
+
 import javafx.animation.Timeline;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -43,23 +42,18 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.input.MouseButton;
-import javafx.util.Duration;
 
-import org.comtel2000.keyboard.event.KeyButtonEvent;
-import org.slf4j.LoggerFactory;
-
-public class KeyButton extends Button implements LongPressable {
-
-	private final static org.slf4j.Logger logger = LoggerFactory.getLogger(KeyButton.class);
+public abstract class KeyButton extends Button implements LongPressable {
 
 	private final static long DEFAULT_DELAY = 400;
 
-	private String keyText;
-	
-	private int keyCode;
+	protected String keyText;
 
-	private final Timeline timer;
+	private boolean movable, repeatable;
+
+	protected int keyCode;
+
+	protected Timeline buttonDelay;
 
 	private ObjectProperty<EventHandler<? super KeyButtonEvent>> onLongPressed;
 
@@ -88,67 +82,11 @@ public class KeyButton extends Button implements LongPressable {
 	public KeyButton(String label, Node graphic, long delay) {
 		super(label, graphic);
 		setId("key-button");
-
-		timer = new Timeline(new KeyFrame(new Duration(20), new KeyValue[0]));
-		if (delay > 0) {
-			timer.setDelay(new Duration(delay));
-			initEventListener();
-		}
-	}
-
-	protected void initEventListener() {
-		timer.setOnFinished(event -> fireLongPressed());
-
-		setOnDragDetected(event -> {
-			logger.trace("{} drag detected", keyCode);
-			event.consume();
-		});
-
-		setOnMouseClicked(event -> {
-			logger.trace("{} clicked: {}", keyCode, timer.getCurrentRate());
-
-			if (event.getButton().equals(MouseButton.PRIMARY)) {
-				if (timer.getStatus().equals(Status.RUNNING)) {
-					timer.stop();
-					fireShortPressed();
-
-				}
-
-			}
-			setFocused(false);
-			event.consume();
-		});
-
-		setOnMousePressed(event -> {
-			logger.trace("{} pressed: {}", keyCode, timer.getCurrentRate());
-			if (event.getButton().equals(MouseButton.PRIMARY)) {
-				timer.playFromStart();
-			}
-			event.consume();
-		});
-
-		setOnMouseDragged(event -> {
-			logger.trace("{} dragged: {}", keyCode, timer.getCurrentRate());
-
-			if (event.getButton().equals(MouseButton.PRIMARY)) {
-				if (timer.getStatus().equals(Status.RUNNING) && timer.getCurrentRate() > 1) {
-					timer.stop();
-					fireLongPressed();
-				}
-				event.consume();
-			}
-
-		});
+		initEventListener(delay > 0 ? delay : DEFAULT_DELAY);
 
 	}
 
-	public Duration getDelay() {
-		return timer.getDelay();
-	}
-
-	public void setDelay(Duration delay) {
-		timer.setDelay(delay);
-	}
+	protected abstract void initEventListener(long delay);
 
 	protected void fireLongPressed() {
 		fireEvent(new KeyButtonEvent(this, KeyButtonEvent.LONG_PRESSED));
@@ -223,6 +161,25 @@ public class KeyButton extends Button implements LongPressable {
 
 	public void setKeyText(String keyText) {
 		this.keyText = keyText;
+	}
+
+	public void addExtKeyCode(int keyCode, String label) {
+	}
+
+	public boolean isMovable() {
+		return movable;
+	}
+
+	public void setMovable(boolean movable) {
+		this.movable = movable;
+	}
+
+	public boolean isRepeatable() {
+		return repeatable;
+	}
+
+	public void setRepeatable(boolean repeatable) {
+		this.repeatable = repeatable;
 	}
 
 }

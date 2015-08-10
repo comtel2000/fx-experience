@@ -70,4 +70,6 @@ public interface StandardKeyCode {
 	int EMAIL_TYPE = -17;
 	
 	int URL_TYPE = -18;
+	
+	int CAPS_LOCK = -19;
 }

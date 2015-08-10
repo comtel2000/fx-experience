@@ -1,10 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- #%L fx-onscreen-keyboard %% Copyright (C) 2014 - 2015 comtel2000 %% Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met: 1. Redistributions of source code must 
-	retain the above copyright notice, this list of conditions and the following disclaimer. 2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other 
-	materials provided with the distribution. 3. Neither the name of the comtel2000 nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission. THIS SOFTWARE IS PROVIDED 
-	BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER 
-	OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER 
-	CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. #L% -->
+<!--
+  #%L
+  fx-onscreen-keyboard
+  %%
+  Copyright (C) 2014 - 2015 comtel2000
+  %%
+  Redistribution and use in source and binary forms, with or without modification,
+  are permitted provided that the following conditions are met:
+  
+  1. Redistributions of source code must retain the above copyright notice, this
+     list of conditions and the following disclaimer.
+  
+  2. Redistributions in binary form must reproduce the above copyright notice,
+     this list of conditions and the following disclaimer in the documentation
+     and/or other materials provided with the distribution.
+  
+  3. Neither the name of the comtel2000 nor the names of its contributors
+     may be used to endorse or promote products derived from this software without
+     specific prior written permission.
+  
+  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+  IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+  INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+  BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+  LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+  OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
+  OF THE POSSIBILITY OF SUCH DAMAGE.
+  #L%
+  -->
 
 <Keyboard keyWidth="40" keyHeight="30" horizontalGap="0" verticalGap="0">
 	<Row>
@@ -20,36 +46,29 @@
 		<Key codes="-121" keyLabel="F10" keyLabelStyle=".small-style" />
 		<Key codes="-5" keyLabel="!" keyLabelStyle=".font-fxkeyboard" repeatable="true" />
 	</Row>
-
 	<Row>
-		<Key codes="43" keyLabel="A" keyLabelStyle=".font-fxkeyboard" keyWidth="50" />
-		<Key codes="97" keyLabel="ALLES MARKIEREN" keyLabelStyle=".small-style" keyWidth="120" />
-		<Key codes="" keyLabel="" />
-		<Key codes="" keyLabel="" />
-		<Key codes="" keyLabel="" />
-		<Key codes="-10" keyLabel="▲" keyLabelStyle=".small-style" />
-		<Key codes="" keyLabel="" />
+		<Key codes="43" keyLabel="A" keyLabelStyle=".font-fxkeyboard" keyWidth="70" />
+		<Key codes="97" keyLabel="ALLES MARKIEREN" keyLabelStyle=".small-style" keyWidth="135" />
+		<Key codes="-14" keyLabel="UNDO" keyLabelStyle=".small-style" keyWidth="70" />
+		<Key codes="-15" keyLabel="REDO" keyLabelStyle=".small-style" keyWidth="70" />
+		<Key codes="-10" keyLabel="▲" keyLabelStyle=".small-style" repeatable="true" />
 		<Key codes="10" keyLabel="ENTER" keyLabelStyle=".small-style" keyWidth="70" />
 	</Row>
-
 	<Row>
-		<Key codes="45" keyLabel="@" keyLabelStyle=".font-fxkeyboard" keyWidth="50" modifier="true" sticky="true" />
-		<Key codes="120" keyLabel="AUSSCHNEIDEN" keyLabelStyle=".small-style" keyWidth="60" />
-		<Key codes="99" keyLabel="KOPIEREN" keyLabelStyle=".small-style" keyWidth="70" />
-		<Key codes="118" keyLabel="EINFÜGEN" keyLabelStyle=".small-style" keyWidth="70" />
-		<Key codes="-12" keyLabel="◄" keyLabelStyle=".small-style" />
-		<Key codes="-11" keyLabel="▼" keyLabelStyle=".small-style" />
-		<Key codes="-13" keyLabel="►" keyLabelStyle=".small-style" />
-		<Key codes="" keyWidth="70" />
+		<Key codes="45" keyLabel="@" keyLabelStyle=".font-fxkeyboard" keyWidth="70" />
+		<Key codes="120" keyLabel="AUSSCHNEIDEN" keyLabelStyle=".small-style" keyWidth="75" />
+		<Key codes="99" keyLabel="KOPIEREN" keyLabelStyle=".small-style" keyWidth="75" />
+		<Key codes="118" keyLabel="EINFÜGEN" keyLabelStyle=".small-style" keyWidth="77" />
+		<Key codes="-12" keyLabel="◄" keyLabelStyle=".small-style" repeatable="true" />
+		<Key codes="-11" keyLabel="▼" keyLabelStyle=".small-style" repeatable="true" />
+		<Key codes="-13" keyLabel="►" keyLabelStyle=".small-style" repeatable="true" />
+		<Key codes="" keyWidth="25" />
 	</Row>
-
-	<Row rowEdgeFlags="bottom">
-		<Key codes="-6" keyLabel="STRG" keyLabelStyle=".small-style" keyWidth="50" />
-		<Key codes="" keyWidth="50" />
-		<Key codes="32" keyLabel="3" keyLabelStyle=".font-fxkeyboard-alpha" movable="true" keyWidth="240" repeatable="true" />
+	<Row>
+		<Key codes="-6" keyLabel="CTRL" keyLabelStyle=".small-style" keyWidth="50" />
+		<Key codes="-4" keyLabel="TAB" keyLabelStyle=".small-style" keyWidth="50" />
+		<Key codes="32" keyLabel="3" keyLabelStyle=".font-fxkeyboard-alpha" keyWidth="240" movable="true" repeatable="true" />
 		<Key codes="-7" keyLabel="DE" keyLabelStyle=".small-style" keyWidth="50" />
 		<Key codes="-3" keyLabel="2" keyLabelStyle=".font-fxkeyboard" keyWidth="50" />
 	</Row>
-
-</Keyboard>
-    
+</Keyboard>    

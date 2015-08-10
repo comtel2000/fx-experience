@@ -21,7 +21,7 @@
 		<Key codes="1047" keyLabel="З" />
 		<Key codes="1061" keyLabel="Х" />
 		<Key codes="1066" keyLabel="Ъ" />
-		<Key codes="-5" keyLabel="!" keyWidth="40" keyLabelStyle=".font-fxkeyboard" keyEdgeFlags="right" repeatable="true" />
+		<Key codes="-5" keyLabel="!" keyWidth="40" keyLabelStyle=".font-fxkeyboard" repeatable="true" />
 	</Row>
 
 	<Row>
@@ -37,11 +37,11 @@
 		<Key codes="1044" keyLabel="Д" />
 		<Key codes="1046" keyLabel="Ж" />
 		<Key codes="1069" keyLabel="Э" />
-		<Key codes="-9" keyLabel="ENTER" keyLabelStyle=".small-style" keyWidth="70" keyEdgeFlags="right" />
+		<Key codes="-9" keyLabel="ENTER" keyLabelStyle=".small-style" keyWidth="70" />
 	</Row>
 
 	<Row>
-		<Key codes="-1" keyLabel="J" keyLabelStyle=".font-fxkeyboard" keyWidth="40" modifier="true" sticky="true" keyEdgeFlags="left" />
+		<Key codes="-1" keyLabel="J" keyLabelStyle=".font-fxkeyboard" keyWidth="40" modifier="true" sticky="true"  />
 		<Key codes="1071" keyLabel="Я" />
 		<Key codes="1063" keyLabel="Ч" />
 		<Key codes="1057" keyLabel="С" />
@@ -53,11 +53,11 @@
 		<Key codes="1070" keyLabel="Ю" />
 		<Key codes="59" keyLabel=";" />
 		<Key codes="58" keyLabel=":" />
-		<Key codes="-1" keyLabel="J" keyLabelStyle=".font-fxkeyboard" keyWidth="40" modifier="true" sticky="true" keyEdgeFlags="right" />
+		<Key codes="-1" keyLabel="J" keyLabelStyle=".font-fxkeyboard" keyWidth="40" modifier="true" sticky="true"  />
 	</Row>
 
 	<Row rowEdgeFlags="bottom">
-		<Key codes="-6" keyLabel="CTRL" keyLabelStyle=".small-style" keyWidth="70" keyEdgeFlags="left" />
+		<Key codes="-6" keyLabel="CTRL" keyLabelStyle=".small-style" keyWidth="70" />
 		<Key codes="-2" keyLabel="?123" keyLabelStyle=".small-style" keyWidth="70" />
 		<Key codes="32" keyLabel="3" keyLabelStyle=".font-fxkeyboard-alpha" movable="true" keyWidth="280" repeatable="true" />
 		<Key codes="-7" keyLabel="RU" keyLabelStyle=".small-style" keyWidth="50" />

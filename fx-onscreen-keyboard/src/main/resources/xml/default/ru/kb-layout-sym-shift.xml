@@ -22,7 +22,7 @@
 		<Key codes="57" keyLabel="9" />
 		<Key codes="48" keyLabel="0" />
 		<Key codes="45" keyLabel="-" />
-		<Key codes="-5" keyLabel="!" keyLabelStyle=".font-fxkeyboard" keyEdgeFlags="right" repeatable="true" />
+		<Key codes="-5" keyLabel="!" keyLabelStyle=".font-fxkeyboard" repeatable="true" />
 	</Row>
 
 	<Row>
@@ -38,11 +38,11 @@
 		<Key codes="43" keyLabel="+" />
 		<Key codes="91" keyLabel="[" />
 		<Key codes="93" keyLabel="]" />
-		<Key codes="-9" keyLabel="ENTER" keyLabelStyle=".small-style" keyWidth="70" keyEdgeFlags="right" />
+		<Key codes="-9" keyLabel="ENTER" keyLabelStyle=".small-style" keyWidth="70" />
 	</Row>
 
 	<Row>
-		<Key codes="-1" keyLabel="J" keyLabelStyle=".font-fxkeyboard" keyWidth="40" modifier="true" sticky="true" keyEdgeFlags="left" />
+		<Key codes="-1" keyLabel="J" keyLabelStyle=".font-fxkeyboard" keyWidth="40" modifier="true" sticky="true" />
 		<Key codes="96" keyLabel="`" />
 		<Key codes="180" keyLabel="´" />
 		<Key codes="64" keyLabel="@" />
@@ -54,10 +54,10 @@
 		<Key codes="169" keyLabel="©" />
 		<Key codes="59" keyLabel=";" />
 		<Key codes="58" keyLabel=":" />
-		<Key codes="-1" keyLabel="J" keyLabelStyle=".font-fxkeyboard" keyWidth="40" modifier="true" sticky="true" keyEdgeFlags="right" />
+		<Key codes="-1" keyLabel="J" keyLabelStyle=".font-fxkeyboard" keyWidth="40" modifier="true" sticky="true" />
 	</Row>
 	<Row rowEdgeFlags="bottom">
-		<Key codes="-6" keyLabel="CTRL" keyLabelStyle=".small-style" keyWidth="70" keyEdgeFlags="left" />
+		<Key codes="-6" keyLabel="CTRL" keyLabelStyle=".small-style" keyWidth="70" />
 		<Key codes="-2" keyLabel="азы" keyLabelStyle=".small-style" keyWidth="70" />
 		<Key codes="32" keyLabel="3" keyLabelStyle=".font-fxkeyboard-alpha" movable="true" keyWidth="280" repeatable="true" />
 		<Key codes="-7" keyLabel="RU" keyLabelStyle=".small-style" keyWidth="50" />
