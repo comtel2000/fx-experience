@@ -43,6 +43,7 @@ import javafx.util.Builder;
 public class KeyBoardPopupBuilder implements Builder<KeyBoardPopup> {
 
 	private final KeyBoardBuilder kb;
+	private double offset = -1;
 
 	protected KeyBoardPopupBuilder() {
 		kb = KeyBoardBuilder.create();
@@ -82,9 +83,17 @@ public class KeyBoardPopupBuilder implements Builder<KeyBoardPopup> {
 		return this;
 	}
 
+	public KeyBoardPopupBuilder offset(double offset) {
+		this.offset  = offset;
+		return this;
+	}
+	
 	@Override
 	public KeyBoardPopup build() {
 		KeyBoardPopup popup = new KeyBoardPopup(kb.build());
+		if (offset > -1){
+			popup.setOffset(offset);
+		}
 		return popup;
 	}
 

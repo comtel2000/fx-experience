@@ -53,13 +53,13 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.stage.Popup;
 
-public class MultiKeyPopup extends Popup {
+class MultiKeyPopup extends Popup {
 
 	private final TilePane buttonPane;
 
 	public static final String DEFAULT_STYLE_CLASS = "key-context-background";
 
-	public MultiKeyPopup() {
+	MultiKeyPopup() {
 		buttonPane = new TilePane();
 		buttonPane.setId(DEFAULT_STYLE_CLASS);
 		buttonPane.setPrefColumns(3);

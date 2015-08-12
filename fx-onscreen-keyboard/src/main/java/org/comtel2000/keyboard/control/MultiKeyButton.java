@@ -47,7 +47,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.transform.Scale;
 import javafx.util.Duration;
 
-public class MultiKeyButton extends KeyButton {
+class MultiKeyButton extends KeyButton {
 
 	private final static org.slf4j.Logger logger = LoggerFactory.getLogger(MultiKeyButton.class);
 
@@ -57,7 +57,7 @@ public class MultiKeyButton extends KeyButton {
 
 	private final DoubleProperty scaleProperty;
 
-	public MultiKeyButton(DoubleProperty scaleProperty, Collection<String> styles) {
+	MultiKeyButton(DoubleProperty scaleProperty, Collection<String> styles) {
 		super();
 		getStyleClass().add("multi-button");
 		this.styles = styles;

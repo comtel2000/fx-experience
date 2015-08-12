@@ -37,11 +37,11 @@ import org.slf4j.LoggerFactory;
 
 import javafx.scene.input.MouseButton;
 
-public class ShortPressKeyButton extends KeyButton {
+class ShortPressKeyButton extends KeyButton {
 
 	private final static org.slf4j.Logger logger = LoggerFactory.getLogger(ShortPressKeyButton.class);
 
-	public ShortPressKeyButton() {
+	ShortPressKeyButton() {
 		super();
 	}
 

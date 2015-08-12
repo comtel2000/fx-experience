@@ -43,11 +43,16 @@ import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
 import javafx.animation.ParallelTransition;
 import javafx.animation.ScaleTransition;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.geometry.Bounds;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Popup;
@@ -55,6 +60,12 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+/**
+ * Helper class to create a {@link KeyboardPane}
+ * 
+ * @author comtel
+ *
+ */
 public class KeyBoardPopup extends Popup implements VkProperties {
 
 	enum Visiblity {
@@ -71,6 +82,9 @@ public class KeyBoardPopup extends Popup implements VkProperties {
 	private final KeyboardPane keyboard;
 
 	private Scene owner;
+
+	/** default vertical keyboard to text component offset */ 
+	private final DoubleProperty offsetProperty = new SimpleDoubleProperty(this, "offset", 5);
 
 	private Animation animation;
 
@@ -105,21 +119,64 @@ public class KeyBoardPopup extends Popup implements VkProperties {
 		owner = Objects.requireNonNull(scene);
 	}
 
+	/**
+	 * Adds a FocusListener to Scene and open keyboard on
+	 * {@link TextInputControl}
+	 * 
+	 * @param scene
+	 *            {@link Scene} to connect with the keyboard
+	 */
 	public void addFocusListener(final Scene scene) {
 		addFocusListener(scene, false);
 	}
 
+	/**
+	 * Adds a FocusListener to Scene and open keyboard on
+	 * {@link TextInputControl}
+	 * 
+	 * @param scene
+	 *            {@link Scene} to connect with the keyboard
+	 * @param doNotOpen
+	 *            on hidden keyboard do nothing and on showing keyboard move to
+	 *            current component
+	 */
 	public void addFocusListener(final Scene scene, boolean doNotOpen) {
 		registerScene(scene);
 		scene.focusOwnerProperty().addListener((value, n1, n2) -> {
 			if (n2 != null && n2 instanceof TextInputControl) {
 				setVisible(doNotOpen ? Visiblity.POS : Visiblity.SHOW, (TextInputControl) n2);
+			} else if (n2 != null && n2 instanceof Parent) {
+				TextInputControl control = findTextInputControl((Parent) n2);
+				setVisible((control != null ? (doNotOpen ? Visiblity.POS : Visiblity.SHOW) : Visiblity.HIDE), control);
 			} else {
 				setVisible(Visiblity.HIDE);
 			}
 		});
 	}
 
+	/**
+	 * search for nested input controls like {@code FakeFocusTextField}
+	 * 
+	 * @see ComboBox#isEditable()
+	 * @param parent
+	 * @return embedded TextInputControl or null
+	 */
+	private static TextInputControl findTextInputControl(Parent parent) {
+		for (Node child : parent.getChildrenUnmodifiable()) {
+			if (child instanceof TextInputControl) {
+				return (TextInputControl) child;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Adds a mouse listener to the Stage and open the keyboards on 'double'
+	 * click a {@link TextInputControl}
+	 * 
+	 * @param stage
+	 *            {@link Stage} to connect with the keyboard
+	 */
 	public void addDoubleClickEventFilter(final Stage stage) {
 		Objects.requireNonNull(stage).addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
 			if (event.getClickCount() == 2 && stage.getScene() != null) {
@@ -136,6 +193,7 @@ public class KeyBoardPopup extends Popup implements VkProperties {
 	}
 
 	void setVisible(final Visiblity visible, final TextInputControl textNode) {
+
 		if ((visible == Visiblity.POS || visible == Visiblity.SHOW) && textNode != null) {
 			Map<String, String> vkProps = getVkProperties(textNode);
 			if (vkProps.isEmpty()) {
@@ -146,8 +204,8 @@ public class KeyBoardPopup extends Popup implements VkProperties {
 					getKeyBoard().switchLocale(new Locale(vkProps.get(VK_LOCALE)));
 				}
 			}
-			Rectangle2D textNodeBounds = new Rectangle2D(textNode.getScene().getWindow().getX() + textNode.getLocalToSceneTransform().getTx(),
-					textNode.getScene().getWindow().getY() + textNode.getLocalToSceneTransform().getTy(), textNode.getWidth(), textNode.getHeight());
+
+			Bounds textNodeBounds = textNode.localToScreen(textNode.getBoundsInLocal());
 			Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
 			if (textNodeBounds.getMinX() + getWidth() > screenBounds.getMaxX()) {
 				setX(screenBounds.getMaxX() - getWidth());
@@ -155,9 +213,9 @@ public class KeyBoardPopup extends Popup implements VkProperties {
 				setX(textNodeBounds.getMinX());
 			}
 			if (textNodeBounds.getMaxY() + getHeight() > screenBounds.getMaxY()) {
-				setY(textNodeBounds.getMinY() - getHeight() + 20);
+				setY(textNodeBounds.getMinY() - getHeight() - offsetProperty.get());
 			} else {
-				setY(textNodeBounds.getMaxY() + 40);
+				setY(textNodeBounds.getMaxY() + offsetProperty.get());
 			}
 		}
 
@@ -167,13 +225,12 @@ public class KeyBoardPopup extends Popup implements VkProperties {
 		if (animation != null) {
 			animation.stop();
 		}
-		getKeyBoard().setOpacity(0.0);
 
-		FadeTransition fade = new FadeTransition(Duration.seconds(.1), getKeyBoard());
+		FadeTransition fade = new FadeTransition(Duration.millis(100), getKeyBoard());
 		fade.setToValue(visible == Visiblity.SHOW ? 1.0 : 0.0);
 		fade.setOnFinished(e -> animation = null);
 
-		ScaleTransition scale = new ScaleTransition(Duration.seconds(.1), getKeyBoard());
+		ScaleTransition scale = new ScaleTransition(Duration.millis(100), getKeyBoard());
 		scale.setToX(visible == Visiblity.SHOW ? 1 : 0.8);
 		scale.setToY(visible == Visiblity.SHOW ? 1 : 0.8);
 		ParallelTransition tx = new ParallelTransition(fade, scale);
@@ -207,4 +264,13 @@ public class KeyBoardPopup extends Popup implements VkProperties {
 		return Collections.emptyMap();
 
 	}
+
+	public final DoubleProperty offsetProperty() {
+		return offsetProperty;
+	}
+
+	public final void setOffset(double offsetProperty) {
+		offsetProperty().set(offsetProperty);
+	}
+
 }

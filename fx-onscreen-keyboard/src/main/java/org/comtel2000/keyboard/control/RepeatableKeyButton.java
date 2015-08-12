@@ -41,13 +41,13 @@ import javafx.animation.Timeline;
 import javafx.scene.input.MouseButton;
 import javafx.util.Duration;
 
-public class RepeatableKeyButton extends KeyButton {
+class RepeatableKeyButton extends KeyButton {
 
 	private final static org.slf4j.Logger logger = LoggerFactory.getLogger(RepeatableKeyButton.class);
 
 	private final long REPEAT_DELAY = 40;
 
-	public RepeatableKeyButton() {
+	RepeatableKeyButton() {
 		super();
 		getStyleClass().add("repeatable-button");
 	}

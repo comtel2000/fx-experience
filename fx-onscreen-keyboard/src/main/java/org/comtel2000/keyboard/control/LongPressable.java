@@ -38,7 +38,7 @@ import org.comtel2000.keyboard.event.KeyButtonEvent;
 import javafx.beans.property.ObjectProperty;
 import javafx.event.EventHandler;
 
-public interface LongPressable {
+interface LongPressable {
 
 	void setOnLongPressed(EventHandler<? super KeyButtonEvent> eventhandler);
 
