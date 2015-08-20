@@ -87,7 +87,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.RowConstraints;
-import javafx.scene.transform.Scale;
 
 public class KeyboardPane extends Region implements StandardKeyCode, EventHandler<KeyButtonEvent> {
 
@@ -158,12 +157,14 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
 		setKeyboardType(KeyboardType.TEXT);
 
 		if (scaleProperty.get() != 1.0) {
-			getTransforms().setAll(new Scale(scaleProperty.get(), scaleProperty.get(), 1, 0, 0, 0));
+			setScaleX(scaleProperty.get());
+			setScaleY(scaleProperty.get());
 		}
 
-		scaleProperty.addListener((arg0, o, s) -> {
+		scaleProperty.addListener((l, o, s) -> {
 			if (o != s) {
-				getTransforms().setAll(new Scale(s.doubleValue(), s.doubleValue(), 1, 0, 0, 0));
+				setScaleX(s.doubleValue());
+				setScaleY(s.doubleValue());
 			}
 		});
 	}

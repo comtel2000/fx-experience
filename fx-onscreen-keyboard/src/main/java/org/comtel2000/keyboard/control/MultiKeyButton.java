@@ -41,10 +41,8 @@ import javafx.animation.Animation.Status;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.property.DoubleProperty;
-import javafx.geometry.Side;
 import javafx.scene.Node;
 import javafx.scene.input.MouseButton;
-import javafx.scene.transform.Scale;
 import javafx.util.Duration;
 
 class MultiKeyButton extends KeyButton {
@@ -110,13 +108,11 @@ class MultiKeyButton extends KeyButton {
 				getParent().getParent().setDisable(false);
 			});
 			setOnLongPressed(event -> {
-				if (context.getButtonPane().getScaleX() != scaleProperty.get()) {
-					context.getButtonPane().getTransforms().setAll(new Scale(scaleProperty.get(), scaleProperty.get(), 1, 0, 0, 0));
-				}
+
 				// getParent().getParent().setEffect(new BoxBlur());
 				getParent().getParent().setDisable(true);
 				setFocused(false);
-				context.show((Node) event.getSource(), Side.TOP, -getPrefWidth(), -getPrefHeight());
+				context.show((Node) event.getSource(), scaleProperty.get());
 			});
 
 		}
@@ -141,7 +137,7 @@ class MultiKeyButton extends KeyButton {
 
 		button.setOnShortPressed(getOnShortPressed());
 
-		getContext().getButtonPane().getChildren().add(button);
+		getContext().addButton(button);
 	}
 
 }

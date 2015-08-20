@@ -231,8 +231,8 @@ public class KeyBoardPopup extends Popup implements VkProperties {
 		fade.setOnFinished(e -> animation = null);
 
 		ScaleTransition scale = new ScaleTransition(Duration.millis(100), getKeyBoard());
-		scale.setToX(visible == Visiblity.SHOW ? 1 : 0.8);
-		scale.setToY(visible == Visiblity.SHOW ? 1 : 0.8);
+		scale.setToX(visible == Visiblity.SHOW ? getKeyBoard().getScaleX() : getKeyBoard().getScaleX() - 0.4);
+		scale.setToY(visible == Visiblity.SHOW ? getKeyBoard().getScaleY() : getKeyBoard().getScaleY() - 0.4);
 		ParallelTransition tx = new ParallelTransition(fade, scale);
 		animation = tx;
 		if (visible == Visiblity.SHOW && !isShowing()) {
