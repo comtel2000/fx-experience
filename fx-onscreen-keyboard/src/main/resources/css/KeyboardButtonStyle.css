@@ -36,16 +36,15 @@
 
 #key-background {
 	-fx-background-color: rgb(220.0, 220.0, 220.0);
-	-fx-background-radius: 0, 0, 0, 0;
+	-fx-background-radius: 0;
 	-fx-focus-traversable: false;
 	-fx-border-color: rgb(100, 106, 120);
 	-fx-border-width: 0.5;
-	-fx-border-radius: 0, 0, 0, 0;
-	-fx-padding: 0;
+	-fx-border-radius: 0;
 }
 
 #key-background-row {
-	-fx-padding: 5.0;
+	-fx-padding: 5;
 	-fx-vgap: 2.5;
 }
 
@@ -55,34 +54,27 @@
 
 #key-context-background {
 	-fx-background-color: rgb(220, 220, 220);
-	-fx-background-radius: 0.0, 0.0, 0.0, 0.0;
+	-fx-background-radius: 0;
 	-fx-focus-traversable: false;
 	-fx-border-color: rgb(100, 106, 120);
 	-fx-border-width: 0.5;
-	-fx-border-radius: 0.0, 0.0, 0.0, 0.0;
+	-fx-border-radius: 0;
 	-fx-opacity: 0.8;
-	-fx-padding: 10;
-	-fx-vgap: 10;
-	-fx-hgap: 10;
+	-fx-padding: 5;
+	-fx-vgap: 5;
+	-fx-hgap: 5;
 }
 
-#key-button {
+#key-button, #key-context-button {
 	-fx-font-size: 1.2em;
 	-fx-font-family: "sans-serif";
 	-fx-text-fill: white;
-	-fx-background-radius: 0.0, 0.0, 0.0, 0.0;
+	-fx-background-radius: 0;
 	-fx-background-color: rgb(60, 66, 80);
 	-fx-border-width: 0;
+	-fx-label-padding: -10;
 }
 
-#key-context-button {
-	-fx-font-size: 1.2em;
-	-fx-font-family: "sans-serif";
-	-fx-text-fill: white;
-	-fx-background-radius: 0.0, 0.0, 0.0, 0.0;
-	-fx-background-color: rgb(60, 66, 80);
-	-fx-padding: 0 5 0 5;
-}
 
 #key-button.button:hover {
 	-fx-background-color: rgb(100, 106, 120);
@@ -99,8 +91,7 @@
 	-fx-font-size: 0.8em;
 }
 
-#key-button.button.dark-style {
-	-fx-background-color: rgb(40, 46, 60);
+#key-button.button.sticky-style {
 }
 
 #key-button.button.font-fxkeyboard {

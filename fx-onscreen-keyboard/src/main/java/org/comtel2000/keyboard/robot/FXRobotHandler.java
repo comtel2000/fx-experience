@@ -91,47 +91,87 @@ public class FXRobotHandler implements IRobot {
 		if (ctrl) {
 			switch (ch) {
 			case java.awt.event.KeyEvent.VK_ENTER:
-				focusNode.fireEvent(createKeyEvent(focusNode, KeyEvent.KEY_PRESSED, Character.toString(ch), KeyCode.ENTER, false));
-				focusNode.fireEvent(createKeyEvent(focusNode, KeyEvent.KEY_RELEASED, Character.toString(ch), KeyCode.ENTER, false));
+				firePressedReleased(focusNode, ch, KeyCode.ENTER);
 				return;
 			case java.awt.event.KeyEvent.VK_BACK_SPACE:
-				focusNode.fireEvent(createKeyEvent(focusNode, KeyEvent.KEY_PRESSED, Character.toString(ch), KeyCode.BACK_SPACE, false));
-				focusNode.fireEvent(createKeyEvent(focusNode, KeyEvent.KEY_RELEASED, Character.toString(ch), KeyCode.BACK_SPACE, false));
+				firePressedReleased(focusNode, ch, KeyCode.BACK_SPACE);
 				return;
 			case java.awt.event.KeyEvent.VK_DELETE:
-				focusNode.fireEvent(createKeyEvent(focusNode, KeyEvent.KEY_PRESSED, Character.toString(ch), KeyCode.DELETE, false));
-				focusNode.fireEvent(createKeyEvent(focusNode, KeyEvent.KEY_RELEASED, Character.toString(ch), KeyCode.DELETE, false));
+				firePressedReleased(focusNode, ch, KeyCode.DELETE);
 				return;
 			case java.awt.event.KeyEvent.VK_ESCAPE:
-				focusNode.fireEvent(createKeyEvent(focusNode, KeyEvent.KEY_PRESSED, Character.toString(ch), KeyCode.ESCAPE, false));
-				focusNode.fireEvent(createKeyEvent(focusNode, KeyEvent.KEY_RELEASED, Character.toString(ch), KeyCode.ESCAPE, false));
+				firePressedReleased(focusNode, ch, KeyCode.ESCAPE);
 				return;
 			case java.awt.event.KeyEvent.VK_SPACE:
-				focusNode.fireEvent(createKeyEvent(focusNode, KeyEvent.KEY_PRESSED, Character.toString(ch), KeyCode.SPACE, false));
-				focusNode.fireEvent(createKeyEvent(focusNode, KeyEvent.KEY_RELEASED, Character.toString(ch), KeyCode.SPACE, false));
+				firePressedReleased(focusNode, ch, KeyCode.SPACE);
 				return;
 			case java.awt.event.KeyEvent.VK_TAB:
-				focusNode.fireEvent(createKeyEvent(focusNode, KeyEvent.KEY_PRESSED, Character.toString(ch), KeyCode.TAB, false));
-				focusNode.fireEvent(createKeyEvent(focusNode, KeyEvent.KEY_RELEASED, Character.toString(ch), KeyCode.TAB, false));
+				firePressedReleased(focusNode, ch, KeyCode.TAB);
 				return;
 			case java.awt.event.KeyEvent.VK_UP:
-				focusNode.fireEvent(createKeyEvent(focusNode, KeyEvent.KEY_PRESSED, Character.toString(ch), KeyCode.UP, false));
-				focusNode.fireEvent(createKeyEvent(focusNode, KeyEvent.KEY_RELEASED, Character.toString(ch), KeyCode.UP, false));
+				firePressedReleased(focusNode, ch, KeyCode.UP);
 				return;
 			case java.awt.event.KeyEvent.VK_DOWN:
-				focusNode.fireEvent(createKeyEvent(focusNode, KeyEvent.KEY_PRESSED, Character.toString(ch), KeyCode.DOWN, false));
-				focusNode.fireEvent(createKeyEvent(focusNode, KeyEvent.KEY_RELEASED, Character.toString(ch), KeyCode.DOWN, false));
+				firePressedReleased(focusNode, ch, KeyCode.DOWN);
 				return;
 			case java.awt.event.KeyEvent.VK_LEFT:
-				focusNode.fireEvent(createKeyEvent(focusNode, KeyEvent.KEY_PRESSED, Character.toString(ch), KeyCode.LEFT, false));
-				focusNode.fireEvent(createKeyEvent(focusNode, KeyEvent.KEY_RELEASED, Character.toString(ch), KeyCode.LEFT, false));
+				firePressedReleased(focusNode, ch, KeyCode.LEFT);
 				return;
 			case java.awt.event.KeyEvent.VK_RIGHT:
-				focusNode.fireEvent(createKeyEvent(focusNode, KeyEvent.KEY_PRESSED, Character.toString(ch), KeyCode.RIGHT, false));
-				focusNode.fireEvent(createKeyEvent(focusNode, KeyEvent.KEY_RELEASED, Character.toString(ch), KeyCode.RIGHT, false));
+				firePressedReleased(focusNode, ch, KeyCode.RIGHT);
+				return;
+			case java.awt.event.KeyEvent.VK_HOME:
+				firePressedReleased(focusNode, ch, KeyCode.HOME);
+				return;
+			case java.awt.event.KeyEvent.VK_END:
+				firePressedReleased(focusNode, ch, KeyCode.END);
+				return;
+			case java.awt.event.KeyEvent.VK_PAGE_UP:
+				firePressedReleased(focusNode, ch, KeyCode.PAGE_UP);
+				return;
+			case java.awt.event.KeyEvent.VK_PAGE_DOWN:
+				firePressedReleased(focusNode, ch, KeyCode.PAGE_DOWN);
+				return;
+			case java.awt.event.KeyEvent.VK_HELP:
+				firePressedReleased(focusNode, ch, KeyCode.HELP);
+				return;
+			case java.awt.event.KeyEvent.VK_F1:
+				firePressedReleased(focusNode, ch, KeyCode.F1);
+				return;
+			case java.awt.event.KeyEvent.VK_F2:
+				firePressedReleased(focusNode, ch, KeyCode.F2);
+				return;
+			case java.awt.event.KeyEvent.VK_F3:
+				firePressedReleased(focusNode, ch, KeyCode.F3);
+				return;
+			case java.awt.event.KeyEvent.VK_F4:
+				firePressedReleased(focusNode, ch, KeyCode.F4);
+				return;
+			case java.awt.event.KeyEvent.VK_F5:
+				firePressedReleased(focusNode, ch, KeyCode.F5);
+				return;
+			case java.awt.event.KeyEvent.VK_F6:
+				firePressedReleased(focusNode, ch, KeyCode.F6);
+				return;
+			case java.awt.event.KeyEvent.VK_F7:
+				firePressedReleased(focusNode, ch, KeyCode.F7);
+				return;
+			case java.awt.event.KeyEvent.VK_F8:
+				firePressedReleased(focusNode, ch, KeyCode.F8);
+				return;
+			case java.awt.event.KeyEvent.VK_F9:
+				firePressedReleased(focusNode, ch, KeyCode.F9);
+				return;
+			case java.awt.event.KeyEvent.VK_F10:
+				firePressedReleased(focusNode, ch, KeyCode.F10);
+				return;
+			case java.awt.event.KeyEvent.VK_F11:
+				firePressedReleased(focusNode, ch, KeyCode.F11);
+				return;
+			case java.awt.event.KeyEvent.VK_F12:
+				firePressedReleased(focusNode, ch, KeyCode.F12);
 				return;
 			}
-
 			KeyCode fxKeyCode = getKeyCode(ch);
 			if (fxKeyCode != null) {
 				focusNode.fireEvent(createKeyEvent(focusNode, KeyEvent.KEY_PRESSED, Character.toString(ch), fxKeyCode, ctrl));
@@ -150,7 +190,11 @@ public class FXRobotHandler implements IRobot {
 
 	private KeyCode getKeyCode(char c) {
 		return KeyCode.getKeyCode(Character.toString(Character.toUpperCase(c)));
+	}
 
+	private void firePressedReleased(Node focusNode, char ch, KeyCode code) {
+		focusNode.fireEvent(createKeyEvent(focusNode, KeyEvent.KEY_PRESSED, Character.toString(ch), code, false));
+		focusNode.fireEvent(createKeyEvent(focusNode, KeyEvent.KEY_RELEASED, Character.toString(ch), code, false));
 	}
 
 	private KeyEvent createKeyEvent(EventTarget target, EventType<KeyEvent> eventType, String character, KeyCode code, boolean ctrl) {

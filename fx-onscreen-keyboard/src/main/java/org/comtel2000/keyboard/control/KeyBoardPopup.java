@@ -39,10 +39,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
-import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
-import javafx.animation.ParallelTransition;
-import javafx.animation.ScaleTransition;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.event.Event;
@@ -58,6 +55,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Popup;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 
 /**
@@ -83,14 +81,14 @@ public class KeyBoardPopup extends Popup implements VkProperties {
 
 	private Scene owner;
 
-	/** default vertical keyboard to text component offset */ 
+	/** default vertical keyboard to text component offset */
 	private final DoubleProperty offsetProperty = new SimpleDoubleProperty(this, "offset", 5);
 
-	private Animation animation;
+	private FadeTransition animation;
 
 	public final static EventHandler<? super Event> DEFAULT_CLOSE_HANDLER = (event) -> {
 		if (event.getSource() instanceof Node) {
-			((Node) event.getSource()).getScene().getWindow().hide();
+			((Node) event.getSource()).fireEvent(new WindowEvent(null, WindowEvent.WINDOW_CLOSE_REQUEST));
 		}
 	};
 
@@ -188,6 +186,10 @@ public class KeyBoardPopup extends Popup implements VkProperties {
 		});
 	}
 
+	public void setOnKeyboardCloseButton(EventHandler<? super Event> value) {
+		getKeyBoard().setOnKeyboardCloseButton(value);
+	}
+	
 	void setVisible(Visiblity visible) {
 		setVisible(visible, null);
 	}
@@ -224,22 +226,22 @@ public class KeyBoardPopup extends Popup implements VkProperties {
 		}
 		if (animation != null) {
 			animation.stop();
+		} else {
+			animation = new FadeTransition(Duration.millis(100), getKeyBoard());
+			animation.setOnFinished(e -> {
+				if (animation.toValueProperty().get() == 0.0){
+					KeyBoardPopup.this.hide();
+				}
+			});
 		}
+		animation.setFromValue(visible == Visiblity.SHOW ? 0.0 : 1.0);
+		animation.setToValue(visible == Visiblity.SHOW ? 1.0 : 0.0);
 
-		FadeTransition fade = new FadeTransition(Duration.millis(100), getKeyBoard());
-		fade.setToValue(visible == Visiblity.SHOW ? 1.0 : 0.0);
-		fade.setOnFinished(e -> animation = null);
-
-		ScaleTransition scale = new ScaleTransition(Duration.millis(100), getKeyBoard());
-		scale.setToX(visible == Visiblity.SHOW ? getKeyBoard().getScaleX() : getKeyBoard().getScaleX() - 0.4);
-		scale.setToY(visible == Visiblity.SHOW ? getKeyBoard().getScaleY() : getKeyBoard().getScaleY() - 0.4);
-		ParallelTransition tx = new ParallelTransition(fade, scale);
-		animation = tx;
 		if (visible == Visiblity.SHOW && !isShowing()) {
 			// initial start
 			super.show(owner != null ? owner.getWindow() : getOwnerWindow());
 		}
-		tx.play();
+		animation.playFromStart();
 	}
 
 	private Map<String, String> getVkProperties(Node node) {

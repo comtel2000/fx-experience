@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <Keyboard horizontalGap="0" keyHeight="30" keyWidth="40" verticalGap="0">
 	<Row>
 		<Key codes="-112" keyLabel="F1" keyLabelStyle=".small-style" />
@@ -14,9 +13,9 @@
 		<Key codes="-121" keyLabel="F10" keyLabelStyle=".small-style" />
 		<Key codes="-5" keyLabel="!" keyLabelStyle=".font-fxkeyboard" repeatable="true" />
 		<Key codes="" keyWidth="5" />
-		<Key codes="55" keyLabel="7" />
-		<Key codes="56" keyLabel="8" />
-		<Key codes="57" keyLabel="9" />
+		<Key codes="-20" keyLabel="P1" keyLabelStyle=".small-style" />
+		<Key codes="-10" keyLabel="▲" keyLabelStyle=".small-style" repeatable="true" />
+		<Key codes="-22" keyLabel="P▲" keyLabelStyle=".small-style" repeatable="true" />
 	</Row>
 	<Row>
 		<Key codes="43" keyLabel="A" keyLabelStyle=".font-fxkeyboard" keyWidth="70" />
@@ -26,9 +25,9 @@
 		<Key codes="-10" keyLabel="▲" keyLabelStyle=".small-style" repeatable="true" />
 		<Key codes="10" keyLabel="ENTER" keyLabelStyle=".small-style" keyWidth="70" />
 		<Key codes="" keyWidth="5" />
-		<Key codes="52" keyLabel="4" />
-		<Key codes="53" keyLabel="5" />
-		<Key codes="54" keyLabel="6" />
+		<Key codes="-12" keyLabel="◄" keyLabelStyle=".small-style" repeatable="true" />
+		<Key codes="0" keyLabel="3" keyLabelStyle=".font-fxkeyboard-alpha" movable="true" />
+		<Key codes="-13" keyLabel="►" keyLabelStyle=".small-style" repeatable="true" />
 	</Row>
 	<Row>
 		<Key codes="45" keyLabel="@" keyLabelStyle=".font-fxkeyboard" keyWidth="70" />
@@ -40,9 +39,9 @@
 		<Key codes="-13" keyLabel="►" keyLabelStyle=".small-style" repeatable="true" />
 		<Key codes="" keyWidth="25" />
 		<Key codes="" keyWidth="5" />
-		<Key codes="49" keyLabel="1" />
-		<Key codes="50" keyLabel="2" />
-		<Key codes="51" keyLabel="3" />
+		<Key codes="-21" keyLabel="END" keyLabelStyle=".small-style" />
+		<Key codes="-11" keyLabel="▼" keyLabelStyle=".small-style" repeatable="true" />
+		<Key codes="-23" keyLabel="P▼" keyLabelStyle=".small-style" repeatable="true" />
 	</Row>
 	<Row rowEdgeFlags="bottom">
 		<Key codes="-6" keyLabel="CTRL" keyLabelStyle=".small-style" keyWidth="60" />
@@ -51,8 +50,8 @@
 		<Key codes="-7" keyLabel="EN" keyLabelStyle=".small-style" keyWidth="40" />
 		<Key codes="-4" keyLabel="TAB" keyLabelStyle=".small-style" keyWidth="50" />
 		<Key codes="" keyWidth="5" />
-		<Key codes="48" keyLabel="0" />
-		<Key codes="45" keyLabel="-" />
+		<Key codes="-24" keyLabel="HLP" keyLabelStyle=".small-style" repeatable="true"/>
+		<Key codes="-8" keyLabel="DEL" keyLabelStyle=".small-style" repeatable="true"/>
 		<Key codes="-3" keyLabel="2" keyLabelStyle=".font-fxkeyboard" />
 	</Row>
 </Keyboard>

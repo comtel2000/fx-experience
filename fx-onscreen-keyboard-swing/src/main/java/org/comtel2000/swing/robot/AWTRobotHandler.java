@@ -96,6 +96,23 @@ public class AWTRobotHandler implements IRobot {
 			case java.awt.event.KeyEvent.VK_RIGHT:
 			case java.awt.event.KeyEvent.VK_UNDO:
 			case java.awt.event.KeyEvent.VK_AGAIN:
+			case java.awt.event.KeyEvent.VK_HOME:
+			case java.awt.event.KeyEvent.VK_END:
+			case java.awt.event.KeyEvent.VK_PAGE_UP:
+			case java.awt.event.KeyEvent.VK_PAGE_DOWN:
+			case java.awt.event.KeyEvent.VK_HELP:
+			case java.awt.event.KeyEvent.VK_F1:
+			case java.awt.event.KeyEvent.VK_F2:
+			case java.awt.event.KeyEvent.VK_F3:
+			case java.awt.event.KeyEvent.VK_F4:
+			case java.awt.event.KeyEvent.VK_F5:
+			case java.awt.event.KeyEvent.VK_F6:
+			case java.awt.event.KeyEvent.VK_F7:
+			case java.awt.event.KeyEvent.VK_F8:
+			case java.awt.event.KeyEvent.VK_F9:
+			case java.awt.event.KeyEvent.VK_F10:
+			case java.awt.event.KeyEvent.VK_F11:
+			case java.awt.event.KeyEvent.VK_F12:
 				kfm.dispatchKeyEvent(new KeyEvent(c, KEY_PRESSED, System.currentTimeMillis(), 0, ch, ch, KEY_LOCATION_STANDARD));
 				kfm.dispatchKeyEvent(new KeyEvent(c, KEY_RELEASED, System.currentTimeMillis(), 0, ch, ch, KEY_LOCATION_STANDARD));
 				return;

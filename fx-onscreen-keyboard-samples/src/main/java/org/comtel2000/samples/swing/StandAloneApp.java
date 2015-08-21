@@ -53,7 +53,6 @@ import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.text.Font;
 
 public class StandAloneApp extends JApplet {
 
@@ -72,9 +71,6 @@ public class StandAloneApp extends JApplet {
 
 	@Override
 	public void init() {
-
-		String fontUrl = this.getClass().getResource("/font/FontKeyboardFX.ttf").toExternalForm();
-		Font.loadFont(fontUrl, -1);
 
 		setLayout(new BorderLayout());
 

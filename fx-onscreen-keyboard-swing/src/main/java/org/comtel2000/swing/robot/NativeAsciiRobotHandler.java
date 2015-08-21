@@ -32,24 +32,42 @@ package org.comtel2000.swing.robot;
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
-
 import static java.awt.event.KeyEvent.VK_A;
+import static java.awt.event.KeyEvent.VK_AGAIN;
 import static java.awt.event.KeyEvent.VK_ALT;
 import static java.awt.event.KeyEvent.VK_BACK_SPACE;
 import static java.awt.event.KeyEvent.VK_C;
 import static java.awt.event.KeyEvent.VK_CONTROL;
 import static java.awt.event.KeyEvent.VK_DELETE;
 import static java.awt.event.KeyEvent.VK_DOWN;
+import static java.awt.event.KeyEvent.VK_END;
 import static java.awt.event.KeyEvent.VK_ENTER;
 import static java.awt.event.KeyEvent.VK_ESCAPE;
+import static java.awt.event.KeyEvent.VK_F1;
+import static java.awt.event.KeyEvent.VK_F10;
+import static java.awt.event.KeyEvent.VK_F11;
+import static java.awt.event.KeyEvent.VK_F12;
+import static java.awt.event.KeyEvent.VK_F2;
+import static java.awt.event.KeyEvent.VK_F3;
+import static java.awt.event.KeyEvent.VK_F4;
+import static java.awt.event.KeyEvent.VK_F5;
+import static java.awt.event.KeyEvent.VK_F6;
+import static java.awt.event.KeyEvent.VK_F7;
+import static java.awt.event.KeyEvent.VK_F8;
+import static java.awt.event.KeyEvent.VK_F9;
+import static java.awt.event.KeyEvent.VK_HELP;
+import static java.awt.event.KeyEvent.VK_HOME;
 import static java.awt.event.KeyEvent.VK_LEFT;
 import static java.awt.event.KeyEvent.VK_META;
 import static java.awt.event.KeyEvent.VK_NUMPAD0;
+import static java.awt.event.KeyEvent.VK_PAGE_DOWN;
+import static java.awt.event.KeyEvent.VK_PAGE_UP;
 import static java.awt.event.KeyEvent.VK_RIGHT;
 import static java.awt.event.KeyEvent.VK_SHIFT;
 import static java.awt.event.KeyEvent.VK_SPACE;
 import static java.awt.event.KeyEvent.VK_TAB;
 import static java.awt.event.KeyEvent.VK_UNDEFINED;
+import static java.awt.event.KeyEvent.VK_UNDO;
 import static java.awt.event.KeyEvent.VK_UP;
 import static java.awt.event.KeyEvent.VK_V;
 import static java.awt.event.KeyEvent.VK_X;
@@ -116,6 +134,25 @@ public class NativeAsciiRobotHandler implements IRobot {
 			case VK_DOWN:
 			case VK_LEFT:
 			case VK_RIGHT:
+			case VK_UNDO:
+			case VK_AGAIN:
+			case VK_HOME:
+			case VK_END:
+			case VK_PAGE_UP:
+			case VK_PAGE_DOWN:
+			case VK_HELP:
+			case VK_F1:
+			case VK_F2:
+			case VK_F3:
+			case VK_F4:
+			case VK_F5:
+			case VK_F6:
+			case VK_F7:
+			case VK_F8:
+			case VK_F9:
+			case VK_F10:
+			case VK_F11:
+			case VK_F12:
 				robot.keyPress(ch);
 				robot.keyRelease(ch);
 				return;

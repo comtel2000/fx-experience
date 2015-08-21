@@ -39,7 +39,6 @@ import org.comtel2000.keyboard.control.DefaultLayer;
 import org.comtel2000.keyboard.control.KeyBoardPopup;
 import org.comtel2000.keyboard.control.KeyBoardPopupBuilder;
 import org.comtel2000.keyboard.control.VkProperties;
-import org.comtel2000.keyboard.robot.FXRobotHandler;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -62,9 +61,8 @@ public class MainDemo extends Application implements VkProperties {
 		stage.setTitle("FX Keyboard (" + System.getProperty("javafx.runtime.version") + ")");
 		stage.setResizable(true);
 
-		KeyBoardPopup popup = KeyBoardPopupBuilder.create().initScale(1.0).initLocale(Locale.ENGLISH).addIRobot(new FXRobotHandler()).build();
-		// popup.getKeyBoard().setOnKeyboardCloseButton(KeyBoardPopup.DEFAULT_CLOSE_HANDLER);
-
+		KeyBoardPopup popup = KeyBoardPopupBuilder.create().initLocale(Locale.ENGLISH).build();
+		
 		VBox pane = new VBox(20);
 
 		Button okButton = new Button("Ok");

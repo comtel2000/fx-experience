@@ -38,12 +38,15 @@ import java.util.Locale;
 
 import org.comtel2000.keyboard.robot.IRobot;
 
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.util.Builder;
 
 public class KeyBoardPopupBuilder implements Builder<KeyBoardPopup> {
 
 	private final KeyBoardBuilder kb;
 	private double offset = -1;
+	private EventHandler<? super Event> closeEventHandler;
 
 	protected KeyBoardPopupBuilder() {
 		kb = KeyBoardBuilder.create();
@@ -84,15 +87,25 @@ public class KeyBoardPopupBuilder implements Builder<KeyBoardPopup> {
 	}
 
 	public KeyBoardPopupBuilder offset(double offset) {
-		this.offset  = offset;
+		this.offset = offset;
 		return this;
 	}
-	
+
+	public KeyBoardPopupBuilder onKeyboardCloseButton(EventHandler<? super Event> handler) {
+		closeEventHandler = handler;
+		return this;
+	}
+
 	@Override
 	public KeyBoardPopup build() {
 		KeyBoardPopup popup = new KeyBoardPopup(kb.build());
-		if (offset > -1){
+		if (offset > -1) {
 			popup.setOffset(offset);
+		}
+		if (closeEventHandler != null) {
+			popup.setOnKeyboardCloseButton(closeEventHandler);
+		} else {
+			popup.setOnKeyboardCloseButton(e -> popup.setVisible(false));
 		}
 		return popup;
 	}

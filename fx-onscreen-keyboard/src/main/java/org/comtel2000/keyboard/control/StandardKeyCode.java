@@ -72,4 +72,39 @@ public interface StandardKeyCode {
 	int URL_TYPE = -18;
 
 	int CAPS_LOCK = -19;
+
+	int HOME = -20;
+
+	int END = -21;
+
+	int PAGE_UP = -22;
+
+	int PAGE_DOWN = -23;
+
+	int HELP = -24;
+
+	int F1 = -112;
+
+	int F2 = -113;
+
+	int F3 = -114;
+
+	int F4 = -115;
+
+	int F5 = -116;
+
+	int F6 = -117;
+
+	int F7 = -118;
+
+	int F8 = -119;
+
+	int F9 = -120;
+
+	int F10 = -121;
+
+	int F11 = -122;
+
+	int F12 = -123;
+
 }

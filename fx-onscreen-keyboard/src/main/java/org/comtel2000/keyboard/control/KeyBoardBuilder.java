@@ -34,8 +34,6 @@ package org.comtel2000.keyboard.control;
  */
 
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
 import org.comtel2000.keyboard.robot.IRobot;
@@ -44,20 +42,10 @@ import javafx.util.Builder;
 
 public class KeyBoardBuilder implements Builder<KeyboardPane> {
 
-	private Path layerPath;
-
-	private DefaultLayer defaultLayer;
-
-	private Locale initLocale;
-
-	private List<IRobot> iRobots;
-
-	private String style;
-
-	private double initScale = 0.0;
+	private final KeyboardPane kb;
 
 	protected KeyBoardBuilder() {
-		iRobots = new ArrayList<>(2);
+		kb = new KeyboardPane();
 	}
 
 	public static KeyBoardBuilder create() {
@@ -65,68 +53,42 @@ public class KeyBoardBuilder implements Builder<KeyboardPane> {
 	}
 
 	public KeyBoardBuilder layerPath(Path path) {
-		layerPath = path;
+		kb.setLayerPath(path);
 		return this;
 	}
 
 	public KeyBoardBuilder layer(DefaultLayer layer) {
-		defaultLayer = layer;
+		kb.setLayer(layer);
 		return this;
 	}
 
 	public KeyBoardBuilder style(String css) {
-		style = css;
+		kb.setStyle(css);
 		return this;
 	}
 
 	public KeyBoardBuilder initLocale(Locale locale) {
-		initLocale = locale;
+		kb.setLocale(locale);
 		return this;
 	}
 
 	public KeyBoardBuilder initScale(double scale) {
-		initScale = scale;
+		kb.setScale(scale);
 		return this;
 	}
 
 	public KeyBoardBuilder addIRobot(IRobot robot) {
-		iRobots.add(robot);
+		kb.addRobotHandler(robot);
 		return this;
 	}
 
 	@Override
 	public KeyboardPane build() {
-
-		KeyboardPane kb = new KeyboardPane();
-
-		if (style != null) {
-			kb.setKeyBoardStyle(style);
-		}
-		if (initLocale != null) {
-			kb.setLocale(initLocale);
-		}
-		if (layerPath != null) {
-			kb.setLayerPath(layerPath);
-		}
-
-		if (defaultLayer != null) {
-			kb.setLayer(defaultLayer);
-		}
-		if (initScale > 0.0) {
-			kb.setScale(initScale);
-		}
-		for (IRobot robot : iRobots) {
-			kb.addRobotHandler(robot);
-		}
-		iRobots.clear();
-		iRobots = null;
-
 		try {
 			kb.load();
 		} catch (Exception e) {
-			e.printStackTrace();
+			new RuntimeException(e);
 		}
-
 		return kb;
 	}
 

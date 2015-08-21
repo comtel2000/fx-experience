@@ -78,23 +78,18 @@ class MultiKeyPopup extends Popup {
 	}
 
 	public void addButton(Button button) {
-
 		buttonPane.getChildren().add(button);
-		if (buttonPane.getChildren().size() > 8) {
-			buttonPane.setPrefColumns(5);
-			buttonPane.setPrefRows(2);
-		} else if (buttonPane.getChildren().size() > 6) {
-			buttonPane.setPrefColumns(4);
-			buttonPane.setPrefRows(2);
-		} else if (buttonPane.getChildren().size() > 4) {
-			buttonPane.setPrefColumns(3);
-			buttonPane.setPrefRows(2);
-		} else if (buttonPane.getChildren().size() > 3) {
-			buttonPane.setPrefColumns(2);
-			buttonPane.setPrefRows(2);
-		} else if (buttonPane.getChildren().size() > 1) {
+		if (buttonPane.getChildren().size() < 6) {
 			buttonPane.setPrefColumns(buttonPane.getChildren().size());
 			buttonPane.setPrefRows(1);
+		}else if (buttonPane.getChildren().size() == 6) {
+			buttonPane.setPrefColumns(3);
+			buttonPane.setPrefRows(2);
+		}else if (buttonPane.getChildren().size() < 9) {
+			buttonPane.setPrefColumns(4);
+			buttonPane.setPrefRows(2);
+		}else {
+			buttonPane.setPrefColumns(5);
 		}
 	}
 

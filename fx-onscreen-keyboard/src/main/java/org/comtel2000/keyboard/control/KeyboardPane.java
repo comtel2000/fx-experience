@@ -55,6 +55,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import org.comtel2000.keyboard.event.KeyButtonEvent;
+import org.comtel2000.keyboard.robot.FXRobotHandler;
 import org.comtel2000.keyboard.robot.IRobot;
 import org.comtel2000.keyboard.xml.KeyboardLayoutHandler;
 import org.comtel2000.keyboard.xml.layout.Keyboard;
@@ -87,6 +88,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.RowConstraints;
+import javafx.stage.WindowEvent;
 
 public class KeyboardPane extends Region implements StandardKeyCode, EventHandler<KeyButtonEvent> {
 
@@ -151,6 +153,10 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
 
 	public void load() throws MalformedURLException, IOException, URISyntaxException {
 
+		if (robots.isEmpty()){
+			logger.debug("load default fx robot handler");
+			robots.add(new FXRobotHandler());
+		}
 		getStylesheets().add(keyBoardStyleProperty.get());
 
 		setLayoutLocale(localeProperty.get());
@@ -508,7 +514,9 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
 						button.getStyleClass().add(style.substring(1));
 					}
 				}
-
+				if (Boolean.TRUE == key.isSticky()){
+					button.getStyleClass().add("sticky-style");
+				}
 				if (codes.length > 0 && !codes[0].isEmpty()) {
 					button.setKeyCode(parseInt(codes[0]));
 				}
@@ -641,11 +649,7 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
 			break;
 		case CLOSE:
 			if (closeEventHandler == null) {
-				if (getScene() != null && getScene().getWindow() != null) {
-					getScene().getWindow().hide();
-				} else {
-					System.exit(0);
-				}
+				fireEvent(new WindowEvent(null, WindowEvent.WINDOW_CLOSE_REQUEST));
 			} else {
 				closeEventHandler.handle(event);
 			}
@@ -687,6 +691,21 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
 			break;
 		case REDO:
 			sendToComponent((char) java.awt.event.KeyEvent.VK_Y, true);
+			break;
+		case HOME:
+			sendToComponent((char) java.awt.event.KeyEvent.VK_HOME, true);
+			break;
+		case END:
+			sendToComponent((char) java.awt.event.KeyEvent.VK_END, true);
+			break;
+		case PAGE_UP:
+			sendToComponent((char) java.awt.event.KeyEvent.VK_PAGE_UP, true);
+			break;
+		case PAGE_DOWN:
+			sendToComponent((char) java.awt.event.KeyEvent.VK_PAGE_DOWN, true);
+			break;
+		case HELP:
+			sendToComponent((char) java.awt.event.KeyEvent.VK_HELP, true);
 			break;
 		case NUMERIC_TYPE:
 			setKeyboardType(KeyboardType.NUMERIC);
@@ -758,6 +777,10 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
 		robots.add(robot);
 	}
 
+	public List<IRobot> getRobotHandler() {
+		return Collections.unmodifiableList(robots);
+	}
+	
 	public void removeRobotHandler(IRobot robot) {
 		robots.remove(robot);
 	}
