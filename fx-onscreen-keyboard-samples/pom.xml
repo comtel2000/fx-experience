@@ -19,7 +19,7 @@
 		<dependency>
 			<groupId>org.comtel2000</groupId>
 			<artifactId>fx-onscreen-keyboard-swing</artifactId>
-			<version>8.2.2-SNAPSHOT</version>
+			<version>8.2.3-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>
