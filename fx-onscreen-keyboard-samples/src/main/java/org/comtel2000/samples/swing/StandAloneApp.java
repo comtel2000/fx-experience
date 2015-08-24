@@ -34,10 +34,12 @@ package org.comtel2000.samples.swing;
  */
 
 import java.awt.BorderLayout;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.ParseException;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.swing.JApplet;
 import javax.swing.JWindow;
@@ -45,10 +47,11 @@ import javax.swing.SwingUtilities;
 
 import org.comtel2000.keyboard.control.DefaultLayer;
 import org.comtel2000.keyboard.control.KeyBoardPopup;
-import org.comtel2000.keyboard.control.KeyBoardPopupBuilder;
+import org.comtel2000.keyboard.control.KeyboardPane;
+import org.comtel2000.keyboard.control.KeyboardType;
 import org.comtel2000.swing.robot.NativeAsciiRobotHandler;
-import org.slf4j.LoggerFactory;
 
+import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Group;
@@ -56,13 +59,8 @@ import javafx.scene.Scene;
 
 public class StandAloneApp extends JApplet {
 
-	private final static org.slf4j.Logger logger = LoggerFactory.getLogger(StandAloneApp.class);
-
-	private static int posX = 100;
-	private static int posY = 100;
-	private static Locale locale;
-	private static String xmlPath;
-	private static String vkType;
+	private static String[] arguments;
+	private int posX = 0, posY = 0;
 
 	private static final long serialVersionUID = 1L;
 
@@ -99,52 +97,74 @@ public class StandAloneApp extends JApplet {
 
 		Scene scene = new Scene(new Group(), 0, 0);
 		javafxPanel.setScene(scene);
+		KeyboardPane kb = new KeyboardPane();
+		kb.setLayer(DefaultLayer.NUMBLOCK);
+		kb.addRobotHandler(new NativeAsciiRobotHandler());
+		kb.setOnKeyboardCloseButton(e -> System.exit(0));
 
-		Path path = null;
+		Map<String, String> params = getParameters();
+		if (params.isEmpty() && arguments.length != 0) {
+			showHelp();
+		}
 		try {
-			if (xmlPath != null) {
-				path = Paths.get(this.getClass().getResource(xmlPath).toURI());
+			if (params.containsKey("help")) {
+				showHelp();
 			}
+			if (params.containsKey("scale")) {
+				kb.setScale(Double.valueOf(params.get("scale")));
+			}
+			if (params.containsKey("locale")) {
+				kb.setLocale(parseLocale(params.get("locale")));
+			}
+			if (params.containsKey("pos")) {
+				parsePosition(params.get("pos"));
+			}
+			if (params.containsKey("layout")) {
+				kb.setLayerPath((Paths.get(this.getClass().getResource(params.get("layout")).toURI())));
+			}
+			if (params.containsKey("type")) {
+				kb.setKeyboardType(KeyboardType.valueOf(params.get("type").toUpperCase()));
+			}
+
+			kb.load();
+
 		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
+			System.out.println(e.getMessage());
+			showHelp();
 		}
 
-		KeyBoardPopup popup = KeyBoardPopupBuilder.create().initLocale(locale).addIRobot(new NativeAsciiRobotHandler()).layerPath(path).layer(DefaultLayer.NUMBLOCK).build();
-		if (vkType != null) {
-			popup.getKeyBoard().setKeyboardType(vkType);
-		}
-		popup.getKeyBoard().setOnKeyboardCloseButton(e -> System.exit(0));
-		popup.registerScene(scene);
+		KeyBoardPopup popup = new KeyBoardPopup(kb);
 		popup.setX(posX);
 		popup.setY(posY);
-		popup.setVisible(true);
+
+		popup.show(scene.getWindow());
 	}
 
-	private static void showHelp() {
+	private void showHelp() {
 		System.out.println();
-		System.out.println("\t-lang <locale>\t\tsetting keyboard language (en,de,ru,..)");
-		System.out.println("\t-layout <path>\t\tpath to custom layout xml");
-		System.out.println("\t-pos <x,y>\t\tinitial keyboard position");
-		System.out.println("\t-type <type>\t\tvkType like numeric, email, url, text(default)");
-		System.out.println("\t-help\t\t\tthis help screen");
+		System.out.println("\t--scale=<double>\tset the intial scale");
+		System.out.println("\t--lang=<locale>\t\tsetting keyboard language (en,de,ru,..)");
+		System.out.println("\t--layout=<path>\t\tpath to custom layout xml");
+		System.out.println("\t--pos=<x,y>\t\tinitial keyboard position");
+		System.out.println("\t--type=<type>\t\tvkType like numeric, email, url, text(default)");
+		System.out.println("\t--help\t\t\tthis help screen");
+		System.exit(0);
 	}
 
-	private static void parseLocale(String l) throws Exception {
+	private Locale parseLocale(String l) throws Exception {
 		if (l == null || l.isEmpty()) {
 			throw new ParseException("invalid locale", 0);
 		}
-
 		String[] lang = l.split("_");
 		if (lang.length == 2) {
-			locale = new Locale(lang[0], lang[1]);
-		} else if (lang.length == 1) {
-			locale = Locale.forLanguageTag(l);
+			return new Locale(lang[0], lang[1]);
 		}
+		return Locale.forLanguageTag(l);
 	}
 
-	private static void parsePosition(String p) throws Exception {
+	private void parsePosition(String p) throws Exception {
 		if (p == null || p.isEmpty()) {
-			throw new ParseException("invalid position", 0);
+			throw new Exception("invalid position: " + String.valueOf(p));
 		}
 
 		String[] pos = p.split(",");
@@ -155,32 +175,25 @@ public class StandAloneApp extends JApplet {
 	}
 
 	public static void main(String[] args) {
-
-		try {
-			for (int i = 0; i < args.length; i++) {
-				if (args[i].equals("-lang")) {
-					parseLocale(args[++i]);
-				} else if (args[i].equals("-layout")) {
-					xmlPath = args[++i];
-				} else if (args[i].equals("-pos")) {
-					parsePosition(args[++i]);
-				} else if (args[i].equals("-type")) {
-					vkType = args[++i];
-				} else {
-					showHelp();
-					return;
-				}
-			}
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			showHelp();
-			return;
-		}
-
+		arguments = args;
 		SwingUtilities.invokeLater(() -> {
 			JApplet applet = new StandAloneApp();
 			applet.init();
 			applet.start();
 		});
+	}
+
+	public static Map<String, String> getParameters() {
+		if (arguments.length == 0) {
+			return Collections.emptyMap();
+		}
+		Map<String, String> parameters = new HashMap<>();
+		for (String arg : arguments) {
+			String[] data = arg.split("=");
+			if (data.length == 2) {
+				parameters.put(data[0].replace("--", "").trim(), data[1].trim());
+			}
+		}
+		return parameters;
 	}
 }
