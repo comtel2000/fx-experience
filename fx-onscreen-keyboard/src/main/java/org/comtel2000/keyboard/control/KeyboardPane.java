@@ -141,7 +141,7 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
 	private final KeyboardLayoutHandler handler;
 
 	public KeyboardPane() {
-		setId("key-background");
+		getStyleClass().add("key-background");
 		setFocusTraversable(false);
 		handler = new KeyboardLayoutHandler(isCacheLayout());
 	}
@@ -427,7 +427,7 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
 		if (layout.getVerticalGap() != null) {
 			rPane.setVgap(layout.getVerticalGap());
 		}
-		rPane.setId("key-background-row");
+		rPane.getStyleClass().add("key-background-row");
 
 		int defaultKeyWidth = 10;
 		if (layout.getKeyWidth() != null) {
@@ -443,7 +443,7 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
 		for (Keyboard.Row row : layout.getRow()) {
 			int colIdx = 0;
 			GridPane colPane = new GridPane();
-			colPane.setId("key-background-column");
+			colPane.getStyleClass().add("key-background-column");
 			// colPane.setVgap(20);
 			// colPane.setPrefWidth(Region.USE_COMPUTED_SIZE);
 
@@ -649,7 +649,7 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
 			break;
 		case CLOSE:
 			if (closeEventHandler == null) {
-				fireEvent(new WindowEvent(null, WindowEvent.WINDOW_CLOSE_REQUEST));
+				fireEvent(new WindowEvent(this.getScene().getWindow(), WindowEvent.WINDOW_CLOSE_REQUEST));
 			} else {
 				closeEventHandler.handle(event);
 			}

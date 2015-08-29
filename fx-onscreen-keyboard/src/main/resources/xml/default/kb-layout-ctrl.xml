@@ -17,7 +17,7 @@
 
 	<Row>
 		<Key codes="43" keyLabel="A" keyLabelStyle=".font-fxkeyboard" keyWidth="70" />
-		<Key codes="97" keyLabel="SELECT ALL" keyLabelStyle=".small-style" keyWidth="135" />
+		<Key codes="65" keyLabel="SELECT ALL" keyLabelStyle=".small-style" keyWidth="135" />
 		<Key codes="-14" keyLabel="UNDO" keyLabelStyle=".small-style" keyWidth="70" />
 		<Key codes="-15" keyLabel="REDO" keyLabelStyle=".small-style" keyWidth="70" />
 		<Key codes="-10" keyLabel="▲" keyLabelStyle=".small-style" repeatable="true" />
@@ -26,9 +26,9 @@
 
 	<Row>
 		<Key codes="45" keyLabel="@" keyLabelStyle=".font-fxkeyboard" keyWidth="70" />
-		<Key codes="120" keyLabel="CUT" keyLabelStyle=".small-style" keyWidth="75" />
-		<Key codes="99" keyLabel="COPY" keyLabelStyle=".small-style" keyWidth="75" />
-		<Key codes="118" keyLabel="PASTE" keyLabelStyle=".small-style" keyWidth="77" />
+		<Key codes="88" keyLabel="CUT" keyLabelStyle=".small-style" keyWidth="75" />
+		<Key codes="67" keyLabel="COPY" keyLabelStyle=".small-style" keyWidth="75" />
+		<Key codes="86" keyLabel="PASTE" keyLabelStyle=".small-style" keyWidth="77" />
 		<Key codes="-12" keyLabel="◄" keyLabelStyle=".small-style" repeatable="true" />
 		<Key codes="-11" keyLabel="▼" keyLabelStyle=".small-style" repeatable="true" />
 		<Key codes="-13" keyLabel="►" keyLabelStyle=".small-style" repeatable="true" />

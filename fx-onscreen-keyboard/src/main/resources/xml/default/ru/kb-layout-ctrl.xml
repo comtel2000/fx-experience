@@ -18,7 +18,7 @@
 	</Row>
 	<Row>
 		<Key codes="43" keyLabel="A" keyLabelStyle=".font-fxkeyboard" keyWidth="90" />
-		<Key codes="97" keyLabel="выбрать все" keyLabelStyle=".small-style" keyWidth="135" />
+		<Key codes="65" keyLabel="выбрать все" keyLabelStyle=".small-style" keyWidth="135" />
 		<Key codes="-14" keyLabel="аннулировать" keyLabelStyle=".small-style" keyWidth="90" />
 		<Key codes="-15" keyLabel="восстановление" keyLabelStyle=".small-style" keyWidth="90" />
 		<Key codes="-10" keyLabel="▲" keyLabelStyle=".small-style" repeatable="true" />
@@ -26,9 +26,9 @@
 	</Row>
 	<Row>
 		<Key codes="45" keyLabel="@" keyLabelStyle=".font-fxkeyboard" keyWidth="90" />
-		<Key codes="120" keyLabel="вырезать" keyLabelStyle=".small-style" keyWidth="90" />
-		<Key codes="99" keyLabel="скопируйте" keyLabelStyle=".small-style" keyWidth="90" />
-		<Key codes="118" keyLabel="паста" keyLabelStyle=".small-style" keyWidth="90" />
+		<Key codes="88" keyLabel="вырезать" keyLabelStyle=".small-style" keyWidth="90" />
+		<Key codes="67" keyLabel="скопируйте" keyLabelStyle=".small-style" keyWidth="90" />
+		<Key codes="86" keyLabel="паста" keyLabelStyle=".small-style" keyWidth="90" />
 		<Key codes="-12" keyLabel="◄" keyLabelStyle=".small-style" repeatable="true" />
 		<Key codes="-11" keyLabel="▼" keyLabelStyle=".small-style" repeatable="true" />
 		<Key codes="-13" keyLabel="►" keyLabelStyle=".small-style" repeatable="true" />

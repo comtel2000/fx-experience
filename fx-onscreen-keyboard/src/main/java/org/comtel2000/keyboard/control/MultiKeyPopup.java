@@ -57,7 +57,7 @@ class MultiKeyPopup extends Popup {
 	MultiKeyPopup() {
 		// setAnchorLocation(AnchorLocation.CONTENT_TOP_LEFT);
 		buttonPane = new TilePane();
-		buttonPane.setId(DEFAULT_STYLE_CLASS);
+		buttonPane.getStyleClass().add(DEFAULT_STYLE_CLASS);
 
 		buttonPane.setFocusTraversable(false);
 

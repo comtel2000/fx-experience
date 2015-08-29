@@ -34,29 +34,29 @@
 	src: url('../font/FontKeyboardFX.ttf');
 }
 
-#key-background {
-	-fx-background-color: rgb(220.0, 220.0, 220.0);
+.key-background {
+	-fx-background-color: #dcdcdc;
 	-fx-background-radius: 0;
 	-fx-focus-traversable: false;
-	-fx-border-color: rgb(100, 106, 120);
+	-fx-border-color: #646a78;
 	-fx-border-width: 0.5;
 	-fx-border-radius: 0;
 }
 
-#key-background-row {
+.key-background-row {
 	-fx-padding: 5;
 	-fx-vgap: 2.5;
 }
 
-#key-background-column {
+.key-background-column {
 	-fx-hgap: 2.5;
 }
 
-#key-context-background {
-	-fx-background-color: rgb(220, 220, 220);
+.key-context-background {
+	-fx-background-color: #dcdcdc;
 	-fx-background-radius: 0;
 	-fx-focus-traversable: false;
-	-fx-border-color: rgb(100, 106, 120);
+	-fx-border-color: #dcdcdc;
 	-fx-border-width: 0.5;
 	-fx-border-radius: 0;
 	-fx-opacity: 0.8;
@@ -65,52 +65,50 @@
 	-fx-hgap: 5;
 }
 
-#key-button, #key-context-button {
+.key-button, .key-context-button {
 	-fx-font-size: 1.2em;
 	-fx-font-family: "sans-serif";
 	-fx-text-fill: white;
 	-fx-background-radius: 0;
-	-fx-background-color: rgb(60, 66, 80);
+	-fx-background-color: #3c4250;
 	-fx-border-width: 0;
 	-fx-label-padding: -10;
 }
 
-
-#key-button.button:hover {
-	-fx-background-color: rgb(100, 106, 120);
+.key-button:hover {
+	-fx-background-color: #646a78;
 }
 
-#key-button.button:pressed {
-	-fx-background-color: rgb(110, 116, 130);
-	-fx-text-fill: gray;
+.key-button:pressed {
+	-fx-background-color: #646a78;
 }
 
-#key-button.button.small-style {
+.key-button.button.small-style {
 	-fx-font-family: "sans-serif";
 	-fx-font-weight: bold;
 	-fx-font-size: 0.8em;
 }
 
-#key-button.button.sticky-style {
+.key-button.button.sticky-style {
 }
 
-#key-button.button.font-fxkeyboard {
+.key-button.button.font-fxkeyboard {
 	-fx-font-family: FontKeyboardFX;
 	-fx-font-size: 1.2em;
 }
 
-#key-button.button.font-fxkeyboard-alpha {
+.key-button.button.font-fxkeyboard-alpha {
 	-fx-font-family: FontKeyboardFX;
 	-fx-font-size: 1.2em;
 	-fx-text-fill: rgba(250, 250, 250, 0.3);
 }
 
-#key-button.button.font-awesome {
+.key-button.button.font-awesome {
 	-fx-font-family: FontAwesome;
 	-fx-font-size: 1.1em;
 }
 
-#key-button.button .label {
+.key-button.button .label {
 	-fx-background-color: white;
 	-fx-scale-shape: false;
 }

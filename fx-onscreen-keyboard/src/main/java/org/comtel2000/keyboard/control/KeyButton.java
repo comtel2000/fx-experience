@@ -81,7 +81,7 @@ public abstract class KeyButton extends Button implements LongPressable {
 
 	public KeyButton(String label, Node graphic, long delay) {
 		super(label, graphic);
-		setId("key-button");
+		getStyleClass().add("key-button");
 		initEventListener(delay > 0 ? delay : DEFAULT_DELAY);
 
 	}
