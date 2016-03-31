@@ -82,6 +82,8 @@ public interface StandardKeyCode {
 	int PAGE_DOWN = -23;
 
 	int HELP = -24;
+	
+	int PRINTSCREEN = -25;
 
 	int F1 = -112;
 

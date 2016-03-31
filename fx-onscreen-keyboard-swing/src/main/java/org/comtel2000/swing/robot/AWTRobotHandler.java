@@ -101,6 +101,7 @@ public class AWTRobotHandler implements IRobot {
 			case java.awt.event.KeyEvent.VK_PAGE_UP:
 			case java.awt.event.KeyEvent.VK_PAGE_DOWN:
 			case java.awt.event.KeyEvent.VK_HELP:
+			case java.awt.event.KeyEvent.VK_PRINTSCREEN:
 			case java.awt.event.KeyEvent.VK_F1:
 			case java.awt.event.KeyEvent.VK_F2:
 			case java.awt.event.KeyEvent.VK_F3:

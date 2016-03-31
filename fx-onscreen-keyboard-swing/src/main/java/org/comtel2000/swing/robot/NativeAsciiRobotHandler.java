@@ -32,49 +32,7 @@ package org.comtel2000.swing.robot;
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
-import static java.awt.event.KeyEvent.VK_A;
-import static java.awt.event.KeyEvent.VK_AGAIN;
-import static java.awt.event.KeyEvent.VK_ALT;
-import static java.awt.event.KeyEvent.VK_BACK_SPACE;
-import static java.awt.event.KeyEvent.VK_C;
-import static java.awt.event.KeyEvent.VK_CONTROL;
-import static java.awt.event.KeyEvent.VK_DELETE;
-import static java.awt.event.KeyEvent.VK_DOWN;
-import static java.awt.event.KeyEvent.VK_END;
-import static java.awt.event.KeyEvent.VK_ENTER;
-import static java.awt.event.KeyEvent.VK_ESCAPE;
-import static java.awt.event.KeyEvent.VK_F1;
-import static java.awt.event.KeyEvent.VK_F10;
-import static java.awt.event.KeyEvent.VK_F11;
-import static java.awt.event.KeyEvent.VK_F12;
-import static java.awt.event.KeyEvent.VK_F2;
-import static java.awt.event.KeyEvent.VK_F3;
-import static java.awt.event.KeyEvent.VK_F4;
-import static java.awt.event.KeyEvent.VK_F5;
-import static java.awt.event.KeyEvent.VK_F6;
-import static java.awt.event.KeyEvent.VK_F7;
-import static java.awt.event.KeyEvent.VK_F8;
-import static java.awt.event.KeyEvent.VK_F9;
-import static java.awt.event.KeyEvent.VK_HELP;
-import static java.awt.event.KeyEvent.VK_HOME;
-import static java.awt.event.KeyEvent.VK_LEFT;
-import static java.awt.event.KeyEvent.VK_META;
-import static java.awt.event.KeyEvent.VK_NUMPAD0;
-import static java.awt.event.KeyEvent.VK_PAGE_DOWN;
-import static java.awt.event.KeyEvent.VK_PAGE_UP;
-import static java.awt.event.KeyEvent.VK_RIGHT;
-import static java.awt.event.KeyEvent.VK_SHIFT;
-import static java.awt.event.KeyEvent.VK_SPACE;
-import static java.awt.event.KeyEvent.VK_TAB;
-import static java.awt.event.KeyEvent.VK_UNDEFINED;
-import static java.awt.event.KeyEvent.VK_UNDO;
-import static java.awt.event.KeyEvent.VK_UP;
-import static java.awt.event.KeyEvent.VK_V;
-import static java.awt.event.KeyEvent.VK_X;
-import static java.awt.event.KeyEvent.VK_Y;
-import static java.awt.event.KeyEvent.VK_Z;
-import static java.awt.event.KeyEvent.getExtendedKeyCodeForChar;
-import static java.awt.event.KeyEvent.getKeyText;
+import static java.awt.event.KeyEvent.*;
 
 import java.awt.AWTException;
 import java.awt.Robot;
@@ -141,6 +99,7 @@ public class NativeAsciiRobotHandler implements IRobot {
 			case VK_PAGE_UP:
 			case VK_PAGE_DOWN:
 			case VK_HELP:
+			case VK_PRINTSCREEN:
 			case VK_F1:
 			case VK_F2:
 			case VK_F3:

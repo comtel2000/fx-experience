@@ -61,7 +61,6 @@ import org.comtel2000.keyboard.xml.KeyboardLayoutHandler;
 import org.comtel2000.keyboard.xml.layout.Keyboard;
 import org.slf4j.LoggerFactory;
 
-import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -724,6 +723,15 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
 		case CAPS_LOCK:
 			capsLockProperty.set(!capsLockProperty.get());
 			break;
+		case PRINTSCREEN:
+			double opacity = getScene().getWindow().getOpacity();
+			getScene().getWindow().setOpacity(0.0);
+			sendToComponent((char) java.awt.event.KeyEvent.VK_PRINTSCREEN, true);
+			Timeline timeline = new Timeline();
+			timeline.setDelay(Duration.millis(1000));
+			timeline.getKeyFrames().add(new KeyFrame(Duration.millis(500), new KeyValue(getScene().getWindow().opacityProperty(), opacity)));
+			timeline.play();
+			break;
 		case F1:
 		case F2:
 		case F3:
@@ -736,9 +744,8 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
 		case F10:
 		case F11:
 		case F12:
-			sendToComponent((char)Math.abs(kb.getKeyCode()), true);
+			sendToComponent((char) Math.abs(kb.getKeyCode()), true);
 			break;
-			
 		default:
 			if (kb.getKeyText() != null) {
 				for (int i = 0; i < kb.getKeyText().length(); i++) {

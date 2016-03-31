@@ -135,6 +135,9 @@ public class FXRobotHandler implements IRobot {
 			case java.awt.event.KeyEvent.VK_HELP:
 				firePressedReleased(focusNode, ch, KeyCode.HELP);
 				return;
+			case java.awt.event.KeyEvent.VK_PRINTSCREEN:
+				firePressedReleased(focusNode, ch, KeyCode.PRINTSCREEN);
+				return;
 			case java.awt.event.KeyEvent.VK_F1:
 				firePressedReleased(focusNode, ch, KeyCode.F1);
 				return;
