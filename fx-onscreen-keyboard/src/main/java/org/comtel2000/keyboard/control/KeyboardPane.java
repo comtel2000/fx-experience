@@ -61,6 +61,10 @@ import org.comtel2000.keyboard.xml.KeyboardLayoutHandler;
 import org.comtel2000.keyboard.xml.layout.Keyboard;
 import org.slf4j.LoggerFactory;
 
+import javafx.animation.FadeTransition;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
@@ -89,6 +93,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.RowConstraints;
 import javafx.stage.WindowEvent;
+import javafx.util.Duration;
 
 public class KeyboardPane extends Region implements StandardKeyCode, EventHandler<KeyButtonEvent> {
 
