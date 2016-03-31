@@ -719,6 +719,21 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
 		case CAPS_LOCK:
 			capsLockProperty.set(!capsLockProperty.get());
 			break;
+		case F1:
+		case F2:
+		case F3:
+		case F4:
+		case F5:
+		case F6:
+		case F7:
+		case F8:
+		case F9:
+		case F10:
+		case F11:
+		case F12:
+			sendToComponent((char)Math.abs(kb.getKeyCode()), true);
+			break;
+			
 		default:
 			if (kb.getKeyText() != null) {
 				for (int i = 0; i < kb.getKeyText().length(); i++) {

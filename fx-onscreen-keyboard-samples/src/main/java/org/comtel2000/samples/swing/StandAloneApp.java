@@ -51,7 +51,6 @@ import org.comtel2000.keyboard.control.KeyboardPane;
 import org.comtel2000.keyboard.control.KeyboardType;
 import org.comtel2000.swing.robot.NativeAsciiRobotHandler;
 
-import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Group;

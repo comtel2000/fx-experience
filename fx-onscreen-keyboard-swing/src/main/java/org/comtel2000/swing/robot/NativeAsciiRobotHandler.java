@@ -109,7 +109,7 @@ public class NativeAsciiRobotHandler implements IRobot {
 
 	@Override
 	public void sendToComponent(Object kb, char ch, boolean ctrl) {
-		logger.trace("fire: {}", ch);
+		logger.trace("fire: {} ctrl:{}", ch, ctrl);
 		send(ch, ctrl);
 	}
 
