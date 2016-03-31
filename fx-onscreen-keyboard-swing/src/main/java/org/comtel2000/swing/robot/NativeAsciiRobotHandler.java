@@ -226,7 +226,7 @@ public class NativeAsciiRobotHandler implements IRobot {
 		try {
 			StringSelection stringSelection = new StringSelection(Character.toString(ch));
 			java.awt.datatransfer.Clipboard clpbrd = Toolkit.getDefaultToolkit().getSystemClipboard();
-			Object recover = clpbrd.getData(DataFlavor.stringFlavor);
+			Object recover = clpbrd.isDataFlavorAvailable(DataFlavor.stringFlavor) ? clpbrd.getData(DataFlavor.stringFlavor) : null;
 			clpbrd.setContents(stringSelection, null);
 
 			robot.keyPress(controlKeyEvent);
