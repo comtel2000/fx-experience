@@ -48,8 +48,11 @@ import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class KeyboardXmlLayoutTest {
+	private static final Logger LOGGER = LoggerFactory.getLogger(KeyboardXmlLayoutTest.class);
 
 	private static KeyboardLayoutHandler handler;
 
@@ -70,9 +73,9 @@ public class KeyboardXmlLayoutTest {
 		Assert.assertFalse(kb.getRow().isEmpty());
 
 		for (Keyboard.Row row : kb.getRow()) {
-			System.err.println("\nRow " + row.getRowEdgeFlags());
+			LOGGER.debug("\nRow " + row.getRowEdgeFlags());
 			for (Keyboard.Row.Key key : row.getKey()) {
-				System.err.println(key.getCodes() + "\t" + (key.getKeyLabel() != null ? key.getKeyLabel() : key.getKeyIconStyle()));
+				LOGGER.debug(key.getCodes() + "\t" + (key.getKeyLabel() != null ? key.getKeyLabel() : key.getKeyIconStyle()));
 			}
 		}
 	}
@@ -96,7 +99,7 @@ public class KeyboardXmlLayoutTest {
 			stream.forEach(p -> {
 				if (Files.isDirectory(p)) {
 					Locale l = new Locale(p.getFileName().toString());
-					System.err.println(l);
+					LOGGER.debug(l.toString());
 				}
 			});
 		}
