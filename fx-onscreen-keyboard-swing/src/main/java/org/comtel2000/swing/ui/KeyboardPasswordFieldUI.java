@@ -47,16 +47,16 @@ public class KeyboardPasswordFieldUI extends BasicPasswordFieldUI {
 
 	private static MouseListener ml = null;
 
+	public KeyboardPasswordFieldUI() {
+		super();
+	}
+
 	public static void setFocusListener(FocusListener l) {
 		fl = l;
 	}
 
 	public static void setMouseListener(MouseListener l) {
 		ml = l;
-	}
-
-	public KeyboardPasswordFieldUI() {
-		super();
 	}
 
 	public static ComponentUI createUI(JComponent c) {

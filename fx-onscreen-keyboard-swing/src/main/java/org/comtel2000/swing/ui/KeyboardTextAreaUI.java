@@ -47,16 +47,16 @@ public class KeyboardTextAreaUI extends BasicTextAreaUI {
 
 	private static MouseListener ml = null;
 
+	public KeyboardTextAreaUI() {
+		super();
+	}
+
 	public static void setFocusListener(FocusListener l) {
 		fl = l;
 	}
 
 	public static void setMouseListener(MouseListener l) {
 		ml = l;
-	}
-
-	public KeyboardTextAreaUI() {
-		super();
 	}
 
 	public static ComponentUI createUI(JComponent c) {

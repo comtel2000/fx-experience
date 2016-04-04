@@ -144,6 +144,10 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
 
 	private final KeyboardLayoutHandler handler;
 
+	private MouseMovedHandler movedHandler;
+
+	private MouseDraggedHandler draggedHandler;
+
 	public KeyboardPane() {
 		getStyleClass().add("key-background");
 		setFocusTraversable(false);
@@ -915,9 +919,6 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
 	public void setCacheLayout(boolean c) {
 		cacheLayoutProperty().set(c);
 	}
-
-	private MouseMovedHandler movedHandler;
-	private MouseDraggedHandler draggedHandler;
 
 	private void installMoveHandler(Node node) {
 		if (movedHandler == null) {

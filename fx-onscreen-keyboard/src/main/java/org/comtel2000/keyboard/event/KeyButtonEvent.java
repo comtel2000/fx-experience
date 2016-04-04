@@ -42,6 +42,12 @@ public class KeyButtonEvent extends Event {
 
 	private static final long serialVersionUID = 647301812232489628L;
 
+	public static final EventType<Event> ANY;
+
+	public static final EventType<Event> LONG_PRESSED;
+
+	public static final EventType<Event> SHORT_PRESSED;
+
 	public KeyButtonEvent(EventType<Event> type) {
 		super(type);
 	}
@@ -59,12 +65,6 @@ public class KeyButtonEvent extends Event {
 		stringbuilder.append(", consumed = ").append(isConsumed());
 		return stringbuilder.append("]").toString();
 	}
-
-	public static final EventType<Event> ANY;
-
-	public static final EventType<Event> LONG_PRESSED;
-
-	public static final EventType<Event> SHORT_PRESSED;
 
 	static {
 		ANY = new EventType<Event>(Event.ANY, "KB_PRESSED");
