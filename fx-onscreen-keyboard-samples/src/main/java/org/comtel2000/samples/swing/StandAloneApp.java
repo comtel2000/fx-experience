@@ -55,8 +55,11 @@ import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class StandAloneApp extends JApplet {
+	private static final Logger LOGGER = LoggerFactory.getLogger(StandAloneApp.class);
 
 	private static String[] arguments;
 	private int posX = 0, posY = 0;
@@ -128,7 +131,7 @@ public class StandAloneApp extends JApplet {
 			kb.load();
 
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			LOGGER.error(e.getMessage());
 			showHelp();
 		}
 
@@ -140,13 +143,13 @@ public class StandAloneApp extends JApplet {
 	}
 
 	private void showHelp() {
-		System.out.println();
-		System.out.println("\t--scale=<double>\tset the intial scale");
-		System.out.println("\t--lang=<locale>\t\tsetting keyboard language (en,de,ru,..)");
-		System.out.println("\t--layout=<path>\t\tpath to custom layout xml");
-		System.out.println("\t--pos=<x,y>\t\tinitial keyboard position");
-		System.out.println("\t--type=<type>\t\tvkType like numeric, email, url, text(default)");
-		System.out.println("\t--help\t\t\tthis help screen");
+		LOGGER.debug("\n");
+		LOGGER.debug("\t--scale=<double>\tset the intial scale");
+		LOGGER.debug("\t--lang=<locale>\t\tsetting keyboard language (en,de,ru,..)");
+		LOGGER.debug("\t--layout=<path>\t\tpath to custom layout xml");
+		LOGGER.debug("\t--pos=<x,y>\t\tinitial keyboard position");
+		LOGGER.debug("\t--type=<type>\t\tvkType like numeric, email, url, text(default)");
+		LOGGER.debug("\t--help\t\t\tthis help screen");
 		System.exit(0);
 	}
 
