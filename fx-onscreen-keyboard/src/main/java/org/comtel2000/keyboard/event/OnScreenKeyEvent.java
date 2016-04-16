@@ -43,6 +43,12 @@ public class OnScreenKeyEvent extends InputEvent {
 
 	private static final long serialVersionUID = 65116620766495525L;
 
+	public static final EventType<? super Event> ANY;
+
+	public static final EventType<? super Event> LONG_PRESSED;
+
+	public static final EventType<? super Event> SHORT_PRESSED;
+
 	public OnScreenKeyEvent(EventType<? extends InputEvent> type) {
 		super(type);
 	}
@@ -61,12 +67,6 @@ public class OnScreenKeyEvent extends InputEvent {
 		stringbuilder.append(", consumed = ").append(isConsumed());
 		return stringbuilder.append("]").toString();
 	}
-
-	public static final EventType<? super Event> ANY;
-
-	public static final EventType<? super Event> LONG_PRESSED;
-
-	public static final EventType<? super Event> SHORT_PRESSED;
 
 	static {
 		ANY = new EventType<Event>(Event.ANY, "KB_PRESSED");

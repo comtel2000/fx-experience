@@ -47,12 +47,12 @@ public class KeyboardEditorPaneUI extends BasicEditorPaneUI {
 
 	private static MouseListener ml = null;
 
-	public static void setFocusListener(FocusListener l) {
-		fl = l;
-	}
-
 	public KeyboardEditorPaneUI() {
 		super();
+	}
+
+	public static void setFocusListener(FocusListener l) {
+		fl = l;
 	}
 
 	public static void setMouseListener(MouseListener l) {

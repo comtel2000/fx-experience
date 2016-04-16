@@ -54,6 +54,15 @@ class MultiKeyPopup extends Popup {
 
 	public static final String DEFAULT_STYLE_CLASS = "key-context-background";
 
+	private ObjectProperty<EventHandler<ActionEvent>> onAction = new SimpleObjectProperty<EventHandler<ActionEvent>>() {
+
+		@Override
+		protected void invalidated() {
+			setEventHandler(ActionEvent.ACTION, get());
+		}
+
+	};
+
 	MultiKeyPopup() {
 		// setAnchorLocation(AnchorLocation.CONTENT_TOP_LEFT);
 		buttonPane = new TilePane();
@@ -152,14 +161,5 @@ class MultiKeyPopup extends Popup {
 			Event.fireEvent(this, new Event(Menu.ON_HIDDEN));
 		}
 	}
-
-	private ObjectProperty<EventHandler<ActionEvent>> onAction = new SimpleObjectProperty<EventHandler<ActionEvent>>() {
-
-		@Override
-		protected void invalidated() {
-			setEventHandler(ActionEvent.ACTION, get());
-		}
-
-	};
 
 }
