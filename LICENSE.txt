@@ -1,6 +1,6 @@
 fx-onscreen-keyboard
 
-Copyright (C) 2014 - 2015, comtel2000
+Copyright (C) 2016, comtel2000
 
 Redistribution and use in source and binary forms, with or without modification,
 are permitted provided that the following conditions are met:

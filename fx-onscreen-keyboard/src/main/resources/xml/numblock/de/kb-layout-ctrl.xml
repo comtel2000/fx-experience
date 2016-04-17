@@ -44,14 +44,14 @@
 		<Key codes="-23" keyLabel="P▼" keyLabelStyle=".small-style" repeatable="true" />
 	</Row>
 	<Row rowEdgeFlags="bottom">
-		<Key codes="-6" keyLabel="CTRL" keyLabelStyle=".small-style" keyWidth="60" sticky="true"/>
+		<Key codes="-6" keyLabel="CTRL" keyLabelStyle=".small-style" keyWidth="60" sticky="true" />
 		<Key codes="-19" keyLabel="CAPS" keyLabelStyle=".small-style" keyWidth="50" />
 		<Key codes="32" keyLabel="3" keyLabelStyle=".font-fxkeyboard-alpha" movable="true" keyWidth="255" repeatable="true" />
 		<Key codes="-7" keyLabel="DE" keyLabelStyle=".small-style" keyWidth="40" />
 		<Key codes="-4" keyLabel="TAB" keyLabelStyle=".small-style" keyWidth="50" />
 		<Key codes="" keyWidth="5" />
-		<Key codes="-25" keyLabel="PRT" keyLabelStyle=".small-style" repeatable="true"/>
-		<Key codes="-8" keyLabel="DEL" keyLabelStyle=".small-style" repeatable="true"/>
+		<Key codes="-25" keyLabel="PRT" keyLabelStyle=".small-style" repeatable="true" />
+		<Key codes="-8" keyLabel="DEL" keyLabelStyle=".small-style" repeatable="true" />
 		<Key codes="-3" keyLabel="2" keyLabelStyle=".font-fxkeyboard" />
 	</Row>
 </Keyboard>

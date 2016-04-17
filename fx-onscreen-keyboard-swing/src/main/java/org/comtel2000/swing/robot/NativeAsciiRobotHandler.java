@@ -1,25 +1,22 @@
 package org.comtel2000.swing.robot;
 
-/*
- * #%L
- * fx-onscreen-keyboard-swing
- * %%
- * Copyright (C) 2014 - 2015 comtel2000
- * %%
+/*******************************************************************************
+ * Copyright (c) 2016 comtel2000
+ *
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice, this
  *    list of conditions and the following disclaimer.
- * 
+ *
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * 3. Neither the name of the comtel2000 nor the names of its contributors
  *    may be used to endorse or promote products derived from this software without
  *    specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
@@ -30,9 +27,51 @@ package org.comtel2000.swing.robot;
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
  * OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
- * #L%
- */
-import static java.awt.event.KeyEvent.*;
+ *******************************************************************************/
+import static java.awt.event.KeyEvent.VK_A;
+import static java.awt.event.KeyEvent.VK_AGAIN;
+import static java.awt.event.KeyEvent.VK_ALT;
+import static java.awt.event.KeyEvent.VK_BACK_SPACE;
+import static java.awt.event.KeyEvent.VK_C;
+import static java.awt.event.KeyEvent.VK_CONTROL;
+import static java.awt.event.KeyEvent.VK_DELETE;
+import static java.awt.event.KeyEvent.VK_DOWN;
+import static java.awt.event.KeyEvent.VK_END;
+import static java.awt.event.KeyEvent.VK_ENTER;
+import static java.awt.event.KeyEvent.VK_ESCAPE;
+import static java.awt.event.KeyEvent.VK_F1;
+import static java.awt.event.KeyEvent.VK_F10;
+import static java.awt.event.KeyEvent.VK_F11;
+import static java.awt.event.KeyEvent.VK_F12;
+import static java.awt.event.KeyEvent.VK_F2;
+import static java.awt.event.KeyEvent.VK_F3;
+import static java.awt.event.KeyEvent.VK_F4;
+import static java.awt.event.KeyEvent.VK_F5;
+import static java.awt.event.KeyEvent.VK_F6;
+import static java.awt.event.KeyEvent.VK_F7;
+import static java.awt.event.KeyEvent.VK_F8;
+import static java.awt.event.KeyEvent.VK_F9;
+import static java.awt.event.KeyEvent.VK_HELP;
+import static java.awt.event.KeyEvent.VK_HOME;
+import static java.awt.event.KeyEvent.VK_LEFT;
+import static java.awt.event.KeyEvent.VK_META;
+import static java.awt.event.KeyEvent.VK_NUMPAD0;
+import static java.awt.event.KeyEvent.VK_PAGE_DOWN;
+import static java.awt.event.KeyEvent.VK_PAGE_UP;
+import static java.awt.event.KeyEvent.VK_PRINTSCREEN;
+import static java.awt.event.KeyEvent.VK_RIGHT;
+import static java.awt.event.KeyEvent.VK_SHIFT;
+import static java.awt.event.KeyEvent.VK_SPACE;
+import static java.awt.event.KeyEvent.VK_TAB;
+import static java.awt.event.KeyEvent.VK_UNDEFINED;
+import static java.awt.event.KeyEvent.VK_UNDO;
+import static java.awt.event.KeyEvent.VK_UP;
+import static java.awt.event.KeyEvent.VK_V;
+import static java.awt.event.KeyEvent.VK_X;
+import static java.awt.event.KeyEvent.VK_Y;
+import static java.awt.event.KeyEvent.VK_Z;
+import static java.awt.event.KeyEvent.getExtendedKeyCodeForChar;
+import static java.awt.event.KeyEvent.getKeyText;
 
 import java.awt.AWTException;
 import java.awt.Robot;

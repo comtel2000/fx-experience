@@ -35,7 +35,7 @@
 	</Row>
 
 	<Row>
-		<Key codes="-1" keyLabel="J" keyLabelStyle=".font-fxkeyboard" keyWidth="40" modifier="true" sticky="true"  />
+		<Key codes="-1" keyLabel="J" keyLabelStyle=".font-fxkeyboard" keyWidth="40" modifier="true" sticky="true" />
 		<Key codes="1071" keyLabel="Я" />
 		<Key codes="1063" keyLabel="Ч" />
 		<Key codes="1057" keyLabel="С" />
@@ -47,7 +47,7 @@
 		<Key codes="1070" keyLabel="Ю" />
 		<Key codes="59" keyLabel=";" />
 		<Key codes="58" keyLabel=":" />
-		<Key codes="-1" keyLabel="J" keyLabelStyle=".font-fxkeyboard" keyWidth="40" modifier="true" sticky="true"  />
+		<Key codes="-1" keyLabel="J" keyLabelStyle=".font-fxkeyboard" keyWidth="40" modifier="true" sticky="true" />
 	</Row>
 
 	<Row rowEdgeFlags="bottom">

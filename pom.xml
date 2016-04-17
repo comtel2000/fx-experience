@@ -159,39 +159,9 @@
 				</pluginManagement>
 				<plugins>
 					<plugin>
-						<groupId>org.codehaus.mojo</groupId>
-						<artifactId>license-maven-plugin</artifactId>
-						<version>1.8</version>
-						<configuration>
-							<verbose>true</verbose>
-							<excludes>
-								<exclude>**/*.xml</exclude>
-								<exclude>**/*.xsd</exclude>
-								<exclude>**/xml/layout/*.java</exclude>
-								<exclude>**/src/test/resources/**</exclude>
-								<exclude>**/src/main/resources/**</exclude>
-							</excludes>
-						</configuration>
-						<executions>
-							<execution>
-								<id>add-license-headers</id>
-								<goals>
-									<goal>update-file-header</goal>
-								</goals>
-								<phase>process-sources</phase>
-								<configuration>
-									<licenseName>bsd_3</licenseName>
-								</configuration>
-							</execution>
-						</executions>
-					</plugin>
-
-					<plugin>
 						<groupId>org.jacoco</groupId>
 						<artifactId>jacoco-maven-plugin</artifactId>
 					</plugin>
-
-
 				</plugins>
 			</build>
 		</profile>
