@@ -151,6 +151,8 @@ public class NativeAsciiRobotHandler implements IRobot {
           robot.keyPress(ch);
           robot.keyRelease(ch);
           return;
+        default:
+          break;
       }
 
       int upperCase = Character.toUpperCase(ch);
@@ -166,6 +168,8 @@ public class NativeAsciiRobotHandler implements IRobot {
           robot.keyRelease(upperCase);
           robot.keyRelease(controlKeyEvent);
           return;
+        default:
+          break;
       }
 
     }

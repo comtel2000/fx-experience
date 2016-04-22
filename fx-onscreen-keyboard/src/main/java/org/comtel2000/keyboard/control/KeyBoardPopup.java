@@ -129,9 +129,9 @@ public class KeyBoardPopup extends Popup implements VkProperties {
   public void addFocusListener(final Scene scene, boolean doNotOpen) {
     registerScene(scene);
     scene.focusOwnerProperty().addListener((value, n1, n2) -> {
-      if (n2 != null && n2 instanceof TextInputControl) {
+      if (n2 instanceof TextInputControl) {
         setVisible(doNotOpen ? Visiblity.POS : Visiblity.SHOW, (TextInputControl) n2);
-      } else if (n2 != null && n2 instanceof Parent) {
+      } else if (n2 instanceof Parent) {
         TextInputControl control = findTextInputControl((Parent) n2);
         setVisible((control != null ? (doNotOpen ? Visiblity.POS : Visiblity.SHOW) : Visiblity.HIDE), control);
       } else {
@@ -166,7 +166,7 @@ public class KeyBoardPopup extends Popup implements VkProperties {
     Objects.requireNonNull(stage).addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
       if (event.getClickCount() == 2 && stage.getScene() != null) {
         Node node = stage.getScene().getFocusOwner();
-        if (node != null && node instanceof TextInputControl) {
+        if (node instanceof TextInputControl) {
           setVisible(Visiblity.SHOW, (TextInputControl) node);
         }
       }

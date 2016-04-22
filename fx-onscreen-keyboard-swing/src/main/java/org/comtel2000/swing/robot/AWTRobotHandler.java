@@ -110,6 +110,8 @@ public class AWTRobotHandler implements IRobot {
           kfm.dispatchKeyEvent(new KeyEvent(c, KEY_PRESSED, System.currentTimeMillis(), 0, ch, ch, KEY_LOCATION_STANDARD));
           kfm.dispatchKeyEvent(new KeyEvent(c, KEY_RELEASED, System.currentTimeMillis(), 0, ch, ch, KEY_LOCATION_STANDARD));
           return;
+        default:
+          break;
       }
 
       int keycode = KeyEvent.getExtendedKeyCodeForChar(ch);

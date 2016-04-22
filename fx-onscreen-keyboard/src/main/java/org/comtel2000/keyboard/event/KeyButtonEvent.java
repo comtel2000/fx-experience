@@ -51,12 +51,11 @@ public class KeyButtonEvent extends Event {
 
   @Override
   public String toString() {
-    StringBuilder stringbuilder = new StringBuilder("KeyButtonEvent [");
-    stringbuilder.append("source = ").append(getSource());
-    stringbuilder.append(", target = ").append(getTarget());
-    stringbuilder.append(", eventType = ").append(getEventType());
-    stringbuilder.append(", consumed = ").append(isConsumed());
-    return stringbuilder.append("]").toString();
+    return new StringBuilder("KeyButtonEvent [")
+            .append("source = ").append(getSource())
+            .append(", target = ").append(getTarget())
+            .append(", eventType = ").append(getEventType())
+            .append(", consumed = ").append(isConsumed()).append("]").toString();
   }
 
   static {
