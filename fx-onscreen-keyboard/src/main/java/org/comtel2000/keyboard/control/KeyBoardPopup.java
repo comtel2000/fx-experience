@@ -1,38 +1,15 @@
 package org.comtel2000.keyboard.control;
 
-/*******************************************************************************
- * Copyright (c) 2016 comtel2000
- *
- * Redistribution and use in source and binary forms, with or without modification, are permitted
- * provided that the following conditions are met:
- *
- * 1. Redistributions of source code must retain the above copyright notice, this list of conditions
- * and the following disclaimer.
- *
- * 2. Redistributions in binary form must reproduce the above copyright notice, this list of
- * conditions and the following disclaimer in the documentation and/or other materials provided with
- * the distribution.
- *
- * 3. Neither the name of the comtel2000 nor the names of its contributors may be used to endorse or
- * promote products derived from this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
- * FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
- * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
- * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY
- * WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *******************************************************************************/
-
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
+import org.comtel2000.keyboard.FXOK;
+
+import com.sun.javafx.css.StyleManager;
+
 import javafx.animation.FadeTransition;
+import javafx.application.Application;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.event.Event;
@@ -59,6 +36,8 @@ import javafx.util.Duration;
  */
 public class KeyBoardPopup extends Popup implements VkProperties {
 
+  private final static String STYLE_CSS = "/css/KeyboardTextInputSkin.css";
+
   enum Visiblity {
     /** Set position and visible true */
     SHOW,
@@ -74,8 +53,10 @@ public class KeyBoardPopup extends Popup implements VkProperties {
 
   private Scene owner;
 
+  private double _offset = 5d;
+
   /** default vertical keyboard to text component offset */
-  private final DoubleProperty offsetProperty = new SimpleDoubleProperty(this, "offset", 5);
+  private DoubleProperty offset;
 
   private FadeTransition animation;
 
@@ -114,6 +95,8 @@ public class KeyBoardPopup extends Popup implements VkProperties {
    * Adds a FocusListener to Scene and open keyboard on {@link TextInputControl}
    * 
    * @param scene {@link Scene} to connect with the keyboard
+   * 
+   * @see #addGlobalFocusListener()
    */
   public void addFocusListener(final Scene scene) {
     addFocusListener(scene, false);
@@ -125,6 +108,8 @@ public class KeyBoardPopup extends Popup implements VkProperties {
    * @param scene {@link Scene} to connect with the keyboard
    * @param doNotOpen on hidden keyboard do nothing and on showing keyboard move to current
    *        component
+   * 
+   * @see #addGlobalFocusListener()
    */
   public void addFocusListener(final Scene scene, boolean doNotOpen) {
     registerScene(scene);
@@ -138,6 +123,37 @@ public class KeyBoardPopup extends Popup implements VkProperties {
         setVisible(Visiblity.HIDE);
       }
     });
+  }
+
+  /**
+   * Set the focus listener as user agent stylesheet for the whole application with main theme
+   * Application.STYLESHEET_MODENA. See
+   * {@link <a href="https://bugs.openjdk.java.net/browse/JDK-8077918">JDK-8077918</a>}
+   * 
+   * @see #addFocusListener(Scene)
+   * @see #addGlobalFocusListener(String)
+   */
+  public void addGlobalFocusListener() {
+    addGlobalFocusListener(Application.STYLESHEET_MODENA);
+  }
+
+  /**
+   * Set the focus listener as user agent stylesheet for the whole application with given main
+   * theme. See {@link <a href="https://bugs.openjdk.java.net/browse/JDK-8077918">JDK-8077918</a>}
+   * 
+   * @param url of main theme stylesheet
+   * 
+   * @see #addFocusListener(Scene)
+   * @see #addGlobalFocusListener()
+   */
+  public void addGlobalFocusListener(String url) {
+    FXOK.registerPopup(this);
+    Application.setUserAgentStylesheet(url);
+    StyleManager.getInstance().addUserAgentStylesheet(getUserAgentStyleSheet());
+  }
+
+  public static String getUserAgentStyleSheet() {
+    return KeyBoardPopup.class.getResource(STYLE_CSS).toExternalForm();
   }
 
   /**
@@ -184,7 +200,7 @@ public class KeyBoardPopup extends Popup implements VkProperties {
   void setVisible(final Visiblity visible, final TextInputControl textNode) {
 
     if ((visible == Visiblity.POS || visible == Visiblity.SHOW) && textNode != null) {
-      Map<String, String> vkProps = getVkProperties(textNode);
+      Map<String, String> vkProps = FXOK.getVkProperties(textNode);
       if (vkProps.isEmpty()) {
         getKeyBoard().setKeyboardType(KeyboardType.TEXT);
       } else {
@@ -202,9 +218,9 @@ public class KeyBoardPopup extends Popup implements VkProperties {
         setX(textNodeBounds.getMinX());
       }
       if (textNodeBounds.getMaxY() + getHeight() > screenBounds.getMaxY()) {
-        setY(textNodeBounds.getMinY() - getHeight() - offsetProperty.get());
+        setY(textNodeBounds.getMinY() - getHeight() - getOffset());
       } else {
-        setY(textNodeBounds.getMaxY() + offsetProperty.get());
+        setY(textNodeBounds.getMaxY() + getOffset());
       }
     }
 
@@ -231,35 +247,39 @@ public class KeyBoardPopup extends Popup implements VkProperties {
     animation.playFromStart();
   }
 
-  private Map<String, String> getVkProperties(Node node) {
-    if (node.hasProperties()) {
-      Map<String, String> vkProps = new HashMap<>(3);
-      node.getProperties().forEach((key, value) -> {
-        if (key.toString().startsWith("vk")) {
-          vkProps.put(String.valueOf(key), String.valueOf(value));
-        }
-      });
-      return vkProps;
-    }
-    if (node.getParent() != null && node.getParent().hasProperties()) {
-      Map<String, String> vkProps = new HashMap<>(3);
-      node.getParent().getProperties().forEach((key, value) -> {
-        if (key.toString().startsWith("vk")) {
-          vkProps.put(String.valueOf(key), String.valueOf(value));
-        }
-      });
-      return vkProps;
-    }
-    return Collections.emptyMap();
-
+  /**
+   * The vertical keyboard to text component offset
+   * 
+   * @return offset
+   */
+  public final double getOffset() {
+    return offset == null ? _offset : offset.get();
   }
 
+  /**
+   * Set the vertical keyboard to text component offset
+   * 
+   * @param value offset
+   */
+  public final void setOffset(double value) {
+    if (offset == null) {
+      _offset = value;
+    } else {
+      offset.set(value);
+    }
+  }
+
+  /**
+   * The vertical keyboard to text component offset
+   * 
+   * @return offset
+   */
   public final DoubleProperty offsetProperty() {
-    return offsetProperty;
+    if (offset == null) {
+      offset = new SimpleDoubleProperty(this, "offset", _offset);
+    }
+    return offset;
   }
 
-  public final void setOffset(double offsetProperty) {
-    offsetProperty().set(offsetProperty);
-  }
 
 }

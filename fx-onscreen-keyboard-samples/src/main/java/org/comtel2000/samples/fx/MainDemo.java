@@ -43,6 +43,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.Separator;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.ToolBar;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -51,7 +52,7 @@ public class MainDemo extends Application implements VkProperties {
 
   @Override
   public void start(Stage stage) {
-    stage.setTitle("FX Keyboard (" + System.getProperty("javafx.runtime.version") + ")");
+    stage.setTitle("FX FXOK (" + System.getProperty("javafx.runtime.version") + ")");
     stage.setResizable(true);
 
     KeyBoardPopup popup = KeyBoardPopupBuilder.create().initLocale(Locale.ENGLISH).build();
@@ -63,6 +64,16 @@ public class MainDemo extends Application implements VkProperties {
 
     Button cancelButton = new Button("Cancel");
     cancelButton.setCancelButton(true);
+
+    Button popupButton = new Button("Popup");
+    popupButton.setOnAction((a) -> {
+      TextInputDialog dialog = new TextInputDialog("Popup");
+      dialog.setTitle("Text Input Dialog");
+      dialog.setContentText("Please enter your name:");
+      dialog.showAndWait();
+
+    });
+
 
     CheckBox spaceKeyMove = new CheckBox("Movable");
     spaceKeyMove.setSelected(true);
@@ -76,7 +87,7 @@ public class MainDemo extends Application implements VkProperties {
     numblock.setSelected(false);
     numblock.selectedProperty().addListener((l, a, b) -> popup.getKeyBoard().switchLayer(b ? DefaultLayer.NUMBLOCK : DefaultLayer.DEFAULT));
 
-    pane.getChildren().add(new ToolBar(okButton, cancelButton, spaceKeyMove, capsLock, numblock));
+    pane.getChildren().add(new ToolBar(okButton, cancelButton, popupButton, spaceKeyMove, capsLock, numblock));
 
     pane.getChildren().add(new Label("Text0"));
     TextField tf0 = new TextField();
@@ -125,7 +136,8 @@ public class MainDemo extends Application implements VkProperties {
     stage.setScene(scene);
 
     popup.addDoubleClickEventFilter(stage);
-    popup.addFocusListener(scene);
+    // popup.addFocusListener(scene);
+    popup.addGlobalFocusListener();
 
     stage.show();
 

@@ -1,0 +1,7 @@
+.text-field { 
+	-fx-skin: "org.comtel2000.keyboard.control.skin.KeyboardTextFieldSkin";
+}
+
+.text-area { 
+	-fx-skin: "org.comtel2000.keyboard.control.skin.KeyboardTextAreaSkin";
+}
