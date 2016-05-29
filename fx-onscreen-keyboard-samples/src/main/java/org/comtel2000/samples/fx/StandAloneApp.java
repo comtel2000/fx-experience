@@ -99,7 +99,6 @@ public class StandAloneApp extends Application {
 
     popup.registerScene(scene);
     popup.setVisible(true);
-    // popup.show(stage);
 
   }
 

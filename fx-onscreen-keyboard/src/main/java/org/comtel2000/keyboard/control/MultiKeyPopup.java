@@ -50,7 +50,6 @@ class MultiKeyPopup extends Popup {
   private ObjectProperty<EventHandler<ActionEvent>> onAction;
 
   MultiKeyPopup() {
-    // setAnchorLocation(AnchorLocation.CONTENT_TOP_LEFT);
     buttonPane = new TilePane();
     buttonPane.getStyleClass().add(DEFAULT_STYLE_CLASS);
 

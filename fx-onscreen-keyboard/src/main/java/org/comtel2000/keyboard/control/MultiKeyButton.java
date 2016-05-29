@@ -101,7 +101,6 @@ class MultiKeyButton extends KeyButton {
       });
       setOnLongPressed(event -> {
 
-        // getParent().getParent().setEffect(new BoxBlur());
         getParent().getParent().setDisable(true);
         setFocused(false);
         context.show((Node) event.getSource(), scale);
