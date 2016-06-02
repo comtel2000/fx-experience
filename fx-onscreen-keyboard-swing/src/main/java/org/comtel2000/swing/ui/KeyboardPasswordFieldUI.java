@@ -36,9 +36,9 @@ import javax.swing.text.JTextComponent;
 
 public class KeyboardPasswordFieldUI extends BasicPasswordFieldUI {
 
-  private static FocusListener fl = null;
+  private static FocusListener fl;
 
-  private static MouseListener ml = null;
+  private static MouseListener ml;
 
   public KeyboardPasswordFieldUI() {
     super();

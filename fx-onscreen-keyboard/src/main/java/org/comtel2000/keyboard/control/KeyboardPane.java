@@ -96,16 +96,16 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
   private String _keyBoardStyle = DEFAULT_CSS;
   private StringProperty keyBoardStyle;
 
-  private boolean _cacheLayout = false;
+  private boolean _cacheLayout;
   private BooleanProperty cacheLayout;
 
-  private boolean _symbol = false;
+  private boolean _symbol;
   private BooleanProperty symbol;
 
-  private boolean _shift = false;
+  private boolean _shift;
   private BooleanProperty shift;
 
-  private boolean _control = false;
+  private boolean _control;
   private BooleanProperty control;
 
   private boolean _spaceKeyMove = true;
@@ -129,16 +129,16 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
   private DefaultLayer _layer = DefaultLayer.DEFAULT;
   private ObjectProperty<DefaultLayer> layer;
 
-  private Path _layerPath = null;
+  private Path _layerPath;
   private ObjectProperty<Path> layerPath;
 
   private Locale _locale = Locale.getDefault();
   private ObjectProperty<Locale> locale;
 
-  private Locale _activeLocale = null;
+  private Locale _activeLocale;
   private ObjectProperty<Locale> activeLocale;
 
-  private KeyboardType _activeType = null;
+  private KeyboardType _activeType;
   private ObjectProperty<KeyboardType> activeType;
 
   private EventHandler<? super Event> closeEventHandler;
