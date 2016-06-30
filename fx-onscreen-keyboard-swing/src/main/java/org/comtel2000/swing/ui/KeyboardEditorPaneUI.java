@@ -36,9 +36,9 @@ import javax.swing.text.JTextComponent;
 
 public class KeyboardEditorPaneUI extends BasicEditorPaneUI {
 
-  private static FocusListener fl = null;
+  private static FocusListener fl;
 
-  private static MouseListener ml = null;
+  private static MouseListener ml;
 
   public KeyboardEditorPaneUI() {
     super();

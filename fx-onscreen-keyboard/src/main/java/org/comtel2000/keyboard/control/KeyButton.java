@@ -48,10 +48,10 @@ public abstract class KeyButton extends Button implements LongPressable {
 
   protected Timeline buttonDelay;
 
-  private EventHandler<? super KeyButtonEvent> _onLongPressed = null;
+  private EventHandler<? super KeyButtonEvent> _onLongPressed;
   private ObjectProperty<EventHandler<? super KeyButtonEvent>> onLongPressed;
 
-  private EventHandler<? super KeyButtonEvent> _onShortPressed = null;
+  private EventHandler<? super KeyButtonEvent> _onShortPressed;
   private ObjectProperty<EventHandler<? super KeyButtonEvent>> onShortPressed;
 
   public KeyButton() {

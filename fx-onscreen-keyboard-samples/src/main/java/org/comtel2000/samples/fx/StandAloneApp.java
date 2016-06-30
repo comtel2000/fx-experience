@@ -45,7 +45,7 @@ import javafx.stage.StageStyle;
 
 public class StandAloneApp extends Application {
 
-  private int posX = 0, posY = 0;
+  private int posX, posY;
 
   @Override
   public void start(Stage stage) {
