@@ -58,7 +58,6 @@ public class SwingDemo extends JApplet implements VkProperties {
 
     KeyBoardWindow window =
         KeyBoardWindowBuilder.create().initLocale(Locale.forLanguageTag("en")).addIRobot(new AWTRobotHandler()).layer(DefaultLayer.NUMBLOCK).build();
-    // window.getKeyBoardPopup().get().getKeyBoard().setOnKeyboardCloseButton(window.getKeyBoardPopup().get().defaultCloseHandler);
     KeyboardUIManagerTool.installKeyboardDefaults(window);
 
     JPanel panel = new JPanel();

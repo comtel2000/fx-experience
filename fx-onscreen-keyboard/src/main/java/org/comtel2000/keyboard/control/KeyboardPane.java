@@ -452,7 +452,6 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
 
     GridPane rPane = new GridPane();
     rPane.setAlignment(Pos.CENTER);
-    // pane.setPrefSize(600, 200);
 
     if (layout.getVerticalGap() != null) {
       rPane.setVgap(layout.getVerticalGap());
@@ -474,8 +473,6 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
       int colIdx = 0;
       GridPane colPane = new GridPane();
       colPane.getStyleClass().add("key-background-column");
-      // colPane.setVgap(20);
-      // colPane.setPrefWidth(Region.USE_COMPUTED_SIZE);
 
       RowConstraints rc = new RowConstraints();
       rc.setPrefHeight(defaultKeyHeight);
@@ -525,7 +522,6 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
 
         button.setFocusTraversable(false);
         button.setOnShortPressed(this);
-        // button.setCache(true);
 
         button.setMinHeight(10);
         button.setPrefHeight(defaultKeyHeight);
@@ -566,9 +562,6 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
         if (key.getKeyIconStyle() != null && key.getKeyIconStyle().startsWith(".")) {
           logger.trace("Load css style: {}", key.getKeyIconStyle());
           Label icon = new Label();
-          // icon.setSnapToPixel(true);
-          // do not reduce css shape quality JavaFX8
-          // icon.setCacheShape(false);
 
           for (String style : key.getKeyIconStyle().split(";")) {
             icon.getStyleClass().add(style.substring(1));
@@ -617,7 +610,6 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
           case DELETE:
             if (!button.isRepeatable()) {
               button.setOnLongPressed(e -> {
-                // e.consume();
                 sendToComponent((char) 97, true);
                 sendToComponent((char) java.awt.event.KeyEvent.VK_DELETE, isControl());
               });
@@ -636,7 +628,6 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
       }
       logger.trace("row[{}] - {}", rowIdx, rowWidth);
       colPane.getRowConstraints().add(rc);
-      // colPane.setGridLinesVisible(true);
       rPane.add(colPane, 0, rowIdx);
       rowIdx++;
     }
