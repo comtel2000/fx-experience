@@ -118,7 +118,7 @@ public class KeyboardLayoutHandler {
         } catch (JAXBException e) {
           logger.error("file: " + String.valueOf(u) + " can not be read", e);
         }
-        if (obj != null && obj instanceof Keyboard) {
+        if (obj instanceof Keyboard) {
           return (Keyboard) obj;
         }
         return null;
@@ -131,7 +131,7 @@ public class KeyboardLayoutHandler {
     } catch (JAXBException e) {
       throw new IOException("file: " + url + " can not be read", e);
     }
-    if (obj != null && obj instanceof Keyboard) {
+    if (obj instanceof Keyboard) {
       return (Keyboard) obj;
     }
     return null;
@@ -152,7 +152,7 @@ public class KeyboardLayoutHandler {
     } catch (JAXBException e) {
       throw new IOException("stream can not be read", e);
     }
-    if (obj != null && obj instanceof Keyboard) {
+    if (obj instanceof Keyboard) {
       return (Keyboard) obj;
     }
     return null;
