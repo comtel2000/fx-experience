@@ -145,7 +145,7 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
 
   private double mousePressedX, mousePressedY;
 
-  private final List<IRobot> robots = new ArrayList<>();
+  private final List<IRobot> robots = new ArrayList<>(3);
 
   private final Map<Locale, String> availableLocales = new LinkedHashMap<>();
 
@@ -316,7 +316,6 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
       url = Paths.get(defaultRoot, file).toUri().toURL();
       logger.debug("add default layout: {}", url);
       typeRegionMap.put(type, createKeyboardPane(handler.getLayout(url)));
-      return;
     }
   }
 
@@ -643,12 +642,11 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
   @Override
   public void handle(KeyButtonEvent event) {
     event.consume();
-    KeyButtonEvent kbEvent = event;
-    if (!kbEvent.getEventType().equals(KeyButtonEvent.SHORT_PRESSED)) {
+    if (!event.getEventType().equals(KeyButtonEvent.SHORT_PRESSED)) {
       logger.warn("ignore non short pressed events");
       return;
     }
-    KeyButton kb = (KeyButton) kbEvent.getSource();
+    KeyButton kb = (KeyButton) event.getSource();
     switch (kb.getKeyCode()) {
       case SHIFT_DOWN:
         // switch shifted

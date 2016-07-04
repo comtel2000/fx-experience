@@ -181,9 +181,7 @@ public class FXRobotHandler implements IRobot {
     }
 
     focusNode.fireEvent(createKeyEvent(focusNode, KeyEvent.KEY_PRESSED, Character.toString(ch), KeyCode.UNDEFINED, ctrl));
-    if (Character.toString(ch) != KeyEvent.CHAR_UNDEFINED) {
-      focusNode.fireEvent(createKeyEvent(focusNode, KeyEvent.KEY_TYPED, Character.toString(ch), KeyCode.UNDEFINED, ctrl));
-    }
+    focusNode.fireEvent(createKeyEvent(focusNode, KeyEvent.KEY_TYPED, Character.toString(ch), KeyCode.UNDEFINED, ctrl));
     focusNode.fireEvent(createKeyEvent(focusNode, KeyEvent.KEY_RELEASED, Character.toString(ch), KeyCode.UNDEFINED, ctrl));
   }
 

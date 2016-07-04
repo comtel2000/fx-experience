@@ -127,8 +127,9 @@ public class KeyBoardPopup extends Popup implements VkProperties {
 
   /**
    * Set the focus listener as user agent stylesheet for the whole application with main theme
-   * Application.STYLESHEET_MODENA. See
-   * {@link <a href="https://bugs.openjdk.java.net/browse/JDK-8077918">JDK-8077918</a>}
+   * Application.STYLESHEET_MODENA.
+   * <p>
+   * Reference: <a href="https://bugs.openjdk.java.net/browse/JDK-8077918">JDK-8077918</a>
    * 
    * @see #addFocusListener(Scene)
    * @see #addGlobalFocusListener(String)
@@ -139,7 +140,9 @@ public class KeyBoardPopup extends Popup implements VkProperties {
 
   /**
    * Set the focus listener as user agent stylesheet for the whole application with given main
-   * theme. See {@link <a href="https://bugs.openjdk.java.net/browse/JDK-8077918">JDK-8077918</a>}
+   * theme.
+   * <p>
+   * Reference: <a href="https://bugs.openjdk.java.net/browse/JDK-8077918">JDK-8077918</a>
    * 
    * @param url of main theme stylesheet
    * 

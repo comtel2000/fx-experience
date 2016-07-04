@@ -27,22 +27,39 @@ package org.comtel2000.keyboard;
  *******************************************************************************/
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.DirectoryStream;
+import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Locale;
+import java.util.stream.Collectors;
+
+import javax.xml.XMLConstants;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
+import javax.xml.transform.stream.StreamSource;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
 
 import org.comtel2000.keyboard.xml.KeyboardLayoutHandler;
 import org.comtel2000.keyboard.xml.layout.Keyboard;
+import org.comtel2000.keyboard.xml.layout.ObjectFactory;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.xml.sax.SAXException;
 
 public class KeyboardXmlLayoutTest {
+
+  private final Path parent = Paths.get("src", "main", "resources");
 
   private static KeyboardLayoutHandler handler;
 
@@ -63,10 +80,9 @@ public class KeyboardXmlLayoutTest {
     Assert.assertFalse(kb.getRow().isEmpty());
 
     for (Keyboard.Row row : kb.getRow()) {
-      System.err.println("\nRow " + row.getRowEdgeFlags());
-      for (Keyboard.Row.Key key : row.getKey()) {
-        System.err.println(key.getCodes() + "\t" + (key.getKeyLabel() != null ? key.getKeyLabel() : key.getKeyIconStyle()));
-      }
+      System.out.println(String.format("row size: %s (%s) ", row.getKey().size(),row.getRowEdgeFlags()));
+      String rows = row.getKey().stream().map(key -> String.format("%s[%s]", key.getCodes(),(key.getKeyLabel() != null ? key.getKeyLabel() : key.getKeyIconStyle()))).collect(Collectors.joining(";"));
+      System.out.println(rows);
     }
   }
 
@@ -89,11 +105,61 @@ public class KeyboardXmlLayoutTest {
       stream.forEach(p -> {
         if (Files.isDirectory(p)) {
           Locale l = new Locale(p.getFileName().toString());
-          System.err.println(l);
+          System.out.println("custom locale: " + l);
         }
       });
     }
     Assert.assertNotNull(url);
 
+  }
+
+  @Test
+  public void validateXmls() throws IOException, URISyntaxException {
+
+    Files.walkFileTree(parent.resolve("xml"), new SimpleFileVisitor<Path>() {
+      @Override
+      public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+        if (!file.getFileName().toString().endsWith(".xml")) {
+          return FileVisitResult.CONTINUE;
+        }
+        try (InputStream is = Files.newInputStream(file)) {
+          System.out.println("validate file: " + file);
+          validate(is);
+        } catch (JAXBException | SAXException | IOException e) {
+          e.printStackTrace();
+          Assert.fail(e.getMessage());
+          return FileVisitResult.TERMINATE;
+        }
+        return FileVisitResult.CONTINUE;
+      }
+    });
+
+  }
+
+  private void validate(InputStream stream) throws JAXBException, SAXException, IOException {
+    SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+    Schema schema = sf.newSchema(parent.resolve("kb-layout.xsd").toUri().toURL());
+
+    JAXBContext jc = JAXBContext.newInstance(Keyboard.class);
+
+    Unmarshaller unmarshaller = jc.createUnmarshaller();
+    unmarshaller.setSchema(schema);
+    unmarshaller.setEventHandler((event) -> {
+      System.out.println("\nEVENT");
+      System.out.println("SEVERITY:  " + event.getSeverity());
+      System.out.println("MESSAGE:  " + event.getMessage());
+      System.out.println("LINKED EXCEPTION:  " + event.getLinkedException());
+      System.out.println("LOCATOR");
+      System.out.println("    LINE NUMBER:  " + event.getLocator().getLineNumber());
+      System.out.println("    COLUMN NUMBER:  " + event.getLocator().getColumnNumber());
+      System.out.println("    OFFSET:  " + event.getLocator().getOffset());
+      System.out.println("    OBJECT:  " + event.getLocator().getObject());
+      System.out.println("    NODE:  " + event.getLocator().getNode());
+      System.out.println("    URL:  " + event.getLocator().getURL());
+      Assert.fail(event.getMessage());
+      return true;
+    });
+    unmarshaller.unmarshal(stream);
+    stream.close();
   }
 }

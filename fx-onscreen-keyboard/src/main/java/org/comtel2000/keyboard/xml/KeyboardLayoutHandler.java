@@ -42,10 +42,10 @@ public class KeyboardLayoutHandler {
 
   private final static org.slf4j.Logger logger = LoggerFactory.getLogger(KeyboardLayoutHandler.class);
 
-  private ConcurrentHashMap<String, Keyboard> layoutStringCache;;
-  private ConcurrentHashMap<URL, Keyboard> layoutURLCache;
-  private JAXBContext context;
+  private final boolean cached;
 
+  private ConcurrentHashMap<String, Keyboard> layoutStringCache;
+  private ConcurrentHashMap<URL, Keyboard> layoutURLCache;
   private Unmarshaller unmarshaller;
 
   public KeyboardLayoutHandler() {
@@ -53,16 +53,18 @@ public class KeyboardLayoutHandler {
   }
 
   public KeyboardLayoutHandler(boolean cached) {
+    this.cached = cached;
     try {
-      context = JAXBContext.newInstance(new Class[] { Keyboard.class });
+      JAXBContext context = JAXBContext.newInstance(Keyboard.class);
       unmarshaller = context.createUnmarshaller();
 
-      if (cached) {
-        layoutStringCache = new ConcurrentHashMap<>(8);
-        layoutURLCache = new ConcurrentHashMap<>(8);
-      }
     } catch (JAXBException e) {
       logger.error(e.getMessage(), e);
+    }
+
+    if (cached) {
+      layoutStringCache = new ConcurrentHashMap<>(8);
+      layoutURLCache = new ConcurrentHashMap<>(8);
     }
   }
 
@@ -74,10 +76,11 @@ public class KeyboardLayoutHandler {
    * @throws IOException If this String path could not be read
    */
   public Keyboard getLayout(String file) throws IOException {
-    if (layoutStringCache != null) {
+
+    if (cached) {
       return layoutStringCache.computeIfAbsent(file, f -> {
-        URL url = KeyboardLayoutHandler.class.getResource(f);
         try {
+          URL url = KeyboardLayoutHandler.class.getResource(f);
           if (url != null) {
             return getLayout(url);
           }
@@ -93,10 +96,10 @@ public class KeyboardLayoutHandler {
     if (url != null) {
       return getLayout(url);
     }
-
-    InputStream is = KeyboardLayoutHandler.class.getResourceAsStream(file);
-    if (is != null) {
-      return getLayout(is);
+    try (InputStream is = KeyboardLayoutHandler.class.getResourceAsStream(file)) {
+      if (is != null) {
+        return getLayout(is);
+      }
     }
     throw new IOException("layout not found on: " + file);
   }
@@ -110,31 +113,23 @@ public class KeyboardLayoutHandler {
    */
   public Keyboard getLayout(URL url) throws IOException {
 
-    if (layoutURLCache != null) {
+    if (cached) {
       return layoutURLCache.computeIfAbsent(url, u -> {
-        Object obj = null;
         try {
-          obj = unmarshaller.unmarshal(u);
+          return (Keyboard) unmarshaller.unmarshal(u);
         } catch (JAXBException e) {
           logger.error("file: " + String.valueOf(u) + " can not be read", e);
-        }
-        if (obj instanceof Keyboard) {
-          return (Keyboard) obj;
         }
         return null;
       });
     }
 
-    Object obj = null;
     try {
-      obj = unmarshaller.unmarshal(url);
+      return (Keyboard) unmarshaller.unmarshal(url);
     } catch (JAXBException e) {
       throw new IOException("file: " + url + " can not be read", e);
     }
-    if (obj instanceof Keyboard) {
-      return (Keyboard) obj;
-    }
-    return null;
+
   }
 
   /**
@@ -145,16 +140,11 @@ public class KeyboardLayoutHandler {
    * @throws IOException If this InputStream could not be read
    */
   private Keyboard getLayout(InputStream is) throws IOException {
-
-    Object obj = null;
     try {
-      obj = unmarshaller.unmarshal(is);
+      return (Keyboard) unmarshaller.unmarshal(is);
     } catch (JAXBException e) {
       throw new IOException("stream can not be read", e);
     }
-    if (obj instanceof Keyboard) {
-      return (Keyboard) obj;
-    }
-    return null;
+
   }
 }

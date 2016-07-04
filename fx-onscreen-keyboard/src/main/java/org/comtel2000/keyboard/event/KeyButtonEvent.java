@@ -1,7 +1,5 @@
 package org.comtel2000.keyboard.event;
 
-import org.comtel2000.keyboard.control.KeyButton;
-
 /*******************************************************************************
  * Copyright (c) 2016 comtel2000
  *
@@ -28,6 +26,8 @@ import org.comtel2000.keyboard.control.KeyButton;
  * WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *******************************************************************************/
 
+import org.comtel2000.keyboard.control.KeyButton;
+
 import javafx.event.Event;
 import javafx.event.EventType;
 
@@ -51,18 +51,14 @@ public class KeyButtonEvent extends Event {
 
   @Override
   public String toString() {
-    StringBuilder stringbuilder = new StringBuilder("KeyButtonEvent [");
-    stringbuilder.append("source = ").append(getSource());
-    stringbuilder.append(", target = ").append(getTarget());
-    stringbuilder.append(", eventType = ").append(getEventType());
-    stringbuilder.append(", consumed = ").append(isConsumed());
-    return stringbuilder.append("]").toString();
+    return "KeyButtonEvent [" + "source = " + getSource() + ", target = " + getTarget() + ", eventType = " + getEventType() + ", consumed = " + isConsumed()
+        + "]";
   }
 
   static {
-    ANY = new EventType<Event>(Event.ANY, "KB_PRESSED");
-    LONG_PRESSED = new EventType<Event>(ANY, "KB_PRESSED_LONG");
-    SHORT_PRESSED = new EventType<Event>(ANY, "KB_PRESSED_SHORT");
+    ANY = new EventType<>(Event.ANY, "KB_PRESSED");
+    LONG_PRESSED = new EventType<>(ANY, "KB_PRESSED_LONG");
+    SHORT_PRESSED = new EventType<>(ANY, "KB_PRESSED_SHORT");
   }
 
 }

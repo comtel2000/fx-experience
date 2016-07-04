@@ -12,70 +12,70 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java-Klasse für anonymous complex type.
+ * <p>Java class for anonymous complex type.
  * 
- * <p>Das folgende Schemafragment gibt den erwarteten Content an, der in dieser Klasse enthalten ist.
+ * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType>
- *   &lt;complexContent>
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;sequence>
- *         &lt;element name="Row" maxOccurs="unbounded">
- *           &lt;complexType>
- *             &lt;complexContent>
- *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *                 &lt;sequence>
- *                   &lt;element name="Key" maxOccurs="unbounded">
- *                     &lt;complexType>
- *                       &lt;complexContent>
- *                         &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *                           &lt;attribute name="codes" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
- *                           &lt;attribute name="popupCharacters" type="{http://www.w3.org/2001/XMLSchema}string" />
- *                           &lt;attribute name="popupKeyboard" type="{http://www.w3.org/2001/XMLSchema}string" />
- *                           &lt;attribute name="keyLabel" type="{http://www.w3.org/2001/XMLSchema}string" />
- *                           &lt;attribute name="keyOutputText" type="{http://www.w3.org/2001/XMLSchema}string" />
- *                           &lt;attribute name="movable" type="{http://www.w3.org/2001/XMLSchema}boolean" />
- *                           &lt;attribute name="sticky" type="{http://www.w3.org/2001/XMLSchema}boolean" />
- *                           &lt;attribute name="modifier" type="{http://www.w3.org/2001/XMLSchema}boolean" />
- *                           &lt;attribute name="repeatable" type="{http://www.w3.org/2001/XMLSchema}boolean" />
- *                           &lt;attribute name="keyIconStyle" type="{http://www.w3.org/2001/XMLSchema}string" />
- *                           &lt;attribute name="keyLabelStyle" type="{http://www.w3.org/2001/XMLSchema}string" />
- *                           &lt;attribute name="keyWidth" type="{http://www.w3.org/2001/XMLSchema}int" />
- *                           &lt;attribute name="keyEdgeFlags">
- *                             &lt;simpleType>
- *                               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *                                 &lt;enumeration value="left"/>
- *                                 &lt;enumeration value="right"/>
- *                               &lt;/restriction>
- *                             &lt;/simpleType>
- *                           &lt;/attribute>
- *                           &lt;attribute name="horizontalGap" type="{http://www.w3.org/2001/XMLSchema}int" />
- *                         &lt;/restriction>
- *                       &lt;/complexContent>
- *                     &lt;/complexType>
- *                   &lt;/element>
- *                 &lt;/sequence>
- *                 &lt;attribute name="rowEdgeFlags">
- *                   &lt;simpleType>
- *                     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *                       &lt;enumeration value="top"/>
- *                       &lt;enumeration value="bottom"/>
- *                     &lt;/restriction>
- *                   &lt;/simpleType>
- *                 &lt;/attribute>
- *               &lt;/restriction>
- *             &lt;/complexContent>
- *           &lt;/complexType>
- *         &lt;/element>
- *       &lt;/sequence>
- *       &lt;attribute name="keyWidth" type="{http://www.w3.org/2001/XMLSchema}int" />
- *       &lt;attribute name="keyHeight" type="{http://www.w3.org/2001/XMLSchema}int" />
- *       &lt;attribute name="horizontalGap" type="{http://www.w3.org/2001/XMLSchema}int" />
- *       &lt;attribute name="verticalGap" type="{http://www.w3.org/2001/XMLSchema}int" />
- *     &lt;/restriction>
- *   &lt;/complexContent>
- * &lt;/complexType>
+ * &lt;complexType&gt;
+ *   &lt;complexContent&gt;
+ *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+ *       &lt;sequence&gt;
+ *         &lt;element name="Row" maxOccurs="unbounded"&gt;
+ *           &lt;complexType&gt;
+ *             &lt;complexContent&gt;
+ *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+ *                 &lt;sequence&gt;
+ *                   &lt;element name="Key" maxOccurs="unbounded"&gt;
+ *                     &lt;complexType&gt;
+ *                       &lt;complexContent&gt;
+ *                         &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+ *                           &lt;attribute name="codes" use="required" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+ *                           &lt;attribute name="popupCharacters" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+ *                           &lt;attribute name="popupKeyboard" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+ *                           &lt;attribute name="keyLabel" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+ *                           &lt;attribute name="keyOutputText" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+ *                           &lt;attribute name="movable" type="{http://www.w3.org/2001/XMLSchema}boolean" /&gt;
+ *                           &lt;attribute name="sticky" type="{http://www.w3.org/2001/XMLSchema}boolean" /&gt;
+ *                           &lt;attribute name="modifier" type="{http://www.w3.org/2001/XMLSchema}boolean" /&gt;
+ *                           &lt;attribute name="repeatable" type="{http://www.w3.org/2001/XMLSchema}boolean" /&gt;
+ *                           &lt;attribute name="keyIconStyle" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+ *                           &lt;attribute name="keyLabelStyle" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+ *                           &lt;attribute name="keyWidth" type="{http://www.w3.org/2001/XMLSchema}int" /&gt;
+ *                           &lt;attribute name="keyEdgeFlags"&gt;
+ *                             &lt;simpleType&gt;
+ *                               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+ *                                 &lt;enumeration value="left"/&gt;
+ *                                 &lt;enumeration value="right"/&gt;
+ *                               &lt;/restriction&gt;
+ *                             &lt;/simpleType&gt;
+ *                           &lt;/attribute&gt;
+ *                           &lt;attribute name="horizontalGap" type="{http://www.w3.org/2001/XMLSchema}int" /&gt;
+ *                         &lt;/restriction&gt;
+ *                       &lt;/complexContent&gt;
+ *                     &lt;/complexType&gt;
+ *                   &lt;/element&gt;
+ *                 &lt;/sequence&gt;
+ *                 &lt;attribute name="rowEdgeFlags"&gt;
+ *                   &lt;simpleType&gt;
+ *                     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+ *                       &lt;enumeration value="top"/&gt;
+ *                       &lt;enumeration value="bottom"/&gt;
+ *                     &lt;/restriction&gt;
+ *                   &lt;/simpleType&gt;
+ *                 &lt;/attribute&gt;
+ *               &lt;/restriction&gt;
+ *             &lt;/complexContent&gt;
+ *           &lt;/complexType&gt;
+ *         &lt;/element&gt;
+ *       &lt;/sequence&gt;
+ *       &lt;attribute name="keyWidth" type="{http://www.w3.org/2001/XMLSchema}int" /&gt;
+ *       &lt;attribute name="keyHeight" type="{http://www.w3.org/2001/XMLSchema}int" /&gt;
+ *       &lt;attribute name="horizontalGap" type="{http://www.w3.org/2001/XMLSchema}int" /&gt;
+ *       &lt;attribute name="verticalGap" type="{http://www.w3.org/2001/XMLSchema}int" /&gt;
+ *     &lt;/restriction&gt;
+ *   &lt;/complexContent&gt;
+ * &lt;/complexType&gt;
  * </pre>
  * 
  * 
@@ -128,7 +128,7 @@ public class Keyboard {
     }
 
     /**
-     * Ruft den Wert der keyWidth-Eigenschaft ab.
+     * Gets the value of the keyWidth property.
      * 
      * @return
      *     possible object is
@@ -140,7 +140,7 @@ public class Keyboard {
     }
 
     /**
-     * Legt den Wert der keyWidth-Eigenschaft fest.
+     * Sets the value of the keyWidth property.
      * 
      * @param value
      *     allowed object is
@@ -152,7 +152,7 @@ public class Keyboard {
     }
 
     /**
-     * Ruft den Wert der keyHeight-Eigenschaft ab.
+     * Gets the value of the keyHeight property.
      * 
      * @return
      *     possible object is
@@ -164,7 +164,7 @@ public class Keyboard {
     }
 
     /**
-     * Legt den Wert der keyHeight-Eigenschaft fest.
+     * Sets the value of the keyHeight property.
      * 
      * @param value
      *     allowed object is
@@ -176,7 +176,7 @@ public class Keyboard {
     }
 
     /**
-     * Ruft den Wert der horizontalGap-Eigenschaft ab.
+     * Gets the value of the horizontalGap property.
      * 
      * @return
      *     possible object is
@@ -188,7 +188,7 @@ public class Keyboard {
     }
 
     /**
-     * Legt den Wert der horizontalGap-Eigenschaft fest.
+     * Sets the value of the horizontalGap property.
      * 
      * @param value
      *     allowed object is
@@ -200,7 +200,7 @@ public class Keyboard {
     }
 
     /**
-     * Ruft den Wert der verticalGap-Eigenschaft ab.
+     * Gets the value of the verticalGap property.
      * 
      * @return
      *     possible object is
@@ -212,7 +212,7 @@ public class Keyboard {
     }
 
     /**
-     * Legt den Wert der verticalGap-Eigenschaft fest.
+     * Sets the value of the verticalGap property.
      * 
      * @param value
      *     allowed object is
@@ -225,56 +225,56 @@ public class Keyboard {
 
 
     /**
-     * <p>Java-Klasse für anonymous complex type.
+     * <p>Java class for anonymous complex type.
      * 
-     * <p>Das folgende Schemafragment gibt den erwarteten Content an, der in dieser Klasse enthalten ist.
+     * <p>The following schema fragment specifies the expected content contained within this class.
      * 
      * <pre>
-     * &lt;complexType>
-     *   &lt;complexContent>
-     *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
-     *       &lt;sequence>
-     *         &lt;element name="Key" maxOccurs="unbounded">
-     *           &lt;complexType>
-     *             &lt;complexContent>
-     *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
-     *                 &lt;attribute name="codes" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
-     *                 &lt;attribute name="popupCharacters" type="{http://www.w3.org/2001/XMLSchema}string" />
-     *                 &lt;attribute name="popupKeyboard" type="{http://www.w3.org/2001/XMLSchema}string" />
-     *                 &lt;attribute name="keyLabel" type="{http://www.w3.org/2001/XMLSchema}string" />
-     *                 &lt;attribute name="keyOutputText" type="{http://www.w3.org/2001/XMLSchema}string" />
-     *                 &lt;attribute name="movable" type="{http://www.w3.org/2001/XMLSchema}boolean" />
-     *                 &lt;attribute name="sticky" type="{http://www.w3.org/2001/XMLSchema}boolean" />
-     *                 &lt;attribute name="modifier" type="{http://www.w3.org/2001/XMLSchema}boolean" />
-     *                 &lt;attribute name="repeatable" type="{http://www.w3.org/2001/XMLSchema}boolean" />
-     *                 &lt;attribute name="keyIconStyle" type="{http://www.w3.org/2001/XMLSchema}string" />
-     *                 &lt;attribute name="keyLabelStyle" type="{http://www.w3.org/2001/XMLSchema}string" />
-     *                 &lt;attribute name="keyWidth" type="{http://www.w3.org/2001/XMLSchema}int" />
-     *                 &lt;attribute name="keyEdgeFlags">
-     *                   &lt;simpleType>
-     *                     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
-     *                       &lt;enumeration value="left"/>
-     *                       &lt;enumeration value="right"/>
-     *                     &lt;/restriction>
-     *                   &lt;/simpleType>
-     *                 &lt;/attribute>
-     *                 &lt;attribute name="horizontalGap" type="{http://www.w3.org/2001/XMLSchema}int" />
-     *               &lt;/restriction>
-     *             &lt;/complexContent>
-     *           &lt;/complexType>
-     *         &lt;/element>
-     *       &lt;/sequence>
-     *       &lt;attribute name="rowEdgeFlags">
-     *         &lt;simpleType>
-     *           &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
-     *             &lt;enumeration value="top"/>
-     *             &lt;enumeration value="bottom"/>
-     *           &lt;/restriction>
-     *         &lt;/simpleType>
-     *       &lt;/attribute>
-     *     &lt;/restriction>
-     *   &lt;/complexContent>
-     * &lt;/complexType>
+     * &lt;complexType&gt;
+     *   &lt;complexContent&gt;
+     *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+     *       &lt;sequence&gt;
+     *         &lt;element name="Key" maxOccurs="unbounded"&gt;
+     *           &lt;complexType&gt;
+     *             &lt;complexContent&gt;
+     *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+     *                 &lt;attribute name="codes" use="required" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+     *                 &lt;attribute name="popupCharacters" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+     *                 &lt;attribute name="popupKeyboard" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+     *                 &lt;attribute name="keyLabel" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+     *                 &lt;attribute name="keyOutputText" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+     *                 &lt;attribute name="movable" type="{http://www.w3.org/2001/XMLSchema}boolean" /&gt;
+     *                 &lt;attribute name="sticky" type="{http://www.w3.org/2001/XMLSchema}boolean" /&gt;
+     *                 &lt;attribute name="modifier" type="{http://www.w3.org/2001/XMLSchema}boolean" /&gt;
+     *                 &lt;attribute name="repeatable" type="{http://www.w3.org/2001/XMLSchema}boolean" /&gt;
+     *                 &lt;attribute name="keyIconStyle" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+     *                 &lt;attribute name="keyLabelStyle" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+     *                 &lt;attribute name="keyWidth" type="{http://www.w3.org/2001/XMLSchema}int" /&gt;
+     *                 &lt;attribute name="keyEdgeFlags"&gt;
+     *                   &lt;simpleType&gt;
+     *                     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+     *                       &lt;enumeration value="left"/&gt;
+     *                       &lt;enumeration value="right"/&gt;
+     *                     &lt;/restriction&gt;
+     *                   &lt;/simpleType&gt;
+     *                 &lt;/attribute&gt;
+     *                 &lt;attribute name="horizontalGap" type="{http://www.w3.org/2001/XMLSchema}int" /&gt;
+     *               &lt;/restriction&gt;
+     *             &lt;/complexContent&gt;
+     *           &lt;/complexType&gt;
+     *         &lt;/element&gt;
+     *       &lt;/sequence&gt;
+     *       &lt;attribute name="rowEdgeFlags"&gt;
+     *         &lt;simpleType&gt;
+     *           &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+     *             &lt;enumeration value="top"/&gt;
+     *             &lt;enumeration value="bottom"/&gt;
+     *           &lt;/restriction&gt;
+     *         &lt;/simpleType&gt;
+     *       &lt;/attribute&gt;
+     *     &lt;/restriction&gt;
+     *   &lt;/complexContent&gt;
+     * &lt;/complexType&gt;
      * </pre>
      * 
      * 
@@ -320,7 +320,7 @@ public class Keyboard {
         }
 
         /**
-         * Ruft den Wert der rowEdgeFlags-Eigenschaft ab.
+         * Gets the value of the rowEdgeFlags property.
          * 
          * @return
          *     possible object is
@@ -332,7 +332,7 @@ public class Keyboard {
         }
 
         /**
-         * Legt den Wert der rowEdgeFlags-Eigenschaft fest.
+         * Sets the value of the rowEdgeFlags property.
          * 
          * @param value
          *     allowed object is
@@ -345,38 +345,38 @@ public class Keyboard {
 
 
         /**
-         * <p>Java-Klasse für anonymous complex type.
+         * <p>Java class for anonymous complex type.
          * 
-         * <p>Das folgende Schemafragment gibt den erwarteten Content an, der in dieser Klasse enthalten ist.
+         * <p>The following schema fragment specifies the expected content contained within this class.
          * 
          * <pre>
-         * &lt;complexType>
-         *   &lt;complexContent>
-         *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
-         *       &lt;attribute name="codes" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
-         *       &lt;attribute name="popupCharacters" type="{http://www.w3.org/2001/XMLSchema}string" />
-         *       &lt;attribute name="popupKeyboard" type="{http://www.w3.org/2001/XMLSchema}string" />
-         *       &lt;attribute name="keyLabel" type="{http://www.w3.org/2001/XMLSchema}string" />
-         *       &lt;attribute name="keyOutputText" type="{http://www.w3.org/2001/XMLSchema}string" />
-         *       &lt;attribute name="movable" type="{http://www.w3.org/2001/XMLSchema}boolean" />
-         *       &lt;attribute name="sticky" type="{http://www.w3.org/2001/XMLSchema}boolean" />
-         *       &lt;attribute name="modifier" type="{http://www.w3.org/2001/XMLSchema}boolean" />
-         *       &lt;attribute name="repeatable" type="{http://www.w3.org/2001/XMLSchema}boolean" />
-         *       &lt;attribute name="keyIconStyle" type="{http://www.w3.org/2001/XMLSchema}string" />
-         *       &lt;attribute name="keyLabelStyle" type="{http://www.w3.org/2001/XMLSchema}string" />
-         *       &lt;attribute name="keyWidth" type="{http://www.w3.org/2001/XMLSchema}int" />
-         *       &lt;attribute name="keyEdgeFlags">
-         *         &lt;simpleType>
-         *           &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
-         *             &lt;enumeration value="left"/>
-         *             &lt;enumeration value="right"/>
-         *           &lt;/restriction>
-         *         &lt;/simpleType>
-         *       &lt;/attribute>
-         *       &lt;attribute name="horizontalGap" type="{http://www.w3.org/2001/XMLSchema}int" />
-         *     &lt;/restriction>
-         *   &lt;/complexContent>
-         * &lt;/complexType>
+         * &lt;complexType&gt;
+         *   &lt;complexContent&gt;
+         *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+         *       &lt;attribute name="codes" use="required" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+         *       &lt;attribute name="popupCharacters" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+         *       &lt;attribute name="popupKeyboard" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+         *       &lt;attribute name="keyLabel" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+         *       &lt;attribute name="keyOutputText" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+         *       &lt;attribute name="movable" type="{http://www.w3.org/2001/XMLSchema}boolean" /&gt;
+         *       &lt;attribute name="sticky" type="{http://www.w3.org/2001/XMLSchema}boolean" /&gt;
+         *       &lt;attribute name="modifier" type="{http://www.w3.org/2001/XMLSchema}boolean" /&gt;
+         *       &lt;attribute name="repeatable" type="{http://www.w3.org/2001/XMLSchema}boolean" /&gt;
+         *       &lt;attribute name="keyIconStyle" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+         *       &lt;attribute name="keyLabelStyle" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+         *       &lt;attribute name="keyWidth" type="{http://www.w3.org/2001/XMLSchema}int" /&gt;
+         *       &lt;attribute name="keyEdgeFlags"&gt;
+         *         &lt;simpleType&gt;
+         *           &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+         *             &lt;enumeration value="left"/&gt;
+         *             &lt;enumeration value="right"/&gt;
+         *           &lt;/restriction&gt;
+         *         &lt;/simpleType&gt;
+         *       &lt;/attribute&gt;
+         *       &lt;attribute name="horizontalGap" type="{http://www.w3.org/2001/XMLSchema}int" /&gt;
+         *     &lt;/restriction&gt;
+         *   &lt;/complexContent&gt;
+         * &lt;/complexType&gt;
          * </pre>
          * 
          * 
@@ -415,7 +415,7 @@ public class Keyboard {
             protected Integer horizontalGap;
 
             /**
-             * Ruft den Wert der codes-Eigenschaft ab.
+             * Gets the value of the codes property.
              * 
              * @return
              *     possible object is
@@ -427,7 +427,7 @@ public class Keyboard {
             }
 
             /**
-             * Legt den Wert der codes-Eigenschaft fest.
+             * Sets the value of the codes property.
              * 
              * @param value
              *     allowed object is
@@ -439,7 +439,7 @@ public class Keyboard {
             }
 
             /**
-             * Ruft den Wert der popupCharacters-Eigenschaft ab.
+             * Gets the value of the popupCharacters property.
              * 
              * @return
              *     possible object is
@@ -451,7 +451,7 @@ public class Keyboard {
             }
 
             /**
-             * Legt den Wert der popupCharacters-Eigenschaft fest.
+             * Sets the value of the popupCharacters property.
              * 
              * @param value
              *     allowed object is
@@ -463,7 +463,7 @@ public class Keyboard {
             }
 
             /**
-             * Ruft den Wert der popupKeyboard-Eigenschaft ab.
+             * Gets the value of the popupKeyboard property.
              * 
              * @return
              *     possible object is
@@ -475,7 +475,7 @@ public class Keyboard {
             }
 
             /**
-             * Legt den Wert der popupKeyboard-Eigenschaft fest.
+             * Sets the value of the popupKeyboard property.
              * 
              * @param value
              *     allowed object is
@@ -487,7 +487,7 @@ public class Keyboard {
             }
 
             /**
-             * Ruft den Wert der keyLabel-Eigenschaft ab.
+             * Gets the value of the keyLabel property.
              * 
              * @return
              *     possible object is
@@ -499,7 +499,7 @@ public class Keyboard {
             }
 
             /**
-             * Legt den Wert der keyLabel-Eigenschaft fest.
+             * Sets the value of the keyLabel property.
              * 
              * @param value
              *     allowed object is
@@ -511,7 +511,7 @@ public class Keyboard {
             }
 
             /**
-             * Ruft den Wert der keyOutputText-Eigenschaft ab.
+             * Gets the value of the keyOutputText property.
              * 
              * @return
              *     possible object is
@@ -523,7 +523,7 @@ public class Keyboard {
             }
 
             /**
-             * Legt den Wert der keyOutputText-Eigenschaft fest.
+             * Sets the value of the keyOutputText property.
              * 
              * @param value
              *     allowed object is
@@ -535,7 +535,7 @@ public class Keyboard {
             }
 
             /**
-             * Ruft den Wert der movable-Eigenschaft ab.
+             * Gets the value of the movable property.
              * 
              * @return
              *     possible object is
@@ -547,7 +547,7 @@ public class Keyboard {
             }
 
             /**
-             * Legt den Wert der movable-Eigenschaft fest.
+             * Sets the value of the movable property.
              * 
              * @param value
              *     allowed object is
@@ -559,7 +559,7 @@ public class Keyboard {
             }
 
             /**
-             * Ruft den Wert der sticky-Eigenschaft ab.
+             * Gets the value of the sticky property.
              * 
              * @return
              *     possible object is
@@ -571,7 +571,7 @@ public class Keyboard {
             }
 
             /**
-             * Legt den Wert der sticky-Eigenschaft fest.
+             * Sets the value of the sticky property.
              * 
              * @param value
              *     allowed object is
@@ -583,7 +583,7 @@ public class Keyboard {
             }
 
             /**
-             * Ruft den Wert der modifier-Eigenschaft ab.
+             * Gets the value of the modifier property.
              * 
              * @return
              *     possible object is
@@ -595,7 +595,7 @@ public class Keyboard {
             }
 
             /**
-             * Legt den Wert der modifier-Eigenschaft fest.
+             * Sets the value of the modifier property.
              * 
              * @param value
              *     allowed object is
@@ -607,7 +607,7 @@ public class Keyboard {
             }
 
             /**
-             * Ruft den Wert der repeatable-Eigenschaft ab.
+             * Gets the value of the repeatable property.
              * 
              * @return
              *     possible object is
@@ -619,7 +619,7 @@ public class Keyboard {
             }
 
             /**
-             * Legt den Wert der repeatable-Eigenschaft fest.
+             * Sets the value of the repeatable property.
              * 
              * @param value
              *     allowed object is
@@ -631,7 +631,7 @@ public class Keyboard {
             }
 
             /**
-             * Ruft den Wert der keyIconStyle-Eigenschaft ab.
+             * Gets the value of the keyIconStyle property.
              * 
              * @return
              *     possible object is
@@ -643,7 +643,7 @@ public class Keyboard {
             }
 
             /**
-             * Legt den Wert der keyIconStyle-Eigenschaft fest.
+             * Sets the value of the keyIconStyle property.
              * 
              * @param value
              *     allowed object is
@@ -655,7 +655,7 @@ public class Keyboard {
             }
 
             /**
-             * Ruft den Wert der keyLabelStyle-Eigenschaft ab.
+             * Gets the value of the keyLabelStyle property.
              * 
              * @return
              *     possible object is
@@ -667,7 +667,7 @@ public class Keyboard {
             }
 
             /**
-             * Legt den Wert der keyLabelStyle-Eigenschaft fest.
+             * Sets the value of the keyLabelStyle property.
              * 
              * @param value
              *     allowed object is
@@ -679,7 +679,7 @@ public class Keyboard {
             }
 
             /**
-             * Ruft den Wert der keyWidth-Eigenschaft ab.
+             * Gets the value of the keyWidth property.
              * 
              * @return
              *     possible object is
@@ -691,7 +691,7 @@ public class Keyboard {
             }
 
             /**
-             * Legt den Wert der keyWidth-Eigenschaft fest.
+             * Sets the value of the keyWidth property.
              * 
              * @param value
              *     allowed object is
@@ -703,7 +703,7 @@ public class Keyboard {
             }
 
             /**
-             * Ruft den Wert der keyEdgeFlags-Eigenschaft ab.
+             * Gets the value of the keyEdgeFlags property.
              * 
              * @return
              *     possible object is
@@ -715,7 +715,7 @@ public class Keyboard {
             }
 
             /**
-             * Legt den Wert der keyEdgeFlags-Eigenschaft fest.
+             * Sets the value of the keyEdgeFlags property.
              * 
              * @param value
              *     allowed object is
@@ -727,7 +727,7 @@ public class Keyboard {
             }
 
             /**
-             * Ruft den Wert der horizontalGap-Eigenschaft ab.
+             * Gets the value of the horizontalGap property.
              * 
              * @return
              *     possible object is
@@ -739,7 +739,7 @@ public class Keyboard {
             }
 
             /**
-             * Legt den Wert der horizontalGap-Eigenschaft fest.
+             * Sets the value of the horizontalGap property.
              * 
              * @param value
              *     allowed object is
