@@ -39,4 +39,11 @@ public interface VkProperties {
 
   String VK_LOCALE_DE = "de";
   String VK_LOCALE_EN = "en";
+  String VK_LOCALE_PL = "pl";
+
+  String VK_HIDDEN = "vkHidden";
+
+  String VK_HIDDEN_TRUE = "vkHiddenTrue";
+  String VK_HIDDEN_FALSE = "vkHiddenFalse";
+
 }
