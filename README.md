@@ -17,11 +17,11 @@
 * fx-onscreen-keyboard-swing (swing components)
 * fx-onscreen-keyboard-samples (sample package)
 
-![num block ctrl] (doc/num_block.png)
+![num block ctrl](https://github.com/comtel2000/fx-experience/blob/master/doc/num_block.png)
 
-![num block] (doc/num_block_ctrl.png)
+![num block](https://github.com/comtel2000/fx-experience/blob/master/doc/num_block_ctrl.png)
 
-![layout ru] (doc/layout_ru.png)
+![layout ru](https://github.com/comtel2000/fx-experience/blob/master/doc/layout_ru.png)
 
 [![video](http://img.youtube.com/vi/CD9lS_HZ4fA/0.jpg)](http://youtu.be/CD9lS_HZ4fA)
 
