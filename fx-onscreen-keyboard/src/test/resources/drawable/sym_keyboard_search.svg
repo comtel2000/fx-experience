@@ -1,9 +1,12 @@
 <svg width="170" height="100" xmlns="http://www.w3.org/2000/svg">
- <!-- Created with SVG-edit - http://svg-edit.googlecode.com/ -->
- <g>
-  <title>Ebene 1</title>
-  <path fill="#ffffff" stroke="#ffffff" stroke-linejoin="round" stroke-linecap="round" opacity="0.5" d="m81,45" id="svg_32"/>
-  <circle stroke-width="3" id="svg_38" r="7.343196" cy="13.777778" cx="54.166668" stroke-linecap="round" stroke-linejoin="round" stroke="#ffffff" fill="none"/>
-  <line stroke-width="4" id="svg_39" y2="29.843622" x2="68.510288" y1="21.222223" x1="60.444444" stroke-linecap="round" stroke-linejoin="round" stroke="#ffffff" fill="none"/>
- </g>
+    <!-- Created with SVG-edit - http://svg-edit.googlecode.com/ -->
+    <g>
+        <title>Ebene 1</title>
+        <path fill="#ffffff" stroke="#ffffff" stroke-linejoin="round" stroke-linecap="round" opacity="0.5" d="m81,45"
+              id="svg_32"/>
+        <circle stroke-width="3" id="svg_38" r="7.343196" cy="13.777778" cx="54.166668" stroke-linecap="round"
+                stroke-linejoin="round" stroke="#ffffff" fill="none"/>
+        <line stroke-width="4" id="svg_39" y2="29.843622" x2="68.510288" y1="21.222223" x1="60.444444"
+              stroke-linecap="round" stroke-linejoin="round" stroke="#ffffff" fill="none"/>
+    </g>
 </svg>

@@ -1,5 +1,8 @@
 package org.comtel2000.keyboard.event;
 
+import javafx.event.Event;
+import javafx.event.EventType;
+import javafx.scene.input.InputEvent;
 import org.comtel2000.keyboard.control.KeyButton;
 
 /*******************************************************************************
@@ -28,43 +31,35 @@ import org.comtel2000.keyboard.control.KeyButton;
  * WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *******************************************************************************/
 
-import javafx.event.Event;
-import javafx.event.EventType;
-import javafx.scene.input.InputEvent;
-
 public class OnScreenKeyEvent extends InputEvent {
 
-  private static final long serialVersionUID = 65116620766495525L;
+    public static final EventType<? super Event> ANY;
+    public static final EventType<? super Event> LONG_PRESSED;
+    public static final EventType<? super Event> SHORT_PRESSED;
+    private static final long serialVersionUID = 65116620766495525L;
 
-  public static final EventType<? super Event> ANY;
+    static {
+        ANY = new EventType<Event>(Event.ANY, "KB_PRESSED");
+        LONG_PRESSED = new EventType<Event>(ANY, "KB_PRESSED_LONG");
+        SHORT_PRESSED = new EventType<Event>(ANY, "KB_PRESSED_SHORT");
+    }
 
-  public static final EventType<? super Event> LONG_PRESSED;
+    public OnScreenKeyEvent(EventType<? extends InputEvent> type) {
+        super(type);
+    }
 
-  public static final EventType<? super Event> SHORT_PRESSED;
+    public OnScreenKeyEvent(KeyButton button, EventType<? extends InputEvent> type) {
+        super(button, button, type);
 
-  public OnScreenKeyEvent(EventType<? extends InputEvent> type) {
-    super(type);
-  }
+    }
 
-  public OnScreenKeyEvent(KeyButton button, EventType<? extends InputEvent> type) {
-    super(button, button, type);
-
-  }
-
-  @Override
-  public String toString() {
-    StringBuilder stringbuilder = new StringBuilder("KeyButtonEvent [");
-    stringbuilder.append("source = ").append(getSource());
-    stringbuilder.append(", target = ").append(getTarget());
-    stringbuilder.append(", eventType = ").append(getEventType());
-    stringbuilder.append(", consumed = ").append(isConsumed());
-    return stringbuilder.append("]").toString();
-  }
-
-  static {
-    ANY = new EventType<Event>(Event.ANY, "KB_PRESSED");
-    LONG_PRESSED = new EventType<Event>(ANY, "KB_PRESSED_LONG");
-    SHORT_PRESSED = new EventType<Event>(ANY, "KB_PRESSED_SHORT");
-  }
+    @Override
+    public String toString() {
+        return "KeyButtonEvent [" + "source = " + getSource() +
+                ", target = " + getTarget() +
+                ", eventType = " + getEventType() +
+                ", consumed = " + isConsumed() +
+                "]";
+    }
 
 }

@@ -26,63 +26,58 @@ package org.comtel2000.swing.control;
  * WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *******************************************************************************/
 
-import java.util.Optional;
-
-import javax.swing.JWindow;
-
-import org.comtel2000.keyboard.control.KeyBoardPopup;
-
 import javafx.embed.swing.JFXPanel;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import org.comtel2000.keyboard.control.KeyBoardPopup;
+
+import javax.swing.*;
+import java.util.Optional;
 
 /**
  * Swing window wrapper class for {@link KeyBoardPopup}
- * 
- * @author comtel
  *
+ * @author comtel
  */
 public class KeyBoardWindow extends JWindow {
 
-  private static final long serialVersionUID = 1564988010984549166L;
-  private final JFXPanel jfxPanel;
+    public final static EventHandler<? super Event> DEFAULT_CLOSE_HANDLER = (event) -> {
+        if (event.getSource() instanceof Node) {
+            ((Node) event.getSource()).getScene().getWindow().hide();
+        }
+    };
+    private static final long serialVersionUID = 1564988010984549166L;
+    private final JFXPanel jfxPanel;
+    private KeyBoardPopup popup;
 
-  public final static EventHandler<? super Event> DEFAULT_CLOSE_HANDLER = (event) -> {
-    if (event.getSource() instanceof Node) {
-      ((Node) event.getSource()).getScene().getWindow().hide();
+    protected KeyBoardWindow() {
+        super();
+        setModalExclusionType(java.awt.Dialog.ModalExclusionType.APPLICATION_EXCLUDE);
+        setFocusable(false);
+        setBackground(null);
+
+        getContentPane().add(jfxPanel = new JFXPanel());
+        jfxPanel.setFocusable(false);
+        jfxPanel.setOpaque(false);
     }
-  };
 
-  private KeyBoardPopup popup;
+    /**
+     * must run in FxApplicationThread
+     *
+     * @param popup Keyboard popup
+     */
+    protected void createScene(final KeyBoardPopup popup) {
+        this.popup = popup;
+        Scene scene = new Scene(new Group(), 0, 0);
+        jfxPanel.setScene(scene);
+        popup.registerScene(scene);
+    }
 
-  protected KeyBoardWindow() {
-    super();
-    setModalExclusionType(java.awt.Dialog.ModalExclusionType.APPLICATION_EXCLUDE);
-    setFocusable(false);
-    setBackground(null);
-
-    getContentPane().add(jfxPanel = new JFXPanel());
-    jfxPanel.setFocusable(false);
-    jfxPanel.setOpaque(false);
-  }
-
-  /**
-   * must run in FxApplicationThread
-   * 
-   * @param popup Keyboard popup
-   */
-  protected void createScene(final KeyBoardPopup popup) {
-    this.popup = popup;
-    Scene scene = new Scene(new Group(), 0, 0);
-    jfxPanel.setScene(scene);
-    popup.registerScene(scene);
-  }
-
-  public Optional<KeyBoardPopup> getKeyBoardPopup() {
-    return Optional.ofNullable(popup);
-  }
+    public Optional<KeyBoardPopup> getKeyBoardPopup() {
+        return Optional.ofNullable(popup);
+    }
 
 }

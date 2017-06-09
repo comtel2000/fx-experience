@@ -1,21 +1,15 @@
-
 package org.comtel2000.keyboard.xml.layout;
 
+import javax.xml.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
 
 
 /**
  * <p>Java-Klasse für anonymous complex type.
- * 
+ * <p>
  * <p>Das folgende Schemafragment gibt den erwarteten Content an, der in dieser Klasse enthalten ist.
- * 
+ * <p>
  * <pre>
  * &lt;complexType>
  *   &lt;complexContent>
@@ -77,12 +71,10 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "row"
+        "row"
 })
 @XmlRootElement(name = "Keyboard")
 public class Keyboard {
@@ -100,25 +92,23 @@ public class Keyboard {
 
     /**
      * Gets the value of the row property.
-     * 
+     * <p>
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
      * This is why there is not a <CODE>set</CODE> method for the row property.
-     * 
+     * <p>
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getRow().add(newItem);
      * </pre>
-     * 
-     * 
+     * <p>
+     * <p>
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link Keyboard.Row }
-     * 
-     * 
      */
     public List<Keyboard.Row> getRow() {
         if (row == null) {
@@ -129,11 +119,9 @@ public class Keyboard {
 
     /**
      * Ruft den Wert der keyWidth-Eigenschaft ab.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *     
+     *
+     * @return possible object is
+     * {@link Integer }
      */
     public Integer getKeyWidth() {
         return keyWidth;
@@ -141,11 +129,9 @@ public class Keyboard {
 
     /**
      * Legt den Wert der keyWidth-Eigenschaft fest.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Integer }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link Integer }
      */
     public void setKeyWidth(Integer value) {
         this.keyWidth = value;
@@ -153,11 +139,9 @@ public class Keyboard {
 
     /**
      * Ruft den Wert der keyHeight-Eigenschaft ab.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *     
+     *
+     * @return possible object is
+     * {@link Integer }
      */
     public Integer getKeyHeight() {
         return keyHeight;
@@ -165,11 +149,9 @@ public class Keyboard {
 
     /**
      * Legt den Wert der keyHeight-Eigenschaft fest.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Integer }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link Integer }
      */
     public void setKeyHeight(Integer value) {
         this.keyHeight = value;
@@ -177,11 +159,9 @@ public class Keyboard {
 
     /**
      * Ruft den Wert der horizontalGap-Eigenschaft ab.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *     
+     *
+     * @return possible object is
+     * {@link Integer }
      */
     public Integer getHorizontalGap() {
         return horizontalGap;
@@ -189,11 +169,9 @@ public class Keyboard {
 
     /**
      * Legt den Wert der horizontalGap-Eigenschaft fest.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Integer }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link Integer }
      */
     public void setHorizontalGap(Integer value) {
         this.horizontalGap = value;
@@ -201,11 +179,9 @@ public class Keyboard {
 
     /**
      * Ruft den Wert der verticalGap-Eigenschaft ab.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *     
+     *
+     * @return possible object is
+     * {@link Integer }
      */
     public Integer getVerticalGap() {
         return verticalGap;
@@ -213,11 +189,9 @@ public class Keyboard {
 
     /**
      * Legt den Wert der verticalGap-Eigenschaft fest.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Integer }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link Integer }
      */
     public void setVerticalGap(Integer value) {
         this.verticalGap = value;
@@ -226,9 +200,9 @@ public class Keyboard {
 
     /**
      * <p>Java-Klasse für anonymous complex type.
-     * 
+     * <p>
      * <p>Das folgende Schemafragment gibt den erwarteten Content an, der in dieser Klasse enthalten ist.
-     * 
+     * <p>
      * <pre>
      * &lt;complexType>
      *   &lt;complexContent>
@@ -276,12 +250,10 @@ public class Keyboard {
      *   &lt;/complexContent>
      * &lt;/complexType>
      * </pre>
-     * 
-     * 
      */
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(name = "", propOrder = {
-        "key"
+            "key"
     })
     public static class Row {
 
@@ -292,25 +264,23 @@ public class Keyboard {
 
         /**
          * Gets the value of the key property.
-         * 
+         * <p>
          * <p>
          * This accessor method returns a reference to the live list,
          * not a snapshot. Therefore any modification you make to the
          * returned list will be present inside the JAXB object.
          * This is why there is not a <CODE>set</CODE> method for the key property.
-         * 
+         * <p>
          * <p>
          * For example, to add a new item, do as follows:
          * <pre>
          *    getKey().add(newItem);
          * </pre>
-         * 
-         * 
+         * <p>
+         * <p>
          * <p>
          * Objects of the following type(s) are allowed in the list
          * {@link Keyboard.Row.Key }
-         * 
-         * 
          */
         public List<Keyboard.Row.Key> getKey() {
             if (key == null) {
@@ -321,11 +291,9 @@ public class Keyboard {
 
         /**
          * Ruft den Wert der rowEdgeFlags-Eigenschaft ab.
-         * 
-         * @return
-         *     possible object is
-         *     {@link String }
-         *     
+         *
+         * @return possible object is
+         * {@link String }
          */
         public String getRowEdgeFlags() {
             return rowEdgeFlags;
@@ -333,11 +301,9 @@ public class Keyboard {
 
         /**
          * Legt den Wert der rowEdgeFlags-Eigenschaft fest.
-         * 
-         * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
+         *
+         * @param value allowed object is
+         *              {@link String }
          */
         public void setRowEdgeFlags(String value) {
             this.rowEdgeFlags = value;
@@ -346,9 +312,9 @@ public class Keyboard {
 
         /**
          * <p>Java-Klasse für anonymous complex type.
-         * 
+         * <p>
          * <p>Das folgende Schemafragment gibt den erwarteten Content an, der in dieser Klasse enthalten ist.
-         * 
+         * <p>
          * <pre>
          * &lt;complexType>
          *   &lt;complexContent>
@@ -378,8 +344,6 @@ public class Keyboard {
          *   &lt;/complexContent>
          * &lt;/complexType>
          * </pre>
-         * 
-         * 
          */
         @XmlAccessorType(XmlAccessType.FIELD)
         @XmlType(name = "")
@@ -416,11 +380,9 @@ public class Keyboard {
 
             /**
              * Ruft den Wert der codes-Eigenschaft ab.
-             * 
-             * @return
-             *     possible object is
-             *     {@link String }
-             *     
+             *
+             * @return possible object is
+             * {@link String }
              */
             public String getCodes() {
                 return codes;
@@ -428,11 +390,9 @@ public class Keyboard {
 
             /**
              * Legt den Wert der codes-Eigenschaft fest.
-             * 
-             * @param value
-             *     allowed object is
-             *     {@link String }
-             *     
+             *
+             * @param value allowed object is
+             *              {@link String }
              */
             public void setCodes(String value) {
                 this.codes = value;
@@ -440,11 +400,9 @@ public class Keyboard {
 
             /**
              * Ruft den Wert der popupCharacters-Eigenschaft ab.
-             * 
-             * @return
-             *     possible object is
-             *     {@link String }
-             *     
+             *
+             * @return possible object is
+             * {@link String }
              */
             public String getPopupCharacters() {
                 return popupCharacters;
@@ -452,11 +410,9 @@ public class Keyboard {
 
             /**
              * Legt den Wert der popupCharacters-Eigenschaft fest.
-             * 
-             * @param value
-             *     allowed object is
-             *     {@link String }
-             *     
+             *
+             * @param value allowed object is
+             *              {@link String }
              */
             public void setPopupCharacters(String value) {
                 this.popupCharacters = value;
@@ -464,11 +420,9 @@ public class Keyboard {
 
             /**
              * Ruft den Wert der popupKeyboard-Eigenschaft ab.
-             * 
-             * @return
-             *     possible object is
-             *     {@link String }
-             *     
+             *
+             * @return possible object is
+             * {@link String }
              */
             public String getPopupKeyboard() {
                 return popupKeyboard;
@@ -476,11 +430,9 @@ public class Keyboard {
 
             /**
              * Legt den Wert der popupKeyboard-Eigenschaft fest.
-             * 
-             * @param value
-             *     allowed object is
-             *     {@link String }
-             *     
+             *
+             * @param value allowed object is
+             *              {@link String }
              */
             public void setPopupKeyboard(String value) {
                 this.popupKeyboard = value;
@@ -488,11 +440,9 @@ public class Keyboard {
 
             /**
              * Ruft den Wert der keyLabel-Eigenschaft ab.
-             * 
-             * @return
-             *     possible object is
-             *     {@link String }
-             *     
+             *
+             * @return possible object is
+             * {@link String }
              */
             public String getKeyLabel() {
                 return keyLabel;
@@ -500,11 +450,9 @@ public class Keyboard {
 
             /**
              * Legt den Wert der keyLabel-Eigenschaft fest.
-             * 
-             * @param value
-             *     allowed object is
-             *     {@link String }
-             *     
+             *
+             * @param value allowed object is
+             *              {@link String }
              */
             public void setKeyLabel(String value) {
                 this.keyLabel = value;
@@ -512,11 +460,9 @@ public class Keyboard {
 
             /**
              * Ruft den Wert der keyOutputText-Eigenschaft ab.
-             * 
-             * @return
-             *     possible object is
-             *     {@link String }
-             *     
+             *
+             * @return possible object is
+             * {@link String }
              */
             public String getKeyOutputText() {
                 return keyOutputText;
@@ -524,11 +470,9 @@ public class Keyboard {
 
             /**
              * Legt den Wert der keyOutputText-Eigenschaft fest.
-             * 
-             * @param value
-             *     allowed object is
-             *     {@link String }
-             *     
+             *
+             * @param value allowed object is
+             *              {@link String }
              */
             public void setKeyOutputText(String value) {
                 this.keyOutputText = value;
@@ -536,11 +480,9 @@ public class Keyboard {
 
             /**
              * Ruft den Wert der movable-Eigenschaft ab.
-             * 
-             * @return
-             *     possible object is
-             *     {@link Boolean }
-             *     
+             *
+             * @return possible object is
+             * {@link Boolean }
              */
             public Boolean isMovable() {
                 return movable;
@@ -548,11 +490,9 @@ public class Keyboard {
 
             /**
              * Legt den Wert der movable-Eigenschaft fest.
-             * 
-             * @param value
-             *     allowed object is
-             *     {@link Boolean }
-             *     
+             *
+             * @param value allowed object is
+             *              {@link Boolean }
              */
             public void setMovable(Boolean value) {
                 this.movable = value;
@@ -560,11 +500,9 @@ public class Keyboard {
 
             /**
              * Ruft den Wert der sticky-Eigenschaft ab.
-             * 
-             * @return
-             *     possible object is
-             *     {@link Boolean }
-             *     
+             *
+             * @return possible object is
+             * {@link Boolean }
              */
             public Boolean isSticky() {
                 return sticky;
@@ -572,11 +510,9 @@ public class Keyboard {
 
             /**
              * Legt den Wert der sticky-Eigenschaft fest.
-             * 
-             * @param value
-             *     allowed object is
-             *     {@link Boolean }
-             *     
+             *
+             * @param value allowed object is
+             *              {@link Boolean }
              */
             public void setSticky(Boolean value) {
                 this.sticky = value;
@@ -584,11 +520,9 @@ public class Keyboard {
 
             /**
              * Ruft den Wert der modifier-Eigenschaft ab.
-             * 
-             * @return
-             *     possible object is
-             *     {@link Boolean }
-             *     
+             *
+             * @return possible object is
+             * {@link Boolean }
              */
             public Boolean isModifier() {
                 return modifier;
@@ -596,11 +530,9 @@ public class Keyboard {
 
             /**
              * Legt den Wert der modifier-Eigenschaft fest.
-             * 
-             * @param value
-             *     allowed object is
-             *     {@link Boolean }
-             *     
+             *
+             * @param value allowed object is
+             *              {@link Boolean }
              */
             public void setModifier(Boolean value) {
                 this.modifier = value;
@@ -608,11 +540,9 @@ public class Keyboard {
 
             /**
              * Ruft den Wert der repeatable-Eigenschaft ab.
-             * 
-             * @return
-             *     possible object is
-             *     {@link Boolean }
-             *     
+             *
+             * @return possible object is
+             * {@link Boolean }
              */
             public Boolean isRepeatable() {
                 return repeatable;
@@ -620,11 +550,9 @@ public class Keyboard {
 
             /**
              * Legt den Wert der repeatable-Eigenschaft fest.
-             * 
-             * @param value
-             *     allowed object is
-             *     {@link Boolean }
-             *     
+             *
+             * @param value allowed object is
+             *              {@link Boolean }
              */
             public void setRepeatable(Boolean value) {
                 this.repeatable = value;
@@ -632,11 +560,9 @@ public class Keyboard {
 
             /**
              * Ruft den Wert der keyIconStyle-Eigenschaft ab.
-             * 
-             * @return
-             *     possible object is
-             *     {@link String }
-             *     
+             *
+             * @return possible object is
+             * {@link String }
              */
             public String getKeyIconStyle() {
                 return keyIconStyle;
@@ -644,11 +570,9 @@ public class Keyboard {
 
             /**
              * Legt den Wert der keyIconStyle-Eigenschaft fest.
-             * 
-             * @param value
-             *     allowed object is
-             *     {@link String }
-             *     
+             *
+             * @param value allowed object is
+             *              {@link String }
              */
             public void setKeyIconStyle(String value) {
                 this.keyIconStyle = value;
@@ -656,11 +580,9 @@ public class Keyboard {
 
             /**
              * Ruft den Wert der keyLabelStyle-Eigenschaft ab.
-             * 
-             * @return
-             *     possible object is
-             *     {@link String }
-             *     
+             *
+             * @return possible object is
+             * {@link String }
              */
             public String getKeyLabelStyle() {
                 return keyLabelStyle;
@@ -668,11 +590,9 @@ public class Keyboard {
 
             /**
              * Legt den Wert der keyLabelStyle-Eigenschaft fest.
-             * 
-             * @param value
-             *     allowed object is
-             *     {@link String }
-             *     
+             *
+             * @param value allowed object is
+             *              {@link String }
              */
             public void setKeyLabelStyle(String value) {
                 this.keyLabelStyle = value;
@@ -680,11 +600,9 @@ public class Keyboard {
 
             /**
              * Ruft den Wert der keyWidth-Eigenschaft ab.
-             * 
-             * @return
-             *     possible object is
-             *     {@link Integer }
-             *     
+             *
+             * @return possible object is
+             * {@link Integer }
              */
             public Integer getKeyWidth() {
                 return keyWidth;
@@ -692,11 +610,9 @@ public class Keyboard {
 
             /**
              * Legt den Wert der keyWidth-Eigenschaft fest.
-             * 
-             * @param value
-             *     allowed object is
-             *     {@link Integer }
-             *     
+             *
+             * @param value allowed object is
+             *              {@link Integer }
              */
             public void setKeyWidth(Integer value) {
                 this.keyWidth = value;
@@ -704,11 +620,9 @@ public class Keyboard {
 
             /**
              * Ruft den Wert der keyEdgeFlags-Eigenschaft ab.
-             * 
-             * @return
-             *     possible object is
-             *     {@link String }
-             *     
+             *
+             * @return possible object is
+             * {@link String }
              */
             public String getKeyEdgeFlags() {
                 return keyEdgeFlags;
@@ -716,11 +630,9 @@ public class Keyboard {
 
             /**
              * Legt den Wert der keyEdgeFlags-Eigenschaft fest.
-             * 
-             * @param value
-             *     allowed object is
-             *     {@link String }
-             *     
+             *
+             * @param value allowed object is
+             *              {@link String }
              */
             public void setKeyEdgeFlags(String value) {
                 this.keyEdgeFlags = value;
@@ -728,11 +640,9 @@ public class Keyboard {
 
             /**
              * Ruft den Wert der horizontalGap-Eigenschaft ab.
-             * 
-             * @return
-             *     possible object is
-             *     {@link Integer }
-             *     
+             *
+             * @return possible object is
+             * {@link Integer }
              */
             public Integer getHorizontalGap() {
                 return horizontalGap;
@@ -740,11 +650,9 @@ public class Keyboard {
 
             /**
              * Legt den Wert der horizontalGap-Eigenschaft fest.
-             * 
-             * @param value
-             *     allowed object is
-             *     {@link Integer }
-             *     
+             *
+             * @param value allowed object is
+             *              {@link Integer }
              */
             public void setHorizontalGap(Integer value) {
                 this.horizontalGap = value;

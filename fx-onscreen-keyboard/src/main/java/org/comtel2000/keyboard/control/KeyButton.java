@@ -26,8 +26,6 @@ package org.comtel2000.keyboard.control;
  * WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *******************************************************************************/
 
-import org.comtel2000.keyboard.event.KeyButtonEvent;
-
 import javafx.animation.Timeline;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -35,142 +33,139 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import org.comtel2000.keyboard.event.KeyButtonEvent;
 
 public abstract class KeyButton extends Button implements LongPressable {
 
-  private final static long DEFAULT_DELAY = 400;
+    private final static long DEFAULT_DELAY = 400;
+    protected Timeline buttonDelay;
+    private String keyText;
+    private boolean movable, repeatable;
+    private int keyCode;
+    private EventHandler<? super KeyButtonEvent> _onLongPressed;
+    private ObjectProperty<EventHandler<? super KeyButtonEvent>> onLongPressed;
 
-  private String keyText;
+    private EventHandler<? super KeyButtonEvent> _onShortPressed;
+    private ObjectProperty<EventHandler<? super KeyButtonEvent>> onShortPressed;
 
-  private boolean movable, repeatable;
-
-  private int keyCode;
-
-  protected Timeline buttonDelay;
-
-  private EventHandler<? super KeyButtonEvent> _onLongPressed;
-  private ObjectProperty<EventHandler<? super KeyButtonEvent>> onLongPressed;
-
-  private EventHandler<? super KeyButtonEvent> _onShortPressed;
-  private ObjectProperty<EventHandler<? super KeyButtonEvent>> onShortPressed;
-
-  public KeyButton() {
-    this(null, null, DEFAULT_DELAY);
-  }
-
-  public KeyButton(String label) {
-    this(label, null, DEFAULT_DELAY);
-  }
-
-  public KeyButton(Node graphic) {
-    this(null, graphic, DEFAULT_DELAY);
-  }
-
-  public KeyButton(String label, Node graphic) {
-    this(label, graphic, DEFAULT_DELAY);
-  }
-
-  public KeyButton(String label, long delay) {
-    this(label, null, delay);
-  }
-
-  public KeyButton(String label, Node graphic, long delay) {
-    super(label, graphic);
-    getStyleClass().add("key-button");
-    initEventListener(delay > 0 ? delay : DEFAULT_DELAY);
-
-  }
-
-  protected abstract void initEventListener(long delay);
-
-  protected void fireLongPressed() {
-    fireEvent(new KeyButtonEvent(this, KeyButtonEvent.LONG_PRESSED));
-  }
-
-  protected void fireShortPressed() {
-    fireEvent(new KeyButtonEvent(this, KeyButtonEvent.SHORT_PRESSED));
-  }
-
-  @Override
-  public final EventHandler<? super KeyButtonEvent> getOnLongPressed() {
-    return onLongPressed == null ? _onLongPressed : onLongPressed.get();
-  }
-
-  @Override
-  public final void setOnLongPressed(EventHandler<? super KeyButtonEvent> h) {
-    onLongPressedProperty().set(h);
-  }
-
-  @Override
-  public final ObjectProperty<EventHandler<? super KeyButtonEvent>> onLongPressedProperty() {
-    if (onLongPressed == null) {
-      onLongPressed = new SimpleObjectProperty<EventHandler<? super KeyButtonEvent>>(this, "onLongPressed", _onLongPressed) {
-        @SuppressWarnings("unchecked")
-        @Override
-        protected void invalidated() {
-          setEventHandler(KeyButtonEvent.LONG_PRESSED, (EventHandler<? super Event>) get());
-        }
-      };
+    public KeyButton() {
+        this(null, null, DEFAULT_DELAY);
     }
-    return onLongPressed;
-  }
 
-  @Override
-  public final EventHandler<? super KeyButtonEvent> getOnShortPressed() {
-    return onShortPressed == null ? _onShortPressed : onShortPressed.get();
-  }
-
-  @Override
-  public final void setOnShortPressed(EventHandler<? super KeyButtonEvent> h) {
-    onShortPressedProperty().set(h);
-  }
-
-  @Override
-  public final ObjectProperty<EventHandler<? super KeyButtonEvent>> onShortPressedProperty() {
-    if (onShortPressed == null) {
-      onShortPressed = new SimpleObjectProperty<EventHandler<? super KeyButtonEvent>>(this, "onShortPressed", _onShortPressed) {
-        @SuppressWarnings("unchecked")
-        @Override
-        protected void invalidated() {
-          setEventHandler(KeyButtonEvent.SHORT_PRESSED, (EventHandler<? super Event>) get());
-        }
-      };
+    public KeyButton(String label) {
+        this(label, null, DEFAULT_DELAY);
     }
-    return onShortPressed;
-  }
 
-  public int getKeyCode() {
-    return keyCode;
-  }
+    public KeyButton(Node graphic) {
+        this(null, graphic, DEFAULT_DELAY);
+    }
 
-  public void setKeyCode(int keyCode) {
-    this.keyCode = keyCode;
-  }
+    public KeyButton(String label, Node graphic) {
+        this(label, graphic, DEFAULT_DELAY);
+    }
 
-  public String getKeyText() {
-    return keyText;
-  }
+    public KeyButton(String label, long delay) {
+        this(label, null, delay);
+    }
 
-  public void setKeyText(String keyText) {
-    this.keyText = keyText;
-  }
+    public KeyButton(String label, Node graphic, long delay) {
+        super(label, graphic);
+        getStyleClass().add("key-button");
+        initEventListener(delay > 0 ? delay : DEFAULT_DELAY);
 
-  public void addExtKeyCode(int keyCode, String label) {}
+    }
 
-  public boolean isMovable() {
-    return movable;
-  }
+    protected abstract void initEventListener(long delay);
 
-  public void setMovable(boolean movable) {
-    this.movable = movable;
-  }
+    protected void fireLongPressed() {
+        fireEvent(new KeyButtonEvent(this, KeyButtonEvent.LONG_PRESSED));
+    }
 
-  public boolean isRepeatable() {
-    return repeatable;
-  }
+    protected void fireShortPressed() {
+        fireEvent(new KeyButtonEvent(this, KeyButtonEvent.SHORT_PRESSED));
+    }
 
-  public void setRepeatable(boolean repeatable) {
-    this.repeatable = repeatable;
-  }
+    @Override
+    public final EventHandler<? super KeyButtonEvent> getOnLongPressed() {
+        return onLongPressed == null ? _onLongPressed : onLongPressed.get();
+    }
+
+    @Override
+    public final void setOnLongPressed(EventHandler<? super KeyButtonEvent> h) {
+        onLongPressedProperty().set(h);
+    }
+
+    @Override
+    public final ObjectProperty<EventHandler<? super KeyButtonEvent>> onLongPressedProperty() {
+        if (onLongPressed == null) {
+            onLongPressed = new SimpleObjectProperty<EventHandler<? super KeyButtonEvent>>(this, "onLongPressed", _onLongPressed) {
+                @SuppressWarnings("unchecked")
+                @Override
+                protected void invalidated() {
+                    setEventHandler(KeyButtonEvent.LONG_PRESSED, (EventHandler<? super Event>) get());
+                }
+            };
+        }
+        return onLongPressed;
+    }
+
+    @Override
+    public final EventHandler<? super KeyButtonEvent> getOnShortPressed() {
+        return onShortPressed == null ? _onShortPressed : onShortPressed.get();
+    }
+
+    @Override
+    public final void setOnShortPressed(EventHandler<? super KeyButtonEvent> h) {
+        onShortPressedProperty().set(h);
+    }
+
+    @Override
+    public final ObjectProperty<EventHandler<? super KeyButtonEvent>> onShortPressedProperty() {
+        if (onShortPressed == null) {
+            onShortPressed = new SimpleObjectProperty<EventHandler<? super KeyButtonEvent>>(this, "onShortPressed", _onShortPressed) {
+                @SuppressWarnings("unchecked")
+                @Override
+                protected void invalidated() {
+                    setEventHandler(KeyButtonEvent.SHORT_PRESSED, (EventHandler<? super Event>) get());
+                }
+            };
+        }
+        return onShortPressed;
+    }
+
+    public int getKeyCode() {
+        return keyCode;
+    }
+
+    public void setKeyCode(int keyCode) {
+        this.keyCode = keyCode;
+    }
+
+    public String getKeyText() {
+        return keyText;
+    }
+
+    public void setKeyText(String keyText) {
+        this.keyText = keyText;
+    }
+
+    public void addExtKeyCode(int keyCode, String label) {
+    }
+
+    public boolean isMovable() {
+        return movable;
+    }
+
+    public void setMovable(boolean movable) {
+        this.movable = movable;
+    }
+
+    public boolean isRepeatable() {
+        return repeatable;
+    }
+
+    public void setRepeatable(boolean repeatable) {
+        this.repeatable = repeatable;
+    }
 
 }

@@ -26,6 +26,13 @@ package org.comtel2000.keyboard;
  * WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *******************************************************************************/
 
+import org.comtel2000.keyboard.xml.KeyboardLayoutHandler;
+import org.comtel2000.keyboard.xml.layout.Keyboard;
+import org.junit.AfterClass;
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -35,65 +42,58 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Locale;
 
-import org.comtel2000.keyboard.xml.KeyboardLayoutHandler;
-import org.comtel2000.keyboard.xml.layout.Keyboard;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
-
 public class KeyboardXmlLayoutTest {
 
-  private static KeyboardLayoutHandler handler;
+    private static KeyboardLayoutHandler handler;
 
-  @BeforeClass
-  public static void open() {
-    handler = new KeyboardLayoutHandler();
-  }
-
-  @AfterClass
-  public static void close() {
-
-  }
-
-  @Test
-  public void testGetLayout() throws IOException {
-    Keyboard kb = handler.getLayout("/xml/default/kb-layout.xml");
-    Assert.assertNotNull(kb);
-    Assert.assertFalse(kb.getRow().isEmpty());
-
-    for (Keyboard.Row row : kb.getRow()) {
-      System.err.println("\nRow " + row.getRowEdgeFlags());
-      for (Keyboard.Row.Key key : row.getKey()) {
-        System.err.println(key.getCodes() + "\t" + (key.getKeyLabel() != null ? key.getKeyLabel() : key.getKeyIconStyle()));
-      }
+    @BeforeClass
+    public static void open() {
+        handler = new KeyboardLayoutHandler();
     }
-  }
 
-  @Test
-  public void validateLayouts() throws IOException {
-    String[] layouts = new String[] { "kb-layout", "kb-layout-shift", "kb-layout-sym", "kb-layout-sym-shift", "kb-layout-ctrl" };
-    for (String layout : layouts) {
-      Keyboard kb = handler.getLayout("/xml/default/" + layout + ".xml");
-      Assert.assertNotNull(kb);
-      Assert.assertFalse(kb.getRow().isEmpty());
+    @AfterClass
+    public static void close() {
+
     }
-  }
 
-  @Test
-  public void validateUrls() throws IOException, URISyntaxException {
+    @Test
+    public void testGetLayout() throws IOException {
+        Keyboard kb = handler.getLayout("/xml/default/kb-layout.xml");
+        Assert.assertNotNull(kb);
+        Assert.assertFalse(kb.getRow().isEmpty());
 
-    URL url = KeyboardLayoutHandler.class.getResource("/xml/default");
-    Path defaultPath = Paths.get(url.toURI());
-    try (DirectoryStream<Path> stream = Files.newDirectoryStream(defaultPath)) {
-      stream.forEach(p -> {
-        if (Files.isDirectory(p)) {
-          Locale l = new Locale(p.getFileName().toString());
-          System.err.println(l);
+        for (Keyboard.Row row : kb.getRow()) {
+            System.err.println("\nRow " + row.getRowEdgeFlags());
+            for (Keyboard.Row.Key key : row.getKey()) {
+                System.err.println(key.getCodes() + "\t" + (key.getKeyLabel() != null ? key.getKeyLabel() : key.getKeyIconStyle()));
+            }
         }
-      });
     }
-    Assert.assertNotNull(url);
 
-  }
+    @Test
+    public void validateLayouts() throws IOException {
+        String[] layouts = new String[]{"kb-layout", "kb-layout-shift", "kb-layout-sym", "kb-layout-sym-shift", "kb-layout-ctrl"};
+        for (String layout : layouts) {
+            Keyboard kb = handler.getLayout("/xml/default/" + layout + ".xml");
+            Assert.assertNotNull(kb);
+            Assert.assertFalse(kb.getRow().isEmpty());
+        }
+    }
+
+    @Test
+    public void validateUrls() throws IOException, URISyntaxException {
+
+        URL url = KeyboardLayoutHandler.class.getResource("/xml/default");
+        Path defaultPath = Paths.get(url.toURI());
+        try (DirectoryStream<Path> stream = Files.newDirectoryStream(defaultPath)) {
+            stream.forEach(p -> {
+                if (Files.isDirectory(p)) {
+                    Locale l = new Locale(p.getFileName().toString());
+                    System.err.println(l);
+                }
+            });
+        }
+        Assert.assertNotNull(url);
+
+    }
 }

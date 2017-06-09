@@ -2,60 +2,61 @@
 
 <Keyboard keyWidth="40" keyHeight="30" horizontalGap="0" verticalGap="0">
 
-	<Row>
-		<Key codes="1081" keyLabel="й" />
-		<Key codes="1094" keyLabel="ц" />
-		<Key codes="1091" keyLabel="у" />
-		<Key codes="1082" keyLabel="к" />
-		<Key codes="1077" keyLabel="е" />
-		<Key codes="1085" keyLabel="н" />
-		<Key codes="1075" keyLabel="г" />
-		<Key codes="1096" keyLabel="ш" />
-		<Key codes="1097" keyLabel="щ" />
-		<Key codes="1079" keyLabel="з" />
-		<Key codes="1093" keyLabel="х" />
-		<Key codes="1098" keyLabel="ъ" />
-		<Key codes="-5" keyLabel="!" keyLabelStyle=".font-fxkeyboard" repeatable="true" />
-	</Row>
+    <Row>
+        <Key codes="1081" keyLabel="й"/>
+        <Key codes="1094" keyLabel="ц"/>
+        <Key codes="1091" keyLabel="у"/>
+        <Key codes="1082" keyLabel="к"/>
+        <Key codes="1077" keyLabel="е"/>
+        <Key codes="1085" keyLabel="н"/>
+        <Key codes="1075" keyLabel="г"/>
+        <Key codes="1096" keyLabel="ш"/>
+        <Key codes="1097" keyLabel="щ"/>
+        <Key codes="1079" keyLabel="з"/>
+        <Key codes="1093" keyLabel="х"/>
+        <Key codes="1098" keyLabel="ъ"/>
+        <Key codes="-5" keyLabel="!" keyLabelStyle=".font-fxkeyboard" repeatable="true"/>
+    </Row>
 
-	<Row>
-		<Key codes="" keyWidth="10" />
-		<Key codes="1092" keyLabel="ф" />
-		<Key codes="1099" keyLabel="ы" />
-		<Key codes="1074" keyLabel="в" />
-		<Key codes="1072" keyLabel="а" />
-		<Key codes="1087" keyLabel="п" />
-		<Key codes="1088" keyLabel="р" />
-		<Key codes="1086,1255" keyLabel="о" />
-		<Key codes="1083" keyLabel="л" />
-		<Key codes="1076" keyLabel="д" />
-		<Key codes="1078" keyLabel="ж" />
-		<Key codes="1101" keyLabel="э" />
-		<Key codes="-9" keyLabel="ENTER" keyLabelStyle=".small-style" keyWidth="70" />
-	</Row>
+    <Row>
+        <Key codes="" keyWidth="10"/>
+        <Key codes="1092" keyLabel="ф"/>
+        <Key codes="1099" keyLabel="ы"/>
+        <Key codes="1074" keyLabel="в"/>
+        <Key codes="1072" keyLabel="а"/>
+        <Key codes="1087" keyLabel="п"/>
+        <Key codes="1088" keyLabel="р"/>
+        <Key codes="1086,1255" keyLabel="о"/>
+        <Key codes="1083" keyLabel="л"/>
+        <Key codes="1076" keyLabel="д"/>
+        <Key codes="1078" keyLabel="ж"/>
+        <Key codes="1101" keyLabel="э"/>
+        <Key codes="-9" keyLabel="ENTER" keyLabelStyle=".small-style" keyWidth="70"/>
+    </Row>
 
-	<Row>
-		<Key codes="-1" keyLabel="I" keyLabelStyle=".font-fxkeyboard" keyWidth="40" modifier="true" sticky="true" />
-		<Key codes="1103" keyLabel="я" />
-		<Key codes="1095" keyLabel="ч" />
-		<Key codes="1089" keyLabel="с" />
-		<Key codes="1084" keyLabel="м" />
-		<Key codes="1080" keyLabel="и" />
-		<Key codes="1090" keyLabel="т" />
-		<Key codes="1100" keyLabel="ь" />
-		<Key codes="1073" keyLabel="б" />
-		<Key codes="1102" keyLabel="ю" />
-		<Key codes="44" keyLabel="," />
-		<Key codes="46" keyLabel="." />
-		<Key codes="-1" keyLabel="I" keyLabelStyle=".font-fxkeyboard" keyWidth="40" modifier="true" sticky="true" />
-	</Row>
+    <Row>
+        <Key codes="-1" keyLabel="I" keyLabelStyle=".font-fxkeyboard" keyWidth="40" modifier="true" sticky="true"/>
+        <Key codes="1103" keyLabel="я"/>
+        <Key codes="1095" keyLabel="ч"/>
+        <Key codes="1089" keyLabel="с"/>
+        <Key codes="1084" keyLabel="м"/>
+        <Key codes="1080" keyLabel="и"/>
+        <Key codes="1090" keyLabel="т"/>
+        <Key codes="1100" keyLabel="ь"/>
+        <Key codes="1073" keyLabel="б"/>
+        <Key codes="1102" keyLabel="ю"/>
+        <Key codes="44" keyLabel=","/>
+        <Key codes="46" keyLabel="."/>
+        <Key codes="-1" keyLabel="I" keyLabelStyle=".font-fxkeyboard" keyWidth="40" modifier="true" sticky="true"/>
+    </Row>
 
-	<Row rowEdgeFlags="bottom">
-		<Key codes="-6" keyLabel="CTRL" keyLabelStyle=".small-style" keyWidth="70" />
-		<Key codes="-2" keyLabel="?123" keyLabelStyle=".small-style" keyWidth="70" />
-		<Key codes="32" keyLabel="3" keyLabelStyle=".font-fxkeyboard-alpha" movable="true" keyWidth="280" repeatable="true" />
-		<Key codes="-7" keyLabel="RU" keyLabelStyle=".small-style" keyWidth="50" />
-		<Key codes="-3" keyLabel="2" keyLabelStyle=".font-fxkeyboard" keyWidth="50" />
-	</Row>
+    <Row rowEdgeFlags="bottom">
+        <Key codes="-6" keyLabel="CTRL" keyLabelStyle=".small-style" keyWidth="70"/>
+        <Key codes="-2" keyLabel="?123" keyLabelStyle=".small-style" keyWidth="70"/>
+        <Key codes="32" keyLabel="3" keyLabelStyle=".font-fxkeyboard-alpha" movable="true" keyWidth="280"
+             repeatable="true"/>
+        <Key codes="-7" keyLabel="RU" keyLabelStyle=".small-style" keyWidth="50"/>
+        <Key codes="-3" keyLabel="2" keyLabelStyle=".font-fxkeyboard" keyWidth="50"/>
+    </Row>
 </Keyboard>
     

@@ -25,33 +25,24 @@
  *******************************************************************************/
 package org.comtel2000.keyboard.control.skin;
 
-import org.comtel2000.keyboard.FXOK;
-
-import com.sun.javafx.scene.control.behavior.TextFieldBehavior;
-import com.sun.javafx.scene.control.skin.TextFieldSkin;
-
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
+import javafx.scene.control.skin.TextFieldSkin;
+import org.comtel2000.keyboard.FXOK;
 
-@SuppressWarnings("restriction")
 public class KeyboardTextFieldSkin extends TextFieldSkin {
 
-  public KeyboardTextFieldSkin(TextField textInput) {
-    super(textInput);
-    addFocusListener(textInput);
-  }
+    public KeyboardTextFieldSkin(TextField textInput) {
+        super(textInput);
+        addFocusListener(textInput);
+    }
 
-  public KeyboardTextFieldSkin(TextField textInput, TextFieldBehavior behavior) {
-    super(textInput, behavior);
-    addFocusListener(textInput);
-  }
+    private void addFocusListener(TextField textInput) {
+        textInput.focusedProperty().addListener(observable -> {
+            Scene scene = getSkinnable().getScene();
+            FXOK.updateVisibility(scene, textInput);
+        });
 
-  private void addFocusListener(TextField textInput) {
-    textInput.focusedProperty().addListener(observable -> {
-      Scene scene = getSkinnable().getScene();
-      FXOK.updateVisibilty(scene, textInput);
-    });
-
-  }
+    }
 
 }

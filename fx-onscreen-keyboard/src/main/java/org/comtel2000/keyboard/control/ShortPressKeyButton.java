@@ -1,5 +1,6 @@
 package org.comtel2000.keyboard.control;
 
+import javafx.scene.input.MouseButton;
 import org.slf4j.LoggerFactory;
 
 /*******************************************************************************
@@ -28,26 +29,24 @@ import org.slf4j.LoggerFactory;
  * WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *******************************************************************************/
 
-import javafx.scene.input.MouseButton;
-
 class ShortPressKeyButton extends KeyButton {
 
-  private final static org.slf4j.Logger logger = LoggerFactory.getLogger(ShortPressKeyButton.class);
+    private final static org.slf4j.Logger logger = LoggerFactory.getLogger(ShortPressKeyButton.class);
 
-  ShortPressKeyButton() {
-    super();
-  }
+    ShortPressKeyButton() {
+        super();
+    }
 
-  @Override
-  protected void initEventListener(long delay) {
-    setOnMousePressed(event -> {
-      logger.trace("{} pressed", getKeyCode());
-      if (event.getButton().equals(MouseButton.PRIMARY)) {
-        fireShortPressed();
-      }
-      setFocused(false);
-      event.consume();
-    });
-  }
+    @Override
+    protected void initEventListener(long delay) {
+        setOnMousePressed(event -> {
+            logger.trace("{} pressed", getKeyCode());
+            if (event.getButton().equals(MouseButton.PRIMARY)) {
+                fireShortPressed();
+            }
+            setFocused(false);
+            event.consume();
+        });
+    }
 
 }

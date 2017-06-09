@@ -1,5 +1,7 @@
 package org.comtel2000.keyboard.control;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.event.EventHandler;
 import org.comtel2000.keyboard.event.KeyButtonEvent;
 
 /*******************************************************************************
@@ -28,20 +30,17 @@ import org.comtel2000.keyboard.event.KeyButtonEvent;
  * WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *******************************************************************************/
 
-import javafx.beans.property.ObjectProperty;
-import javafx.event.EventHandler;
-
 interface LongPressable {
 
-  void setOnLongPressed(EventHandler<? super KeyButtonEvent> eventhandler);
+    EventHandler<? super KeyButtonEvent> getOnLongPressed();
 
-  EventHandler<? super KeyButtonEvent> getOnLongPressed();
+    void setOnLongPressed(EventHandler<? super KeyButtonEvent> eventhandler);
 
-  ObjectProperty<EventHandler<? super KeyButtonEvent>> onLongPressedProperty();
+    ObjectProperty<EventHandler<? super KeyButtonEvent>> onLongPressedProperty();
 
-  void setOnShortPressed(EventHandler<? super KeyButtonEvent> eventhandler);
+    EventHandler<? super KeyButtonEvent> getOnShortPressed();
 
-  EventHandler<? super KeyButtonEvent> getOnShortPressed();
+    void setOnShortPressed(EventHandler<? super KeyButtonEvent> eventhandler);
 
-  ObjectProperty<EventHandler<? super KeyButtonEvent>> onShortPressedProperty();
+    ObjectProperty<EventHandler<? super KeyButtonEvent>> onShortPressedProperty();
 }

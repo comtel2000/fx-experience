@@ -26,10 +26,10 @@ package org.comtel2000.swing.ui;
  * WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *******************************************************************************/
 
-import java.awt.Component;
+import java.awt.*;
 
 public interface EventCallback {
 
-  void call(Component component, boolean vis);
+    void call(Component component, boolean vis);
 
 }
