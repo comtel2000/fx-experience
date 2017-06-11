@@ -38,11 +38,22 @@ java -jar fx-onscreen-keyboard-samples/target/fx-onscreen-keyboard-jar-with-depe
 
 ## Maven central repository
 
+Java 8 (latest stable):
+
 ```xml
 <dependency>
   <groupId>org.comtel2000</groupId>
   <artifactId>fx-onscreen-keyboard</artifactId>
-  <version>[LATEST_RELEASE]</version>
+  <version>8.2.4</version>
+</dependency>
+```
+Java 9 JPMS Support (java9 branch):
+
+```xml
+<dependency>
+  <groupId>org.comtel2000</groupId>
+  <artifactId>fx-onscreen-keyboard</artifactId>
+  <version>9.0.0-SNAPSHOT</version>
 </dependency>
 ```
 
