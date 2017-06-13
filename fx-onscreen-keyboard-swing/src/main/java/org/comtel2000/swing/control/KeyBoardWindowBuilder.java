@@ -1,7 +1,5 @@
-package org.comtel2000.swing.control;
-
 /*******************************************************************************
- * Copyright (c) 2016 comtel2000
+ * Copyright (c) 2017 comtel2000
  *
  * Redistribution and use in source and binary forms, with or without modification, are permitted
  * provided that the following conditions are met:
@@ -26,6 +24,8 @@ package org.comtel2000.swing.control;
  * WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *******************************************************************************/
 
+package org.comtel2000.swing.control;
+
 import java.nio.file.Path;
 import java.util.Locale;
 import java.util.concurrent.CountDownLatch;
@@ -41,7 +41,7 @@ import javafx.util.Builder;
 
 /**
  * Swing {@link KeyBoardWindow} builder
- * 
+ *
  * @author comtel
  *
  */
@@ -57,7 +57,7 @@ public class KeyBoardWindowBuilder implements Builder<KeyBoardWindow> {
 
   /**
    * create new instance
-   * 
+   *
    * @return this
    */
   public static KeyBoardWindowBuilder create() {
@@ -66,7 +66,7 @@ public class KeyBoardWindowBuilder implements Builder<KeyBoardWindow> {
 
   /**
    * The own layout location
-   * 
+   *
    * @param path the layer location
    * @return this
    */
@@ -77,7 +77,7 @@ public class KeyBoardWindowBuilder implements Builder<KeyBoardWindow> {
 
   /**
    * The initial {@link Locale}
-   * 
+   *
    * @param locale initial locale
    * @return this
    */
@@ -88,7 +88,7 @@ public class KeyBoardWindowBuilder implements Builder<KeyBoardWindow> {
 
   /**
    * The initial keyboard scale
-   * 
+   *
    * @param scale initial size
    * @return this
    */
@@ -99,7 +99,7 @@ public class KeyBoardWindowBuilder implements Builder<KeyBoardWindow> {
 
   /**
    * The robot adapter default {@link AWTRobotHandler}
-   * 
+   *
    * @param robot default {@link AWTRobotHandler}
    * @return this
    */
@@ -110,7 +110,7 @@ public class KeyBoardWindowBuilder implements Builder<KeyBoardWindow> {
 
   /**
    * The embedded layout
-   * 
+   *
    * @param layer embedded layout layer
    * @return this
    */
@@ -121,7 +121,7 @@ public class KeyBoardWindowBuilder implements Builder<KeyBoardWindow> {
 
   /**
    * The style location and name
-   * 
+   *
    * @param css style sheet
    * @return this
    */
@@ -132,7 +132,7 @@ public class KeyBoardWindowBuilder implements Builder<KeyBoardWindow> {
 
   /**
    * build and wait for finalize FX instantiation
-   * 
+   *
    * @return KeyBoardWindow window
    */
   @Override

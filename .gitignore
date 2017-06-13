@@ -1,6 +1,9 @@
-/.project
-/.settings
-/target/
+.project
+.settings
+.classpath
+target
 pom.xml.versionsBackup
 pom.xml.releaseBackup
 release.properties
+.idea
+*.iml

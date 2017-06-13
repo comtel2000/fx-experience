@@ -1,7 +1,5 @@
-package org.comtel2000.keyboard.control;
-
 /*******************************************************************************
- * Copyright (c) 2016 comtel2000
+ * Copyright (c) 2017 comtel2000
  *
  * Redistribution and use in source and binary forms, with or without modification, are permitted
  * provided that the following conditions are met:
@@ -26,6 +24,8 @@ package org.comtel2000.keyboard.control;
  * WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *******************************************************************************/
 
+package org.comtel2000.keyboard.control;
+
 import java.util.Collection;
 
 import org.slf4j.LoggerFactory;
@@ -34,6 +34,7 @@ import javafx.animation.Animation.Status;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.input.MouseButton;
 import javafx.util.Duration;
 
@@ -45,13 +46,13 @@ class MultiKeyButton extends KeyButton {
 
   private final Collection<String> styles;
 
-  private final double scale;
+  private final Parent parent;
 
-  MultiKeyButton(double scale, Collection<String> styles) {
+  MultiKeyButton(Parent parent, Collection<String> styles) {
     super();
     getStyleClass().add("multi-button");
     this.styles = styles;
-    this.scale = scale;
+    this.parent = parent;
   }
 
   @Override
@@ -91,19 +92,19 @@ class MultiKeyButton extends KeyButton {
 
   }
 
-  private MultiKeyPopup getContext() {
+  MultiKeyPopup getContext() {
     if (context == null) {
       context = new MultiKeyPopup();
       context.getStylesheets().setAll(styles);
       context.setOnHidden(event -> {
-        getParent().getParent().setEffect(null);
-        getParent().getParent().setDisable(false);
+        parent.setEffect(null);
+        parent.setDisable(false);
       });
       setOnLongPressed(event -> {
-
-        getParent().getParent().setDisable(true);
+        Node node = (Node) event.getSource();
+        parent.setDisable(true);
         setFocused(false);
-        context.show((Node) event.getSource(), scale);
+        context.show(node, parent.getScaleX());
       });
 
     }

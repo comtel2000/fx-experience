@@ -1,7 +1,5 @@
-package org.comtel2000.swing.control;
-
 /*******************************************************************************
- * Copyright (c) 2016 comtel2000
+ * Copyright (c) 2017 comtel2000
  *
  * Redistribution and use in source and binary forms, with or without modification, are permitted
  * provided that the following conditions are met:
@@ -26,6 +24,8 @@ package org.comtel2000.swing.control;
  * WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *******************************************************************************/
 
+package org.comtel2000.swing.control;
+
 import java.util.Optional;
 
 import javax.swing.JWindow;
@@ -41,7 +41,7 @@ import javafx.scene.Scene;
 
 /**
  * Swing window wrapper class for {@link KeyBoardPopup}
- * 
+ *
  * @author comtel
  *
  */
@@ -71,7 +71,7 @@ public class KeyBoardWindow extends JWindow {
 
   /**
    * must run in FxApplicationThread
-   * 
+   *
    * @param popup Keyboard popup
    */
   protected void createScene(final KeyBoardPopup popup) {

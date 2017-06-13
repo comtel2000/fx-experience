@@ -1,7 +1,5 @@
-package org.comtel2000.swing.robot;
-
 /*******************************************************************************
- * Copyright (c) 2016 comtel2000
+ * Copyright (c) 2017 comtel2000
  *
  * Redistribution and use in source and binary forms, with or without modification, are permitted
  * provided that the following conditions are met:
@@ -25,6 +23,9 @@ package org.comtel2000.swing.robot;
  * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY
  * WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *******************************************************************************/
+
+package org.comtel2000.swing.robot;
+
 import static java.awt.event.KeyEvent.VK_A;
 import static java.awt.event.KeyEvent.VK_AGAIN;
 import static java.awt.event.KeyEvent.VK_ALT;
@@ -206,7 +207,7 @@ public class NativeAsciiRobotHandler implements IRobot {
   /**
    * does not work for extended codepage signs
    */
-  private void winAltDump(Robot robot, int ch) {
+  void winAltDump(Robot robot, int ch) {
     robot.keyPress(VK_ALT);
     for (int i = 3; i >= 0; --i) {
       int vk = ch / (int) (Math.pow(10, i)) % 10 + VK_NUMPAD0;
