@@ -2,8 +2,7 @@
 .settings
 .classpath
 target
-pom.xml.versionsBackup
-pom.xml.releaseBackup
+pom.xml.*
 release.properties
 .idea
 *.iml

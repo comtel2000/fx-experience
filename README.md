@@ -44,7 +44,7 @@ Java 8 (latest stable):
 <dependency>
   <groupId>org.comtel2000</groupId>
   <artifactId>fx-onscreen-keyboard</artifactId>
-  <version>8.2.4</version>
+  <version>8.2.5</version>
 </dependency>
 ```
 Java 9 JPMS Support (java9 branch):

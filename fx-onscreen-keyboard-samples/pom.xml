@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>org.comtel2000</groupId>
 		<artifactId>fx-parent</artifactId>
-		<version>8.2.5</version>
+		<version>8.2.6-SNAPSHOT</version>
 	</parent>
 	<artifactId>fx-onscreen-keyboard-samples</artifactId>
 	<name>fx-onscreen-keyboard-samples</name>
