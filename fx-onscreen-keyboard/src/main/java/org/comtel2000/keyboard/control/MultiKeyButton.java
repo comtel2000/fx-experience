@@ -1,7 +1,5 @@
-package org.comtel2000.keyboard.control;
-
 /*******************************************************************************
- * Copyright (c) 2016 comtel2000
+ * Copyright (c) 2017 comtel2000
  *
  * Redistribution and use in source and binary forms, with or without modification, are permitted
  * provided that the following conditions are met:
@@ -26,105 +24,112 @@ package org.comtel2000.keyboard.control;
  * WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *******************************************************************************/
 
+package org.comtel2000.keyboard.control;
+
+import java.util.Collection;
+
+import org.slf4j.LoggerFactory;
+
 import javafx.animation.Animation.Status;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.input.MouseButton;
 import javafx.util.Duration;
-import org.slf4j.LoggerFactory;
-
-import java.util.Collection;
 
 class MultiKeyButton extends KeyButton {
 
-    private final static org.slf4j.Logger logger = LoggerFactory.getLogger(MultiKeyButton.class);
-    private final Collection<String> styles;
-    private final double scale;
-    private MultiKeyPopup context;
+  private final static org.slf4j.Logger logger = LoggerFactory.getLogger(MultiKeyButton.class);
 
-    MultiKeyButton(double scale, Collection<String> styles) {
-        super();
-        getStyleClass().add("multi-button");
-        this.styles = styles;
-        this.scale = scale;
-    }
+  private MultiKeyPopup context;
 
-    @Override
-    protected void initEventListener(long delay) {
+  private final Collection<String> styles;
 
-        buttonDelay = new Timeline(new KeyFrame(new Duration(delay), event -> fireLongPressed()));
+  private final Parent parent;
 
-        setOnDragDetected(e -> {
-            logger.trace("{} drag detected", getKeyCode());
-            if (buttonDelay.getStatus().equals(Status.RUNNING) && buttonDelay.getCurrentRate() > 0) {
-                buttonDelay.stop();
-                fireLongPressed();
-            }
-            e.consume();
-        });
+  MultiKeyButton(Parent parent, Collection<String> styles) {
+    super();
+    getStyleClass().add("multi-button");
+    this.styles = styles;
+    this.parent = parent;
+  }
 
-        setOnMouseClicked(event -> {
-            logger.trace("{} clicked: {}", getKeyCode(), buttonDelay.getCurrentRate());
+  @Override
+  protected void initEventListener(long delay) {
 
-            if (event.getButton().equals(MouseButton.PRIMARY)) {
-                if (buttonDelay.getStatus().equals(Status.RUNNING)) {
-                    buttonDelay.stop();
-                    fireShortPressed();
-                }
-            }
-            setFocused(false);
-            event.consume();
-        });
+    buttonDelay = new Timeline(new KeyFrame(new Duration(delay), event -> fireLongPressed()));
 
-        setOnMousePressed(event -> {
-            logger.trace("{} pressed: {}", getKeyCode(), buttonDelay.getCurrentRate());
-            if (event.getButton().equals(MouseButton.PRIMARY)) {
-                buttonDelay.playFromStart();
-            }
-            event.consume();
-        });
+    setOnDragDetected(e -> {
+      logger.trace("{} drag detected", getKeyCode());
+      if (buttonDelay.getStatus().equals(Status.RUNNING) && buttonDelay.getCurrentRate() > 0) {
+        buttonDelay.stop();
+        fireLongPressed();
+      }
+      e.consume();
+    });
 
-    }
+    setOnMouseClicked(event -> {
+      logger.trace("{} clicked: {}", getKeyCode(), buttonDelay.getCurrentRate());
 
-    private MultiKeyPopup getContext() {
-        if (context == null) {
-            context = new MultiKeyPopup();
-            context.getStylesheets().setAll(styles);
-            context.setOnHidden(event -> {
-                getParent().getParent().setEffect(null);
-                getParent().getParent().setDisable(false);
-            });
-            setOnLongPressed(event -> {
-
-                getParent().getParent().setDisable(true);
-                setFocused(false);
-                context.show((Node) event.getSource(), scale);
-            });
-
+      if (event.getButton().equals(MouseButton.PRIMARY)) {
+        if (buttonDelay.getStatus().equals(Status.RUNNING)) {
+          buttonDelay.stop();
+          fireShortPressed();
         }
-        return context;
+      }
+      setFocused(false);
+      event.consume();
+    });
+
+    setOnMousePressed(event -> {
+      logger.trace("{} pressed: {}", getKeyCode(), buttonDelay.getCurrentRate());
+      if (event.getButton().equals(MouseButton.PRIMARY)) {
+        buttonDelay.playFromStart();
+      }
+      event.consume();
+    });
+
+  }
+
+  MultiKeyPopup getContext() {
+    if (context == null) {
+      context = new MultiKeyPopup();
+      context.getStylesheets().setAll(styles);
+      context.setOnHidden(event -> {
+        parent.setEffect(null);
+        parent.setDisable(false);
+      });
+      setOnLongPressed(event -> {
+        Node node = (Node) event.getSource();
+        parent.setDisable(true);
+        setFocused(false);
+        context.show(node, parent.getScaleX());
+      });
+
     }
+    return context;
+  }
 
-    @Override
-    public void addExtKeyCode(int extKeyCode, String label) {
-        KeyButton button = new ShortPressKeyButton();
-        button.setText(label);
-        button.setKeyCode(extKeyCode);
+  @Override
+  public void addExtKeyCode(int extKeyCode, String label) {
+    KeyButton button = new ShortPressKeyButton();
+    button.setText(label);
+    button.setKeyCode(extKeyCode);
 
-        if (getStyleClass() != null) {
-            button.getStyleClass().addAll(getStyleClass());
-        } else {
-            button.setId("key-context-button");
-        }
-        button.setFocusTraversable(false);
-
-        button.setPrefWidth(this.getPrefWidth());
-        button.setPrefHeight(this.getPrefHeight());
-
-        button.setOnShortPressed(getOnShortPressed());
-
-        getContext().addButton(button);
+    if (getStyleClass() != null) {
+      button.getStyleClass().addAll(getStyleClass());
+    } else {
+      button.setId("key-context-button");
     }
+    button.setFocusTraversable(false);
+
+    button.setPrefWidth(this.getPrefWidth());
+    button.setPrefHeight(this.getPrefHeight());
+
+    button.setOnShortPressed(getOnShortPressed());
+
+    getContext().addButton(button);
+  }
 
 }

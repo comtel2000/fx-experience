@@ -1,4 +1,5 @@
 module fx.onscreen.keyboard.swing {
+
     requires java.desktop;
     requires fx.onscreen.keyboard;
     requires javafx.swing;

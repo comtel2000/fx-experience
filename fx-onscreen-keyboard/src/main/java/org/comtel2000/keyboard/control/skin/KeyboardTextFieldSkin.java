@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2016 comtel2000
+ * Copyright (c) 2017 comtel2000
  *
  * Redistribution and use in source and binary forms, with or without modification, are permitted
  * provided that the following conditions are met:
@@ -23,26 +23,29 @@
  * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY
  * WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *******************************************************************************/
+
 package org.comtel2000.keyboard.control.skin;
+
+import org.comtel2000.keyboard.FXOK;
 
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.control.skin.TextFieldSkin;
-import org.comtel2000.keyboard.FXOK;
+
 
 public class KeyboardTextFieldSkin extends TextFieldSkin {
 
-    public KeyboardTextFieldSkin(TextField textInput) {
-        super(textInput);
-        addFocusListener(textInput);
-    }
+  public KeyboardTextFieldSkin(TextField textInput) {
+    super(textInput);
+    addFocusListener(textInput);
+  }
 
-    private void addFocusListener(TextField textInput) {
-        textInput.focusedProperty().addListener(observable -> {
-            Scene scene = getSkinnable().getScene();
-            FXOK.updateVisibility(scene, textInput);
-        });
+  private void addFocusListener(TextField textInput) {
+    textInput.focusedProperty().addListener(observable -> {
+      Scene scene = getSkinnable().getScene();
+      FXOK.updateVisibilty(scene, textInput);
+    });
 
-    }
+  }
 
 }

@@ -6,11 +6,13 @@
         <artifactId>fx-parent</artifactId>
         <version>9.0.0-SNAPSHOT</version>
     </parent>
+
     <artifactId>fx-onscreen-keyboard-swing</artifactId>
+    <packaging>jar</packaging>
+
     <name>fx-onscreen-keyboard-swing</name>
     <description>JavaFX on-screen keyboard Swing support module.</description>
     <url>http://comtel2000.org</url>
-    <packaging>jar</packaging>
 
     <dependencies>
         <dependency>

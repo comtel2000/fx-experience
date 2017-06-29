@@ -1,7 +1,5 @@
-package org.comtel2000.keyboard.control;
-
 /*******************************************************************************
- * Copyright (c) 2016 comtel2000
+ * Copyright (c) 2017 comtel2000
  *
  * Redistribution and use in source and binary forms, with or without modification, are permitted
  * provided that the following conditions are met:
@@ -26,17 +24,19 @@ package org.comtel2000.keyboard.control;
  * WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *******************************************************************************/
 
+package org.comtel2000.keyboard.control;
+
 public interface VkProperties {
 
-    String VK_TYPE = "vkType";
+  String VK_TYPE = "vkType";
 
-    String VK_TYPE_TEXT = "text";
-    String VK_TYPE_NUMERIC = "numeric";
-    String VK_TYPE_URL = "url";
-    String VK_TYPE_EMAIL = "email";
+  String VK_TYPE_TEXT = "text";
+  String VK_TYPE_NUMERIC = "numeric";
+  String VK_TYPE_URL = "url";
+  String VK_TYPE_EMAIL = "email";
 
-    String VK_LOCALE = "vkLocale";
+  String VK_LOCALE = "vkLocale";
 
-    String VK_LOCALE_DE = "de";
-    String VK_LOCALE_EN = "en";
+  String VK_LOCALE_DE = "de";
+  String VK_LOCALE_EN = "en";
 }

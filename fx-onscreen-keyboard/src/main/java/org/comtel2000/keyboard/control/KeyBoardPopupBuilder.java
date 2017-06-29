@@ -1,7 +1,5 @@
-package org.comtel2000.keyboard.control;
-
 /*******************************************************************************
- * Copyright (c) 2016 comtel2000
+ * Copyright (c) 2017 comtel2000
  *
  * Redistribution and use in source and binary forms, with or without modification, are permitted
  * provided that the following conditions are met:
@@ -26,80 +24,83 @@ package org.comtel2000.keyboard.control;
  * WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *******************************************************************************/
 
-import javafx.event.Event;
-import javafx.event.EventHandler;
-import javafx.util.Builder;
-import org.comtel2000.keyboard.robot.IRobot;
+package org.comtel2000.keyboard.control;
 
 import java.nio.file.Path;
 import java.util.Locale;
 
+import org.comtel2000.keyboard.robot.IRobot;
+
+import javafx.event.Event;
+import javafx.event.EventHandler;
+import javafx.util.Builder;
+
 public class KeyBoardPopupBuilder implements Builder<KeyBoardPopup> {
 
-    private final KeyBoardBuilder kb;
-    private double offset = -1;
-    private EventHandler<? super Event> closeEventHandler;
+  private final KeyBoardBuilder kb;
+  private double offset = -1;
+  private EventHandler<? super Event> closeEventHandler;
 
-    protected KeyBoardPopupBuilder() {
-        kb = KeyBoardBuilder.create();
-    }
+  protected KeyBoardPopupBuilder() {
+    kb = KeyBoardBuilder.create();
+  }
 
-    public static KeyBoardPopupBuilder create() {
-        return new KeyBoardPopupBuilder();
-    }
+  public static KeyBoardPopupBuilder create() {
+    return new KeyBoardPopupBuilder();
+  }
 
-    public KeyBoardPopupBuilder layerPath(Path path) {
-        kb.layerPath(path);
-        return this;
-    }
+  public KeyBoardPopupBuilder layerPath(Path path) {
+    kb.layerPath(path);
+    return this;
+  }
 
-    public KeyBoardPopupBuilder initLocale(Locale locale) {
-        kb.initLocale(locale);
-        return this;
-    }
+  public KeyBoardPopupBuilder initLocale(Locale locale) {
+    kb.initLocale(locale);
+    return this;
+  }
 
-    public KeyBoardPopupBuilder initScale(double scale) {
-        kb.initScale(scale);
-        return this;
-    }
+  public KeyBoardPopupBuilder initScale(double scale) {
+    kb.initScale(scale);
+    return this;
+  }
 
-    public KeyBoardPopupBuilder addIRobot(IRobot robot) {
-        kb.addIRobot(robot);
-        return this;
-    }
+  public KeyBoardPopupBuilder addIRobot(IRobot robot) {
+    kb.addIRobot(robot);
+    return this;
+  }
 
-    public KeyBoardPopupBuilder layer(DefaultLayer l) {
-        kb.layer(l);
-        return this;
-    }
+  public KeyBoardPopupBuilder layer(DefaultLayer l) {
+    kb.layer(l);
+    return this;
+  }
 
-    public KeyBoardPopupBuilder style(String css) {
-        kb.style(css);
-        return this;
-    }
+  public KeyBoardPopupBuilder style(String css) {
+    kb.style(css);
+    return this;
+  }
 
-    public KeyBoardPopupBuilder offset(double offset) {
-        this.offset = offset;
-        return this;
-    }
+  public KeyBoardPopupBuilder offset(double offset) {
+    this.offset = offset;
+    return this;
+  }
 
-    public KeyBoardPopupBuilder onKeyboardCloseButton(EventHandler<? super Event> handler) {
-        closeEventHandler = handler;
-        return this;
-    }
+  public KeyBoardPopupBuilder onKeyboardCloseButton(EventHandler<? super Event> handler) {
+    closeEventHandler = handler;
+    return this;
+  }
 
-    @Override
-    public KeyBoardPopup build() {
-        KeyBoardPopup popup = new KeyBoardPopup(kb.build());
-        if (offset > -1) {
-            popup.setOffset(offset);
-        }
-        if (closeEventHandler != null) {
-            popup.setOnKeyboardCloseButton(closeEventHandler);
-        } else {
-            popup.setOnKeyboardCloseButton(e -> popup.setVisible(false));
-        }
-        return popup;
+  @Override
+  public KeyBoardPopup build() {
+    KeyBoardPopup popup = new KeyBoardPopup(kb.build());
+    if (offset > -1) {
+      popup.setOffset(offset);
     }
+    if (closeEventHandler != null) {
+      popup.setOnKeyboardCloseButton(closeEventHandler);
+    } else {
+      popup.setOnKeyboardCloseButton(e -> popup.setVisible(false));
+    }
+    return popup;
+  }
 
 }

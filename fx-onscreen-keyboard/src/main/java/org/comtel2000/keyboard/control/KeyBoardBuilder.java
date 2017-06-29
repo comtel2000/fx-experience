@@ -1,7 +1,5 @@
-package org.comtel2000.keyboard.control;
-
 /*******************************************************************************
- * Copyright (c) 2016 comtel2000
+ * Copyright (c) 2017 comtel2000
  *
  * Redistribution and use in source and binary forms, with or without modification, are permitted
  * provided that the following conditions are met:
@@ -26,62 +24,65 @@ package org.comtel2000.keyboard.control;
  * WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *******************************************************************************/
 
-import javafx.util.Builder;
-import org.comtel2000.keyboard.robot.IRobot;
+package org.comtel2000.keyboard.control;
 
 import java.nio.file.Path;
 import java.util.Locale;
 
+import org.comtel2000.keyboard.robot.IRobot;
+
+import javafx.util.Builder;
+
 public class KeyBoardBuilder implements Builder<KeyboardPane> {
 
-    private final KeyboardPane kb;
+  private final KeyboardPane kb;
 
-    protected KeyBoardBuilder() {
-        kb = new KeyboardPane();
-    }
+  protected KeyBoardBuilder() {
+    kb = new KeyboardPane();
+  }
 
-    public static KeyBoardBuilder create() {
-        return new KeyBoardBuilder();
-    }
+  public static KeyBoardBuilder create() {
+    return new KeyBoardBuilder();
+  }
 
-    public KeyBoardBuilder layerPath(Path path) {
-        kb.setLayerPath(path);
-        return this;
-    }
+  public KeyBoardBuilder layerPath(Path path) {
+    kb.setLayerPath(path);
+    return this;
+  }
 
-    public KeyBoardBuilder layer(DefaultLayer layer) {
-        kb.setLayer(layer);
-        return this;
-    }
+  public KeyBoardBuilder layer(DefaultLayer layer) {
+    kb.setLayer(layer);
+    return this;
+  }
 
-    public KeyBoardBuilder style(String css) {
-        kb.setStyle(css);
-        return this;
-    }
+  public KeyBoardBuilder style(String css) {
+    kb.setStyle(css);
+    return this;
+  }
 
-    public KeyBoardBuilder initLocale(Locale locale) {
-        kb.setLocale(locale);
-        return this;
-    }
+  public KeyBoardBuilder initLocale(Locale locale) {
+    kb.setLocale(locale);
+    return this;
+  }
 
-    public KeyBoardBuilder initScale(double scale) {
-        kb.setScale(scale);
-        return this;
-    }
+  public KeyBoardBuilder initScale(double scale) {
+    kb.setScale(scale);
+    return this;
+  }
 
-    public KeyBoardBuilder addIRobot(IRobot robot) {
-        kb.addRobotHandler(robot);
-        return this;
-    }
+  public KeyBoardBuilder addIRobot(IRobot robot) {
+    kb.addRobotHandler(robot);
+    return this;
+  }
 
-    @Override
-    public KeyboardPane build() {
-        try {
-            kb.load();
-        } catch (Exception e) {
-            new RuntimeException(e);
-        }
-        return kb;
+  @Override
+  public KeyboardPane build() {
+    try {
+      kb.load();
+    } catch (Exception e) {
+      new RuntimeException(e);
     }
+    return kb;
+  }
 
 }
