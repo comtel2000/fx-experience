@@ -43,7 +43,7 @@ public class KeyboardTextFieldSkin extends TextFieldSkin {
   private void addFocusListener(TextField textInput) {
     textInput.focusedProperty().addListener(observable -> {
       Scene scene = getSkinnable().getScene();
-      FXOK.updateVisibilty(scene, textInput);
+      FXOK.updateVisibility(scene, textInput);
     });
 
   }

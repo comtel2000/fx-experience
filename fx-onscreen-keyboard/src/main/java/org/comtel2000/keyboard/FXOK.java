@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2017 comtel2000
+ * Copyright (c) 2016 comtel2000
  *
  * Redistribution and use in source and binary forms, with or without modification, are permitted
  * provided that the following conditions are met:
@@ -23,17 +23,7 @@
  * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY
  * WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *******************************************************************************/
-
 package org.comtel2000.keyboard;
-
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-
-import org.comtel2000.keyboard.control.KeyBoardPopup;
-import org.comtel2000.keyboard.control.KeyboardType;
-import org.comtel2000.keyboard.control.VkProperties;
 
 import javafx.animation.FadeTransition;
 import javafx.geometry.Bounds;
@@ -43,39 +33,53 @@ import javafx.scene.Scene;
 import javafx.scene.control.TextInputControl;
 import javafx.stage.Screen;
 import javafx.util.Duration;
+import org.comtel2000.keyboard.control.KeyBoardPopup;
+import org.comtel2000.keyboard.control.KeyboardType;
+import org.comtel2000.keyboard.control.VkProperties;
+
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 public class FXOK implements VkProperties {
 
-  public enum Visiblity {
-    /** Set position and visible true */
-    SHOW,
-
-    /** Set visible false */
-    HIDE,
-
-    /** Set positioning only if visible true */
-    POS
-  }
-
   private static KeyBoardPopup popup;
-
   private static FadeTransition animation;
 
-  private FXOK() {}
+  public enum Visibility {
+    /**
+     * Set position and visible true
+     */
+    SHOW,
+
+    /**
+     * Set visible false
+     */
+    HIDE,
+
+    /**
+     * Set positioning only if visible true
+     */
+    POS
+  }
+  
+  private FXOK() {
+  }
 
   public static void registerPopup(KeyBoardPopup p) {
     popup = p;
   }
 
-  public static void setVisible(Visiblity visible) {
+  public static void setVisible(Visibility visible) {
     setVisible(visible, null);
   }
 
-  public static void setVisible(final Visiblity visible, final TextInputControl textNode) {
+  public static void setVisible(final Visibility visible, final TextInputControl textNode) {
     if (popup == null) {
       return;
     }
-    if ((visible == Visiblity.POS || visible == Visiblity.SHOW) && textNode != null) {
+    if ((visible == Visibility.POS || visible == Visibility.SHOW) && textNode != null) {
       Map<String, String> vkProps = getVkProperties(textNode);
       if (vkProps.isEmpty()) {
         popup.getKeyBoard().setKeyboardType(KeyboardType.TEXT);
@@ -100,7 +104,7 @@ public class FXOK implements VkProperties {
       }
     }
 
-    if (visible == Visiblity.POS || visible == Visiblity.HIDE && !popup.isShowing()) {
+    if (visible == Visibility.POS || visible == Visibility.HIDE && !popup.isShowing()) {
       return;
     }
     if (animation != null) {
@@ -113,10 +117,10 @@ public class FXOK implements VkProperties {
         }
       });
     }
-    animation.setFromValue(visible == Visiblity.SHOW ? 0.0 : 1.0);
-    animation.setToValue(visible == Visiblity.SHOW ? 1.0 : 0.0);
+    animation.setFromValue(visible == Visibility.SHOW ? 0.0 : 1.0);
+    animation.setToValue(visible == Visibility.SHOW ? 1.0 : 0.0);
 
-    if (visible == Visiblity.SHOW && !popup.isShowing()) {
+    if (visible == Visibility.SHOW && !popup.isShowing()) {
       // initial start
       popup.show(textNode.getScene().getWindow());
     }
@@ -146,14 +150,14 @@ public class FXOK implements VkProperties {
 
   }
 
-  public static void updateVisibilty(Scene scene, TextInputControl textInput) {
+  public static void updateVisibility(Scene scene, TextInputControl textInput) {
     if (textInput.isEditable() && textInput.isFocused()) {
-      setVisible(Visiblity.SHOW, textInput);
+      setVisible(Visibility.SHOW, textInput);
     } else if (scene == null || scene.getWindow() == null || !scene.getWindow().isFocused()
-        || !(scene.getFocusOwner() instanceof TextInputControl && ((TextInputControl) scene.getFocusOwner()).isEditable())) {
-      setVisible(Visiblity.HIDE, textInput);
+            || !(scene.getFocusOwner() instanceof TextInputControl && ((TextInputControl) scene.getFocusOwner()).isEditable())) {
+      setVisible(Visibility.HIDE, textInput);
     } else {
-      setVisible(Visiblity.POS, textInput);
+      setVisible(Visibility.POS, textInput);
     }
   }
 

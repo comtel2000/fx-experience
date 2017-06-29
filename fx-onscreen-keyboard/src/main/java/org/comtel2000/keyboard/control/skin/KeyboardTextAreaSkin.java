@@ -42,7 +42,7 @@ public class KeyboardTextAreaSkin extends TextAreaSkin {
   private void addFocusListener(TextArea textInput) {
     textInput.focusedProperty().addListener(observable -> {
       Scene scene = getSkinnable().getScene();
-      FXOK.updateVisibilty(scene, textInput);
+      FXOK.updateVisibility(scene, textInput);
     });
 
   }
