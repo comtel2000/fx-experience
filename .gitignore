@@ -3,6 +3,7 @@
 .classpath
 target
 pom.xml.*
+*-pom.xml
 release.properties
 .idea
 *.iml

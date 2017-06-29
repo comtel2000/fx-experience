@@ -1,30 +1,33 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>org.comtel2000</groupId>
-		<artifactId>fx-parent</artifactId>
-		<version>8.2.6-SNAPSHOT</version>
-	</parent>
-	<artifactId>fx-onscreen-keyboard-swing</artifactId>
-	<name>fx-onscreen-keyboard-swing</name>
-	<description>JavaFX on-screen keyboard Swing support module.</description>
-	<url>http://comtel2000.org</url>
-	<packaging>jar</packaging>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.comtel2000</groupId>
+        <artifactId>fx-parent</artifactId>
+        <version>8.2.6-SNAPSHOT</version>
+    </parent>
 
-	<dependencies>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.comtel2000</groupId>
-			<artifactId>fx-onscreen-keyboard</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-		</dependency>
-	</dependencies>
+    <artifactId>fx-onscreen-keyboard-swing</artifactId>
+    <packaging>jar</packaging>
+
+    <name>fx-onscreen-keyboard-swing</name>
+    <description>JavaFX on-screen keyboard Swing support module.</description>
+    <url>http://comtel2000.org</url>
+
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.comtel2000</groupId>
+            <artifactId>fx-onscreen-keyboard</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+    </dependencies>
 </project>
