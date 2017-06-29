@@ -9,7 +9,7 @@
 	<artifactId>fx-onscreen-keyboard</artifactId>
 	<packaging>jar</packaging>
 
-	<name>fx-onscreen-keyboard-core</name>
+	<name>fx-onscreen-keyboard</name>
 	<description>Keyboard core components</description>
 	<url>http://comtel2000.org</url>
 
