@@ -19,7 +19,7 @@
 	<Row>
 		<Key codes="" keyWidth="10" />
 		<Key codes="65,196,197,195,194,193,192" keyLabel="A" />
-		<Key codes="83,223" keyLabel="S" />
+		<Key codes="83,7838" keyLabel="S" />
 		<Key codes="68" keyLabel="D" />
 		<Key codes="70" keyLabel="F" />
 		<Key codes="71" keyLabel="G" />
