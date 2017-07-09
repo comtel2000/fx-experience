@@ -16,3 +16,14 @@ addons:
   apt:
     packages:
       - oracle-java8-installer
+
+# skip install
+install: true
+
+before_script:
+  # Linux OS: Use framebuffer for UI
+  # See https://docs.travis-ci.com/user/gui-and-headless-browsers/#Using-xvfb-to-Run-Tests-That-Require-a-GUI
+  # Note: exporting DISPLAY in a separate shell file will not grant the script shell file access to it.
+  #       To insure it has access, just use the following line.
+  - if [[ "${TRAVIS_OS_NAME}" == linux ]]; then export DISPLAY=:99.0; sh -e /etc/init.d/xvfb start; fi
+      
