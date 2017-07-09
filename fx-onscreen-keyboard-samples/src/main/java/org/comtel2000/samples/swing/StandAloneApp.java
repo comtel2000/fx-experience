@@ -52,7 +52,8 @@ import javafx.scene.Scene;
 public class StandAloneApp extends JApplet {
 
   private static String[] arguments;
-  private int posX, posY;
+  private int posX;
+  private int posY;
 
   private static final long serialVersionUID = 1L;
 

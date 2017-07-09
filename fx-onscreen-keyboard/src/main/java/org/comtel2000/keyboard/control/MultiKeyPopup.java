@@ -114,7 +114,8 @@ class MultiKeyPopup extends Popup {
       double offsetY = getHeight() / 2;
 
       Bounds bounds = node.localToScreen(node.getBoundsInLocal());
-      super.show(node, bounds.getMinX() + (bounds.getWidth() / 2) - offsetX, bounds.getMinY() - offsetY);
+      super.show(node, bounds.getMinX() + (bounds.getWidth() / 2) - offsetX,
+          bounds.getMinY() - offsetY);
 
       if (offsetX < 1 || offsetY < 1) {
         centerPosition();

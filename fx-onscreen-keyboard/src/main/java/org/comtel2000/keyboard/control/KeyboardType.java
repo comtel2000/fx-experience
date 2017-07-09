@@ -26,7 +26,36 @@
 
 package org.comtel2000.keyboard.control;
 
+import java.util.Optional;
+
 public enum KeyboardType {
 
-  TEXT, TEXT_SHIFT, SYMBOL, SYMBOL_SHIFT, CTRL, NUMERIC, EMAIL, URL
+  TEXT, TEXT_SHIFT, SYMBOL, SYMBOL_SHIFT, CTRL, NUMERIC, EMAIL, URL;
+
+  public static Optional<KeyboardType> findValue(Object value) {
+    if (value == null) {
+      return Optional.empty();
+    }
+
+    if (value instanceof Number) {
+      switch (Number.class.cast(value).intValue()) {
+      case 0:
+        return Optional.of(TEXT);
+      case 1:
+        return Optional.of(NUMERIC);
+      case 2:
+        return Optional.of(URL);
+      case 3:
+        return Optional.of(EMAIL);
+      default:
+        return Optional.empty();
+      }
+    }
+    for (KeyboardType t : values()) {
+      if (t.toString().equalsIgnoreCase(value.toString())) {
+        return Optional.of(t);
+      }
+    }
+    return Optional.empty();
+  }
 }

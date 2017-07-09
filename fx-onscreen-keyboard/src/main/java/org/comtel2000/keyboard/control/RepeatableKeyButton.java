@@ -36,9 +36,9 @@ import javafx.util.Duration;
 
 class RepeatableKeyButton extends KeyButton {
 
-  private final static org.slf4j.Logger logger = LoggerFactory.getLogger(RepeatableKeyButton.class);
+  private static final org.slf4j.Logger logger = LoggerFactory.getLogger(RepeatableKeyButton.class);
 
-  private final long REPEAT_DELAY = 40;
+  private static final long REPEAT_DELAY = 40;
 
   RepeatableKeyButton() {
     super();

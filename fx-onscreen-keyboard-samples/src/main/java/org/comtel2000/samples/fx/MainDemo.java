@@ -55,10 +55,6 @@ public class MainDemo extends Application implements VkProperties {
     stage.setTitle("FX FXOK (" + System.getProperty("javafx.runtime.version") + ")");
     stage.setResizable(true);
 
-    KeyBoardPopup popup = KeyBoardPopupBuilder.create().initLocale(Locale.ENGLISH).build();
-
-    VBox pane = new VBox(20);
-
     Button okButton = new Button("Ok");
     okButton.setDefaultButton(true);
 
@@ -71,9 +67,9 @@ public class MainDemo extends Application implements VkProperties {
       dialog.setTitle("Text Input Dialog");
       dialog.setContentText("Please enter your name:");
       dialog.showAndWait();
-
     });
 
+    KeyBoardPopup popup = KeyBoardPopupBuilder.create().initLocale(Locale.ENGLISH).build();
     CheckBox spaceKeyMove = new CheckBox("Movable");
     spaceKeyMove.setSelected(true);
     popup.getKeyBoard().spaceKeyMoveProperty().bindBidirectional(spaceKeyMove.selectedProperty());
@@ -85,6 +81,8 @@ public class MainDemo extends Application implements VkProperties {
     CheckBox numblock = new CheckBox("NumBlock");
     numblock.setSelected(false);
     numblock.selectedProperty().addListener((l, a, b) -> popup.getKeyBoard().switchLayer(b ? DefaultLayer.NUMBLOCK : DefaultLayer.DEFAULT));
+
+    VBox pane = new VBox(10);
 
     pane.getChildren().add(new ToolBar(okButton, cancelButton, popupButton, spaceKeyMove, capsLock, numblock));
 
@@ -118,6 +116,12 @@ public class MainDemo extends Application implements VkProperties {
     tf4.setPromptText("url");
     tf4.getProperties().put(VK_TYPE, VK_TYPE_URL);
     pane.getChildren().add(tf4);
+
+    pane.getChildren().add(new Label("Text5 (control)"));
+    TextField tf5 = new TextField();
+    tf5.setPromptText("control");
+    tf5.getProperties().put(VK_TYPE, VK_TYPE_CTRL);
+    pane.getChildren().add(tf5);
 
     ComboBox<String> combo = new ComboBox<>();
     combo.setEditable(true);

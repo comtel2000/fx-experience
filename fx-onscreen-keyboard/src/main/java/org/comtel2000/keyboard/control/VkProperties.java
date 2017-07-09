@@ -26,17 +26,50 @@
 
 package org.comtel2000.keyboard.control;
 
+import javafx.scene.Node;
+
+/**
+ * Settings for {@link Node#getProperties} to change the default keyboard layout ({@link #VK_TYPE})
+ * and locale ({@link #VK_LOCALE}).
+ * 
+ * @author comtel
+ *
+ */
 public interface VkProperties {
 
+  /** properties type key */
   String VK_TYPE = "vkType";
 
-  String VK_TYPE_TEXT = "text";
-  String VK_TYPE_NUMERIC = "numeric";
-  String VK_TYPE_URL = "url";
-  String VK_TYPE_EMAIL = "email";
-
+  /** properties locale key */
   String VK_LOCALE = "vkLocale";
 
+  /** default text layout type value */
+  int VK_TYPE_TEXT = 0;
+
+  /** numeric layout type value */
+  int VK_TYPE_NUMERIC = 1;
+
+  /** custom url layout type value */
+  int VK_TYPE_URL = 2;
+
+  /** custom email layout type value */
+  int VK_TYPE_EMAIL = 3;
+
+  /** control layout type value */
+  String VK_TYPE_CTRL = "CTRL";
+
+  /** shifted text layout type value */
+  String VK_TYPE_TEXT_SHIFT = "TEXT_SHIFT";
+
+  /** symbol layout type value */
+  String VK_TYPE_SYMBOL = "SYMBOL";
+
+  /** shifted symbol layout type value */
+  String VK_TYPE_SYMBOL_SHIFT = "SYMBOL_SHIFT";
+
+  /** German locale value */
   String VK_LOCALE_DE = "de";
+
+  /** English locale value */
   String VK_LOCALE_EN = "en";
 }

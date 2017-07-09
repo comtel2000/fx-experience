@@ -38,20 +38,22 @@ import javafx.scene.control.Button;
 
 public abstract class KeyButton extends Button implements LongPressable {
 
-  private final static long DEFAULT_DELAY = 400;
+  private static final long DEFAULT_DELAY = 400;
 
   private String keyText;
 
-  private boolean movable, repeatable, sticky;
+  private boolean movable;
+  private boolean repeatable;
+  private boolean sticky;
 
   private int keyCode;
 
   protected Timeline buttonDelay;
 
-  private EventHandler<? super KeyButtonEvent> _onLongPressed;
+  private EventHandler<? super KeyButtonEvent> longPressed;
   private ObjectProperty<EventHandler<? super KeyButtonEvent>> onLongPressed;
 
-  private EventHandler<? super KeyButtonEvent> _onShortPressed;
+  private EventHandler<? super KeyButtonEvent> shortPressed;
   private ObjectProperty<EventHandler<? super KeyButtonEvent>> onShortPressed;
 
   public KeyButton() {
@@ -93,7 +95,7 @@ public abstract class KeyButton extends Button implements LongPressable {
 
   @Override
   public final EventHandler<? super KeyButtonEvent> getOnLongPressed() {
-    return onLongPressed == null ? _onLongPressed : onLongPressed.get();
+    return onLongPressed == null ? longPressed : onLongPressed.get();
   }
 
   @Override
@@ -104,7 +106,8 @@ public abstract class KeyButton extends Button implements LongPressable {
   @Override
   public final ObjectProperty<EventHandler<? super KeyButtonEvent>> onLongPressedProperty() {
     if (onLongPressed == null) {
-      onLongPressed = new SimpleObjectProperty<EventHandler<? super KeyButtonEvent>>(this, "onLongPressed", _onLongPressed) {
+      onLongPressed = new SimpleObjectProperty<EventHandler<? super KeyButtonEvent>>(this,
+          "onLongPressed", longPressed) {
         @SuppressWarnings("unchecked")
         @Override
         protected void invalidated() {
@@ -117,7 +120,7 @@ public abstract class KeyButton extends Button implements LongPressable {
 
   @Override
   public final EventHandler<? super KeyButtonEvent> getOnShortPressed() {
-    return onShortPressed == null ? _onShortPressed : onShortPressed.get();
+    return onShortPressed == null ? shortPressed : onShortPressed.get();
   }
 
   @Override
@@ -128,7 +131,8 @@ public abstract class KeyButton extends Button implements LongPressable {
   @Override
   public final ObjectProperty<EventHandler<? super KeyButtonEvent>> onShortPressedProperty() {
     if (onShortPressed == null) {
-      onShortPressed = new SimpleObjectProperty<EventHandler<? super KeyButtonEvent>>(this, "onShortPressed", _onShortPressed) {
+      onShortPressed = new SimpleObjectProperty<EventHandler<? super KeyButtonEvent>>(this,
+          "onShortPressed", shortPressed) {
         @SuppressWarnings("unchecked")
         @Override
         protected void invalidated() {
@@ -155,7 +159,8 @@ public abstract class KeyButton extends Button implements LongPressable {
     this.keyText = keyText;
   }
 
-  public void addExtKeyCode(int keyCode, String label) {}
+  public void addExtKeyCode(int keyCode, String label) {
+  }
 
   public boolean isMovable() {
     return movable;

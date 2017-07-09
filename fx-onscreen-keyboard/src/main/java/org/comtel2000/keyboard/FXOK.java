@@ -61,7 +61,8 @@ public class FXOK implements VkProperties {
 
   private static FadeTransition animation;
 
-  private FXOK() {}
+  private FXOK() {
+  }
 
   public static void registerPopup(KeyBoardPopup p) {
     popup = p;
@@ -76,13 +77,14 @@ public class FXOK implements VkProperties {
       return;
     }
     if ((visible == Visiblity.POS || visible == Visiblity.SHOW) && textNode != null) {
-      Map<String, String> vkProps = getVkProperties(textNode);
+      Map<String, Object> vkProps = getVkProperties(textNode);
       if (vkProps.isEmpty()) {
         popup.getKeyBoard().setKeyboardType(KeyboardType.TEXT);
       } else {
-        popup.getKeyBoard().setKeyboardType(vkProps.getOrDefault(VK_TYPE, VK_TYPE_TEXT));
+        popup.getKeyBoard()
+            .setKeyboardType(vkProps.getOrDefault(VK_TYPE, String.valueOf(VK_TYPE_TEXT)));
         if (vkProps.containsKey(VK_LOCALE)) {
-          popup.getKeyBoard().switchLocale(new Locale(vkProps.get(VK_LOCALE)));
+          popup.getKeyBoard().switchLocale(new Locale(vkProps.get(VK_LOCALE).toString()));
         }
       }
 
@@ -123,18 +125,18 @@ public class FXOK implements VkProperties {
     animation.playFromStart();
   }
 
-  public static Map<String, String> getVkProperties(Node node) {
+  public static Map<String, Object> getVkProperties(Node node) {
     if (node.hasProperties()) {
-      Map<String, String> vkProps = new HashMap<>(3);
+      Map<String, Object> vkProps = new HashMap<>(3);
       node.getProperties().forEach((key, value) -> {
         if (key.toString().startsWith("vk")) {
-          vkProps.put(String.valueOf(key), String.valueOf(value));
+          vkProps.put(String.valueOf(key), value);
         }
       });
       return vkProps;
     }
     if (node.getParent() != null && node.getParent().hasProperties()) {
-      Map<String, String> vkProps = new HashMap<>(3);
+      Map<String, Object> vkProps = new HashMap<>(3);
       node.getParent().getProperties().forEach((key, value) -> {
         if (key.toString().startsWith("vk")) {
           vkProps.put(String.valueOf(key), String.valueOf(value));
@@ -150,7 +152,8 @@ public class FXOK implements VkProperties {
     if (textInput.isEditable() && textInput.isFocused()) {
       setVisible(Visiblity.SHOW, textInput);
     } else if (scene == null || scene.getWindow() == null || !scene.getWindow().isFocused()
-        || !(scene.getFocusOwner() instanceof TextInputControl && ((TextInputControl) scene.getFocusOwner()).isEditable())) {
+        || !(scene.getFocusOwner() instanceof TextInputControl
+            && ((TextInputControl) scene.getFocusOwner()).isEditable())) {
       setVisible(Visiblity.HIDE, textInput);
     } else {
       setVisible(Visiblity.POS, textInput);

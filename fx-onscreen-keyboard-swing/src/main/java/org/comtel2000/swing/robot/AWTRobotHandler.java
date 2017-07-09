@@ -47,7 +47,7 @@ import org.slf4j.LoggerFactory;
 
 public class AWTRobotHandler implements IRobot {
 
-  private final static org.slf4j.Logger logger = LoggerFactory.getLogger(AWTRobotHandler.class);
+  private static final org.slf4j.Logger logger = LoggerFactory.getLogger(AWTRobotHandler.class);
 
   private final int controlDownMask;
 
@@ -110,6 +110,8 @@ public class AWTRobotHandler implements IRobot {
           kfm.dispatchKeyEvent(new KeyEvent(c, KEY_PRESSED, System.currentTimeMillis(), 0, ch, ch, KEY_LOCATION_STANDARD));
           kfm.dispatchKeyEvent(new KeyEvent(c, KEY_RELEASED, System.currentTimeMillis(), 0, ch, ch, KEY_LOCATION_STANDARD));
           return;
+        default:
+          break;
       }
 
       int keycode = KeyEvent.getExtendedKeyCodeForChar(ch);

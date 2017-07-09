@@ -38,10 +38,14 @@ public class XmlHelperTest {
     reader.next();
     reader.require(XMLStreamConstants.START_ELEMENT, null, XmlHelper.KEYBOARD);
 
-    assertEquals(Integer.valueOf(40), XmlHelper.readIntAttribute(reader, XmlHelper.ATTR_KEY_WIDTH).orElse(-1));
-    assertEquals(Integer.valueOf(30), XmlHelper.readIntAttribute(reader, XmlHelper.ATTR_KEY_HEIGHT).orElse(-1));
-    assertEquals(Integer.valueOf(0), XmlHelper.readIntAttribute(reader, XmlHelper.ATTR_H_GAP).orElse(-1));
-    assertEquals(Integer.valueOf(0), XmlHelper.readIntAttribute(reader, XmlHelper.ATTR_V_GAP).orElse(-1));
+    assertEquals(Integer.valueOf(40),
+        XmlHelper.readIntAttribute(reader, XmlHelper.ATTR_KEY_WIDTH).orElse(-1));
+    assertEquals(Integer.valueOf(30),
+        XmlHelper.readIntAttribute(reader, XmlHelper.ATTR_KEY_HEIGHT).orElse(-1));
+    assertEquals(Integer.valueOf(0),
+        XmlHelper.readIntAttribute(reader, XmlHelper.ATTR_H_GAP).orElse(-1));
+    assertEquals(Integer.valueOf(0),
+        XmlHelper.readIntAttribute(reader, XmlHelper.ATTR_V_GAP).orElse(-1));
     assertNull(XmlHelper.readIntAttribute(reader, "verticalGapX").orElse(null));
 
     assertEquals(40, XmlHelper.readIntAttribute(reader, XmlHelper.ATTR_KEY_WIDTH, 1));
@@ -54,7 +58,8 @@ public class XmlHelperTest {
   }
 
   @Test
-  public void readBooleanAttribute() throws XMLStreamException, FactoryConfigurationError, IOException {
+  public void readBooleanAttribute()
+      throws XMLStreamException, FactoryConfigurationError, IOException {
     URL url = XmlHelperTest.class.getResource("/xml/kb-layout.xml");
     XMLStreamReader reader = XMLInputFactory.newInstance().createXMLStreamReader(url.openStream());
     reader.next();

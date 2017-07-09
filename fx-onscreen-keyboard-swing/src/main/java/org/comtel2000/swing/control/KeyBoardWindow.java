@@ -40,7 +40,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 
 /**
- * Swing window wrapper class for {@link KeyBoardPopup}
+ * Swing window wrapper class for {@link KeyBoardPopup}.
  *
  * @author comtel
  *
@@ -50,7 +50,7 @@ public class KeyBoardWindow extends JWindow {
   private static final long serialVersionUID = 1564988010984549166L;
   private final JFXPanel jfxPanel;
 
-  public final static EventHandler<? super Event> DEFAULT_CLOSE_HANDLER = (event) -> {
+  public static final EventHandler<? super Event> DEFAULT_CLOSE_HANDLER = (event) -> {
     if (event.getSource() instanceof Node) {
       ((Node) event.getSource()).getScene().getWindow().hide();
     }

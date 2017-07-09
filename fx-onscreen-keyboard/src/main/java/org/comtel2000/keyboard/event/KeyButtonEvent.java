@@ -51,8 +51,8 @@ public class KeyButtonEvent extends Event {
 
   @Override
   public String toString() {
-    return "KeyButtonEvent [" + "source = " + getSource() + ", target = " + getTarget() + ", eventType = " + getEventType() + ", consumed = " + isConsumed()
-        + "]";
+    return "KeyButtonEvent [" + "source = " + getSource() + ", target = " + getTarget()
+        + ", eventType = " + getEventType() + ", consumed = " + isConsumed() + "]";
   }
 
   static {

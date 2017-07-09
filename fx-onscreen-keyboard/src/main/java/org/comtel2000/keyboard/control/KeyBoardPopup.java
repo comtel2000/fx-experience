@@ -62,7 +62,7 @@ import javafx.util.Duration;
  */
 public class KeyBoardPopup extends Popup implements VkProperties {
 
-  private final static String STYLE_CSS = "/css/KeyboardTextInputSkin.css";
+  private static final String STYLE_CSS = "/css/KeyboardTextInputSkin.css";
 
   enum Visiblity {
     /** Set position and visible true */
@@ -86,7 +86,7 @@ public class KeyBoardPopup extends Popup implements VkProperties {
 
   private FadeTransition animation;
 
-  public final static EventHandler<? super Event> DEFAULT_CLOSE_HANDLER = (event) -> {
+  public static final EventHandler<? super Event> DEFAULT_CLOSE_HANDLER = (event) -> {
     if (event.getSource() instanceof Node) {
       ((Node) event.getSource()).fireEvent(new WindowEvent(null, WindowEvent.WINDOW_CLOSE_REQUEST));
     }
@@ -120,7 +120,8 @@ public class KeyBoardPopup extends Popup implements VkProperties {
   /**
    * Adds a FocusListener to Scene and open keyboard on {@link TextInputControl}
    *
-   * @param scene {@link Scene} to connect with the keyboard
+   * @param scene
+   *          {@link Scene} to connect with the keyboard
    *
    * @see #addGlobalFocusListener()
    */
@@ -131,9 +132,10 @@ public class KeyBoardPopup extends Popup implements VkProperties {
   /**
    * Adds a FocusListener to Scene and open keyboard on {@link TextInputControl}
    *
-   * @param scene {@link Scene} to connect with the keyboard
-   * @param doNotOpen on hidden keyboard do nothing and on showing keyboard move to current
-   *        component
+   * @param scene
+   *          {@link Scene} to connect with the keyboard
+   * @param doNotOpen
+   *          on hidden keyboard do nothing and on showing keyboard move to current component
    *
    * @see #addGlobalFocusListener()
    */
@@ -144,7 +146,9 @@ public class KeyBoardPopup extends Popup implements VkProperties {
         setVisible(doNotOpen ? Visiblity.POS : Visiblity.SHOW, (TextInputControl) n2);
       } else if (n2 instanceof Parent) {
         TextInputControl control = findTextInputControl((Parent) n2);
-        setVisible((control != null ? (doNotOpen ? Visiblity.POS : Visiblity.SHOW) : Visiblity.HIDE), control);
+        setVisible(
+            (control != null ? (doNotOpen ? Visiblity.POS : Visiblity.SHOW) : Visiblity.HIDE),
+            control);
       } else {
         setVisible(Visiblity.HIDE);
       }
@@ -154,6 +158,7 @@ public class KeyBoardPopup extends Popup implements VkProperties {
   /**
    * Set the focus listener as user agent stylesheet for the whole application with main theme
    * Application.STYLESHEET_MODENA.
+   * 
    * <p>
    * Reference: <a href="https://bugs.openjdk.java.net/browse/JDK-8077918">JDK-8077918</a>
    *
@@ -167,10 +172,12 @@ public class KeyBoardPopup extends Popup implements VkProperties {
   /**
    * Set the focus listener as user agent stylesheet for the whole application with given main
    * theme.
+   * 
    * <p>
    * Reference: <a href="https://bugs.openjdk.java.net/browse/JDK-8077918">JDK-8077918</a>
    *
-   * @param url of main theme stylesheet
+   * @param url
+   *          of main theme stylesheet
    *
    * @see #addFocusListener(Scene)
    * @see #addGlobalFocusListener()
@@ -190,6 +197,7 @@ public class KeyBoardPopup extends Popup implements VkProperties {
    *
    * @see ComboBox#isEditable()
    * @param parent
+   *          Parent of TextInputControl
    * @return embedded TextInputControl or null
    */
   private static TextInputControl findTextInputControl(Parent parent) {
@@ -205,7 +213,8 @@ public class KeyBoardPopup extends Popup implements VkProperties {
    * Adds a mouse listener to the Stage and open the keyboards on 'double' click a
    * {@link TextInputControl}
    *
-   * @param stage {@link Stage} to connect with the keyboard
+   * @param stage
+   *          {@link Stage} to connect with the keyboard
    */
   public void addDoubleClickEventFilter(final Stage stage) {
     Objects.requireNonNull(stage).addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
@@ -229,13 +238,13 @@ public class KeyBoardPopup extends Popup implements VkProperties {
   void setVisible(final Visiblity visible, final TextInputControl textNode) {
 
     if ((visible == Visiblity.POS || visible == Visiblity.SHOW) && textNode != null) {
-      Map<String, String> vkProps = FXOK.getVkProperties(textNode);
+      Map<String, Object> vkProps = FXOK.getVkProperties(textNode);
       if (vkProps.isEmpty()) {
         getKeyBoard().setKeyboardType(KeyboardType.TEXT);
       } else {
         getKeyBoard().setKeyboardType(vkProps.getOrDefault(VK_TYPE, VK_TYPE_TEXT));
         if (vkProps.containsKey(VK_LOCALE)) {
-          getKeyBoard().switchLocale(new Locale(vkProps.get(VK_LOCALE)));
+          getKeyBoard().switchLocale(new Locale(vkProps.get(VK_LOCALE).toString()));
         }
       }
 
@@ -288,7 +297,8 @@ public class KeyBoardPopup extends Popup implements VkProperties {
   /**
    * Set the vertical keyboard to text component offset
    *
-   * @param value offset
+   * @param value
+   *          offset
    */
   public final void setOffset(double value) {
     if (offset == null) {

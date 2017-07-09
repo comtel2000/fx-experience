@@ -1,5 +1,5 @@
 # fx-onscreen-keyboard
-[![Build Status](https://travis-ci.org/comtel2000/fx-experience.png?branch=master)](https://travis-ci.org/comtel2000/fx-experience)  [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.comtel2000/fx-parent/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.comtel2000/fx-parent)  [![License](https://img.shields.io/badge/license-BSD--3--Clause-blue.svg)](http://opensource.org/licenses/BSD-3-Clause)
+[![Build Status](https://travis-ci.org/comtel2000/fx-experience.png?branch=master)](https://travis-ci.org/comtel2000/fx-experience)  [![Codacy Badge](https://api.codacy.com/project/badge/grade/6f9977dc35fc4eb1b51328539c7515ea)](https://www.codacy.com/app/comtel2000/fx-experience)  [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.comtel2000/fx-parent/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.comtel2000/fx-parent)  [![License](https://img.shields.io/badge/license-BSD--3--Clause-blue.svg)](http://opensource.org/licenses/BSD-3-Clause)
 
 *FXOK* provides a JavaFX based virtual on-screen keyboard component for touch based monitors with xml layout configuration
 
@@ -47,7 +47,7 @@ Java 8 (latest stable):
   <version>8.2.5</version>
 </dependency>
 ```
-Java 9 JPMS Support (java9 branch):
+Java 9 module support (java9 branch):
 
 ```xml
 <dependency>

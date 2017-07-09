@@ -40,7 +40,7 @@ import javafx.util.Duration;
 
 class MultiKeyButton extends KeyButton {
 
-  private final static org.slf4j.Logger logger = LoggerFactory.getLogger(MultiKeyButton.class);
+  private static final org.slf4j.Logger logger = LoggerFactory.getLogger(MultiKeyButton.class);
 
   private MultiKeyPopup context;
 

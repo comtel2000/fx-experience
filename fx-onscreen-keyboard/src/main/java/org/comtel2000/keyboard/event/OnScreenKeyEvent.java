@@ -23,6 +23,7 @@
  * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY
  * WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *******************************************************************************/
+
 package org.comtel2000.keyboard.event;
 
 import org.comtel2000.keyboard.control.KeyButton;
@@ -52,8 +53,8 @@ public class OnScreenKeyEvent extends InputEvent {
 
   @Override
   public String toString() {
-    return "KeyButtonEvent [" + "source = " + getSource() + ", target = " + getTarget() + ", eventType = " + getEventType() + ", consumed = " + isConsumed()
-        + "]";
+    return "KeyButtonEvent [" + "source = " + getSource() + ", target = " + getTarget()
+        + ", eventType = " + getEventType() + ", consumed = " + isConsumed() + "]";
   }
 
   static {

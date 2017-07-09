@@ -81,15 +81,13 @@ import org.comtel2000.keyboard.robot.IRobot;
 import org.slf4j.LoggerFactory;
 
 /**
- * native OS support
- * <p>
- * dirty unicode char support only by transfer over OS clipboard..
+ * native OS support (dirty unicode char support only by transfer over OS clipboard..)
  *
  * @author comtel
  */
 public class NativeAsciiRobotHandler implements IRobot {
 
-  private final static org.slf4j.Logger logger = LoggerFactory.getLogger(NativeAsciiRobotHandler.class);
+  private static final org.slf4j.Logger logger = LoggerFactory.getLogger(NativeAsciiRobotHandler.class);
 
   private final int controlKeyEvent;
 
@@ -152,6 +150,8 @@ public class NativeAsciiRobotHandler implements IRobot {
           robot.keyPress(ch);
           robot.keyRelease(ch);
           return;
+        default:
+          break;
       }
 
       int upperCase = Character.toUpperCase(ch);
@@ -167,6 +167,8 @@ public class NativeAsciiRobotHandler implements IRobot {
           robot.keyRelease(upperCase);
           robot.keyRelease(controlKeyEvent);
           return;
+        default:
+          break;
       }
 
     }
@@ -222,7 +224,7 @@ public class NativeAsciiRobotHandler implements IRobot {
     try {
       StringSelection stringSelection = new StringSelection(Character.toString(ch));
       java.awt.datatransfer.Clipboard clpbrd = Toolkit.getDefaultToolkit().getSystemClipboard();
-      Object recover = clpbrd.isDataFlavorAvailable(DataFlavor.stringFlavor) ? clpbrd.getData(DataFlavor.stringFlavor) : null;
+
       clpbrd.setContents(stringSelection, null);
 
       robot.keyPress(controlKeyEvent);
@@ -231,6 +233,7 @@ public class NativeAsciiRobotHandler implements IRobot {
       robot.keyRelease(controlKeyEvent);
       robot.delay(50);
 
+      Object recover = clpbrd.isDataFlavorAvailable(DataFlavor.stringFlavor) ? clpbrd.getData(DataFlavor.stringFlavor) : null;
       StringSelection recoverSelection = new StringSelection(recover != null ? recover.toString() : "");
       clpbrd.setContents(recoverSelection, null);
     } catch (Exception e) {

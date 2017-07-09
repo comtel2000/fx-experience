@@ -19,16 +19,18 @@ import javafx.stage.Stage;
 
 public class KeyboardPaneTest extends ApplicationTest {
 
-  private final static int SHORT_PRESS_DELAY = 20;
-  private final static int LONG_PRESS_DELAY = 450;
+  private static final int SHORT_PRESS_DELAY = 20;
+  private static final int LONG_PRESS_DELAY = 450;
 
-  private final static Function<Integer, Predicate<Node>> KEY_CODE_FUNC = keyCode -> {
-    return node -> ((node instanceof KeyButton) && keyCode == KeyButton.class.cast(node).getKeyCode());
+  private static final Function<Integer, Predicate<Node>> KEY_CODE_FUNC = keyCode -> {
+    return node -> ((node instanceof KeyButton)
+        && keyCode == KeyButton.class.cast(node).getKeyCode());
   };
 
   @Override
   public void start(Stage stage) {
-    KeyboardPane keyboard = KeyBoardBuilder.create().layer(DefaultLayer.DEFAULT).initLocale(Locale.ENGLISH).build();
+    KeyboardPane keyboard = KeyBoardBuilder.create().layer(DefaultLayer.DEFAULT)
+        .initLocale(Locale.ENGLISH).build();
     Scene scene = new Scene(keyboard, keyboard.getPrefWidth(), keyboard.getPrefHeight());
     stage.setScene(scene);
     stage.show();
@@ -43,11 +45,13 @@ public class KeyboardPaneTest extends ApplicationTest {
   }
 
   private void pressKey(String query, int millis) {
-    moveTo(point(query)).press(MouseButton.PRIMARY).sleep(millis, TimeUnit.MILLISECONDS).release(MouseButton.PRIMARY);
+    moveTo(point(query)).press(MouseButton.PRIMARY).sleep(millis, TimeUnit.MILLISECONDS)
+        .release(MouseButton.PRIMARY);
   }
 
   private void pressShort(int keyCode) {
-    clickOn(KEY_CODE_FUNC.apply(keyCode), MouseButton.PRIMARY).sleep(SHORT_PRESS_DELAY, TimeUnit.MILLISECONDS);
+    clickOn(KEY_CODE_FUNC.apply(keyCode), MouseButton.PRIMARY).sleep(SHORT_PRESS_DELAY,
+        TimeUnit.MILLISECONDS);
   }
 
   @Test
