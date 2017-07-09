@@ -67,6 +67,9 @@ public class XmlHelper {
   public static Optional<Integer> readIntAttribute(XMLStreamReader reader, String attr) {
     return Optional.ofNullable(reader.getAttributeValue(null, attr)).flatMap(s -> {
       try {
+        if (s == null || s.isEmpty() || s.indexOf(',') != -1) {
+          return Optional.empty();
+        }
         return Optional.of(Integer.valueOf(s));
       } catch (NumberFormatException e) {
         e.printStackTrace();
@@ -77,7 +80,7 @@ public class XmlHelper {
 
   public static int readIntAttribute(XMLStreamReader reader, String attr, int defaultValue) {
     String a = reader.getAttributeValue(null, attr);
-    if (a == null || a.isEmpty()) {
+    if (a == null || a.isEmpty() || a.indexOf(',') != -1) {
       return defaultValue;
     }
     try {
