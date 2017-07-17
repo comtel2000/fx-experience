@@ -26,22 +26,63 @@
 
 package org.comtel2000.keyboard.control;
 
-import org.comtel2000.keyboard.event.KeyButtonEvent;
+import java.nio.file.Path;
+import java.util.Locale;
 
-import javafx.beans.property.ObjectProperty;
-import javafx.event.EventHandler;
+import org.comtel2000.keyboard.robot.IRobot;
 
-interface LongPressable {
+import javafx.util.Builder;
 
-  void setOnLongPressed(EventHandler<? super KeyButtonEvent> eventhandler);
+public class KeyboardBuilder implements Builder<KeyboardPane> {
 
-  EventHandler<? super KeyButtonEvent> getOnLongPressed();
+  private final KeyboardPane kb;
 
-  ObjectProperty<EventHandler<? super KeyButtonEvent>> onLongPressedProperty();
+  protected KeyboardBuilder() {
+    kb = new KeyboardPane();
+  }
 
-  void setOnShortPressed(EventHandler<? super KeyButtonEvent> eventhandler);
+  public static KeyboardBuilder create() {
+    return new KeyboardBuilder();
+  }
 
-  EventHandler<? super KeyButtonEvent> getOnShortPressed();
+  public KeyboardBuilder layerPath(Path path) {
+    kb.setLayerPath(path);
+    return this;
+  }
 
-  ObjectProperty<EventHandler<? super KeyButtonEvent>> onShortPressedProperty();
+  public KeyboardBuilder layer(KeyboardLayer layer) {
+    kb.setLayer(layer);
+    return this;
+  }
+
+  public KeyboardBuilder style(String css) {
+    kb.setStyle(css);
+    return this;
+  }
+
+  public KeyboardBuilder initLocale(Locale locale) {
+    kb.setLocale(locale);
+    return this;
+  }
+
+  public KeyboardBuilder initScale(double scale) {
+    kb.setScale(scale);
+    return this;
+  }
+
+  public KeyboardBuilder addIRobot(IRobot robot) {
+    kb.addRobotHandler(robot);
+    return this;
+  }
+
+  @Override
+  public KeyboardPane build() {
+    try {
+      kb.load();
+    } catch (Exception e) {
+      throw new IllegalStateException(e);
+    }
+    return kb;
+  }
+
 }

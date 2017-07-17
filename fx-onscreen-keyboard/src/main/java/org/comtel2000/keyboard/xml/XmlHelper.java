@@ -31,7 +31,11 @@ import java.util.Optional;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 
+import org.slf4j.LoggerFactory;
+
 public class XmlHelper {
+
+  private static final org.slf4j.Logger logger = LoggerFactory.getLogger(XmlHelper.class);
 
   public static final String KEYBOARD = "Keyboard";
   public static final String ROW = "Row";
@@ -72,7 +76,7 @@ public class XmlHelper {
         }
         return Optional.of(Integer.valueOf(s));
       } catch (NumberFormatException e) {
-        e.printStackTrace();
+        logger.error(e.getMessage(), e);
       }
       return Optional.empty();
     });
@@ -86,7 +90,7 @@ public class XmlHelper {
     try {
       return Integer.parseInt(a);
     } catch (NumberFormatException e) {
-      e.printStackTrace();
+      logger.error(e.getMessage(), e);
     }
     return defaultValue;
   }
@@ -109,7 +113,7 @@ public class XmlHelper {
       try {
         reader.close();
       } catch (XMLStreamException e) {
-        e.printStackTrace();
+        logger.error(e.getMessage(), e);
       }
     }
   }

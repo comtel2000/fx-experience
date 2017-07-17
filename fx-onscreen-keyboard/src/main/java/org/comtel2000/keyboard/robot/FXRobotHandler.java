@@ -34,7 +34,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javafx.application.Platform;
-import javafx.event.EventTarget;
 import javafx.event.EventType;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -173,21 +172,21 @@ public class FXRobotHandler implements IRobot {
       }
       KeyCode fxKeyCode = getKeyCode(ch);
       if (fxKeyCode != null) {
-        focusNode.fireEvent(createKeyEvent(focusNode, KeyEvent.KEY_PRESSED, Character.toString(ch),
-            fxKeyCode, ctrl));
-        focusNode.fireEvent(createKeyEvent(focusNode, KeyEvent.KEY_RELEASED, Character.toString(ch),
-            fxKeyCode, ctrl));
+        focusNode.fireEvent(
+            createKeyEvent(KeyEvent.KEY_PRESSED, Character.toString(ch), fxKeyCode, ctrl));
+        focusNode.fireEvent(
+            createKeyEvent(KeyEvent.KEY_RELEASED, Character.toString(ch), fxKeyCode, ctrl));
         return;
       }
 
     }
 
-    focusNode.fireEvent(createKeyEvent(focusNode, KeyEvent.KEY_PRESSED, Character.toString(ch),
-        KeyCode.UNDEFINED, ctrl));
-    focusNode.fireEvent(createKeyEvent(focusNode, KeyEvent.KEY_TYPED, Character.toString(ch),
-        KeyCode.UNDEFINED, ctrl));
-    focusNode.fireEvent(createKeyEvent(focusNode, KeyEvent.KEY_RELEASED, Character.toString(ch),
-        KeyCode.UNDEFINED, ctrl));
+    focusNode.fireEvent(
+        createKeyEvent(KeyEvent.KEY_PRESSED, Character.toString(ch), KeyCode.UNDEFINED, ctrl));
+    focusNode.fireEvent(
+        createKeyEvent(KeyEvent.KEY_TYPED, Character.toString(ch), KeyCode.UNDEFINED, ctrl));
+    focusNode.fireEvent(
+        createKeyEvent(KeyEvent.KEY_RELEASED, Character.toString(ch), KeyCode.UNDEFINED, ctrl));
   }
 
   private KeyCode getKeyCode(char c) {
@@ -195,14 +194,12 @@ public class FXRobotHandler implements IRobot {
   }
 
   private void firePressedReleased(Node focusNode, char ch, KeyCode code) {
-    focusNode.fireEvent(
-        createKeyEvent(focusNode, KeyEvent.KEY_PRESSED, Character.toString(ch), code, false));
-    focusNode.fireEvent(
-        createKeyEvent(focusNode, KeyEvent.KEY_RELEASED, Character.toString(ch), code, false));
+    focusNode.fireEvent(createKeyEvent(KeyEvent.KEY_PRESSED, Character.toString(ch), code, false));
+    focusNode.fireEvent(createKeyEvent(KeyEvent.KEY_RELEASED, Character.toString(ch), code, false));
   }
 
-  private KeyEvent createKeyEvent(EventTarget target, EventType<KeyEvent> eventType,
-      String character, KeyCode code, boolean ctrl) {
+  private KeyEvent createKeyEvent(EventType<KeyEvent> eventType, String character, KeyCode code,
+      boolean ctrl) {
     return new KeyEvent(eventType, character, code.toString(), code, false,
         ctrl && controlKeyCode == CONTROL, false, ctrl && controlKeyCode == META);
   }

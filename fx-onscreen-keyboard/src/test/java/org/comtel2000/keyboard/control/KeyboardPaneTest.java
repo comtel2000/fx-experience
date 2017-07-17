@@ -1,13 +1,19 @@
 package org.comtel2000.keyboard.control;
 
 import static org.testfx.api.FxAssert.verifyThat;
-import static org.testfx.matcher.base.NodeMatchers.*;
+import static org.testfx.matcher.base.NodeMatchers.isDisabled;
+import static org.testfx.matcher.base.NodeMatchers.isEnabled;
+import static org.testfx.matcher.base.NodeMatchers.isNotNull;
+import static org.testfx.matcher.base.NodeMatchers.isNull;
 
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.stream.IntStream;
 
+import org.comtel2000.keyboard.control.button.KeyButton;
+import org.comtel2000.keyboard.control.button.SymbolCode;
 import org.junit.Test;
 import org.testfx.framework.junit.ApplicationTest;
 import org.testfx.util.NodeQueryUtils;
@@ -29,7 +35,7 @@ public class KeyboardPaneTest extends ApplicationTest {
 
   @Override
   public void start(Stage stage) {
-    KeyboardPane keyboard = KeyBoardBuilder.create().layer(DefaultLayer.DEFAULT)
+    KeyboardPane keyboard = KeyboardBuilder.create().layer(KeyboardLayer.DEFAULT)
         .initLocale(Locale.ENGLISH).build();
     Scene scene = new Scene(keyboard, keyboard.getPrefWidth(), keyboard.getPrefHeight());
     stage.setScene(scene);
@@ -56,24 +62,24 @@ public class KeyboardPaneTest extends ApplicationTest {
 
   @Test
   public void toggleShift() {
-    verifyThat("a", isNotNull());
-    verifyThat("A", isNull());
-    pressShort(StandardKeyCode.SHIFT_DOWN);
-    verifyThat("a", isNull());
-    verifyThat("A", isNotNull());
-    pressShort(StandardKeyCode.SHIFT_DOWN);
-    verifyThat("a", isNotNull());
-    verifyThat("A", isNull());
+    IntStream.range('a', 'z' + 1).forEach(i -> verifyThat(Character.toString((char)i), isNotNull()));
+    IntStream.range('A', 'H').forEach(i -> verifyThat(Character.toString((char)i), isNull()));
+    pressShort(SymbolCode.SHIFT_DOWN);
+    IntStream.range('a', 'z' + 1).forEach(i -> verifyThat(Character.toString((char)i), isNull()));
+    IntStream.range('A', 'H').forEach(i -> verifyThat(Character.toString((char)i), isNotNull()));
+    pressShort(SymbolCode.SHIFT_DOWN);
+    IntStream.range('a', 'z' + 1).forEach(i -> verifyThat(Character.toString((char)i), isNotNull()));
+    IntStream.range('A', 'H').forEach(i -> verifyThat(Character.toString((char)i), isNull()));
   }
 
   @Test
   public void toggleControl() {
     verifyThat("a", isNotNull());
     verifyThat("F1", isNull());
-    pressShort(StandardKeyCode.CTRL_DOWN);
+    pressShort(SymbolCode.CTRL_DOWN);
     verifyThat("a", isNull());
     verifyThat("F1", isNotNull());
-    pressShort(StandardKeyCode.CTRL_DOWN);
+    pressShort(SymbolCode.CTRL_DOWN);
     verifyThat("a", isNotNull());
     verifyThat("F1", isNull());
   }
@@ -82,10 +88,10 @@ public class KeyboardPaneTest extends ApplicationTest {
   public void toggleSymbol() {
     verifyThat("a", isNotNull());
     verifyThat("(", isNull());
-    pressShort(StandardKeyCode.SYMBOL_DOWN);
+    pressShort(SymbolCode.SYMBOL_DOWN);
     verifyThat("a", isNull());
     verifyThat("(", isNotNull());
-    pressShort(StandardKeyCode.SYMBOL_DOWN);
+    pressShort(SymbolCode.SYMBOL_DOWN);
     verifyThat("a", isNotNull());
     verifyThat("(", isNull());
   }
@@ -94,12 +100,12 @@ public class KeyboardPaneTest extends ApplicationTest {
   public void toggleSymbolShift() {
     verifyThat("a", isNotNull());
     verifyThat("[", isNull());
-    pressShort(StandardKeyCode.SHIFT_DOWN);
-    pressShort(StandardKeyCode.SYMBOL_DOWN);
+    pressShort(SymbolCode.SHIFT_DOWN);
+    pressShort(SymbolCode.SYMBOL_DOWN);
     verifyThat("a", isNull());
     verifyThat("[", isNotNull());
-    pressShort(StandardKeyCode.SHIFT_DOWN);
-    pressShort(StandardKeyCode.SYMBOL_DOWN);
+    pressShort(SymbolCode.SHIFT_DOWN);
+    pressShort(SymbolCode.SYMBOL_DOWN);
     verifyThat("a", isNotNull());
     verifyThat("[", isNull());
   }

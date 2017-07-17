@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Keyboard horizontalGap="0" keyHeight="30" keyWidth="40" verticalGap="0">
+	<Row>
+		<Key codes="55" keyLabel="7" />
+		<Key codes="56" keyLabel="8" />
+		<Key codes="57" keyLabel="9" />
+		<Key codes="-5" keyLabel="!" keyLabelStyle=".font-fxkeyboard" keyWidth="55" repeatable="true" />
+	</Row>
+	<Row>
+		<Key codes="52" keyLabel="4" />
+		<Key codes="53" keyLabel="5" />
+		<Key codes="54" keyLabel="6" />
+		<Key codes="-9" keyLabel="ENTER" keyLabelStyle=".small-style" keyWidth="55" />
+	</Row>
+	<Row>
+		<Key codes="49" keyLabel="1" />
+		<Key codes="50" keyLabel="2" />
+		<Key codes="51" keyLabel="3" />
+		<Key codes="-4" keyLabel="TAB" keyLabelStyle=".small-style" keyWidth="55" />
+	</Row>
+	<Row rowEdgeFlags="bottom">
+		<Key codes="48" keyLabel="0" keyWidth="85" movable="true" repeatable="true" />
+		<Key codes="45,46,44" keyLabel="-" popupCharacters="46" />
+		<Key codes="-3" keyLabel="2" keyWidth="55" keyLabelStyle=".font-fxkeyboard" />
+	</Row>
+</Keyboard>
+    

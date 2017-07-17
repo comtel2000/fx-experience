@@ -24,19 +24,18 @@
  * WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *******************************************************************************/
 
-package org.comtel2000.keyboard.control;
+package org.comtel2000.keyboard.control.button;
 
 import org.comtel2000.keyboard.event.KeyButtonEvent;
 
 import javafx.animation.Timeline;
 import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.event.Event;
+import javafx.beans.property.ObjectPropertyBase;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 
-public abstract class KeyButton extends Button implements LongPressable {
+public abstract class KeyButton extends Button implements LongPressable<KeyButtonEvent> {
 
   private static final long DEFAULT_DELAY = 400;
 
@@ -50,11 +49,11 @@ public abstract class KeyButton extends Button implements LongPressable {
 
   protected Timeline buttonDelay;
 
-  private EventHandler<? super KeyButtonEvent> longPressed;
-  private ObjectProperty<EventHandler<? super KeyButtonEvent>> onLongPressed;
+  private EventHandler<KeyButtonEvent> longPressed;
+  private ObjectProperty<EventHandler<KeyButtonEvent>> onLongPressed;
 
-  private EventHandler<? super KeyButtonEvent> shortPressed;
-  private ObjectProperty<EventHandler<? super KeyButtonEvent>> onShortPressed;
+  private EventHandler<KeyButtonEvent> shortPressed;
+  private ObjectProperty<EventHandler<KeyButtonEvent>> onShortPressed;
 
   public KeyButton() {
     this(null, null, DEFAULT_DELAY);
@@ -94,24 +93,32 @@ public abstract class KeyButton extends Button implements LongPressable {
   }
 
   @Override
-  public final EventHandler<? super KeyButtonEvent> getOnLongPressed() {
+  public final EventHandler<KeyButtonEvent> getOnLongPressed() {
     return onLongPressed == null ? longPressed : onLongPressed.get();
   }
 
   @Override
-  public final void setOnLongPressed(EventHandler<? super KeyButtonEvent> h) {
+  public final void setOnLongPressed(EventHandler<KeyButtonEvent> h) {
     onLongPressedProperty().set(h);
   }
 
   @Override
-  public final ObjectProperty<EventHandler<? super KeyButtonEvent>> onLongPressedProperty() {
+  public final ObjectProperty<EventHandler<KeyButtonEvent>> onLongPressedProperty() {
     if (onLongPressed == null) {
-      onLongPressed = new SimpleObjectProperty<EventHandler<? super KeyButtonEvent>>(this,
-          "onLongPressed", longPressed) {
-        @SuppressWarnings("unchecked")
+      onLongPressed = new ObjectPropertyBase<EventHandler<KeyButtonEvent>>(longPressed) {
         @Override
         protected void invalidated() {
-          setEventHandler(KeyButtonEvent.LONG_PRESSED, (EventHandler<? super Event>) get());
+          setEventHandler(KeyButtonEvent.LONG_PRESSED, get());
+        }
+
+        @Override
+        public Object getBean() {
+          return KeyButton.this;
+        }
+
+        @Override
+        public String getName() {
+          return "longPressed";
         }
       };
     }
@@ -119,24 +126,33 @@ public abstract class KeyButton extends Button implements LongPressable {
   }
 
   @Override
-  public final EventHandler<? super KeyButtonEvent> getOnShortPressed() {
+  public final EventHandler<KeyButtonEvent> getOnShortPressed() {
     return onShortPressed == null ? shortPressed : onShortPressed.get();
   }
 
   @Override
-  public final void setOnShortPressed(EventHandler<? super KeyButtonEvent> h) {
+  public final void setOnShortPressed(EventHandler<KeyButtonEvent> h) {
     onShortPressedProperty().set(h);
   }
 
   @Override
-  public final ObjectProperty<EventHandler<? super KeyButtonEvent>> onShortPressedProperty() {
+  public final ObjectProperty<EventHandler<KeyButtonEvent>> onShortPressedProperty() {
     if (onShortPressed == null) {
-      onShortPressed = new SimpleObjectProperty<EventHandler<? super KeyButtonEvent>>(this,
-          "onShortPressed", shortPressed) {
-        @SuppressWarnings("unchecked")
+      onShortPressed = new ObjectPropertyBase<EventHandler<KeyButtonEvent>>(shortPressed) {
+
         @Override
         protected void invalidated() {
-          setEventHandler(KeyButtonEvent.SHORT_PRESSED, (EventHandler<? super Event>) get());
+          setEventHandler(KeyButtonEvent.SHORT_PRESSED, get());
+        }
+
+        @Override
+        public Object getBean() {
+          return KeyButton.this;
+        }
+
+        @Override
+        public String getName() {
+          return "shortPressed";
         }
       };
     }

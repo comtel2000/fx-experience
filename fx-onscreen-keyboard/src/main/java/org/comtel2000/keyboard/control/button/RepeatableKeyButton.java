@@ -24,65 +24,63 @@
  * WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *******************************************************************************/
 
-package org.comtel2000.keyboard.control;
+package org.comtel2000.keyboard.control.button;
 
-import java.nio.file.Path;
-import java.util.Locale;
+import org.slf4j.LoggerFactory;
 
-import org.comtel2000.keyboard.robot.IRobot;
+import javafx.animation.Animation.Status;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.scene.input.MouseButton;
+import javafx.util.Duration;
 
-import javafx.util.Builder;
+public class RepeatableKeyButton extends KeyButton {
 
-public class KeyBoardBuilder implements Builder<KeyboardPane> {
+  private static final org.slf4j.Logger logger = LoggerFactory.getLogger(RepeatableKeyButton.class);
 
-  private final KeyboardPane kb;
+  private static final long REPEAT_DELAY = 40;
 
-  protected KeyBoardBuilder() {
-    kb = new KeyboardPane();
-  }
-
-  public static KeyBoardBuilder create() {
-    return new KeyBoardBuilder();
-  }
-
-  public KeyBoardBuilder layerPath(Path path) {
-    kb.setLayerPath(path);
-    return this;
-  }
-
-  public KeyBoardBuilder layer(DefaultLayer layer) {
-    kb.setLayer(layer);
-    return this;
-  }
-
-  public KeyBoardBuilder style(String css) {
-    kb.setStyle(css);
-    return this;
-  }
-
-  public KeyBoardBuilder initLocale(Locale locale) {
-    kb.setLocale(locale);
-    return this;
-  }
-
-  public KeyBoardBuilder initScale(double scale) {
-    kb.setScale(scale);
-    return this;
-  }
-
-  public KeyBoardBuilder addIRobot(IRobot robot) {
-    kb.addRobotHandler(robot);
-    return this;
+  public RepeatableKeyButton() {
+    super();
+    getStyleClass().add("repeatable-button");
+    setRepeatable(true);
   }
 
   @Override
-  public KeyboardPane build() {
-    try {
-      kb.load();
-    } catch (Exception e) {
-      new RuntimeException(e);
-    }
-    return kb;
+  protected void initEventListener(long delay) {
+
+    buttonDelay = new Timeline(new KeyFrame(Duration.millis(delay), event -> {
+      fireShortPressed();
+      buttonDelay.playFrom(buttonDelay.getCycleDuration().subtract(Duration.millis(REPEAT_DELAY)));
+    }));
+
+    setOnDragDetected(e -> {
+      logger.trace("{} drag detected", getKeyCode());
+      buttonDelay.stop();
+      e.consume();
+    });
+
+    setOnMousePressed(e -> {
+      logger.trace("{} pressed", getKeyCode());
+      if (e.getButton().equals(MouseButton.PRIMARY)) {
+        if (!isMovable()) {
+          fireShortPressed();
+        }
+        buttonDelay.playFromStart();
+      }
+      e.consume();
+    });
+
+    setOnMouseReleased(e -> {
+      logger.trace("{} released", getKeyCode());
+      if (isMovable() && buttonDelay.getStatus() == Status.RUNNING) {
+        fireShortPressed();
+      }
+      buttonDelay.stop();
+      setFocused(false);
+      e.consume();
+    });
+
   }
 
 }

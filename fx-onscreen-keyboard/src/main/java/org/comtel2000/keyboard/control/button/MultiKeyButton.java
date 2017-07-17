@@ -24,7 +24,7 @@
  * WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *******************************************************************************/
 
-package org.comtel2000.keyboard.control;
+package org.comtel2000.keyboard.control.button;
 
 import java.util.Collection;
 
@@ -38,7 +38,7 @@ import javafx.scene.Parent;
 import javafx.scene.input.MouseButton;
 import javafx.util.Duration;
 
-class MultiKeyButton extends KeyButton {
+public class MultiKeyButton extends KeyButton {
 
   private static final org.slf4j.Logger logger = LoggerFactory.getLogger(MultiKeyButton.class);
 
@@ -48,7 +48,7 @@ class MultiKeyButton extends KeyButton {
 
   private final Parent parent;
 
-  MultiKeyButton(Parent parent, Collection<String> styles) {
+  public MultiKeyButton(Parent parent, Collection<String> styles) {
     super();
     getStyleClass().add("multi-button");
     this.styles = styles;
@@ -72,11 +72,11 @@ class MultiKeyButton extends KeyButton {
     setOnMouseClicked(event -> {
       logger.trace("{} clicked: {}", getKeyCode(), buttonDelay.getCurrentRate());
 
-      if (event.getButton().equals(MouseButton.PRIMARY)) {
-        if (buttonDelay.getStatus().equals(Status.RUNNING)) {
-          buttonDelay.stop();
-          fireShortPressed();
-        }
+      if (event.getButton().equals(MouseButton.PRIMARY)
+          && buttonDelay.getStatus().equals(Status.RUNNING)) {
+        buttonDelay.stop();
+        fireShortPressed();
+
       }
       setFocused(false);
       event.consume();

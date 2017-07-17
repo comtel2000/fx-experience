@@ -30,9 +30,9 @@ import java.nio.file.Path;
 import java.util.Locale;
 import java.util.concurrent.CountDownLatch;
 
-import org.comtel2000.keyboard.control.DefaultLayer;
-import org.comtel2000.keyboard.control.KeyBoardBuilder;
-import org.comtel2000.keyboard.control.KeyBoardPopup;
+import org.comtel2000.keyboard.control.KeyboardBuilder;
+import org.comtel2000.keyboard.control.KeyboardLayer;
+import org.comtel2000.keyboard.control.KeyboardPopup;
 import org.comtel2000.keyboard.robot.IRobot;
 import org.comtel2000.swing.robot.AWTRobotHandler;
 
@@ -40,19 +40,17 @@ import javafx.application.Platform;
 import javafx.util.Builder;
 
 /**
- * Swing {@link KeyBoardWindow} builder
+ * Swing {@link KeyboardWindow} builder
  *
  * @author comtel
  *
  */
-public class KeyBoardWindowBuilder implements Builder<KeyBoardWindow> {
+public class KeyboardWindowBuilder implements Builder<KeyboardWindow> {
 
-  private final CountDownLatch latch = new CountDownLatch(1);
+  private final KeyboardBuilder kb;
 
-  private final KeyBoardBuilder kb;
-
-  KeyBoardWindowBuilder() {
-    kb = KeyBoardBuilder.create();
+  KeyboardWindowBuilder() {
+    kb = KeyboardBuilder.create();
   }
 
   /**
@@ -60,8 +58,8 @@ public class KeyBoardWindowBuilder implements Builder<KeyBoardWindow> {
    *
    * @return this
    */
-  public static KeyBoardWindowBuilder create() {
-    return new KeyBoardWindowBuilder();
+  public static KeyboardWindowBuilder create() {
+    return new KeyboardWindowBuilder();
   }
 
   /**
@@ -70,7 +68,7 @@ public class KeyBoardWindowBuilder implements Builder<KeyBoardWindow> {
    * @param path the layer location
    * @return this
    */
-  public KeyBoardWindowBuilder layerPath(Path path) {
+  public KeyboardWindowBuilder layerPath(Path path) {
     kb.layerPath(path);
     return this;
   }
@@ -81,7 +79,7 @@ public class KeyBoardWindowBuilder implements Builder<KeyBoardWindow> {
    * @param locale initial locale
    * @return this
    */
-  public KeyBoardWindowBuilder initLocale(Locale locale) {
+  public KeyboardWindowBuilder initLocale(Locale locale) {
     kb.initLocale(locale);
     return this;
   }
@@ -92,7 +90,7 @@ public class KeyBoardWindowBuilder implements Builder<KeyBoardWindow> {
    * @param scale initial size
    * @return this
    */
-  public KeyBoardWindowBuilder initScale(double scale) {
+  public KeyboardWindowBuilder initScale(double scale) {
     kb.initScale(scale);
     return this;
   }
@@ -103,7 +101,7 @@ public class KeyBoardWindowBuilder implements Builder<KeyBoardWindow> {
    * @param robot default {@link AWTRobotHandler}
    * @return this
    */
-  public KeyBoardWindowBuilder addIRobot(IRobot robot) {
+  public KeyboardWindowBuilder addIRobot(IRobot robot) {
     kb.addIRobot(robot);
     return this;
   }
@@ -114,7 +112,7 @@ public class KeyBoardWindowBuilder implements Builder<KeyBoardWindow> {
    * @param layer embedded layout layer
    * @return this
    */
-  public KeyBoardWindowBuilder layer(DefaultLayer layer) {
+  public KeyboardWindowBuilder layer(KeyboardLayer layer) {
     kb.layer(layer);
     return this;
   }
@@ -125,7 +123,7 @@ public class KeyBoardWindowBuilder implements Builder<KeyBoardWindow> {
    * @param css style sheet
    * @return this
    */
-  public KeyBoardWindowBuilder style(String css) {
+  public KeyboardWindowBuilder style(String css) {
     kb.style(css);
     return this;
   }
@@ -133,13 +131,14 @@ public class KeyBoardWindowBuilder implements Builder<KeyBoardWindow> {
   /**
    * build and wait for finalize FX instantiation
    *
-   * @return KeyBoardWindow window
+   * @return KeyboardWindow window
    */
   @Override
-  public KeyBoardWindow build() {
-    final KeyBoardWindow window = new KeyBoardWindow();
+  public KeyboardWindow build() {
+    final KeyboardWindow window = new KeyboardWindow();
+    final CountDownLatch latch = new CountDownLatch(1);
     Platform.runLater(() -> {
-      KeyBoardPopup popup = new KeyBoardPopup(kb.build());
+      KeyboardPopup popup = new KeyboardPopup(kb.build());
       window.createScene(popup);
       latch.countDown();
     });

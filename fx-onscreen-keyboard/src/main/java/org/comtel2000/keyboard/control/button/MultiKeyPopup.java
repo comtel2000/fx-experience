@@ -24,7 +24,7 @@
  * WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *******************************************************************************/
 
-package org.comtel2000.keyboard.control;
+package org.comtel2000.keyboard.control.button;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -41,7 +41,7 @@ import javafx.scene.control.Menu;
 import javafx.scene.layout.TilePane;
 import javafx.stage.Popup;
 
-class MultiKeyPopup extends Popup {
+public class MultiKeyPopup extends Popup {
 
   private final TilePane buttonPane;
 

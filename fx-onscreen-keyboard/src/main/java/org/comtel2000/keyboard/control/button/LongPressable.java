@@ -24,8 +24,23 @@
  * WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *******************************************************************************/
 
-package org.comtel2000.keyboard.control;
+package org.comtel2000.keyboard.control.button;
 
-public enum DefaultLayer {
-  DEFAULT, NUMBLOCK
+import javafx.beans.property.ObjectProperty;
+import javafx.event.Event;
+import javafx.event.EventHandler;
+
+interface LongPressable<T extends Event> {
+
+  void setOnLongPressed(EventHandler<T> eventhandler);
+
+  EventHandler<T> getOnLongPressed();
+
+  ObjectProperty<EventHandler<T>> onLongPressedProperty();
+
+  void setOnShortPressed(EventHandler<T> eventhandler);
+
+  EventHandler<T> getOnShortPressed();
+
+  ObjectProperty<EventHandler<T>> onShortPressedProperty();
 }

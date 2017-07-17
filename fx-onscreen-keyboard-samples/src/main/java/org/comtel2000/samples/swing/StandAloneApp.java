@@ -28,7 +28,6 @@ package org.comtel2000.samples.swing;
 
 import java.awt.BorderLayout;
 import java.nio.file.Paths;
-import java.text.ParseException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Locale;
@@ -38,9 +37,9 @@ import javax.swing.JApplet;
 import javax.swing.JWindow;
 import javax.swing.SwingUtilities;
 
-import org.comtel2000.keyboard.control.DefaultLayer;
-import org.comtel2000.keyboard.control.KeyBoardPopup;
+import org.comtel2000.keyboard.control.KeyboardLayer;
 import org.comtel2000.keyboard.control.KeyboardPane;
+import org.comtel2000.keyboard.control.KeyboardPopup;
 import org.comtel2000.keyboard.control.KeyboardType;
 import org.comtel2000.swing.robot.NativeAsciiRobotHandler;
 
@@ -90,7 +89,7 @@ public class StandAloneApp extends JApplet {
     Scene scene = new Scene(new Group(), 0, 0);
     javafxPanel.setScene(scene);
     KeyboardPane kb = new KeyboardPane();
-    kb.setLayer(DefaultLayer.NUMBLOCK);
+    kb.setLayer(KeyboardLayer.NUMBLOCK);
     kb.addRobotHandler(new NativeAsciiRobotHandler());
     kb.setOnKeyboardCloseButton(e -> System.exit(0));
 
@@ -125,7 +124,7 @@ public class StandAloneApp extends JApplet {
       showHelp();
     }
 
-    KeyBoardPopup popup = new KeyBoardPopup(kb);
+    KeyboardPopup popup = new KeyboardPopup(kb);
     popup.setX(posX);
     popup.setY(posY);
 
@@ -143,9 +142,9 @@ public class StandAloneApp extends JApplet {
     System.exit(0);
   }
 
-  private Locale parseLocale(String l) throws Exception {
+  private Locale parseLocale(String l) {
     if (l == null || l.isEmpty()) {
-      throw new ParseException("invalid locale", 0);
+      throw new IllegalArgumentException("locale must not be empty");
     }
     String[] lang = l.split("_");
     if (lang.length == 2) {
@@ -154,11 +153,10 @@ public class StandAloneApp extends JApplet {
     return Locale.forLanguageTag(l);
   }
 
-  private void parsePosition(String p) throws Exception {
-    if (p == null || p.isEmpty()) {
-      throw new Exception("invalid position: " + String.valueOf(p));
+  private void parsePosition(String p) {
+    if (p == null || p.isEmpty() || p.indexOf(',') == -1) {
+      throw new IllegalArgumentException(String.format("invalid position: %s", p));
     }
-
     String[] pos = p.split(",");
     if (pos.length == 2) {
       posX = Integer.valueOf(pos[0]);

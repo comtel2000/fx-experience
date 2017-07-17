@@ -31,8 +31,8 @@ import java.text.ParseException;
 import java.util.Locale;
 import java.util.Map;
 
-import org.comtel2000.keyboard.control.DefaultLayer;
-import org.comtel2000.keyboard.control.KeyBoardPopup;
+import org.comtel2000.keyboard.control.KeyboardLayer;
+import org.comtel2000.keyboard.control.KeyboardPopup;
 import org.comtel2000.keyboard.control.KeyboardPane;
 import org.comtel2000.keyboard.control.KeyboardType;
 import org.comtel2000.swing.robot.NativeAsciiRobotHandler;
@@ -55,7 +55,7 @@ public class StandAloneApp extends Application {
     stage.initStyle(StageStyle.UNDECORATED);
 
     KeyboardPane kb = new KeyboardPane();
-    kb.setLayer(DefaultLayer.NUMBLOCK);
+    kb.setLayer(KeyboardLayer.NUMBLOCK);
     kb.addRobotHandler(new NativeAsciiRobotHandler());
     kb.setOnKeyboardCloseButton(e -> System.exit(0));
 
@@ -90,7 +90,7 @@ public class StandAloneApp extends Application {
       showHelp();
     }
 
-    KeyBoardPopup popup = new KeyBoardPopup(kb);
+    KeyboardPopup popup = new KeyboardPopup(kb);
     popup.setX(posX);
     popup.setY(posY);
 

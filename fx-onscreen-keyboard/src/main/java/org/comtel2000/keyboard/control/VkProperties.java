@@ -35,41 +35,44 @@ import javafx.scene.Node;
  * @author comtel
  *
  */
-public interface VkProperties {
+public final class VkProperties {
+
+  private VkProperties() {
+  }
 
   /** properties type key */
-  String VK_TYPE = "vkType";
+  public static final String VK_TYPE = "vkType";
 
   /** properties locale key */
-  String VK_LOCALE = "vkLocale";
+  public static final String VK_LOCALE = "vkLocale";
 
   /** default text layout type value */
-  int VK_TYPE_TEXT = 0;
+  public static final int VK_TYPE_TEXT = 0;
 
   /** numeric layout type value */
-  int VK_TYPE_NUMERIC = 1;
+  public static final int VK_TYPE_NUMERIC = 1;
 
   /** custom url layout type value */
-  int VK_TYPE_URL = 2;
+  public static final int VK_TYPE_URL = 2;
 
   /** custom email layout type value */
-  int VK_TYPE_EMAIL = 3;
+  public static final int VK_TYPE_EMAIL = 3;
 
   /** control layout type value */
-  String VK_TYPE_CTRL = "CTRL";
+  public static final String VK_TYPE_CTRL = "CTRL";
 
   /** shifted text layout type value */
-  String VK_TYPE_TEXT_SHIFT = "TEXT_SHIFT";
+  public static final String VK_TYPE_TEXT_SHIFT = "TEXT_SHIFT";
 
   /** symbol layout type value */
-  String VK_TYPE_SYMBOL = "SYMBOL";
+  public static final String VK_TYPE_SYMBOL = "SYMBOL";
 
   /** shifted symbol layout type value */
-  String VK_TYPE_SYMBOL_SHIFT = "SYMBOL_SHIFT";
+  public static final String VK_TYPE_SYMBOL_SHIFT = "SYMBOL_SHIFT";
 
   /** German locale value */
-  String VK_LOCALE_DE = "de";
+  public static final String VK_LOCALE_DE = "de";
 
   /** English locale value */
-  String VK_LOCALE_EN = "en";
+  public static final String VK_LOCALE_EN = "en";
 }

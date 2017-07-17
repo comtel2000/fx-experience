@@ -30,23 +30,29 @@ import org.comtel2000.keyboard.FXOK;
 
 import com.sun.javafx.scene.control.skin.TextAreaSkin;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
 
 @SuppressWarnings("restriction")
-public class KeyboardTextAreaSkin extends TextAreaSkin {
+public class KeyboardTextAreaSkin extends TextAreaSkin implements ChangeListener<Scene> {
 
   public KeyboardTextAreaSkin(TextArea textInput) {
     super(textInput);
-    addFocusListener(textInput);
+    if (textInput.getScene() == null) {
+      textInput.sceneProperty().addListener(this);
+      return;
+    }
+    FXOK.registerScene(textInput.getScene());
   }
 
-  private void addFocusListener(TextArea textInput) {
-    textInput.focusedProperty().addListener(observable -> {
-      Scene scene = getSkinnable().getScene();
-      FXOK.updateVisibilty(scene, textInput);
-    });
-
+  @Override
+  public void changed(ObservableValue<? extends Scene> observable, Scene oldValue, Scene newValue) {
+    if (newValue != null) {
+      FXOK.registerScene(newValue);
+      getSkinnable().sceneProperty().removeListener(this);
+    }
   }
 
 }

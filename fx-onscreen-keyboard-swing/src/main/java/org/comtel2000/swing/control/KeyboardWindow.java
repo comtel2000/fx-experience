@@ -24,43 +24,64 @@
  * WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *******************************************************************************/
 
-package org.comtel2000.keyboard.event;
+package org.comtel2000.swing.control;
 
-import org.comtel2000.keyboard.control.KeyButton;
+import javax.swing.JWindow;
 
+import org.comtel2000.keyboard.control.KeyboardPopup;
+
+import javafx.embed.swing.JFXPanel;
 import javafx.event.Event;
-import javafx.event.EventType;
-import javafx.scene.input.InputEvent;
+import javafx.event.EventHandler;
+import javafx.scene.Group;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 
-public class OnScreenKeyEvent extends InputEvent {
+/**
+ * Swing window wrapper class for {@link KeyboardPopup}.
+ *
+ * @author comtel
+ *
+ */
+public class KeyboardWindow extends JWindow {
 
-  private static final long serialVersionUID = 65116620766495525L;
+  private static final long serialVersionUID = 1564988010984549166L;
+  private final JFXPanel jfxPanel;
 
-  public static final EventType<? super Event> ANY;
+  public static final EventHandler<? super Event> DEFAULT_CLOSE_HANDLER = event -> {
+    if (event.getSource() instanceof Node) {
+      ((Node) event.getSource()).getScene().getWindow().hide();
+    }
+  };
 
-  public static final EventType<? super Event> LONG_PRESSED;
+  private transient KeyboardPopup popup;
 
-  public static final EventType<? super Event> SHORT_PRESSED;
-
-  public OnScreenKeyEvent(EventType<? extends InputEvent> type) {
-    super(type);
+  protected KeyboardWindow() {
+    super();
+    setModalExclusionType(java.awt.Dialog.ModalExclusionType.APPLICATION_EXCLUDE);
+    setFocusable(false);
+    setBackground(null);
+    
+    jfxPanel = new JFXPanel();
+    jfxPanel.setFocusable(false);
+    jfxPanel.setOpaque(false);    
+    getContentPane().add(jfxPanel);
   }
 
-  public OnScreenKeyEvent(KeyButton button, EventType<? extends InputEvent> type) {
-    super(button, button, type);
-
+  /**
+   * must run in FxApplicationThread
+   *
+   * @param popup Keyboard popup
+   */
+  protected void createScene(final KeyboardPopup popup) {
+    this.popup = popup;
+    Scene scene = new Scene(new Group(), 0, 0);
+    jfxPanel.setScene(scene);
+    popup.registerScene(scene);
   }
 
-  @Override
-  public String toString() {
-    return "KeyButtonEvent [" + "source = " + getSource() + ", target = " + getTarget()
-        + ", eventType = " + getEventType() + ", consumed = " + isConsumed() + "]";
-  }
-
-  static {
-    ANY = new EventType<>(Event.ANY, "KB_PRESSED");
-    LONG_PRESSED = new EventType<>(ANY, "KB_PRESSED_LONG");
-    SHORT_PRESSED = new EventType<>(ANY, "KB_PRESSED_SHORT");
+  public KeyboardPopup getKeyboardPopup() {
+    return popup;
   }
 
 }

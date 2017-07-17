@@ -31,28 +31,38 @@ import org.comtel2000.keyboard.FXOK;
 import com.sun.javafx.scene.control.behavior.TextFieldBehavior;
 import com.sun.javafx.scene.control.skin.TextFieldSkin;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 
 @SuppressWarnings("restriction")
-public class KeyboardTextFieldSkin extends TextFieldSkin {
+public class KeyboardTextFieldSkin extends TextFieldSkin implements ChangeListener<Scene> {
 
   public KeyboardTextFieldSkin(TextField textInput) {
     super(textInput);
-    addFocusListener(textInput);
+    if (textInput.getScene() == null) {
+      textInput.sceneProperty().addListener(this);
+      return;
+    }
+    FXOK.registerScene(textInput.getScene());
   }
 
   public KeyboardTextFieldSkin(TextField textInput, TextFieldBehavior behavior) {
     super(textInput, behavior);
-    addFocusListener(textInput);
+    if (textInput.getScene() == null) {
+      textInput.sceneProperty().addListener(this);
+      return;
+    }
+    FXOK.registerScene(textInput.getScene());
   }
 
-  private void addFocusListener(TextField textInput) {
-    textInput.focusedProperty().addListener(observable -> {
-      Scene scene = getSkinnable().getScene();
-      FXOK.updateVisibilty(scene, textInput);
-    });
-
+  @Override
+  public void changed(ObservableValue<? extends Scene> observable, Scene oldValue, Scene newValue) {
+    if (newValue != null) {
+      FXOK.registerScene(newValue);
+      getSkinnable().sceneProperty().removeListener(this);
+    }
   }
 
 }

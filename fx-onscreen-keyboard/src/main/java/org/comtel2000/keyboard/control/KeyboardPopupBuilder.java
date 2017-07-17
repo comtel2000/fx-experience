@@ -24,65 +24,83 @@
  * WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *******************************************************************************/
 
-package org.comtel2000.swing.control;
+package org.comtel2000.keyboard.control;
 
-import java.util.Optional;
+import java.nio.file.Path;
+import java.util.Locale;
 
-import javax.swing.JWindow;
+import org.comtel2000.keyboard.robot.IRobot;
 
-import org.comtel2000.keyboard.control.KeyBoardPopup;
-
-import javafx.embed.swing.JFXPanel;
 import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.scene.Group;
-import javafx.scene.Node;
-import javafx.scene.Scene;
+import javafx.util.Builder;
 
-/**
- * Swing window wrapper class for {@link KeyBoardPopup}.
- *
- * @author comtel
- *
- */
-public class KeyBoardWindow extends JWindow {
+public class KeyboardPopupBuilder implements Builder<KeyboardPopup> {
 
-  private static final long serialVersionUID = 1564988010984549166L;
-  private final JFXPanel jfxPanel;
+  private final KeyboardBuilder kb;
+  private double offset = -1;
+  private EventHandler<? super Event> closeEventHandler;
 
-  public static final EventHandler<? super Event> DEFAULT_CLOSE_HANDLER = (event) -> {
-    if (event.getSource() instanceof Node) {
-      ((Node) event.getSource()).getScene().getWindow().hide();
+  protected KeyboardPopupBuilder() {
+    kb = KeyboardBuilder.create();
+  }
+
+  public static KeyboardPopupBuilder create() {
+    return new KeyboardPopupBuilder();
+  }
+
+  public KeyboardPopupBuilder layerPath(Path path) {
+    kb.layerPath(path);
+    return this;
+  }
+
+  public KeyboardPopupBuilder initLocale(Locale locale) {
+    kb.initLocale(locale);
+    return this;
+  }
+
+  public KeyboardPopupBuilder initScale(double scale) {
+    kb.initScale(scale);
+    return this;
+  }
+
+  public KeyboardPopupBuilder addIRobot(IRobot robot) {
+    kb.addIRobot(robot);
+    return this;
+  }
+
+  public KeyboardPopupBuilder layer(KeyboardLayer l) {
+    kb.layer(l);
+    return this;
+  }
+
+  public KeyboardPopupBuilder style(String css) {
+    kb.style(css);
+    return this;
+  }
+
+  public KeyboardPopupBuilder offset(double offset) {
+    this.offset = offset;
+    return this;
+  }
+
+  public KeyboardPopupBuilder onKeyboardCloseButton(EventHandler<? super Event> handler) {
+    closeEventHandler = handler;
+    return this;
+  }
+
+  @Override
+  public KeyboardPopup build() {
+    KeyboardPopup popup = new KeyboardPopup(kb.build());
+    if (offset > -1) {
+      popup.setOffset(offset);
     }
-  };
-
-  private KeyBoardPopup popup;
-
-  protected KeyBoardWindow() {
-    super();
-    setModalExclusionType(java.awt.Dialog.ModalExclusionType.APPLICATION_EXCLUDE);
-    setFocusable(false);
-    setBackground(null);
-
-    getContentPane().add(jfxPanel = new JFXPanel());
-    jfxPanel.setFocusable(false);
-    jfxPanel.setOpaque(false);
-  }
-
-  /**
-   * must run in FxApplicationThread
-   *
-   * @param popup Keyboard popup
-   */
-  protected void createScene(final KeyBoardPopup popup) {
-    this.popup = popup;
-    Scene scene = new Scene(new Group(), 0, 0);
-    jfxPanel.setScene(scene);
-    popup.registerScene(scene);
-  }
-
-  public Optional<KeyBoardPopup> getKeyBoardPopup() {
-    return Optional.ofNullable(popup);
+    if (closeEventHandler != null) {
+      popup.setOnKeyboardCloseButton(closeEventHandler);
+    } else {
+      popup.setOnKeyboardCloseButton(KeyboardPopup.DEFAULT_CLOSE_HANDLER);
+    }
+    return popup;
   }
 
 }

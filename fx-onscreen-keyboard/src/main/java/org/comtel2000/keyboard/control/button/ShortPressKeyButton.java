@@ -24,17 +24,17 @@
  * WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *******************************************************************************/
 
-package org.comtel2000.keyboard.control;
+package org.comtel2000.keyboard.control.button;
 
 import org.slf4j.LoggerFactory;
 
 import javafx.scene.input.MouseButton;
 
-class ShortPressKeyButton extends KeyButton {
+public class ShortPressKeyButton extends KeyButton {
 
   private static final org.slf4j.Logger logger = LoggerFactory.getLogger(ShortPressKeyButton.class);
 
-  ShortPressKeyButton() {
+  public ShortPressKeyButton() {
     super();
   }
 
