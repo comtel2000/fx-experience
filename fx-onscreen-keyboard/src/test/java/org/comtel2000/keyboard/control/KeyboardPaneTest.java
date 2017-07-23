@@ -62,14 +62,16 @@ public class KeyboardPaneTest extends ApplicationTest {
 
   @Test
   public void toggleShift() {
-    IntStream.range('a', 'z' + 1).forEach(i -> verifyThat(Character.toString((char)i), isNotNull()));
-    IntStream.range('A', 'H').forEach(i -> verifyThat(Character.toString((char)i), isNull()));
+    IntStream.range('a', 'z' + 1)
+        .forEach(i -> verifyThat(Character.toString((char) i), isNotNull()));
+    IntStream.range('A', 'H').forEach(i -> verifyThat(Character.toString((char) i), isNull()));
     pressShort(SymbolCode.SHIFT_DOWN);
-    IntStream.range('a', 'z' + 1).forEach(i -> verifyThat(Character.toString((char)i), isNull()));
-    IntStream.range('A', 'H').forEach(i -> verifyThat(Character.toString((char)i), isNotNull()));
+    IntStream.range('a', 'z' + 1).forEach(i -> verifyThat(Character.toString((char) i), isNull()));
+    IntStream.range('A', 'H').forEach(i -> verifyThat(Character.toString((char) i), isNotNull()));
     pressShort(SymbolCode.SHIFT_DOWN);
-    IntStream.range('a', 'z' + 1).forEach(i -> verifyThat(Character.toString((char)i), isNotNull()));
-    IntStream.range('A', 'H').forEach(i -> verifyThat(Character.toString((char)i), isNull()));
+    IntStream.range('a', 'z' + 1)
+        .forEach(i -> verifyThat(Character.toString((char) i), isNotNull()));
+    IntStream.range('A', 'H').forEach(i -> verifyThat(Character.toString((char) i), isNull()));
   }
 
   @Test

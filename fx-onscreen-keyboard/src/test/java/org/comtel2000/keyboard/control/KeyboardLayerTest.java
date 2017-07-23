@@ -19,11 +19,11 @@ import javafx.stage.Stage;
 public class KeyboardLayerTest extends ApplicationTest {
 
   KeyboardPane keyboard;
-  
+
   @Override
   public void start(Stage stage) {
-    keyboard = KeyboardBuilder.create().layer(KeyboardLayer.DEFAULT)
-        .initLocale(Locale.ENGLISH).build();
+    keyboard = KeyboardBuilder.create().layer(KeyboardLayer.DEFAULT).initLocale(Locale.ENGLISH)
+        .build();
     Scene scene = new Scene(keyboard, keyboard.getPrefWidth(), keyboard.getPrefHeight());
     stage.setScene(scene);
     stage.show();
@@ -31,16 +31,19 @@ public class KeyboardLayerTest extends ApplicationTest {
 
   @Test
   public void toggleLayer() throws InterruptedException {
-    IntStream.rangeClosed('a', 'z').forEach(i -> verifyThat(Character.toString((char)i), isNotNull()));
+    IntStream.rangeClosed('a', 'z')
+        .forEach(i -> verifyThat(Character.toString((char) i), isNotNull()));
     verifyThat("0", isNull());
     verifyThat("1", isNull());
     runAndWait(() -> keyboard.switchLayer(KeyboardLayer.NUMBLOCK));
-    
-    IntStream.rangeClosed('a', 'z').forEach(i -> verifyThat(Character.toString((char)i), isNotNull()));
+
+    IntStream.rangeClosed('a', 'z')
+        .forEach(i -> verifyThat(Character.toString((char) i), isNotNull()));
     IntStream.rangeClosed(0, 9).forEach(i -> verifyThat("" + i, isNotNull()));
-    
+
     runAndWait(() -> keyboard.switchLayer(KeyboardLayer.DEFAULT));
-    IntStream.rangeClosed('a', 'z').forEach(i -> verifyThat(Character.toString((char)i), isNotNull()));
+    IntStream.rangeClosed('a', 'z')
+        .forEach(i -> verifyThat(Character.toString((char) i), isNotNull()));
     verifyThat("0", isNull());
     verifyThat("1", isNull());
   }

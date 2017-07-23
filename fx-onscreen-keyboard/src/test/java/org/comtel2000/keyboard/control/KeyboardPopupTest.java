@@ -54,7 +54,7 @@ public class KeyboardPopupTest extends ApplicationTest {
         throw new RuntimeException(e);
       }
     });
-    
+
     runAndWait(() -> keyboard.setVisible(false));
   }
 
@@ -75,7 +75,7 @@ public class KeyboardPopupTest extends ApplicationTest {
         throw new RuntimeException(e);
       }
     });
-    
+
     runAndWait(() -> keyboard.setVisible(false));
   }
 
@@ -105,7 +105,7 @@ public class KeyboardPopupTest extends ApplicationTest {
         throw new RuntimeException(e);
       }
     });
-    
+
     runAndWait(() -> keyboard.setVisible(false));
   }
 }

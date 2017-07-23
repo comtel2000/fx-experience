@@ -117,7 +117,7 @@ public class FXOK {
   public static void setHideOnCloseButton() {
     popup.getKeyboard().setOnKeyboardCloseButton(e -> fire(Control.HIDE));
   }
-  
+
   static void fire(final Control control) {
     fire(control, null);
   }

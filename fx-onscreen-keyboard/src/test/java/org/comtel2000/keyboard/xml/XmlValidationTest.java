@@ -24,11 +24,13 @@ public class XmlValidationTest {
   public void validateXmlLayouts() throws Exception {
     Validator v = Validator.forLanguage(Languages.W3C_XML_SCHEMA_NS_URI);
     v.setSchemaSource(new StreamSource(xsd.toFile()));
-    Files.walk(mainParent).filter(p -> !p.toFile().isDirectory() && p.getFileName().toString().endsWith(".xml")).forEach(p -> {
-      System.out.println("test file: " + p);
-      ValidationResult r = v.validateInstance(new StreamSource(p.toFile()));
-      assertTrue(r.isValid());
-    });
+    Files.walk(mainParent)
+        .filter(p -> !p.toFile().isDirectory() && p.getFileName().toString().endsWith(".xml"))
+        .forEach(p -> {
+          System.out.println("test file: " + p);
+          ValidationResult r = v.validateInstance(new StreamSource(p.toFile()));
+          assertTrue(r.isValid());
+        });
   }
 
   @Test

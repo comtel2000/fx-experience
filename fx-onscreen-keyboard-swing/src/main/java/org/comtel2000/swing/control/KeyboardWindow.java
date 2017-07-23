@@ -61,10 +61,10 @@ public class KeyboardWindow extends JWindow {
     setModalExclusionType(java.awt.Dialog.ModalExclusionType.APPLICATION_EXCLUDE);
     setFocusable(false);
     setBackground(null);
-    
+
     jfxPanel = new JFXPanel();
     jfxPanel.setFocusable(false);
-    jfxPanel.setOpaque(false);    
+    jfxPanel.setOpaque(false);
     getContentPane().add(jfxPanel);
   }
 

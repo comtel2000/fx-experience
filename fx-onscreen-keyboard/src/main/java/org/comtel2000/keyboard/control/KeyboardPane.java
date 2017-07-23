@@ -26,7 +26,48 @@
 
 package org.comtel2000.keyboard.control;
 
-import static org.comtel2000.keyboard.control.button.SymbolCode.*;
+import static org.comtel2000.keyboard.control.button.SymbolCode.ARROW_DOWN;
+import static org.comtel2000.keyboard.control.button.SymbolCode.ARROW_LEFT;
+import static org.comtel2000.keyboard.control.button.SymbolCode.ARROW_RIGHT;
+import static org.comtel2000.keyboard.control.button.SymbolCode.ARROW_UP;
+import static org.comtel2000.keyboard.control.button.SymbolCode.BACK_SPACE;
+import static org.comtel2000.keyboard.control.button.SymbolCode.CAPS_LOCK;
+import static org.comtel2000.keyboard.control.button.SymbolCode.CLOSE;
+import static org.comtel2000.keyboard.control.button.SymbolCode.CONTROL_TYPE;
+import static org.comtel2000.keyboard.control.button.SymbolCode.CTRL_DOWN;
+import static org.comtel2000.keyboard.control.button.SymbolCode.DELETE;
+import static org.comtel2000.keyboard.control.button.SymbolCode.EMAIL_TYPE;
+import static org.comtel2000.keyboard.control.button.SymbolCode.END;
+import static org.comtel2000.keyboard.control.button.SymbolCode.ENTER;
+import static org.comtel2000.keyboard.control.button.SymbolCode.F1;
+import static org.comtel2000.keyboard.control.button.SymbolCode.F10;
+import static org.comtel2000.keyboard.control.button.SymbolCode.F11;
+import static org.comtel2000.keyboard.control.button.SymbolCode.F12;
+import static org.comtel2000.keyboard.control.button.SymbolCode.F2;
+import static org.comtel2000.keyboard.control.button.SymbolCode.F3;
+import static org.comtel2000.keyboard.control.button.SymbolCode.F4;
+import static org.comtel2000.keyboard.control.button.SymbolCode.F5;
+import static org.comtel2000.keyboard.control.button.SymbolCode.F6;
+import static org.comtel2000.keyboard.control.button.SymbolCode.F7;
+import static org.comtel2000.keyboard.control.button.SymbolCode.F8;
+import static org.comtel2000.keyboard.control.button.SymbolCode.F9;
+import static org.comtel2000.keyboard.control.button.SymbolCode.HELP;
+import static org.comtel2000.keyboard.control.button.SymbolCode.HOME;
+import static org.comtel2000.keyboard.control.button.SymbolCode.LOCALE_SWITCH;
+import static org.comtel2000.keyboard.control.button.SymbolCode.NUMERIC_TYPE;
+import static org.comtel2000.keyboard.control.button.SymbolCode.PAGE_DOWN;
+import static org.comtel2000.keyboard.control.button.SymbolCode.PAGE_UP;
+import static org.comtel2000.keyboard.control.button.SymbolCode.PRINTSCREEN;
+import static org.comtel2000.keyboard.control.button.SymbolCode.REDO;
+import static org.comtel2000.keyboard.control.button.SymbolCode.SHIFT_DOWN;
+import static org.comtel2000.keyboard.control.button.SymbolCode.SYMBOL_DOWN;
+import static org.comtel2000.keyboard.control.button.SymbolCode.SYMBOL_SHIFT_TYPE;
+import static org.comtel2000.keyboard.control.button.SymbolCode.SYMBOL_TYPE;
+import static org.comtel2000.keyboard.control.button.SymbolCode.TAB;
+import static org.comtel2000.keyboard.control.button.SymbolCode.TEXT_SHIFT_TYPE;
+import static org.comtel2000.keyboard.control.button.SymbolCode.TEXT_TYPE;
+import static org.comtel2000.keyboard.control.button.SymbolCode.UNDO;
+import static org.comtel2000.keyboard.control.button.SymbolCode.URL_TYPE;
 
 import java.io.IOException;
 import java.net.URI;
@@ -194,6 +235,7 @@ public class KeyboardPane extends Region implements EventHandler<KeyButtonEvent>
   public void resetLocale() {
     switchLocale(getLocale());
   }
+
   public void switchLocale(final Object local) {
     if (local instanceof Locale) {
       switchLocale((Locale) local);
@@ -204,7 +246,7 @@ public class KeyboardPane extends Region implements EventHandler<KeyButtonEvent>
       return;
     }
   }
-  
+
   public void switchLocale(final Locale local) {
     try {
       if (local.equals(getActiveLocale())) {

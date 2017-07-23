@@ -50,165 +50,161 @@ import javafx.util.Duration;
 
 public class KeyboardUIManagerTool {
 
-	private KeyboardUIManagerTool() {
-	}
+  private KeyboardUIManagerTool() {}
 
-	/**
-	 * install listener to basic UI text components
-	 *
-	 * @param fl
-	 *            Component {@link FocusListener}
-	 * @param ml
-	 *            Component {@link MouseListener}
-	 */
-	public static void installKeyboardDefaults(FocusListener fl, MouseListener ml) {
+  /**
+   * install listener to basic UI text components
+   *
+   * @param fl Component {@link FocusListener}
+   * @param ml Component {@link MouseListener}
+   */
+  public static void installKeyboardDefaults(FocusListener fl, MouseListener ml) {
 
-		UIManager.put("TextFieldUI", KeyboardTextFieldUI.class.getName());
-		UIManager.put("PasswordFieldUI", KeyboardPasswordFieldUI.class.getName());
-		UIManager.put("TextAreaUI", KeyboardTextAreaUI.class.getName());
-		UIManager.put("EditorPaneUI", KeyboardEditorPaneUI.class.getName());
+    UIManager.put("TextFieldUI", KeyboardTextFieldUI.class.getName());
+    UIManager.put("PasswordFieldUI", KeyboardPasswordFieldUI.class.getName());
+    UIManager.put("TextAreaUI", KeyboardTextAreaUI.class.getName());
+    UIManager.put("EditorPaneUI", KeyboardEditorPaneUI.class.getName());
 
-		KeyboardTextFieldUI.setFocusListener(fl);
-		KeyboardTextFieldUI.setMouseListener(ml);
+    KeyboardTextFieldUI.setFocusListener(fl);
+    KeyboardTextFieldUI.setMouseListener(ml);
 
-		KeyboardPasswordFieldUI.setFocusListener(fl);
-		KeyboardPasswordFieldUI.setMouseListener(ml);
+    KeyboardPasswordFieldUI.setFocusListener(fl);
+    KeyboardPasswordFieldUI.setMouseListener(ml);
 
-		KeyboardTextAreaUI.setFocusListener(fl);
-		KeyboardTextAreaUI.setMouseListener(ml);
+    KeyboardTextAreaUI.setFocusListener(fl);
+    KeyboardTextAreaUI.setMouseListener(ml);
 
-		KeyboardEditorPaneUI.setFocusListener(fl);
-		KeyboardEditorPaneUI.setMouseListener(ml);
-	}
+    KeyboardEditorPaneUI.setFocusListener(fl);
+    KeyboardEditorPaneUI.setMouseListener(ml);
+  }
 
-	/**
-	 * Register {@link FocusListener} and {@link MouseListener}
-	 *
-	 * @param callback
-	 *            {@link EventCallback}
-	 * @see #installKeyboardDefaults(FocusListener, MouseListener)
-	 */
-	public static void installKeyboardDefaults(EventCallback callback) {
-		installKeyboardDefaults(createFocusListener(callback), createMouseDoubleClickListener(callback));
-	}
+  /**
+   * Register {@link FocusListener} and {@link MouseListener}
+   *
+   * @param callback {@link EventCallback}
+   * @see #installKeyboardDefaults(FocusListener, MouseListener)
+   */
+  public static void installKeyboardDefaults(EventCallback callback) {
+    installKeyboardDefaults(createFocusListener(callback), createMouseDoubleClickListener(callback));
+  }
 
-	public static void installKeyboardDefaults(final KeyboardWindow window) {
-		SwingCallback callback = new SwingCallback(window);
-		window.getKeyboardPopup().getKeyboard().setOnKeyboardCloseButton(e -> callback.call(null, false));
-		installKeyboardDefaults(createFocusListener(callback), createMouseDoubleClickListener(callback));
-	}
+  public static void installKeyboardDefaults(final KeyboardWindow window) {
+    SwingCallback callback = new SwingCallback(window);
+    window.getKeyboardPopup().getKeyboard().setOnKeyboardCloseButton(e -> callback.call(null, false));
+    installKeyboardDefaults(createFocusListener(callback), createMouseDoubleClickListener(callback));
+  }
 
-	private static FocusListener createFocusListener(EventCallback c) {
-		return new FocusListener() {
-			@Override
-			public void focusLost(FocusEvent e) {
-				c.call(null, false);
-			}
+  private static FocusListener createFocusListener(EventCallback c) {
+    return new FocusListener() {
+      @Override
+      public void focusLost(FocusEvent e) {
+        c.call(null, false);
+      }
 
-			@Override
-			public void focusGained(FocusEvent e) {
-				c.call(e.getComponent(), true);
-			}
-		};
-	}
+      @Override
+      public void focusGained(FocusEvent e) {
+        c.call(e.getComponent(), true);
+      }
+    };
+  }
 
-	private static MouseListener createMouseDoubleClickListener(EventCallback c) {
-		return new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				if (e.getClickCount() == 2) {
-					c.call(e.getComponent(), true);
-				}
-			}
-		};
-	}
+  private static MouseListener createMouseDoubleClickListener(EventCallback c) {
+    return new MouseAdapter() {
+      @Override
+      public void mouseClicked(MouseEvent e) {
+        if (e.getClickCount() == 2) {
+          c.call(e.getComponent(), true);
+        }
+      }
+    };
+  }
 
-	private static class SwingCallback implements EventCallback {
+  private static class SwingCallback implements EventCallback {
 
-		private final KeyboardWindow window;
-		private Component initPosition;
-		private Transition transition;
+    private final KeyboardWindow window;
+    private Component initPosition;
+    private Transition transition;
 
-		public SwingCallback(KeyboardWindow window) {
-			this.window = window;
-		}
+    public SwingCallback(KeyboardWindow window) {
+      this.window = window;
+    }
 
-		@Override
-		public void call(final Component comp, final boolean show) {
-			KeyboardPopup popup = window.getKeyboardPopup();
-			if (popup == null) {
-				// keyboard not initialized -> cache position
-				initPosition = comp;
-				return;
-			}
-			final Component location;
+    @Override
+    public void call(final Component comp, final boolean show) {
+      KeyboardPopup popup = window.getKeyboardPopup();
+      if (popup == null) {
+        // keyboard not initialized -> cache position
+        initPosition = comp;
+        return;
+      }
+      final Component location;
 
-			if (show && comp == null) {
-				// recover cached component
-				location = initPosition;
-			} else {
-				location = comp;
-			}
-			Platform.runLater(() -> {
-				if (show && location != null) {
-					updateLocation(popup, location);
-				}
-				updateVisibility(show, popup);
-			});
-		}
+      if (show && comp == null) {
+        // recover cached component
+        location = initPosition;
+      } else {
+        location = comp;
+      }
+      Platform.runLater(() -> {
+        if (show && location != null) {
+          updateLocation(popup, location);
+        }
+        updateVisibility(show, popup);
+      });
+    }
 
-		private void updateVisibility(final boolean show, KeyboardPopup popup) {
-			if (transition == null) {
-				transition = new FadeTransition(Duration.seconds(0.1), popup.getKeyboard());
-				transition.setOnFinished(event -> {
-					if (((FadeTransition) transition).toValueProperty().intValue() == 0) {
-						popup.setVisible(false);
-					}
-				});
-			} else {
-				transition.stop();
-				transition.setInterpolator(show ? Interpolator.EASE_OUT : Interpolator.EASE_IN);
-			}
+    private void updateVisibility(final boolean show, KeyboardPopup popup) {
+      if (transition == null) {
+        transition = new FadeTransition(Duration.seconds(0.1), popup.getKeyboard());
+        transition.setOnFinished(event -> {
+          if (((FadeTransition) transition).toValueProperty().intValue() == 0) {
+            popup.setVisible(false);
+          }
+        });
+      } else {
+        transition.stop();
+        transition.setInterpolator(show ? Interpolator.EASE_OUT : Interpolator.EASE_IN);
+      }
 
-			if (show) {
-				if (popup.isVisible() && transition.getStatus() == Animation.Status.STOPPED) {
-					return;
-				}
-				popup.getKeyboard().setOpacity(0.0);
-				popup.setVisible(true);
-				((FadeTransition) transition).setFromValue(0.0f);
-				((FadeTransition) transition).setToValue(1.0f);
-				transition.play();
+      if (show) {
+        if (popup.isVisible() && transition.getStatus() == Animation.Status.STOPPED) {
+          return;
+        }
+        popup.getKeyboard().setOpacity(0.0);
+        popup.setVisible(true);
+        ((FadeTransition) transition).setFromValue(0.0f);
+        ((FadeTransition) transition).setToValue(1.0f);
+        transition.play();
 
-			} else {
-				if (!popup.isVisible() && transition.getStatus() == Animation.Status.STOPPED) {
-					return;
-				}
-				((FadeTransition) transition).setFromValue(1.0f);
-				((FadeTransition) transition).setToValue(0.0f);
-				transition.play();
-			}
-		}
+      } else {
+        if (!popup.isVisible() && transition.getStatus() == Animation.Status.STOPPED) {
+          return;
+        }
+        ((FadeTransition) transition).setFromValue(1.0f);
+        ((FadeTransition) transition).setToValue(0.0f);
+        transition.play();
+      }
+    }
 
-		private void updateLocation(KeyboardPopup popup, final Component location) {
-			popup.setX(location.getLocationOnScreen().getX());
-			popup.setY(location.getLocationOnScreen().getY() + location.getHeight());
+    private void updateLocation(KeyboardPopup popup, final Component location) {
+      popup.setX(location.getLocationOnScreen().getX());
+      popup.setY(location.getLocationOnScreen().getY() + location.getHeight());
 
-			if (location instanceof JTextComponent) {
-				JTextComponent textComponent = (JTextComponent) location;
-				Object type = textComponent.getDocument().getProperty(VkProperties.VK_TYPE);
-				if (type != null) {
-					popup.getKeyboard().setKeyboardType(type);
-				} else {
-					popup.getKeyboard().setKeyboardType(KeyboardType.TEXT);
-				}
-				Object locale = textComponent.getDocument().getProperty(VkProperties.VK_LOCALE);
-				if (locale != null) {
-					popup.getKeyboard().switchLocale(locale);
-				}
-			}
-		}
+      if (location instanceof JTextComponent) {
+        JTextComponent textComponent = (JTextComponent) location;
+        Object type = textComponent.getDocument().getProperty(VkProperties.VK_TYPE);
+        if (type != null) {
+          popup.getKeyboard().setKeyboardType(type);
+        } else {
+          popup.getKeyboard().setKeyboardType(KeyboardType.TEXT);
+        }
+        Object locale = textComponent.getDocument().getProperty(VkProperties.VK_LOCALE);
+        if (locale != null) {
+          popup.getKeyboard().switchLocale(locale);
+        }
+      }
+    }
 
-	}
+  }
 
 }

@@ -76,26 +76,26 @@ public class SwingDemo extends JApplet {
     panel.add(numbers);
 
     panel.add(new JTextField(70));
-    
-    JComboBox<String> combo = new JComboBox<>(new String[] {"DEMO", "TEST"});
+
+    JComboBox<String> combo = new JComboBox<>(new String[] { "DEMO", "TEST" });
     combo.setEditable(true);
     if (combo.getEditor().getEditorComponent() instanceof JTextComponent) {
-    	JTextComponent comp =(JTextComponent) combo.getEditor().getEditorComponent();
-    	comp.getDocument().putProperty(VkProperties.VK_TYPE, VkProperties.VK_TYPE_TEXT_SHIFT);
+      JTextComponent comp = (JTextComponent) combo.getEditor().getEditorComponent();
+      comp.getDocument().putProperty(VkProperties.VK_TYPE, VkProperties.VK_TYPE_TEXT_SHIFT);
     }
     panel.add(combo);
     JEditorPane ePane = new JEditorPane();
     ePane.setPreferredSize(new Dimension(600, 50));
     panel.add(ePane);
-    
+
     JTextArea area = new JTextArea(4, 70);
     area.setToolTipText("switch to Locale 'de'");
     // set text area to german locale
     area.getDocument().putProperty(VkProperties.VK_LOCALE, VkProperties.VK_LOCALE_DE);
     panel.add(area);
-    
+
     panel.add(new JPasswordField(70));
-    
+
     panel.add(new JSeparator(JSeparator.HORIZONTAL));
     panel.add(new JButton("Ok"));
     panel.add(new JButton("Cancel"));

@@ -80,17 +80,17 @@ public final class SymbolCode {
   public static final int HELP = -24;
 
   public static final int PRINTSCREEN = -25;
-  
+
   public static final int TEXT_TYPE = -26;
-  
+
   public static final int TEXT_SHIFT_TYPE = -27;
-  
+
   public static final int SYMBOL_TYPE = -28;
-  
+
   public static final int SYMBOL_SHIFT_TYPE = -29;
-  
+
   public static final int CONTROL_TYPE = -30;
-  
+
   public static final int F1 = -112;
 
   public static final int F2 = -113;
