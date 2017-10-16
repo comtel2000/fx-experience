@@ -34,7 +34,7 @@ import java.util.Map;
 import org.comtel2000.keyboard.control.DefaultLayer;
 import org.comtel2000.keyboard.control.KeyBoardPopup;
 import org.comtel2000.keyboard.control.KeyboardPane;
-import org.comtel2000.keyboard.control.KeyboardType;
+import org.comtel2000.keyboard.control.DefaultKeyboardType;
 import org.comtel2000.swing.robot.NativeAsciiRobotHandler;
 
 import javafx.application.Application;
@@ -80,7 +80,7 @@ public class StandAloneApp extends Application {
         kb.setLayerPath((Paths.get(this.getClass().getResource(params.get("layout")).toURI())));
       }
       if (params.containsKey("type")) {
-        kb.setKeyboardType(KeyboardType.valueOf(params.get("type").toUpperCase()));
+        kb.setKeyboardType(DefaultKeyboardType.valueOf(params.get("type").toUpperCase()));
       }
 
       kb.load();

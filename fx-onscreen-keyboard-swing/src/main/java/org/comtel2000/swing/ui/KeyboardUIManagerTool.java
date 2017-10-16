@@ -37,7 +37,7 @@ import javax.swing.UIManager;
 import javax.swing.text.JTextComponent;
 
 import org.comtel2000.keyboard.control.KeyBoardPopup;
-import org.comtel2000.keyboard.control.KeyboardType;
+import org.comtel2000.keyboard.control.DefaultKeyboardType;
 import org.comtel2000.keyboard.control.VkProperties;
 import org.comtel2000.swing.control.KeyBoardWindow;
 
@@ -166,7 +166,7 @@ public class KeyboardUIManagerTool {
             if (type != null) {
               popup.getKeyBoard().setKeyboardType((String) type);
             } else {
-              popup.getKeyBoard().setKeyboardType(KeyboardType.TEXT);
+              popup.getKeyBoard().setKeyboardType(DefaultKeyboardType.TEXT);
             }
             Object locale = textComponent.getDocument().getProperty(VkProperties.VK_LOCALE);
             if (locale != null) {

@@ -28,34 +28,66 @@ package org.comtel2000.keyboard.control;
 
 import java.util.Optional;
 
-public enum KeyboardType {
+public enum DefaultKeyboardType implements IKeyboardType {
 
-  TEXT, TEXT_SHIFT, SYMBOL, SYMBOL_SHIFT, CTRL, NUMERIC, EMAIL, URL;
+    TEXT(0, false, false, false),
+    NUMERIC(1, false, false, false),
+    URL(2, false, false, false),
+    EMAIL(3, false, false, false),
+    CTRL(4, true, false, false),
+    SYMBOL_SHIFT(5, false, true, true),
+    SYMBOL(7, false, false, true),
+    TEXT_SHIFT(6, false, true, false);
 
-  public static Optional<KeyboardType> findValue(Object value) {
-    if (value == null) {
-      return Optional.empty();
+    int keyboardTypeNumber = 0;
+    boolean control, shift, symbol;
+
+    DefaultKeyboardType(int keyboardTypeNumber, boolean control, boolean shift, boolean symbol) {
+        this.keyboardTypeNumber = keyboardTypeNumber;
+        this.control = control;
+        this.shift = shift;
+        this.symbol = symbol;
     }
 
-    if (value instanceof Number) {
-      switch (Number.class.cast(value).intValue()) {
-      case 0:
-        return Optional.of(TEXT);
-      case 1:
-        return Optional.of(NUMERIC);
-      case 2:
-        return Optional.of(URL);
-      case 3:
-        return Optional.of(EMAIL);
-      default:
+    @Override
+    public boolean getControl() {
+        return control;
+    }
+
+    @Override
+    public boolean getShift() {
+        return shift;
+    }
+
+    @Override
+    public boolean getSymbol() {
+        return symbol;
+    }
+
+    @Override
+    public int getKeyboardTypeNumber() {
+        return keyboardTypeNumber;
+    }
+
+    public static Optional<DefaultKeyboardType> findValue(Object value) {
+        if (value == null) {
+            return Optional.empty();
+        }
+
+        DefaultKeyboardType[] values = values();
+        if (value instanceof Number) {
+            for (DefaultKeyboardType defaultKeyboardType : values) {
+                if (value.equals(defaultKeyboardType.getKeyboardTypeNumber())) {
+                    return Optional.of(defaultKeyboardType);
+                }
+            }
+            return Optional.empty();
+        }
+        for (DefaultKeyboardType t : values) {
+            if (t.toString().equalsIgnoreCase(value.toString())) {
+                return Optional.of(t);
+            }
+        }
         return Optional.empty();
-      }
     }
-    for (KeyboardType t : values()) {
-      if (t.toString().equalsIgnoreCase(value.toString())) {
-        return Optional.of(t);
-      }
-    }
-    return Optional.empty();
-  }
 }

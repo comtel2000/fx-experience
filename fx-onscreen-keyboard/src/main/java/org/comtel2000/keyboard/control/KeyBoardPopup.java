@@ -240,7 +240,7 @@ public class KeyBoardPopup extends Popup implements VkProperties {
     if ((visible == Visiblity.POS || visible == Visiblity.SHOW) && textNode != null) {
       Map<String, Object> vkProps = FXOK.getVkProperties(textNode);
       if (vkProps.isEmpty()) {
-        getKeyBoard().setKeyboardType(KeyboardType.TEXT);
+        getKeyBoard().setKeyboardType(DefaultKeyboardType.TEXT);
       } else {
         getKeyBoard().setKeyboardType(vkProps.getOrDefault(VK_TYPE, VK_TYPE_TEXT));
         if (vkProps.containsKey(VK_LOCALE)) {

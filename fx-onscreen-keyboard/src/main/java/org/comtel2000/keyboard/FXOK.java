@@ -32,7 +32,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.comtel2000.keyboard.control.KeyBoardPopup;
-import org.comtel2000.keyboard.control.KeyboardType;
+import org.comtel2000.keyboard.control.DefaultKeyboardType;
 import org.comtel2000.keyboard.control.VkProperties;
 
 import javafx.animation.FadeTransition;
@@ -79,7 +79,7 @@ public class FXOK implements VkProperties {
     if ((visible == Visiblity.POS || visible == Visiblity.SHOW) && textNode != null) {
       Map<String, Object> vkProps = getVkProperties(textNode);
       if (vkProps.isEmpty()) {
-        popup.getKeyBoard().setKeyboardType(KeyboardType.TEXT);
+        popup.getKeyBoard().setKeyboardType(DefaultKeyboardType.TEXT);
       } else {
         popup.getKeyBoard()
             .setKeyboardType(vkProps.getOrDefault(VK_TYPE, String.valueOf(VK_TYPE_TEXT)));
