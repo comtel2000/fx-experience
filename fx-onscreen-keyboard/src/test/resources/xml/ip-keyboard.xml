@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Keyboard horizontalGap="0" keyWidth="40" keyHeight="30" verticalGap="0">
+    <Row>
+        <Key codes="55" keyLabel="7" />
+        <Key codes="56" keyLabel="8" />
+        <Key codes="57" keyLabel="9" />
+        <Key codes="" />
+    </Row>
+    <Row>
+        <Key codes="52" keyLabel="4" />
+        <Key codes="53" keyLabel="5" />
+        <Key codes="54" keyLabel="6" />
+        <Key codes="32" keyLabel="3" keyLabelStyle=".font-fxkeyboard-alpha" movable="true"/>
+    </Row>
+    <Row>
+        <Key codes="49" keyLabel="1" />
+        <Key codes="50" keyLabel="2"/>
+        <Key codes="51" keyLabel="3" />
+        <Key codes="" />
+    </Row>
+    <Row rowEdgeFlags="bottom">
+        <Key codes="48" keyLabel="0" keyWidth="82" movable="true" repeatable="true" />
+        <Key codes="44" keyLabel="@" popupCharacters="44"  />
+        <Key codes="" />
+    </Row>
+</Keyboard>

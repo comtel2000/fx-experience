@@ -276,8 +276,14 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
             url = Paths.get(root, file).toUri().toURL();
         }
         if (url != null) {
-            logger.debug("add layout: {}", url);
-            typeRegionMap.put(type.getKeyboardTypeNumber(), getKeyboardPane(url));
+            if (typeRegionMap.containsKey(type.getKeyboardId())) {
+                logger.warn("layout {} was already present in the typeRegionMap. Overwriting layout...", url);
+            } else {
+                logger.debug("add layout: {}", url);
+            }
+
+            typeRegionMap.put(type.getKeyboardId(), getKeyboardPane(url));
+
             return;
         }
         String defaultRoot = getAvailableLocales().get(Locale.ENGLISH);
@@ -288,13 +294,13 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
         url = KeyboardPane.class.getResource(defaultRoot + "/" + file);
         if (url != null) {
             logger.debug("add default layout: {}", url);
-            typeRegionMap.put(type.getKeyboardTypeNumber(), getKeyboardPane(url));
+            typeRegionMap.put(type.getKeyboardId(), getKeyboardPane(url));
             return;
         }
         if (Files.exists(Paths.get(defaultRoot, file))) {
             url = Paths.get(defaultRoot, file).toUri().toURL();
             logger.debug("add default layout: {}", url);
-            typeRegionMap.put(type.getKeyboardTypeNumber(), getKeyboardPane(url));
+            typeRegionMap.put(type.getKeyboardId(), getKeyboardPane(url));
         }
     }
 
@@ -367,13 +373,13 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
         setActiveType(type);
 
         //default settings
-        Region pane = typeRegionMap.get(type.getKeyboardTypeNumber());
+        Region pane = typeRegionMap.get(type.getKeyboardId());
         setControl(type.getControl());
         setShift(type.getShift());
         setSymbol(type.getSymbol());
 
         if (pane == null) {
-            pane = typeRegionMap.get(DefaultKeyboardType.TEXT.getKeyboardTypeNumber());
+            pane = typeRegionMap.get(DefaultKeyboardType.TEXT.getKeyboardId());
         }
         if (pane != null) {
             getChildren().setAll(pane);

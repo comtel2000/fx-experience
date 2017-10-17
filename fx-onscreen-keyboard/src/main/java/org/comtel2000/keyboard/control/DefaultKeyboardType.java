@@ -65,7 +65,7 @@ public enum DefaultKeyboardType implements IKeyboardType {
     }
 
     @Override
-    public int getKeyboardTypeNumber() {
+    public int getKeyboardId() {
         return keyboardTypeNumber;
     }
 
@@ -77,7 +77,7 @@ public enum DefaultKeyboardType implements IKeyboardType {
         DefaultKeyboardType[] values = values();
         if (value instanceof Number) {
             for (DefaultKeyboardType defaultKeyboardType : values) {
-                if (value.equals(defaultKeyboardType.getKeyboardTypeNumber())) {
+                if (value.equals(defaultKeyboardType.getKeyboardId())) {
                     return Optional.of(defaultKeyboardType);
                 }
             }

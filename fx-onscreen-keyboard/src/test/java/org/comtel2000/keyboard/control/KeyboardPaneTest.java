@@ -31,7 +31,7 @@ public class KeyboardPaneTest extends ApplicationTest {
 
     private IKeyboardType type = new IKeyboardType() {
         @Override
-        public int getKeyboardTypeNumber() {
+        public int getKeyboardId() {
             return 10;
         }
 
