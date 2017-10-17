@@ -40,6 +40,9 @@ public interface VkProperties {
   /** properties type key */
   String VK_TYPE = "vkType";
 
+  /** indicates whether or not the keyboard should be se visible for the textfield where going to be shown*/
+  String VK_DISABLED = "vkDisabled";
+
   /** properties locale key */
   String VK_LOCALE = "vkLocale";
 

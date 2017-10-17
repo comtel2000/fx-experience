@@ -76,8 +76,15 @@ public class FXOK implements VkProperties {
     if (popup == null) {
       return;
     }
+
+    //whether the keyboard should be disabled
+    boolean vkDisabled = false;
+    Map<String, Object> vkProps = getVkProperties(textNode);
+    if (vkProps.containsKey(VK_DISABLED)) {
+      vkDisabled = (boolean) vkProps.get(VK_DISABLED);
+    }
+
     if ((visible == Visiblity.POS || visible == Visiblity.SHOW) && textNode != null) {
-      Map<String, Object> vkProps = getVkProperties(textNode);
       if (vkProps.isEmpty()) {
         popup.getKeyBoard().setKeyboardType(DefaultKeyboardType.TEXT);
       } else {
@@ -100,6 +107,11 @@ public class FXOK implements VkProperties {
       } else {
         popup.setY(textNodeBounds.getMaxY() + popup.getOffset());
       }
+    }
+
+    if (vkDisabled){
+      popup.hide();
+      return;
     }
 
     if (visible == Visiblity.POS || visible == Visiblity.HIDE && !popup.isShowing()) {

@@ -237,8 +237,13 @@ public class KeyBoardPopup extends Popup implements VkProperties {
 
   void setVisible(final Visiblity visible, final TextInputControl textNode) {
 
+    boolean vkDisabled = false;
+    Map<String, Object> vkProps = FXOK.getVkProperties(textNode);
+    if (vkProps.containsKey(VK_DISABLED)) {
+      vkDisabled = (boolean) vkProps.get(VK_DISABLED);
+    }
+
     if ((visible == Visiblity.POS || visible == Visiblity.SHOW) && textNode != null) {
-      Map<String, Object> vkProps = FXOK.getVkProperties(textNode);
       if (vkProps.isEmpty()) {
         getKeyBoard().setKeyboardType(DefaultKeyboardType.TEXT);
       } else {
@@ -260,6 +265,11 @@ public class KeyBoardPopup extends Popup implements VkProperties {
       } else {
         setY(textNodeBounds.getMaxY() + getOffset());
       }
+    }
+
+    if (vkDisabled){
+      hide();
+      return;
     }
 
     if (visible == Visiblity.POS || visible == Visiblity.HIDE && !isShowing()) {
