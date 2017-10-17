@@ -386,10 +386,6 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
         }
     }
 
-    public void setKeyboardType(Object type) {
-        setKeyboardType(DefaultKeyboardType.findValue(type).orElse(DefaultKeyboardType.TEXT));
-    }
-
     private Region getKeyboardPane(URL layout) throws XMLStreamException, IOException {
         if (isCacheLayout()) {
             return layoutCache.computeIfAbsent(layout, this::createKeyboardPane);
@@ -1101,7 +1097,7 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
         return activeKeyboardTypeFinder;
     }
 
-    public final void setActiveLocaleLoader(IExternalLocaleLoader l) {
+    public final void setActiveExternalLocaleLoader(IExternalLocaleLoader l) {
         if (activeLocaleLoader == null) {
             _activeLocaleLoader = l;
         } else {

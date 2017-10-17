@@ -247,7 +247,7 @@ public class KeyBoardPopup extends Popup implements VkProperties {
       if (vkProps.isEmpty()) {
         getKeyBoard().setKeyboardType(DefaultKeyboardType.TEXT);
       } else {
-        getKeyBoard().setKeyboardType(vkProps.getOrDefault(VK_TYPE, VK_TYPE_TEXT));
+        getKeyBoard().setKeyboardType((IKeyboardType) vkProps.getOrDefault(VK_TYPE, DefaultKeyboardType.TEXT));
         if (vkProps.containsKey(VK_LOCALE)) {
           getKeyBoard().switchLocale(new Locale(vkProps.get(VK_LOCALE).toString()));
         }

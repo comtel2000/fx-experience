@@ -75,7 +75,7 @@ public class KeyBoardBuilder implements Builder<KeyboardPane> {
     }
 
     public KeyBoardBuilder setExternalLocaleLoader(IExternalLocaleLoader localeLoader) {
-        kb.setActiveLocaleLoader(localeLoader);
+        kb.setActiveExternalLocaleLoader(localeLoader);
         return this;
     }
 

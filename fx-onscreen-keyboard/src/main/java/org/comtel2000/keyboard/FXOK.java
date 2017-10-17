@@ -31,6 +31,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import org.comtel2000.keyboard.control.IKeyboardType;
 import org.comtel2000.keyboard.control.KeyBoardPopup;
 import org.comtel2000.keyboard.control.DefaultKeyboardType;
 import org.comtel2000.keyboard.control.VkProperties;
@@ -89,7 +90,7 @@ public class FXOK implements VkProperties {
         popup.getKeyBoard().setKeyboardType(DefaultKeyboardType.TEXT);
       } else {
         popup.getKeyBoard()
-            .setKeyboardType(vkProps.getOrDefault(VK_TYPE, String.valueOf(VK_TYPE_TEXT)));
+            .setKeyboardType((IKeyboardType) vkProps.getOrDefault(VK_TYPE, DefaultKeyboardType.TEXT));
         if (vkProps.containsKey(VK_LOCALE)) {
           popup.getKeyBoard().switchLocale(new Locale(vkProps.get(VK_LOCALE).toString()));
         }

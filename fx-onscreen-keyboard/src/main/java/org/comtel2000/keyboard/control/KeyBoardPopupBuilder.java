@@ -88,6 +88,16 @@ public class KeyBoardPopupBuilder implements Builder<KeyBoardPopup> {
     closeEventHandler = handler;
     return this;
   }
+  public KeyBoardPopupBuilder setExternalLocaleLoader(IExternalLocaleLoader localeLoader) {
+    kb.setExternalLocaleLoader(localeLoader);
+    return this;
+  }
+
+  public KeyBoardPopupBuilder setExternalKeyboardTypeFinder(IExternalKeyboardTypeFinder externalKeyboardTypeFinder) {
+    kb.setExternalKeyboardTypeFinder(externalKeyboardTypeFinder);
+    return this;
+  }
+
 
   @Override
   public KeyBoardPopup build() {
