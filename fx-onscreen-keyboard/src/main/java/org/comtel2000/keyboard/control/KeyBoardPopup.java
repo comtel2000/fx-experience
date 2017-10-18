@@ -237,10 +237,12 @@ public class KeyBoardPopup extends Popup implements VkProperties {
 
   void setVisible(final Visiblity visible, final TextInputControl textNode) {
 
+    //whether the keyboard should be disabled
     boolean vkDisabled = false;
-    Map<String, Object> vkProps = FXOK.getVkProperties(textNode);
-    if (vkProps.containsKey(VK_DISABLED)) {
-      vkDisabled = (boolean) vkProps.get(VK_DISABLED);
+    Map<String, Object> vkProps = null;
+    if (textNode != null) {
+      vkProps = FXOK.getVkProperties(textNode);
+      vkDisabled = (boolean) vkProps.getOrDefault(VK_DISABLED, false);
     }
 
     if ((visible == Visiblity.POS || visible == Visiblity.SHOW) && textNode != null) {
