@@ -40,7 +40,9 @@ public enum DefaultKeyboardType implements IKeyboardType {
     TEXT_SHIFT(6, false, true, false);
 
     int keyboardTypeNumber = 0;
-    boolean control, shift, symbol;
+    boolean control = false;
+    boolean shift = false;
+    boolean symbol = false;
 
     DefaultKeyboardType(int keyboardTypeNumber, boolean control, boolean shift, boolean symbol) {
         this.keyboardTypeNumber = keyboardTypeNumber;

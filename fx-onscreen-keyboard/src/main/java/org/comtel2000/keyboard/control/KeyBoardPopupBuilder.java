@@ -26,14 +26,13 @@
 
 package org.comtel2000.keyboard.control;
 
-import java.nio.file.Path;
-import java.util.Locale;
-
-import org.comtel2000.keyboard.robot.IRobot;
-
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.util.Builder;
+import org.comtel2000.keyboard.robot.IRobot;
+
+import java.nio.file.Path;
+import java.util.Locale;
 
 public class KeyBoardPopupBuilder implements Builder<KeyBoardPopup> {
 
@@ -88,6 +87,7 @@ public class KeyBoardPopupBuilder implements Builder<KeyBoardPopup> {
     closeEventHandler = handler;
     return this;
   }
+
   public KeyBoardPopupBuilder setExternalLocaleLoader(IExternalLocaleLoader localeLoader) {
     kb.setExternalLocaleLoader(localeLoader);
     return this;

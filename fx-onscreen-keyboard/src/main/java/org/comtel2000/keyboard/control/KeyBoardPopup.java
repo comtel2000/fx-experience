@@ -26,14 +26,7 @@
 
 package org.comtel2000.keyboard.control;
 
-import java.util.Locale;
-import java.util.Map;
-import java.util.Objects;
-
-import org.comtel2000.keyboard.FXOK;
-
 import com.sun.javafx.css.StyleManager;
-
 import javafx.animation.FadeTransition;
 import javafx.application.Application;
 import javafx.beans.property.DoubleProperty;
@@ -53,6 +46,11 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
+import org.comtel2000.keyboard.FXOK;
+
+import java.util.Locale;
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * Helper class to create a {@link KeyboardPane}
@@ -158,7 +156,7 @@ public class KeyBoardPopup extends Popup implements VkProperties {
   /**
    * Set the focus listener as user agent stylesheet for the whole application with main theme
    * Application.STYLESHEET_MODENA.
-   * 
+   *
    * <p>
    * Reference: <a href="https://bugs.openjdk.java.net/browse/JDK-8077918">JDK-8077918</a>
    *
@@ -172,7 +170,7 @@ public class KeyBoardPopup extends Popup implements VkProperties {
   /**
    * Set the focus listener as user agent stylesheet for the whole application with given main
    * theme.
-   * 
+   *
    * <p>
    * Reference: <a href="https://bugs.openjdk.java.net/browse/JDK-8077918">JDK-8077918</a>
    *
@@ -269,7 +267,7 @@ public class KeyBoardPopup extends Popup implements VkProperties {
       }
     }
 
-    if (vkDisabled){
+    if (vkDisabled) {
       hide();
       return;
     }

@@ -60,10 +60,10 @@ public class KeyboardTextFieldUI extends BasicTextFieldUI {
   public void installUI(JComponent c) {
     if (c instanceof JTextComponent) {
       if (fl != null) {
-        ((JTextComponent) c).addFocusListener(fl);
+        c.addFocusListener(fl);
       }
       if (ml != null) {
-        ((JTextComponent) c).addMouseListener(ml);
+        c.addMouseListener(ml);
       }
     }
     super.installUI(c);

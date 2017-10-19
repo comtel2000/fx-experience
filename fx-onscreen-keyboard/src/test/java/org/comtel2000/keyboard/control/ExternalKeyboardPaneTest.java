@@ -1,21 +1,17 @@
 package org.comtel2000.keyboard.control;
 
-import javafx.scene.Node;
+import static org.testfx.api.FxAssert.verifyThat;
+import static org.testfx.matcher.base.NodeMatchers.isNotNull;
+import static org.testfx.matcher.base.NodeMatchers.isNull;
+
 import javafx.scene.Scene;
-import javafx.scene.input.MouseButton;
 import javafx.stage.Stage;
 import org.junit.Test;
 import org.testfx.framework.junit.ApplicationTest;
 
 import java.util.Collections;
 import java.util.Locale;
-import java.util.concurrent.TimeUnit;
-import java.util.function.Function;
-import java.util.function.Predicate;
 
-import static org.testfx.api.FxAssert.verifyThat;
-import static org.testfx.matcher.base.NodeMatchers.isNotNull;
-import static org.testfx.matcher.base.NodeMatchers.isNull;
 
 public class ExternalKeyboardPaneTest extends ApplicationTest {
 
@@ -45,7 +41,8 @@ public class ExternalKeyboardPaneTest extends ApplicationTest {
     public void start(Stage stage) {
 
         KeyboardPane keyboard = KeyBoardBuilder.create()
-                .setExternalKeyboardTypeFinder(() -> Collections.singletonList(new IExternalKeyboardTypeFinder.KeyboardTypeBean(externalTestKeyboardSize, "/xml", "ip-keyboard.xml"))).layer(DefaultLayer.DEFAULT)
+                .setExternalKeyboardTypeFinder(() -> Collections.singletonList(new IExternalKeyboardTypeFinder
+                        .KeyboardTypeBean(externalTestKeyboardSize, "/xml", "ip-keyboard.xml"))).layer(DefaultLayer.DEFAULT)
                 .initLocale(Locale.ENGLISH).build();
 
         keyboard.setKeyboardType(externalTestKeyboardSize);
