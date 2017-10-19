@@ -36,14 +36,13 @@ import static java.awt.event.KeyEvent.KEY_RELEASED;
 import static java.awt.event.KeyEvent.KEY_TYPED;
 import static java.awt.event.KeyEvent.VK_UNDEFINED;
 
+import org.comtel2000.keyboard.robot.IRobot;
+import org.slf4j.LoggerFactory;
+
+import javax.swing.SwingUtilities;
 import java.awt.Component;
 import java.awt.KeyboardFocusManager;
 import java.awt.event.KeyEvent;
-
-import javax.swing.SwingUtilities;
-
-import org.comtel2000.keyboard.robot.IRobot;
-import org.slf4j.LoggerFactory;
 
 public class AWTRobotHandler implements IRobot {
 

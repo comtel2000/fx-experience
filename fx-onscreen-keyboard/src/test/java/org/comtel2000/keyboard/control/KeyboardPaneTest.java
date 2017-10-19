@@ -1,5 +1,11 @@
 package org.comtel2000.keyboard.control;
 
+import static org.testfx.api.FxAssert.verifyThat;
+import static org.testfx.matcher.base.NodeMatchers.isDisabled;
+import static org.testfx.matcher.base.NodeMatchers.isEnabled;
+import static org.testfx.matcher.base.NodeMatchers.isNotNull;
+import static org.testfx.matcher.base.NodeMatchers.isNull;
+
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseButton;
@@ -8,16 +14,11 @@ import org.junit.Test;
 import org.testfx.framework.junit.ApplicationTest;
 import org.testfx.util.NodeQueryUtils;
 
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 import java.util.function.Predicate;
-
-import static org.testfx.api.FxAssert.verifyThat;
-import static org.testfx.matcher.base.NodeMatchers.*;
 
 public class KeyboardPaneTest extends ApplicationTest {
 
@@ -53,7 +54,9 @@ public class KeyboardPaneTest extends ApplicationTest {
 
     @Override
     public void start(Stage stage) {
-        KeyboardPane keyboard = KeyBoardBuilder.create().setExternalKeyboardTypeFinder(() -> Collections.singletonList(new IExternalKeyboardTypeFinder.KeyboardTypeBean(type, "c:\\app", "ip-keyboard.xml"))).layer(DefaultLayer.DEFAULT)
+        KeyboardPane keyboard = KeyBoardBuilder.create().setExternalKeyboardTypeFinder(() ->
+                Collections.singletonList(new IExternalKeyboardTypeFinder
+                        .KeyboardTypeBean(type, "c:\\app", "ip-keyboard.xml"))).layer(DefaultLayer.DEFAULT)
                 .initLocale(Locale.ENGLISH).build();
         keyboard.setActiveType(type);
         Scene scene = new Scene(keyboard, keyboard.getPrefWidth(), keyboard.getPrefHeight());

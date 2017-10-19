@@ -26,10 +26,9 @@
 
 package org.comtel2000.keyboard.control;
 
-import org.comtel2000.keyboard.event.KeyButtonEvent;
-
 import javafx.beans.property.ObjectProperty;
 import javafx.event.EventHandler;
+import org.comtel2000.keyboard.event.KeyButtonEvent;
 
 interface LongPressable {
 

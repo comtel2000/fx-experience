@@ -26,22 +26,21 @@
 
 package org.comtel2000.samples.fx;
 
-import java.nio.file.Paths;
-import java.text.ParseException;
-import java.util.Locale;
-import java.util.Map;
-
-import org.comtel2000.keyboard.control.DefaultLayer;
-import org.comtel2000.keyboard.control.KeyBoardPopup;
-import org.comtel2000.keyboard.control.KeyboardPane;
-import org.comtel2000.keyboard.control.DefaultKeyboardType;
-import org.comtel2000.swing.robot.NativeAsciiRobotHandler;
-
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import org.comtel2000.keyboard.control.DefaultKeyboardType;
+import org.comtel2000.keyboard.control.DefaultLayer;
+import org.comtel2000.keyboard.control.KeyBoardPopup;
+import org.comtel2000.keyboard.control.KeyboardPane;
+import org.comtel2000.swing.robot.NativeAsciiRobotHandler;
+
+import java.nio.file.Paths;
+import java.text.ParseException;
+import java.util.Locale;
+import java.util.Map;
 
 public class StandAloneApp extends Application {
 

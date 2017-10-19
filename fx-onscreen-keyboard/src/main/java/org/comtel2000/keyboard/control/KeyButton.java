@@ -26,8 +26,6 @@
 
 package org.comtel2000.keyboard.control;
 
-import org.comtel2000.keyboard.event.KeyButtonEvent;
-
 import javafx.animation.Timeline;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -35,6 +33,7 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import org.comtel2000.keyboard.event.KeyButtonEvent;
 
 public abstract class KeyButton extends Button implements LongPressable {
 

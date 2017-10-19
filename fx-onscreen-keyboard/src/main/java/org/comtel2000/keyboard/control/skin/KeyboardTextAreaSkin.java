@@ -26,12 +26,10 @@
 
 package org.comtel2000.keyboard.control.skin;
 
-import org.comtel2000.keyboard.FXOK;
-
 import com.sun.javafx.scene.control.skin.TextAreaSkin;
-
 import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
+import org.comtel2000.keyboard.FXOK;
 
 @SuppressWarnings("restriction")
 public class KeyboardTextAreaSkin extends TextAreaSkin {

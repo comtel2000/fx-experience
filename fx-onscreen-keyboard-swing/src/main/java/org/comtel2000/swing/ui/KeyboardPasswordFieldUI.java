@@ -26,13 +26,12 @@
 
 package org.comtel2000.swing.ui;
 
-import java.awt.event.FocusListener;
-import java.awt.event.MouseListener;
-
 import javax.swing.JComponent;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicPasswordFieldUI;
 import javax.swing.text.JTextComponent;
+import java.awt.event.FocusListener;
+import java.awt.event.MouseListener;
 
 public class KeyboardPasswordFieldUI extends BasicPasswordFieldUI {
 

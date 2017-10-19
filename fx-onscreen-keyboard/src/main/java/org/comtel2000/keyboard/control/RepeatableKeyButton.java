@@ -26,13 +26,12 @@
 
 package org.comtel2000.keyboard.control;
 
-import org.slf4j.LoggerFactory;
-
 import javafx.animation.Animation.Status;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.input.MouseButton;
 import javafx.util.Duration;
+import org.slf4j.LoggerFactory;
 
 class RepeatableKeyButton extends KeyButton {
 

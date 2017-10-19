@@ -26,18 +26,17 @@
 
 package org.comtel2000.swing.control;
 
-import java.nio.file.Path;
-import java.util.Locale;
-import java.util.concurrent.CountDownLatch;
-
+import javafx.application.Platform;
+import javafx.util.Builder;
 import org.comtel2000.keyboard.control.DefaultLayer;
 import org.comtel2000.keyboard.control.KeyBoardBuilder;
 import org.comtel2000.keyboard.control.KeyBoardPopup;
 import org.comtel2000.keyboard.robot.IRobot;
 import org.comtel2000.swing.robot.AWTRobotHandler;
 
-import javafx.application.Platform;
-import javafx.util.Builder;
+import java.nio.file.Path;
+import java.util.Locale;
+import java.util.concurrent.CountDownLatch;
 
 /**
  * Swing {@link KeyBoardWindow} builder

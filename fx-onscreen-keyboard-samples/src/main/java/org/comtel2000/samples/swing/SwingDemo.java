@@ -26,10 +26,12 @@
 
 package org.comtel2000.samples.swing;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.util.Locale;
+import org.comtel2000.keyboard.control.DefaultLayer;
+import org.comtel2000.keyboard.control.VkProperties;
+import org.comtel2000.swing.control.KeyBoardWindow;
+import org.comtel2000.swing.control.KeyBoardWindowBuilder;
+import org.comtel2000.swing.robot.AWTRobotHandler;
+import org.comtel2000.swing.ui.KeyboardUIManagerTool;
 
 import javax.swing.JApplet;
 import javax.swing.JButton;
@@ -41,13 +43,10 @@ import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
-
-import org.comtel2000.keyboard.control.DefaultLayer;
-import org.comtel2000.keyboard.control.VkProperties;
-import org.comtel2000.swing.control.KeyBoardWindow;
-import org.comtel2000.swing.control.KeyBoardWindowBuilder;
-import org.comtel2000.swing.robot.AWTRobotHandler;
-import org.comtel2000.swing.ui.KeyboardUIManagerTool;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.util.Locale;
 
 public class SwingDemo extends JApplet implements VkProperties {
 

@@ -26,10 +26,9 @@
 
 package org.comtel2000.keyboard.xml;
 
-import java.util.Optional;
-
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
+import java.util.Optional;
 
 public class XmlHelper {
 

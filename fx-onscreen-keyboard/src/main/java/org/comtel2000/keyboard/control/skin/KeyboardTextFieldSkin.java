@@ -26,13 +26,11 @@
 
 package org.comtel2000.keyboard.control.skin;
 
-import org.comtel2000.keyboard.FXOK;
-
 import com.sun.javafx.scene.control.behavior.TextFieldBehavior;
 import com.sun.javafx.scene.control.skin.TextFieldSkin;
-
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
+import org.comtel2000.keyboard.FXOK;
 
 @SuppressWarnings("restriction")
 public class KeyboardTextFieldSkin extends TextFieldSkin {

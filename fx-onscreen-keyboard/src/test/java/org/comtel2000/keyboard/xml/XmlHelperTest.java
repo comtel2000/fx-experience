@@ -1,17 +1,19 @@
 package org.comtel2000.keyboard.xml;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
-import java.io.IOException;
-import java.net.URL;
+import org.junit.Test;
 
 import javax.xml.stream.FactoryConfigurationError;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
-
-import org.junit.Test;
+import java.io.IOException;
+import java.net.URL;
 
 public class XmlHelperTest {
 

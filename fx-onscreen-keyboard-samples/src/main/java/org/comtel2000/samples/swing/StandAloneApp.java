@@ -26,6 +26,19 @@
 
 package org.comtel2000.samples.swing;
 
+import javafx.application.Platform;
+import javafx.embed.swing.JFXPanel;
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import org.comtel2000.keyboard.control.DefaultKeyboardType;
+import org.comtel2000.keyboard.control.DefaultLayer;
+import org.comtel2000.keyboard.control.KeyBoardPopup;
+import org.comtel2000.keyboard.control.KeyboardPane;
+import org.comtel2000.swing.robot.NativeAsciiRobotHandler;
+
+import javax.swing.JApplet;
+import javax.swing.JWindow;
+import javax.swing.SwingUtilities;
 import java.awt.BorderLayout;
 import java.nio.file.Paths;
 import java.text.ParseException;
@@ -33,21 +46,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-
-import javax.swing.JApplet;
-import javax.swing.JWindow;
-import javax.swing.SwingUtilities;
-
-import org.comtel2000.keyboard.control.DefaultLayer;
-import org.comtel2000.keyboard.control.KeyBoardPopup;
-import org.comtel2000.keyboard.control.KeyboardPane;
-import org.comtel2000.keyboard.control.DefaultKeyboardType;
-import org.comtel2000.swing.robot.NativeAsciiRobotHandler;
-
-import javafx.application.Platform;
-import javafx.embed.swing.JFXPanel;
-import javafx.scene.Group;
-import javafx.scene.Scene;
 
 public class StandAloneApp extends JApplet {
 

@@ -26,13 +26,6 @@
 
 package org.comtel2000.samples.fx;
 
-import java.util.Locale;
-
-import org.comtel2000.keyboard.control.DefaultLayer;
-import org.comtel2000.keyboard.control.KeyBoardPopup;
-import org.comtel2000.keyboard.control.KeyBoardPopupBuilder;
-import org.comtel2000.keyboard.control.VkProperties;
-
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -47,6 +40,12 @@ import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.ToolBar;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import org.comtel2000.keyboard.control.DefaultLayer;
+import org.comtel2000.keyboard.control.KeyBoardPopup;
+import org.comtel2000.keyboard.control.KeyBoardPopupBuilder;
+import org.comtel2000.keyboard.control.VkProperties;
+
+import java.util.Locale;
 
 public class MainDemo extends Application implements VkProperties {
 

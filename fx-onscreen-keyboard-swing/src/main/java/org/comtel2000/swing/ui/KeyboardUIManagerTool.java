@@ -26,27 +26,25 @@
 
 package org.comtel2000.swing.ui;
 
+import javafx.animation.Animation;
+import javafx.animation.FadeTransition;
+import javafx.animation.Transition;
+import javafx.application.Platform;
+import javafx.util.Duration;
+import org.comtel2000.keyboard.control.DefaultKeyboardType;
+import org.comtel2000.keyboard.control.IKeyboardType;
+import org.comtel2000.keyboard.control.KeyBoardPopup;
+import org.comtel2000.keyboard.control.VkProperties;
+import org.comtel2000.swing.control.KeyBoardWindow;
+
+import javax.swing.UIManager;
+import javax.swing.text.JTextComponent;
 import java.awt.Component;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Locale;
-
-import javax.swing.UIManager;
-import javax.swing.text.JTextComponent;
-
-import org.comtel2000.keyboard.control.IKeyboardType;
-import org.comtel2000.keyboard.control.KeyBoardPopup;
-import org.comtel2000.keyboard.control.DefaultKeyboardType;
-import org.comtel2000.keyboard.control.VkProperties;
-import org.comtel2000.swing.control.KeyBoardWindow;
-
-import javafx.animation.Animation;
-import javafx.animation.FadeTransition;
-import javafx.animation.Transition;
-import javafx.application.Platform;
-import javafx.util.Duration;
 
 public class KeyboardUIManagerTool {
 

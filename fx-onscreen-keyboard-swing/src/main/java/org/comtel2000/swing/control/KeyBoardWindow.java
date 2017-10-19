@@ -26,18 +26,16 @@
 
 package org.comtel2000.swing.control;
 
-import java.util.Optional;
-
-import javax.swing.JWindow;
-
-import org.comtel2000.keyboard.control.KeyBoardPopup;
-
 import javafx.embed.swing.JFXPanel;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import org.comtel2000.keyboard.control.KeyBoardPopup;
+
+import javax.swing.JWindow;
+import java.util.Optional;
 
 /**
  * Swing window wrapper class for {@link KeyBoardPopup}.

@@ -71,14 +71,14 @@ import static java.awt.event.KeyEvent.VK_Z;
 import static java.awt.event.KeyEvent.getExtendedKeyCodeForChar;
 import static java.awt.event.KeyEvent.getKeyText;
 
+import org.comtel2000.keyboard.robot.IRobot;
+import org.slf4j.LoggerFactory;
+
 import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.Toolkit;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.StringSelection;
-
-import org.comtel2000.keyboard.robot.IRobot;
-import org.slf4j.LoggerFactory;
 
 /**
  * native OS support (dirty unicode char support only by transfer over OS clipboard..)

@@ -26,10 +26,9 @@
 
 package org.comtel2000.keyboard.event;
 
-import org.comtel2000.keyboard.control.KeyButton;
-
 import javafx.event.Event;
 import javafx.event.EventType;
+import org.comtel2000.keyboard.control.KeyButton;
 
 public class KeyButtonEvent extends Event {
 
