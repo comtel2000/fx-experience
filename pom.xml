@@ -65,12 +65,12 @@
 			<dependency>
 				<groupId>org.slf4j</groupId>
 				<artifactId>slf4j-api</artifactId>
-				<version>1.8.0-alpha2</version>
+				<version>1.8.0-beta1</version>
 			</dependency>
 			<dependency>
 				<groupId>org.slf4j</groupId>
 				<artifactId>slf4j-simple</artifactId>
-				<version>1.8.0-alpha2</version>
+				<version>1.8.0-beta1</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
@@ -200,7 +200,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
-					<version>3.6.1</version>
+					<version>3.7.0</version>
 					<configuration>
 						<source>9</source>
 						<target>9</target>
