@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Keyboard keyWidth="40" keyHeight="30" horizontalGap="0" verticalGap="0">
+	<Row>
+		<Key codes="-112" keyLabel="F1" keyLabelStyle=".small-style" />
+		<Key codes="-113" keyLabel="F2" keyLabelStyle=".small-style" />
+		<Key codes="-114" keyLabel="F3" keyLabelStyle=".small-style" />
+		<Key codes="-115" keyLabel="F4" keyLabelStyle=".small-style" />
+		<Key codes="-116" keyLabel="F5" keyLabelStyle=".small-style" />
+		<Key codes="-117" keyLabel="F6" keyLabelStyle=".small-style" />
+		<Key codes="-118" keyLabel="F7" keyLabelStyle=".small-style" />
+		<Key codes="-119" keyLabel="F8" keyLabelStyle=".small-style" />
+		<Key codes="-120" keyLabel="F9" keyLabelStyle=".small-style" />
+		<Key codes="-121" keyLabel="F10" keyLabelStyle=".small-style" />
+		<Key codes="-5" keyLabel="!" keyLabelStyle=".font-fxkeyboard" repeatable="true" />
+	</Row>
+
+	<Row>
+		<Key codes="43" keyLabel="A" keyLabelStyle=".font-fxkeyboard" keyWidth="70" />
+		<Key codes="65" keyLabel="SELECT ALL" keyLabelStyle=".small-style" keyWidth="135" />
+		<Key codes="-14" keyLabel="UNDO" keyLabelStyle=".small-style" keyWidth="70" />
+		<Key codes="-15" keyLabel="REDO" keyLabelStyle=".small-style" keyWidth="70" />
+		<Key codes="-10" keyLabel="▲" keyLabelStyle=".small-style" repeatable="true" />
+		<Key codes="10" keyLabel="ENTER" keyLabelStyle=".small-style" keyWidth="70" />
+	</Row>
+
+	<Row>
+		<Key codes="45" keyLabel="@" keyLabelStyle=".font-fxkeyboard" keyWidth="70" />
+		<Key codes="88" keyLabel="CUT" keyLabelStyle=".small-style" keyWidth="75" />
+		<Key codes="67" keyLabel="COPY" keyLabelStyle=".small-style" keyWidth="75" />
+		<Key codes="86" keyLabel="PASTE" keyLabelStyle=".small-style" keyWidth="77" />
+		<Key codes="-12" keyLabel="◄" keyLabelStyle=".small-style" repeatable="true" />
+		<Key codes="-11" keyLabel="▼" keyLabelStyle=".small-style" repeatable="true" />
+		<Key codes="-13" keyLabel="►" keyLabelStyle=".small-style" repeatable="true" />
+		<Key codes="" keyWidth="25" />
+	</Row>
+
+	<Row>
+		<Key codes="-6" keyLabel="CTRL" keyLabelStyle=".small-style" keyWidth="50" />
+		<Key codes="-4" keyLabel="TAB" keyLabelStyle=".small-style" keyWidth="50" />
+		<Key codes="32" keyLabel="3" keyLabelStyle=".font-fxkeyboard-alpha" keyWidth="240" movable="true" repeatable="true" />
+		<Key codes="-7" keyLabel="ES" keyLabelStyle=".small-style" keyWidth="50" />
+		<Key codes="-3" keyLabel="2" keyLabelStyle=".font-fxkeyboard" keyWidth="50" />
+	</Row>
+
+</Keyboard>
+    

@@ -72,4 +72,7 @@ public interface VkProperties {
 
   /** English locale value */
   String VK_LOCALE_EN = "en";
+
+  /** Spanish locale value */
+  String VK_LOCALE_ES = "es";
 }
