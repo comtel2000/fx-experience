@@ -26,7 +26,7 @@
 
 package org.comtel2000.keyboard.control;
 
-public interface StandardKeyCode {
+interface StandardKeyCode {
 
   int SHIFT_DOWN = -1;
 

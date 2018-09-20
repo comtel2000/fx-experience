@@ -45,34 +45,28 @@ public class KeyBoardBuilder implements Builder<KeyboardPane> {
     return new KeyBoardBuilder();
   }
 
-  public KeyBoardBuilder layerPath(Path path) {
+  public void layerPath(Path path) {
     kb.setLayerPath(path);
-    return this;
   }
 
-  public KeyBoardBuilder layer(DefaultLayer layer) {
+  public void layer(DefaultLayer layer) {
     kb.setLayer(layer);
-    return this;
   }
 
-  public KeyBoardBuilder style(String css) {
+  public void style(String css) {
     kb.setStyle(css);
-    return this;
   }
 
-  public KeyBoardBuilder initLocale(Locale locale) {
+  public void initLocale(Locale locale) {
     kb.setLocale(locale);
-    return this;
   }
 
-  public KeyBoardBuilder initScale(double scale) {
+  public void initScale(double scale) {
     kb.setScale(scale);
-    return this;
   }
 
-  public KeyBoardBuilder addIRobot(IRobot robot) {
+  public void addIRobot(IRobot robot) {
     kb.addRobotHandler(robot);
-    return this;
   }
 
   @Override
@@ -80,7 +74,7 @@ public class KeyBoardBuilder implements Builder<KeyboardPane> {
     try {
       kb.load();
     } catch (Exception e) {
-      new RuntimeException(e);
+      throw new RuntimeException(e);
     }
     return kb;
   }

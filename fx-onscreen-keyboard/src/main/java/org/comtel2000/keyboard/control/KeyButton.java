@@ -26,11 +26,14 @@
 
 package org.comtel2000.keyboard.control;
 
+import java.security.AccessController;
+import java.security.PrivilegedAction;
+
 import org.comtel2000.keyboard.event.KeyButtonEvent;
 
 import javafx.animation.Timeline;
 import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.ObjectPropertyBase;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -38,62 +41,73 @@ import javafx.scene.control.Button;
 
 public abstract class KeyButton extends Button implements LongPressable {
 
-  private final static long DEFAULT_DELAY = 400;
+  private static double KEY_LONG_PRESS_DELAY = 400;
 
+  private static final double KEY_LONG_PRESS_DELAY_MIN = 100;
+  private static final double KEY_LONG_PRESS_DELAY_MAX = 1000;
+
+  Timeline buttonDelay;
   private String keyText;
-
-  private boolean movable, repeatable, sticky;
-
+  private boolean movable;
+  private boolean repeatable;
+  private boolean sticky;
   private int keyCode;
-
-  protected Timeline buttonDelay;
-
-  private EventHandler<? super KeyButtonEvent> _onLongPressed;
   private ObjectProperty<EventHandler<? super KeyButtonEvent>> onLongPressed;
-
-  private EventHandler<? super KeyButtonEvent> _onShortPressed;
   private ObjectProperty<EventHandler<? super KeyButtonEvent>> onShortPressed;
 
+  static {
+    AccessController.doPrivileged((PrivilegedAction<Void>) () -> {
+
+      String s = System.getProperty("org.comtel2000.keyboard.longPressDelay");
+      if (s != null) {
+        Double delay = Double.valueOf(s);
+        KEY_LONG_PRESS_DELAY = Math.min(Math.max(delay, KEY_LONG_PRESS_DELAY_MIN),
+            KEY_LONG_PRESS_DELAY_MAX);
+      }
+      return null;
+    });
+  }
+
   public KeyButton() {
-    this(null, null, DEFAULT_DELAY);
+    this(null, null, KEY_LONG_PRESS_DELAY);
   }
 
   public KeyButton(String label) {
-    this(label, null, DEFAULT_DELAY);
+    this(label, null, KEY_LONG_PRESS_DELAY);
   }
 
   public KeyButton(Node graphic) {
-    this(null, graphic, DEFAULT_DELAY);
+    this(null, graphic, KEY_LONG_PRESS_DELAY);
   }
 
   public KeyButton(String label, Node graphic) {
-    this(label, graphic, DEFAULT_DELAY);
+    this(label, graphic, KEY_LONG_PRESS_DELAY);
   }
 
-  public KeyButton(String label, long delay) {
+  public KeyButton(String label, double delay) {
     this(label, null, delay);
   }
 
-  public KeyButton(String label, Node graphic, long delay) {
+  public KeyButton(String label, Node graphic, double delay) {
     super(label, graphic);
     getStyleClass().add("key-button");
-    initEventListener(delay > 0 ? delay : DEFAULT_DELAY);
+    initEventListener(delay > 0 ? delay : KEY_LONG_PRESS_DELAY);
 
   }
 
-  protected abstract void initEventListener(long delay);
+  protected abstract void initEventListener(double delay);
 
-  protected void fireLongPressed() {
+  void fireLongPressed() {
     fireEvent(new KeyButtonEvent(this, KeyButtonEvent.LONG_PRESSED));
   }
 
-  protected void fireShortPressed() {
+  void fireShortPressed() {
     fireEvent(new KeyButtonEvent(this, KeyButtonEvent.SHORT_PRESSED));
   }
 
   @Override
   public final EventHandler<? super KeyButtonEvent> getOnLongPressed() {
-    return onLongPressed == null ? _onLongPressed : onLongPressed.get();
+    return onLongPressed != null ? onLongPressed.get() : null;
   }
 
   @Override
@@ -104,11 +118,21 @@ public abstract class KeyButton extends Button implements LongPressable {
   @Override
   public final ObjectProperty<EventHandler<? super KeyButtonEvent>> onLongPressedProperty() {
     if (onLongPressed == null) {
-      onLongPressed = new SimpleObjectProperty<EventHandler<? super KeyButtonEvent>>(this, "onLongPressed", _onLongPressed) {
+      onLongPressed = new ObjectPropertyBase<>() {
         @SuppressWarnings("unchecked")
         @Override
         protected void invalidated() {
           setEventHandler(KeyButtonEvent.LONG_PRESSED, (EventHandler<? super Event>) get());
+        }
+
+        @Override
+        public Object getBean() {
+          return KeyButton.this;
+        }
+
+        @Override
+        public String getName() {
+          return "onLongPressed";
         }
       };
     }
@@ -117,7 +141,7 @@ public abstract class KeyButton extends Button implements LongPressable {
 
   @Override
   public final EventHandler<? super KeyButtonEvent> getOnShortPressed() {
-    return onShortPressed == null ? _onShortPressed : onShortPressed.get();
+    return onShortPressed != null ? onShortPressed.get() : null;
   }
 
   @Override
@@ -128,11 +152,21 @@ public abstract class KeyButton extends Button implements LongPressable {
   @Override
   public final ObjectProperty<EventHandler<? super KeyButtonEvent>> onShortPressedProperty() {
     if (onShortPressed == null) {
-      onShortPressed = new SimpleObjectProperty<EventHandler<? super KeyButtonEvent>>(this, "onShortPressed", _onShortPressed) {
+      onShortPressed = new ObjectPropertyBase<>() {
         @SuppressWarnings("unchecked")
         @Override
         protected void invalidated() {
           setEventHandler(KeyButtonEvent.SHORT_PRESSED, (EventHandler<? super Event>) get());
+        }
+
+        @Override
+        public Object getBean() {
+          return KeyButton.this;
+        }
+
+        @Override
+        public String getName() {
+          return "onShortPressed";
         }
       };
     }
@@ -155,7 +189,8 @@ public abstract class KeyButton extends Button implements LongPressable {
     this.keyText = keyText;
   }
 
-  public void addExtKeyCode(int keyCode, String label) {}
+  public void addExtKeyCode(int keyCode, String label) {
+  }
 
   public boolean isMovable() {
     return movable;
@@ -169,7 +204,7 @@ public abstract class KeyButton extends Button implements LongPressable {
     return repeatable;
   }
 
-  public void setRepeatable(boolean repeatable) {
+  void setRepeatable(boolean repeatable) {
     this.repeatable = repeatable;
   }
 

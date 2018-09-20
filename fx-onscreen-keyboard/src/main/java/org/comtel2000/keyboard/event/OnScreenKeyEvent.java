@@ -31,15 +31,18 @@ import javafx.event.Event;
 import javafx.event.EventType;
 import javafx.scene.input.InputEvent;
 
-public class OnScreenKeyEvent extends InputEvent {
+class OnScreenKeyEvent extends InputEvent {
 
+  private static final EventType<? super Event> ANY;
+  private static final EventType<? super Event> LONG_PRESSED;
+  private static final EventType<? super Event> SHORT_PRESSED;
   private static final long serialVersionUID = 65116620766495525L;
 
-  public static final EventType<? super Event> ANY;
-
-  public static final EventType<? super Event> LONG_PRESSED;
-
-  public static final EventType<? super Event> SHORT_PRESSED;
+  static {
+    ANY = new EventType<>(Event.ANY, "KB_PRESSED");
+    LONG_PRESSED = new EventType<>(ANY, "KB_PRESSED_LONG");
+    SHORT_PRESSED = new EventType<>(ANY, "KB_PRESSED_SHORT");
+  }
 
   public OnScreenKeyEvent(EventType<? extends InputEvent> type) {
     super(type);
@@ -52,14 +55,8 @@ public class OnScreenKeyEvent extends InputEvent {
 
   @Override
   public String toString() {
-    return "KeyButtonEvent [" + "source = " + getSource() + ", target = " + getTarget() + ", eventType = " + getEventType() + ", consumed = " + isConsumed()
-        + "]";
-  }
-
-  static {
-    ANY = new EventType<>(Event.ANY, "KB_PRESSED");
-    LONG_PRESSED = new EventType<>(ANY, "KB_PRESSED_LONG");
-    SHORT_PRESSED = new EventType<>(ANY, "KB_PRESSED_SHORT");
+    return "KeyButtonEvent [" + "source = " + getSource() + ", target = " + getTarget()
+        + ", eventType = " + getEventType() + ", consumed = " + isConsumed() + "]";
   }
 
 }

@@ -26,45 +26,46 @@ package org.comtel2000.swing.ui;
  * WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *******************************************************************************/
 
-import javax.swing.*;
-import javax.swing.plaf.ComponentUI;
-import javax.swing.plaf.basic.BasicPasswordFieldUI;
-import javax.swing.text.JTextComponent;
 import java.awt.event.FocusListener;
 import java.awt.event.MouseListener;
 
+import javax.swing.JComponent;
+import javax.swing.plaf.ComponentUI;
+import javax.swing.plaf.basic.BasicPasswordFieldUI;
+import javax.swing.text.JTextComponent;
+
 public class KeyboardPasswordFieldUI extends BasicPasswordFieldUI {
 
-    private static FocusListener fl;
+  static FocusListener fl;
 
-    private static MouseListener ml;
+  static MouseListener ml;
 
-    public KeyboardPasswordFieldUI() {
-        super();
+  KeyboardPasswordFieldUI() {
+    super();
+  }
+
+  public static void setFocusListener(FocusListener l) {
+    fl = l;
+  }
+
+  public static void setMouseListener(MouseListener l) {
+    ml = l;
+  }
+
+  public static ComponentUI createUI(JComponent c) {
+    return new KeyboardPasswordFieldUI();
+  }
+
+  @Override
+  public void installUI(JComponent c) {
+    if (c instanceof JTextComponent) {
+      if (fl != null) {
+        c.addFocusListener(fl);
+      }
+      if (ml != null) {
+        c.addMouseListener(ml);
+      }
     }
-
-    public static void setFocusListener(FocusListener l) {
-        fl = l;
-    }
-
-    public static void setMouseListener(MouseListener l) {
-        ml = l;
-    }
-
-    public static ComponentUI createUI(JComponent c) {
-        return new KeyboardPasswordFieldUI();
-    }
-
-    @Override
-    public void installUI(JComponent c) {
-        if (c instanceof JTextComponent) {
-            if (fl != null) {
-                c.addFocusListener(fl);
-            }
-            if (ml != null) {
-                c.addMouseListener(ml);
-            }
-        }
-        super.installUI(c);
-    }
+    super.installUI(c);
+  }
 }

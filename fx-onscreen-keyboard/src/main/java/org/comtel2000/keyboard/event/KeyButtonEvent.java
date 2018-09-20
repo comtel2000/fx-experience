@@ -33,13 +33,16 @@ import javafx.event.EventType;
 
 public class KeyButtonEvent extends Event {
 
+  public static final EventType<Event> ANY;
+  public static final EventType<Event> LONG_PRESSED;
+  public static final EventType<Event> SHORT_PRESSED;
   private static final long serialVersionUID = 647301812232489628L;
 
-  public static final EventType<Event> ANY;
-
-  public static final EventType<Event> LONG_PRESSED;
-
-  public static final EventType<Event> SHORT_PRESSED;
+  static {
+    ANY = new EventType<>(Event.ANY, "KB_PRESSED");
+    LONG_PRESSED = new EventType<>(ANY, "KB_PRESSED_LONG");
+    SHORT_PRESSED = new EventType<>(ANY, "KB_PRESSED_SHORT");
+  }
 
   public KeyButtonEvent(EventType<Event> type) {
     super(type);
@@ -51,14 +54,8 @@ public class KeyButtonEvent extends Event {
 
   @Override
   public String toString() {
-    return "KeyButtonEvent [" + "source = " + getSource() + ", target = " + getTarget() + ", eventType = " + getEventType() + ", consumed = " + isConsumed()
-        + "]";
-  }
-
-  static {
-    ANY = new EventType<>(Event.ANY, "KB_PRESSED");
-    LONG_PRESSED = new EventType<>(ANY, "KB_PRESSED_LONG");
-    SHORT_PRESSED = new EventType<>(ANY, "KB_PRESSED_SHORT");
+    return "KeyButtonEvent [" + "source = " + getSource() + ", target = " + getTarget()
+        + ", eventType = " + getEventType() + ", consumed = " + isConsumed() + "]";
   }
 
 }

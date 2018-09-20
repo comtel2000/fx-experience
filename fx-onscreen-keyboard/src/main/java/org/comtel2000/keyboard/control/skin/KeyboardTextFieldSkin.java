@@ -27,13 +27,12 @@
 package org.comtel2000.keyboard.control.skin;
 
 import org.comtel2000.keyboard.FXOK;
+import org.comtel2000.keyboard.control.KeyBoardPopup.Visibility;
 
-import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.control.skin.TextFieldSkin;
 
-
-public class KeyboardTextFieldSkin extends TextFieldSkin {
+class KeyboardTextFieldSkin extends TextFieldSkin {
 
   public KeyboardTextFieldSkin(TextField textInput) {
     super(textInput);
@@ -41,10 +40,8 @@ public class KeyboardTextFieldSkin extends TextFieldSkin {
   }
 
   private void addFocusListener(TextField textInput) {
-    textInput.focusedProperty().addListener(observable -> {
-      Scene scene = getSkinnable().getScene();
-      FXOK.updateVisibility(scene, textInput);
-    });
+    textInput.focusedProperty().addListener(
+        (l, a, b) -> FXOK.setVisible(b ? Visibility.SHOW : Visibility.HIDE, textInput));
 
   }
 

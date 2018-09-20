@@ -33,29 +33,29 @@ import javax.xml.stream.XMLStreamReader;
 
 public class XmlHelper {
 
-  public final static String KEYBOARD = "Keyboard";
-  public final static String ROW = "Row";
-  public final static String KEY = "Key";
+  public static final String KEYBOARD = "Keyboard";
+  public static final String ROW = "Row";
+  public static final String KEY = "Key";
 
-  public final static String ATTR_KEY_WIDTH = "keyWidth";
-  public final static String ATTR_KEY_HEIGHT = "keyHeight";
-  public final static String ATTR_H_GAP = "horizontalGap";
-  public final static String ATTR_V_GAP = "verticalGap";
-  public final static String ATTR_ROW_EDGE_FLAGS = "rowEdgeFlags";
-  public final static String ATTR_KEY_EDGE_FLAGS = "keyEdgeFlags";
+  public static final String ATTR_KEY_WIDTH = "keyWidth";
+  public static final String ATTR_KEY_HEIGHT = "keyHeight";
+  public static final String ATTR_H_GAP = "horizontalGap";
+  public static final String ATTR_V_GAP = "verticalGap";
+  public static final String ATTR_ROW_EDGE_FLAGS = "rowEdgeFlags";
+  public static final String ATTR_KEY_EDGE_FLAGS = "keyEdgeFlags";
 
-  public final static String ATTR_KEY_LABEL = "keyLabel";
-  public final static String ATTR_KEY_LABEL_STYLE = "keyLabelStyle";
-  public final static String ATTR_KEY_ICON_STYLE = "keyIconStyle";
-  public final static String ATTR_KEY_OUTPUT_TEXT = "keyOutputText";
+  public static final String ATTR_KEY_LABEL = "keyLabel";
+  public static final String ATTR_KEY_LABEL_STYLE = "keyLabelStyle";
+  public static final String ATTR_KEY_ICON_STYLE = "keyIconStyle";
+  public static final String ATTR_KEY_OUTPUT_TEXT = "keyOutputText";
 
-  public final static String ATTR_CODES = "codes";
-  public final static String ATTR_MOVABLE = "movable";
-  public final static String ATTR_REPEATABLE = "repeatable";
-  public final static String ATTR_STICKY = "sticky";
+  public static final String ATTR_CODES = "codes";
+  public static final String ATTR_MOVABLE = "movable";
+  public static final String ATTR_REPEATABLE = "repeatable";
+  public static final String ATTR_STICKY = "sticky";
 
-  public final static String FLAG_RIGHT = "right";
-  public final static String FLAG_LEFT = "left";
+  public static final String FLAG_RIGHT = "right";
+  public static final String FLAG_LEFT = "left";
 
   private XmlHelper() {
   }
@@ -69,8 +69,9 @@ public class XmlHelper {
       try {
         return Optional.of(Integer.valueOf(s));
       } catch (NumberFormatException e) {
+        return Optional.empty();
       }
-      return Optional.empty();
+
     });
   }
 
@@ -82,11 +83,13 @@ public class XmlHelper {
     try {
       return Integer.parseInt(a);
     } catch (NumberFormatException e) {
+      return defaultValue;
     }
-    return defaultValue;
+
   }
 
-  public static boolean readBooleanAttribute(XMLStreamReader reader, String attr, boolean defaultValue) {
+  public static boolean readBooleanAttribute(XMLStreamReader reader, String attr,
+      boolean defaultValue) {
     String a = reader.getAttributeValue(null, attr);
     if (a == null || a.isEmpty()) {
       return defaultValue;
@@ -103,6 +106,7 @@ public class XmlHelper {
       try {
         reader.close();
       } catch (XMLStreamException e) {
+        // nothing
       }
     }
   }

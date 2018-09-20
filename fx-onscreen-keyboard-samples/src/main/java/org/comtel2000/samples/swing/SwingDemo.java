@@ -1,5 +1,26 @@
 package org.comtel2000.samples.swing;
 
+import static org.comtel2000.keyboard.control.VkProperties.VK_LOCALE;
+import static org.comtel2000.keyboard.control.VkProperties.VK_LOCALE_DE;
+import static org.comtel2000.keyboard.control.VkProperties.VK_TYPE;
+import static org.comtel2000.keyboard.control.VkProperties.VK_TYPE_NUMERIC;
+
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.util.Locale;
+
+import javax.swing.JButton;
+import javax.swing.JEditorPane;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JSeparator;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
+import javax.swing.WindowConstants;
+
 /*******************************************************************************
  * Copyright (c) 2016 comtel2000
  *
@@ -27,74 +48,64 @@ package org.comtel2000.samples.swing;
  *******************************************************************************/
 
 import org.comtel2000.keyboard.control.DefaultLayer;
-import org.comtel2000.keyboard.control.VkProperties;
 import org.comtel2000.swing.control.KeyBoardWindow;
 import org.comtel2000.swing.control.KeyBoardWindowBuilder;
 import org.comtel2000.swing.robot.AWTRobotHandler;
 import org.comtel2000.swing.ui.KeyboardUIManagerTool;
 
-import javax.swing.*;
-import java.awt.*;
-import java.util.Locale;
+public class SwingDemo extends JFrame {
 
-public class SwingDemo extends JApplet implements VkProperties {
+  private static final long serialVersionUID = 1L;
 
-    private static final long serialVersionUID = 1L;
+  public static void main(String[] args) {
+    SwingUtilities.invokeLater(() -> {
+      JFrame frame = new JFrame("Swing FX Keyboard");
+      frame.setResizable(false);
+      frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            JFrame frame = new JFrame("Swing FX Keyboard");
-            frame.setResizable(false);
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      SwingDemo kb = new SwingDemo();
+      kb.init();
+      frame.setContentPane(kb.getContentPane());
+      frame.pack();
+      frame.setLocationRelativeTo(null);
+      frame.setVisible(true);
 
-            JApplet applet = new SwingDemo();
-            applet.init();
+    });
+  }
 
-            frame.setContentPane(applet.getContentPane());
+  public void init() {
 
-            frame.pack();
-            frame.setLocationRelativeTo(null);
-            frame.setVisible(true);
+    KeyBoardWindow window =
+        KeyBoardWindowBuilder.create().initLocale(Locale.forLanguageTag("en")).addIRobot(new AWTRobotHandler()).layer(DefaultLayer.NUMBLOCK).build();
+    KeyboardUIManagerTool.installKeyboardDefaults(window);
 
-            applet.start();
+    JPanel panel = new JPanel();
+    panel.setPreferredSize(new Dimension(800, 400));
+    FlowLayout layout = new FlowLayout(FlowLayout.LEADING, 20, 20);
+    panel.setLayout(layout);
 
-        });
-    }
+    panel.add(new JTextField(70));
 
-    @Override
-    public void init() {
+    JTextField numbers = new JTextField("0-9", 70);
+    numbers.setToolTipText("0-9");
+    // set numeric kb type
+    numbers.getDocument().putProperty(VK_TYPE, VK_TYPE_NUMERIC);
+    panel.add(numbers);
+    panel.add(new JPasswordField(70));
 
-        KeyBoardWindow window =
-                KeyBoardWindowBuilder.create().initLocale(Locale.forLanguageTag("en")).addIRobot(new AWTRobotHandler()).layer(DefaultLayer.NUMBLOCK).build();
-        KeyboardUIManagerTool.installKeyboardDefaults(window);
+    JTextArea area = new JTextArea(4, 70);
+    area.setToolTipText("switch to Locale 'de'");
+    // set text area to german locale
+    area.getDocument().putProperty(VK_LOCALE, VK_LOCALE_DE);
+    panel.add(area);
+    panel.add(new JEditorPane());
+    panel.add(new JSeparator());
+    panel.add(new JButton("Ok"));
+    panel.add(new JButton("Cancel"));
 
-        JPanel panel = new JPanel();
-        panel.setPreferredSize(new Dimension(800, 400));
-        FlowLayout layout = new FlowLayout(FlowLayout.LEADING, 20, 20);
-        panel.setLayout(layout);
+    setLayout(new BorderLayout());
+    add(panel, BorderLayout.CENTER);
 
-        panel.add(new JTextField(70));
-
-        JTextField numbers = new JTextField("0-9", 70);
-        numbers.setToolTipText("0-9");
-        // set numeric kb type
-        numbers.getDocument().putProperty(VK_TYPE, VK_TYPE_NUMERIC);
-        panel.add(numbers);
-        panel.add(new JPasswordField(70));
-
-        JTextArea area = new JTextArea(4, 70);
-        area.setToolTipText("switch to Locale 'de'");
-        // set text area to german locale
-        area.getDocument().putProperty(VK_LOCALE, VK_LOCALE_DE);
-        panel.add(area);
-        panel.add(new JEditorPane());
-        panel.add(new JSeparator());
-        panel.add(new JButton("Ok"));
-        panel.add(new JButton("Cancel"));
-
-        setLayout(new BorderLayout());
-        add(panel, BorderLayout.CENTER);
-
-    }
+  }
 
 }

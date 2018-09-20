@@ -40,13 +40,10 @@ import javafx.util.Duration;
 
 class MultiKeyButton extends KeyButton {
 
-  private final static org.slf4j.Logger logger = LoggerFactory.getLogger(MultiKeyButton.class);
-
-  private MultiKeyPopup context;
-
+  private static final org.slf4j.Logger logger = LoggerFactory.getLogger(MultiKeyButton.class);
   private final Collection<String> styles;
-
   private final Parent parent;
+  private MultiKeyPopup context;
 
   MultiKeyButton(Parent parent, Collection<String> styles) {
     super();
@@ -56,7 +53,7 @@ class MultiKeyButton extends KeyButton {
   }
 
   @Override
-  protected void initEventListener(long delay) {
+  protected void initEventListener(double delay) {
 
     buttonDelay = new Timeline(new KeyFrame(new Duration(delay), event -> fireLongPressed()));
 
@@ -92,7 +89,7 @@ class MultiKeyButton extends KeyButton {
 
   }
 
-  MultiKeyPopup getContext() {
+  private MultiKeyPopup getContext() {
     if (context == null) {
       context = new MultiKeyPopup();
       context.getStylesheets().setAll(styles);

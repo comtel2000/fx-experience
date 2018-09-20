@@ -33,15 +33,15 @@ import javafx.event.EventHandler;
 
 interface LongPressable {
 
-  void setOnLongPressed(EventHandler<? super KeyButtonEvent> eventhandler);
-
   EventHandler<? super KeyButtonEvent> getOnLongPressed();
+
+  void setOnLongPressed(EventHandler<? super KeyButtonEvent> eventhandler);
 
   ObjectProperty<EventHandler<? super KeyButtonEvent>> onLongPressedProperty();
 
-  void setOnShortPressed(EventHandler<? super KeyButtonEvent> eventhandler);
-
   EventHandler<? super KeyButtonEvent> getOnShortPressed();
+
+  void setOnShortPressed(EventHandler<? super KeyButtonEvent> eventhandler);
 
   ObjectProperty<EventHandler<? super KeyButtonEvent>> onShortPressedProperty();
 }

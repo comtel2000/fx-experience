@@ -26,6 +26,12 @@
 
 package org.comtel2000.keyboard.control;
 
+import static org.comtel2000.keyboard.control.VkProperties.VK_LOCALE;
+import static org.comtel2000.keyboard.control.VkProperties.VK_STATE;
+import static org.comtel2000.keyboard.control.VkProperties.VK_STATE_DISABLED;
+import static org.comtel2000.keyboard.control.VkProperties.VK_TYPE;
+import static org.comtel2000.keyboard.control.VkProperties.VK_TYPE_TEXT;
+
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -33,9 +39,10 @@ import java.util.Objects;
 import org.comtel2000.keyboard.FXOK;
 
 import javafx.animation.FadeTransition;
-import javafx.application.Application;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.collections.ListChangeListener;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Bounds;
@@ -49,6 +56,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Popup;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 
@@ -56,43 +64,94 @@ import javafx.util.Duration;
  * Helper class to create a {@link KeyboardPane}
  *
  * @author comtel
- *
  */
-public class KeyBoardPopup extends Popup implements VkProperties {
+public class KeyBoardPopup extends Popup {
 
-  private final static String STYLE_CSS = "/css/KeyboardTextInputSkin.css";
-
-  enum Visiblity {
-    /** Set position and visible true */
+  public enum Visibility {
+    /**
+     * Set position and visible true
+     */
     SHOW,
 
-    /** Set visible false */
+    /**
+     * Set visible false
+     */
     HIDE,
 
-    /** Set positioning only if visible true */
+    /**
+     * Set positioning only if visible true
+     */
     POS
   }
 
-  private final KeyboardPane keyboard;
-
-  private Scene owner;
-
-  private double _offset = 5d;
-
-  /** default vertical keyboard to text component offset */
-  private DoubleProperty offset;
-
-  private FadeTransition animation;
-
-  public final static EventHandler<? super Event> DEFAULT_CLOSE_HANDLER = (event) -> {
+  public static final EventHandler<? super Event> DEFAULT_CLOSE_HANDLER = event -> {
     if (event.getSource() instanceof Node) {
       ((Node) event.getSource()).fireEvent(new WindowEvent(null, WindowEvent.WINDOW_CLOSE_REQUEST));
     }
   };
+  private static final String STYLE_CSS = "/css/KeyboardTextInputSkin.css";
+  private final KeyboardPane keyboard;
+
+  private boolean doNotOpenHiddenKeyboard = false;
+
+  private final ChangeListener<? super Node> focusChangeListener = (value, n1, n2) -> {
+    if (n2 instanceof TextInputControl) {
+      setVisible(doNotOpenHiddenKeyboard ? Visibility.POS : Visibility.SHOW, (TextInputControl) n2);
+      return;
+    }
+    if (n2 instanceof Parent) {
+      TextInputControl control = findTextInputControl((Parent) n2);
+      if (control != null) {
+        setVisible(doNotOpenHiddenKeyboard ? Visibility.POS : Visibility.SHOW, control);
+        return;
+      }
+    }
+    setVisible(Visibility.HIDE);
+  };
+
+  private final EventHandler<? super MouseEvent> doubleClickEventFilter = event -> {
+    if (event.getClickCount() == 2 && event.getSource() instanceof Stage) {
+      Node node = ((Stage) event.getSource()).getScene().getFocusOwner();
+      if (node instanceof TextInputControl) {
+        setVisible(Visibility.SHOW, (TextInputControl) node);
+      }
+    }
+  };
+
+  private Scene owner;
+
+  private double offsetValue = 5d;
+
+  /**
+   * default vertical keyboard to text component offset
+   */
+  private DoubleProperty offset;
+
+  private FadeTransition animation;
 
   public KeyBoardPopup(final KeyboardPane panel) {
     keyboard = Objects.requireNonNull(panel);
     getContent().add(keyboard);
+  }
+
+  public static String getUserAgentStyleSheet() {
+    return KeyBoardPopup.class.getResource(STYLE_CSS).toExternalForm();
+  }
+
+  /**
+   * search for nested input controls like {@code FakeFocusTextField}
+   *
+   * @param parent
+   * @return embedded TextInputControl or null
+   * @see ComboBox#isEditable()
+   */
+  private static TextInputControl findTextInputControl(Parent parent) {
+    for (Node child : parent.getChildrenUnmodifiable()) {
+      if (child instanceof TextInputControl) {
+        return (TextInputControl) child;
+      }
+    }
+    return null;
   }
 
   public final KeyboardPane getKeyBoard() {
@@ -104,7 +163,11 @@ public class KeyBoardPopup extends Popup implements VkProperties {
   }
 
   public void setVisible(boolean visible) {
-    setVisible(visible ? Visiblity.SHOW : Visiblity.HIDE);
+    setVisible(visible ? Visibility.SHOW : Visibility.HIDE);
+  }
+
+  void setVisible(Visibility visible) {
+    setVisible(visible, null);
   }
 
   public Scene getRegisteredScene() {
@@ -118,8 +181,8 @@ public class KeyBoardPopup extends Popup implements VkProperties {
   /**
    * Adds a FocusListener to Scene and open keyboard on {@link TextInputControl}
    *
-   * @param scene {@link Scene} to connect with the keyboard
-   *
+   * @param scene
+   *          {@link Scene} to connect with the keyboard
    * @see #addGlobalFocusListener()
    */
   public void addFocusListener(final Scene scene) {
@@ -129,88 +192,74 @@ public class KeyBoardPopup extends Popup implements VkProperties {
   /**
    * Adds a FocusListener to Scene and open keyboard on {@link TextInputControl}
    *
-   * @param scene {@link Scene} to connect with the keyboard
-   * @param doNotOpen on hidden keyboard do nothing and on showing keyboard move to current
-   *        component
-   *
+   * @param scene
+   *          {@link Scene} to connect with the keyboard
+   * @param doNotOpen
+   *          on hidden keyboard do nothing and on showing keyboard move to current component
    * @see #addGlobalFocusListener()
    */
   public void addFocusListener(final Scene scene, boolean doNotOpen) {
+    doNotOpenHiddenKeyboard = doNotOpen;
     registerScene(scene);
-    scene.focusOwnerProperty().addListener((value, n1, n2) -> {
-      if (n2 instanceof TextInputControl) {
-        setVisible(doNotOpen ? Visiblity.POS : Visiblity.SHOW, (TextInputControl) n2);
-      } else if (n2 instanceof Parent) {
-        TextInputControl control = findTextInputControl((Parent) n2);
-        setVisible((control != null ? (doNotOpen ? Visiblity.POS : Visiblity.SHOW) : Visiblity.HIDE), control);
-      } else {
-        setVisible(Visiblity.HIDE);
-      }
-    });
+    scene.focusOwnerProperty().addListener(focusChangeListener);
   }
 
   /**
-   * Set the focus listener as user agent stylesheet for the whole application with main theme
-   * Application.STYLESHEET_MODENA.
-   * <p>
-   * Reference: <a href="https://bugs.openjdk.java.net/browse/JDK-8077918">JDK-8077918</a>
+   * Add keyboard popup listener to all open dialogs, stages, etc.
    *
    * @see #addFocusListener(Scene)
-   * @see #addGlobalFocusListener(String)
    */
   public void addGlobalFocusListener() {
-    addGlobalFocusListener(Application.STYLESHEET_MODENA);
+    addGlobalFocusListener(doNotOpenHiddenKeyboard);
   }
 
   /**
-   * Set the focus listener as user agent stylesheet for the whole application with given main
-   * theme.
-   * <p>
-   * Reference: <a href="https://bugs.openjdk.java.net/browse/JDK-8077918">JDK-8077918</a>
+   * Add keyboard popup listener to all open dialogs, stages, etc.
    *
-   * @param url of main theme stylesheet
-   *
-   * @see #addFocusListener(Scene)
-   * @see #addGlobalFocusListener()
+   * @param doNotOpen
+   *          on hidden keyboard do nothing and on showing keyboard move to current component
    */
-  public void addGlobalFocusListener(String url) {
-    FXOK.registerPopup(this);
-    Application.setUserAgentStylesheet(url);
-    //StyleManager.getInstance().addUserAgentStylesheet(getUserAgentStyleSheet());
-  }
-
-  public static String getUserAgentStyleSheet() {
-    return KeyBoardPopup.class.getResource(STYLE_CSS).toExternalForm();
-  }
-
-  /**
-   * search for nested input controls like {@code FakeFocusTextField}
-   *
-   * @see ComboBox#isEditable()
-   * @param parent
-   * @return embedded TextInputControl or null
-   */
-  private static TextInputControl findTextInputControl(Parent parent) {
-    for (Node child : parent.getChildrenUnmodifiable()) {
-      if (child instanceof TextInputControl) {
-        return (TextInputControl) child;
+  public void addGlobalFocusListener(boolean doNotOpen) {
+    doNotOpenHiddenKeyboard = doNotOpen;
+    Window.getWindows().addListener((ListChangeListener.Change<? extends Window> c) -> {
+      while (c.next()) {
+        if (!c.wasPermutated()) {
+          c.getAddedSubList()
+              .forEach(win -> win.getScene().focusOwnerProperty().addListener(focusChangeListener));
+          c.getRemoved().forEach(
+              win -> win.getScene().focusOwnerProperty().removeListener(focusChangeListener));
+        }
       }
-    }
-    return null;
+    });
   }
 
   /**
    * Adds a mouse listener to the Stage and open the keyboards on 'double' click a
    * {@link TextInputControl}
    *
-   * @param stage {@link Stage} to connect with the keyboard
+   * @param stage
+   *          {@link Stage} to connect with the keyboard
+   *
+   * @see #addGlobalDoubleClickEventFilter()
    */
   public void addDoubleClickEventFilter(final Stage stage) {
-    Objects.requireNonNull(stage).addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
-      if (event.getClickCount() == 2 && stage.getScene() != null) {
-        Node node = stage.getScene().getFocusOwner();
-        if (node instanceof TextInputControl) {
-          setVisible(Visiblity.SHOW, (TextInputControl) node);
+    stage.addEventFilter(MouseEvent.MOUSE_CLICKED, doubleClickEventFilter);
+  }
+
+  /**
+   * Adds a mouse listener to all Stage and open the keyboards on 'double' click a
+   * {@link TextInputControl}
+   *
+   * @see #addDoubleClickEventFilter(Stage)
+   */
+  public void addGlobalDoubleClickEventFilter() {
+    Window.getWindows().addListener((ListChangeListener.Change<? extends Window> c) -> {
+      while (c.next()) {
+        if (!c.wasPermutated()) {
+          c.getAddedSubList()
+              .forEach(win -> win.addEventFilter(MouseEvent.MOUSE_CLICKED, doubleClickEventFilter));
+          c.getRemoved().forEach(
+              win -> win.removeEventFilter(MouseEvent.MOUSE_CLICKED, doubleClickEventFilter));
         }
       }
     });
@@ -220,17 +269,17 @@ public class KeyBoardPopup extends Popup implements VkProperties {
     getKeyBoard().setOnKeyboardCloseButton(value);
   }
 
-  void setVisible(Visiblity visible) {
-    setVisible(visible, null);
-  }
+  public void setVisible(final Visibility visible, final TextInputControl textNode) {
 
-  void setVisible(final Visiblity visible, final TextInputControl textNode) {
-
-    if ((visible == Visiblity.POS || visible == Visiblity.SHOW) && textNode != null) {
+    if ((visible == Visibility.POS || visible == Visibility.SHOW) && textNode != null) {
       Map<String, String> vkProps = FXOK.getVkProperties(textNode);
       if (vkProps.isEmpty()) {
         getKeyBoard().setKeyboardType(KeyboardType.TEXT);
       } else {
+        if (VK_STATE_DISABLED.equals(vkProps.get(VK_STATE))) {
+          startFade(Visibility.HIDE, textNode);
+          return;
+        }
         getKeyBoard().setKeyboardType(vkProps.getOrDefault(VK_TYPE, VK_TYPE_TEXT));
         if (vkProps.containsKey(VK_LOCALE)) {
           getKeyBoard().switchLocale(new Locale(vkProps.get(VK_LOCALE)));
@@ -250,8 +299,11 @@ public class KeyBoardPopup extends Popup implements VkProperties {
         setY(textNodeBounds.getMaxY() + getOffset());
       }
     }
+    startFade(visible, textNode);
+  }
 
-    if (visible == Visiblity.POS || visible == Visiblity.HIDE && !isShowing()) {
+  private void startFade(final Visibility visible, final TextInputControl textNode) {
+    if (visible == Visibility.POS || visible == Visibility.HIDE && !isShowing()) {
       return;
     }
     if (animation != null) {
@@ -264,12 +316,18 @@ public class KeyBoardPopup extends Popup implements VkProperties {
         }
       });
     }
-    animation.setFromValue(visible == Visiblity.SHOW ? 0.0 : 1.0);
-    animation.setToValue(visible == Visiblity.SHOW ? 1.0 : 0.0);
+    animation.setFromValue(visible == Visibility.SHOW ? 0.0 : 1.0);
+    animation.setToValue(visible == Visibility.SHOW ? 1.0 : 0.0);
 
-    if (visible == Visiblity.SHOW && !isShowing()) {
+    if (visible == Visibility.SHOW && !isShowing()) {
       // initial start
-      super.show(owner != null ? owner.getWindow() : getOwnerWindow());
+      if (textNode != null && textNode.getScene() != null) {
+        super.show(textNode.getScene().getWindow());
+      } else if (owner != null) {
+        super.show(owner.getWindow());
+      } else {
+        super.show(getOwnerWindow());
+      }
     }
     animation.playFromStart();
   }
@@ -280,17 +338,18 @@ public class KeyBoardPopup extends Popup implements VkProperties {
    * @return offset
    */
   public final double getOffset() {
-    return offset == null ? _offset : offset.get();
+    return offset == null ? offsetValue : offset.get();
   }
 
   /**
    * Set the vertical keyboard to text component offset
    *
-   * @param value offset
+   * @param value
+   *          offset
    */
   public final void setOffset(double value) {
     if (offset == null) {
-      _offset = value;
+      offsetValue = value;
     } else {
       offset.set(value);
     }
@@ -303,9 +362,17 @@ public class KeyBoardPopup extends Popup implements VkProperties {
    */
   public final DoubleProperty offsetProperty() {
     if (offset == null) {
-      offset = new SimpleDoubleProperty(this, "offset", _offset);
+      offset = new SimpleDoubleProperty(this, "offset", offsetValue);
     }
     return offset;
+  }
+
+  public ChangeListener<? super Node> getFocusChangeListener() {
+    return focusChangeListener;
+  }
+
+  public EventHandler<? super MouseEvent> getDoubleClickEventFilter() {
+    return doubleClickEventFilter;
   }
 
 }

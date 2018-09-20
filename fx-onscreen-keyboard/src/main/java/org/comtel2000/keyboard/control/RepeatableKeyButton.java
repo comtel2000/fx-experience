@@ -26,8 +26,12 @@
 
 package org.comtel2000.keyboard.control;
 
+import java.security.AccessController;
+import java.security.PrivilegedAction;
+
 import org.slf4j.LoggerFactory;
 
+import javafx.animation.Animation;
 import javafx.animation.Animation.Status;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -36,9 +40,33 @@ import javafx.util.Duration;
 
 class RepeatableKeyButton extends KeyButton {
 
-  private final static org.slf4j.Logger logger = LoggerFactory.getLogger(RepeatableKeyButton.class);
+  private static final org.slf4j.Logger logger = LoggerFactory.getLogger(RepeatableKeyButton.class);
+
+  // key repeat rate (cps)
+  private static double KEY_REPEAT_RATE = 25;
+  private static final double KEY_REPEAT_RATE_MIN = 2;
+  private static final double KEY_REPEAT_RATE_MAX = 50;
 
   private final long REPEAT_DELAY = 40;
+
+  private Timeline repeatDelay;
+
+  static {
+    AccessController.doPrivileged((PrivilegedAction<Void>) () -> {
+
+      String s = System.getProperty("org.comtel2000.keyboard.repeatRate");
+      if (s != null) {
+        Double rate = Double.valueOf(s);
+        if (rate <= 0) {
+          // disable key repeat
+          KEY_REPEAT_RATE = 0;
+        } else {
+          KEY_REPEAT_RATE = Math.min(Math.max(rate, KEY_REPEAT_RATE_MIN), KEY_REPEAT_RATE_MAX);
+        }
+      }
+      return null;
+    });
+  }
 
   RepeatableKeyButton() {
     super();
@@ -47,40 +75,45 @@ class RepeatableKeyButton extends KeyButton {
   }
 
   @Override
-  protected void initEventListener(long delay) {
+  protected void initEventListener(double delay) {
 
-    buttonDelay = new Timeline(new KeyFrame(Duration.millis(delay), event -> {
-      fireShortPressed();
-      buttonDelay.playFrom(buttonDelay.getCycleDuration().subtract(Duration.millis(REPEAT_DELAY)));
-    }));
+    if (KEY_REPEAT_RATE > 0) {
+      buttonDelay = new Timeline(new KeyFrame(Duration.millis(delay), event -> {
+        fireShortPressed();
+        // buttonDelay.playFrom(buttonDelay.getCycleDuration().subtract(Duration.millis(REPEAT_DELAY)));
+        repeatDelay.playFromStart();
+      }));
+      repeatDelay = new Timeline(
+          new KeyFrame(Duration.millis(1000.0 / KEY_REPEAT_RATE), event -> fireShortPressed()));
+      repeatDelay.setCycleCount(Animation.INDEFINITE);
+      setOnDragDetected(e -> {
+        logger.trace("{} drag detected", getKeyCode());
+        buttonDelay.stop();
+        e.consume();
+      });
 
-    setOnDragDetected(e -> {
-      logger.trace("{} drag detected", getKeyCode());
-      buttonDelay.stop();
-      e.consume();
-    });
+      setOnMousePressed(e -> {
+        logger.trace("{} pressed", getKeyCode());
+        if (e.getButton().equals(MouseButton.PRIMARY)) {
+          if (!isMovable()) {
+            fireShortPressed();
+          }
+          buttonDelay.playFromStart();
+        }
+        e.consume();
+      });
 
-    setOnMousePressed(e -> {
-      logger.trace("{} pressed", getKeyCode());
-      if (e.getButton().equals(MouseButton.PRIMARY)) {
-        if (!isMovable()) {
+      setOnMouseReleased(e -> {
+        logger.trace("{} released", getKeyCode());
+        if (isMovable() && buttonDelay.getStatus() == Status.RUNNING) {
           fireShortPressed();
         }
-        buttonDelay.playFromStart();
-      }
-      e.consume();
-    });
-
-    setOnMouseReleased(e -> {
-      logger.trace("{} released", getKeyCode());
-      if (isMovable() && buttonDelay.getStatus() == Status.RUNNING) {
-        fireShortPressed();
-      }
-      buttonDelay.stop();
-      setFocused(false);
-      e.consume();
-    });
-
+        buttonDelay.stop();
+        repeatDelay.stop();
+        setFocused(false);
+        e.consume();
+      });
+    }
   }
 
 }

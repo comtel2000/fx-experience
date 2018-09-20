@@ -25,45 +25,20 @@
  *******************************************************************************/
 package org.comtel2000.keyboard;
 
-import javafx.animation.FadeTransition;
-import javafx.geometry.Bounds;
-import javafx.geometry.Rectangle2D;
-import javafx.scene.Node;
-import javafx.scene.Scene;
-import javafx.scene.control.TextInputControl;
-import javafx.stage.Screen;
-import javafx.util.Duration;
-import org.comtel2000.keyboard.control.KeyBoardPopup;
-import org.comtel2000.keyboard.control.KeyboardType;
-import org.comtel2000.keyboard.control.VkProperties;
-
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
-public class FXOK implements VkProperties {
+import org.comtel2000.keyboard.control.KeyBoardPopup;
+import org.comtel2000.keyboard.control.KeyBoardPopup.Visibility;
+
+import javafx.scene.Node;
+import javafx.scene.control.TextInputControl;
+
+public class FXOK {
 
   private static KeyBoardPopup popup;
-  private static FadeTransition animation;
 
-  public enum Visibility {
-    /**
-     * Set position and visible true
-     */
-    SHOW,
-
-    /**
-     * Set visible false
-     */
-    HIDE,
-
-    /**
-     * Set positioning only if visible true
-     */
-    POS
-  }
-  
   private FXOK() {
   }
 
@@ -71,77 +46,29 @@ public class FXOK implements VkProperties {
     popup = p;
   }
 
-  public static void setVisible(Visibility visible) {
-    setVisible(visible, null);
-  }
-
   public static void setVisible(final Visibility visible, final TextInputControl textNode) {
     if (popup == null) {
       return;
     }
-    if ((visible == Visibility.POS || visible == Visibility.SHOW) && textNode != null) {
-      Map<String, String> vkProps = getVkProperties(textNode);
-      if (vkProps.isEmpty()) {
-        popup.getKeyBoard().setKeyboardType(KeyboardType.TEXT);
-      } else {
-        popup.getKeyBoard().setKeyboardType(vkProps.getOrDefault(VK_TYPE, VK_TYPE_TEXT));
-        if (vkProps.containsKey(VK_LOCALE)) {
-          popup.getKeyBoard().switchLocale(new Locale(vkProps.get(VK_LOCALE)));
-        }
-      }
-
-      Bounds textNodeBounds = textNode.localToScreen(textNode.getBoundsInLocal());
-      Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
-      if (textNodeBounds.getMinX() + popup.getWidth() > screenBounds.getMaxX()) {
-        popup.setX(screenBounds.getMaxX() - popup.getWidth());
-      } else {
-        popup.setX(textNodeBounds.getMinX());
-      }
-      if (textNodeBounds.getMaxY() + popup.getHeight() > screenBounds.getMaxY()) {
-        popup.setY(textNodeBounds.getMinY() - popup.getHeight() - popup.getOffset());
-      } else {
-        popup.setY(textNodeBounds.getMaxY() + popup.getOffset());
-      }
-    }
-
-    if (visible == Visibility.POS || visible == Visibility.HIDE && !popup.isShowing()) {
-      return;
-    }
-    if (animation != null) {
-      animation.stop();
-    } else {
-      animation = new FadeTransition(Duration.millis(100), popup.getKeyBoard());
-      animation.setOnFinished(e -> {
-        if (animation.toValueProperty().get() == 0.0) {
-          popup.hide();
-        }
-      });
-    }
-    animation.setFromValue(visible == Visibility.SHOW ? 0.0 : 1.0);
-    animation.setToValue(visible == Visibility.SHOW ? 1.0 : 0.0);
-
-    if (visible == Visibility.SHOW && !popup.isShowing()) {
-      // initial start
-      popup.show(textNode.getScene().getWindow());
-    }
-    animation.playFromStart();
+    popup.setVisible(visible, textNode);
   }
 
   public static Map<String, String> getVkProperties(Node node) {
     if (node.hasProperties()) {
-      Map<String, String> vkProps = new HashMap<>(3);
+      Map<String, String> vkProps = new HashMap<>();
       node.getProperties().forEach((key, value) -> {
         if (key.toString().startsWith("vk")) {
-          vkProps.put(String.valueOf(key), String.valueOf(value));
+
+          vkProps.put(key.toString(), String.valueOf(value));
         }
       });
       return vkProps;
     }
     if (node.getParent() != null && node.getParent().hasProperties()) {
-      Map<String, String> vkProps = new HashMap<>(3);
+      Map<String, String> vkProps = new HashMap<>();
       node.getParent().getProperties().forEach((key, value) -> {
         if (key.toString().startsWith("vk")) {
-          vkProps.put(String.valueOf(key), String.valueOf(value));
+          vkProps.put(key.toString(), String.valueOf(value));
         }
       });
       return vkProps;
@@ -150,15 +77,8 @@ public class FXOK implements VkProperties {
 
   }
 
-  public static void updateVisibility(Scene scene, TextInputControl textInput) {
-    if (textInput.isEditable() && textInput.isFocused()) {
-      setVisible(Visibility.SHOW, textInput);
-    } else if (scene == null || scene.getWindow() == null || !scene.getWindow().isFocused()
-            || !(scene.getFocusOwner() instanceof TextInputControl && ((TextInputControl) scene.getFocusOwner()).isEditable())) {
-      setVisible(Visibility.HIDE, textInput);
-    } else {
-      setVisible(Visibility.POS, textInput);
-    }
+  public static KeyBoardPopup getPopup() {
+    return popup;
   }
 
 }

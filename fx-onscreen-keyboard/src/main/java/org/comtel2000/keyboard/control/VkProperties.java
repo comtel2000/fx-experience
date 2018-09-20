@@ -26,17 +26,25 @@
 
 package org.comtel2000.keyboard.control;
 
-public interface VkProperties {
+public class VkProperties {
 
-  String VK_TYPE = "vkType";
+  public static final String VK_TYPE = "vkType";
 
-  String VK_TYPE_TEXT = "text";
-  String VK_TYPE_NUMERIC = "numeric";
-  String VK_TYPE_URL = "url";
-  String VK_TYPE_EMAIL = "email";
+  public static final String VK_TYPE_TEXT = "text";
+  public static final String VK_TYPE_NUMERIC = "numeric";
+  public static final String VK_TYPE_URL = "url";
+  public static final String VK_TYPE_EMAIL = "email";
 
-  String VK_LOCALE = "vkLocale";
+  public static final String VK_STATE = "vkState";
+  public static final String VK_STATE_ENABLED = "on";
+  public static final String VK_STATE_DISABLED = "off";
 
-  String VK_LOCALE_DE = "de";
-  String VK_LOCALE_EN = "en";
+  public static final String VK_LOCALE = "vkLocale";
+
+  public static final String VK_LOCALE_DE = "de";
+  public static final String VK_LOCALE_EN = "en";
+
+  private VkProperties() {
+
+  }
 }

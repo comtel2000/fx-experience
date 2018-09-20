@@ -29,6 +29,7 @@ package org.comtel2000.keyboard.control;
 import java.nio.file.Path;
 import java.util.Locale;
 
+import org.comtel2000.keyboard.control.KeyBoardPopup.Visibility;
 import org.comtel2000.keyboard.robot.IRobot;
 
 import javafx.event.Event;
@@ -98,7 +99,7 @@ public class KeyBoardPopupBuilder implements Builder<KeyBoardPopup> {
     if (closeEventHandler != null) {
       popup.setOnKeyboardCloseButton(closeEventHandler);
     } else {
-      popup.setOnKeyboardCloseButton(e -> popup.setVisible(false));
+      popup.setOnKeyboardCloseButton(e -> popup.setVisible(Visibility.HIDE));
     }
     return popup;
   }

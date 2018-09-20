@@ -43,10 +43,8 @@ import javafx.stage.Popup;
 
 class MultiKeyPopup extends Popup {
 
-  private final TilePane buttonPane;
-
   public static final String DEFAULT_STYLE_CLASS = "key-context-background";
-
+  private final TilePane buttonPane;
   private ObjectProperty<EventHandler<ActionEvent>> onAction;
 
   MultiKeyPopup() {
@@ -114,7 +112,8 @@ class MultiKeyPopup extends Popup {
       double offsetY = getHeight() / 2;
 
       Bounds bounds = node.localToScreen(node.getBoundsInLocal());
-      super.show(node, bounds.getMinX() + (bounds.getWidth() / 2) - offsetX, bounds.getMinY() - offsetY);
+      super.show(node, bounds.getMinX() + (bounds.getWidth() / 2) - offsetX,
+          bounds.getMinY() - offsetY);
 
       if (offsetX < 1 || offsetY < 1) {
         centerPosition();
@@ -128,17 +127,17 @@ class MultiKeyPopup extends Popup {
     setY(getY() - getHeight() / 2);
   }
 
-  public final void setOnAction(EventHandler<ActionEvent> eventhandler) {
-    onActionProperty().set(eventhandler);
-  }
-
   public final EventHandler<ActionEvent> getOnAction() {
     return onActionProperty().get();
   }
 
+  public final void setOnAction(EventHandler<ActionEvent> eventhandler) {
+    onActionProperty().set(eventhandler);
+  }
+
   public final ObjectProperty<EventHandler<ActionEvent>> onActionProperty() {
     if (onAction == null) {
-      onAction = new SimpleObjectProperty<EventHandler<ActionEvent>>() {
+      onAction = new SimpleObjectProperty<>() {
         @Override
         protected void invalidated() {
           setEventHandler(ActionEvent.ACTION, get());
