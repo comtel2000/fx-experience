@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.comtel2000</groupId>
 	<artifactId>fx-parent</artifactId>
-	<version>11.0.0</version>
+	<version>11.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>fx-experience</name>
