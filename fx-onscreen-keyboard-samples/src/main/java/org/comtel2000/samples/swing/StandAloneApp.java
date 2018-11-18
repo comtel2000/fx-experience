@@ -1,22 +1,23 @@
 package org.comtel2000.samples.swing;
 
-import java.awt.BorderLayout;
+import javafx.application.Platform;
+import javafx.embed.swing.JFXPanel;
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import org.comtel2000.keyboard.control.DefaultLayer;
+import org.comtel2000.keyboard.control.KeyBoardPopup;
+import org.comtel2000.keyboard.control.KeyboardPane;
+import org.comtel2000.keyboard.control.KeyboardType;
+import org.comtel2000.swing.robot.NativeAsciiRobotHandler;
+
+import javax.swing.*;
+import java.awt.*;
 import java.nio.file.Paths;
 import java.text.ParseException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-
-import javax.swing.JFrame;
-import javax.swing.JWindow;
-import javax.swing.SwingUtilities;
-
-import org.comtel2000.keyboard.control.DefaultLayer;
-import org.comtel2000.keyboard.control.KeyBoardPopup;
-import org.comtel2000.keyboard.control.KeyboardPane;
-import org.comtel2000.keyboard.control.KeyboardType;
-import org.comtel2000.swing.robot.NativeAsciiRobotHandler;
 
 /*******************************************************************************
  * Copyright (c) 2016 comtel2000
@@ -43,11 +44,6 @@ import org.comtel2000.swing.robot.NativeAsciiRobotHandler;
  * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY
  * WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *******************************************************************************/
-
-import javafx.application.Platform;
-import javafx.embed.swing.JFXPanel;
-import javafx.scene.Group;
-import javafx.scene.Scene;
 
 public class StandAloneApp extends JFrame {
 

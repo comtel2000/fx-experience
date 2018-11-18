@@ -26,11 +26,6 @@
 
 package org.comtel2000.keyboard.control;
 
-import java.security.AccessController;
-import java.security.PrivilegedAction;
-
-import org.comtel2000.keyboard.event.KeyButtonEvent;
-
 import javafx.animation.Timeline;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ObjectPropertyBase;
@@ -38,6 +33,10 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import org.comtel2000.keyboard.event.KeyButtonEvent;
+
+import java.security.AccessController;
+import java.security.PrivilegedAction;
 
 public abstract class KeyButton extends Button implements LongPressable {
 
@@ -49,7 +48,6 @@ public abstract class KeyButton extends Button implements LongPressable {
   Timeline buttonDelay;
   private String keyText;
   private boolean movable;
-  private boolean repeatable;
   private boolean sticky;
   private int keyCode;
   private ObjectProperty<EventHandler<? super KeyButtonEvent>> onLongPressed;
@@ -201,11 +199,7 @@ public abstract class KeyButton extends Button implements LongPressable {
   }
 
   public boolean isRepeatable() {
-    return repeatable;
-  }
-
-  void setRepeatable(boolean repeatable) {
-    this.repeatable = repeatable;
+    return false;
   }
 
   public boolean isSticky() {

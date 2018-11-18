@@ -25,11 +25,10 @@
  *******************************************************************************/
 package org.comtel2000.keyboard.event;
 
-import org.comtel2000.keyboard.control.KeyButton;
-
 import javafx.event.Event;
 import javafx.event.EventType;
 import javafx.scene.input.InputEvent;
+import org.comtel2000.keyboard.control.KeyButton;
 
 class OnScreenKeyEvent extends InputEvent {
 

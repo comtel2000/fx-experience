@@ -26,11 +26,10 @@
 
 package org.comtel2000.keyboard.control.skin;
 
-import org.comtel2000.keyboard.FXOK;
-import org.comtel2000.keyboard.control.KeyBoardPopup.Visibility;
-
 import javafx.scene.control.TextField;
 import javafx.scene.control.skin.TextFieldSkin;
+import org.comtel2000.keyboard.FXOK;
+import org.comtel2000.keyboard.control.KeyBoardPopup.Visibility;
 
 class KeyboardTextFieldSkin extends TextFieldSkin {
 

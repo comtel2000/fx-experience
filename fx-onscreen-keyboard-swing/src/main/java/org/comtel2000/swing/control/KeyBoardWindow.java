@@ -1,10 +1,15 @@
 package org.comtel2000.swing.control;
 
-import java.util.Optional;
-
-import javax.swing.JWindow;
-
+import javafx.embed.swing.JFXPanel;
+import javafx.event.Event;
+import javafx.event.EventHandler;
+import javafx.scene.Group;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import org.comtel2000.keyboard.control.KeyBoardPopup;
+
+import javax.swing.*;
+import java.util.Optional;
 
 /*******************************************************************************
  * Copyright (c) 2016 comtel2000
@@ -31,13 +36,6 @@ import org.comtel2000.keyboard.control.KeyBoardPopup;
  * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY
  * WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *******************************************************************************/
-
-import javafx.embed.swing.JFXPanel;
-import javafx.event.Event;
-import javafx.event.EventHandler;
-import javafx.scene.Group;
-import javafx.scene.Node;
-import javafx.scene.Scene;
 
 /**
  * Swing window wrapper class for {@link KeyBoardPopup}

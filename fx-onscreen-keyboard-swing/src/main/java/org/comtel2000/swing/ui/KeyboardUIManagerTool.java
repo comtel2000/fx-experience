@@ -1,20 +1,20 @@
 package org.comtel2000.swing.ui;
 
-import java.awt.Component;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.util.Locale;
-
-import javax.swing.UIManager;
-import javax.swing.text.JTextComponent;
-
+import javafx.animation.Animation;
+import javafx.animation.FadeTransition;
+import javafx.animation.Transition;
+import javafx.application.Platform;
+import javafx.util.Duration;
 import org.comtel2000.keyboard.control.KeyBoardPopup;
 import org.comtel2000.keyboard.control.KeyboardType;
 import org.comtel2000.keyboard.control.VkProperties;
 import org.comtel2000.swing.control.KeyBoardWindow;
+
+import javax.swing.*;
+import javax.swing.text.JTextComponent;
+import java.awt.*;
+import java.awt.event.*;
+import java.util.Locale;
 
 /*******************************************************************************
  * Copyright (c) 2016 comtel2000
@@ -41,12 +41,6 @@ import org.comtel2000.swing.control.KeyBoardWindow;
  * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY
  * WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *******************************************************************************/
-
-import javafx.animation.Animation;
-import javafx.animation.FadeTransition;
-import javafx.animation.Transition;
-import javafx.application.Platform;
-import javafx.util.Duration;
 
 public class KeyboardUIManagerTool {
 

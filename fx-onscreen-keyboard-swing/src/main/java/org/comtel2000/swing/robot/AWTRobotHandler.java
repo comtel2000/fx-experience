@@ -1,20 +1,16 @@
 package org.comtel2000.swing.robot;
 
+import org.comtel2000.keyboard.robot.IRobot;
+import org.slf4j.LoggerFactory;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.KeyEvent;
+
 import static java.awt.event.InputEvent.CTRL_DOWN_MASK;
 import static java.awt.event.InputEvent.META_DOWN_MASK;
 import static java.awt.event.InputEvent.SHIFT_DOWN_MASK;
-import static java.awt.event.KeyEvent.KEY_LOCATION_STANDARD;
-import static java.awt.event.KeyEvent.KEY_LOCATION_UNKNOWN;
-import static java.awt.event.KeyEvent.KEY_PRESSED;
-import static java.awt.event.KeyEvent.KEY_RELEASED;
-import static java.awt.event.KeyEvent.KEY_TYPED;
-import static java.awt.event.KeyEvent.VK_UNDEFINED;
-
-import java.awt.Component;
-import java.awt.KeyboardFocusManager;
-import java.awt.event.KeyEvent;
-
-import javax.swing.SwingUtilities;
+import static java.awt.event.KeyEvent.*;
 
 /*******************************************************************************
  * Copyright (c) 2016 comtel2000
@@ -41,9 +37,6 @@ import javax.swing.SwingUtilities;
  * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY
  * WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *******************************************************************************/
-
-import org.comtel2000.keyboard.robot.IRobot;
-import org.slf4j.LoggerFactory;
 
 public class AWTRobotHandler implements IRobot {
 

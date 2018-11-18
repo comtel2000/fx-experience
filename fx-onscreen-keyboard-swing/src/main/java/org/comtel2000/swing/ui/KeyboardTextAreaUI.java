@@ -1,5 +1,9 @@
 package org.comtel2000.swing.ui;
 
+import javax.swing.*;
+import javax.swing.plaf.ComponentUI;
+import javax.swing.plaf.basic.BasicTextAreaUI;
+import javax.swing.text.JTextComponent;
 import java.awt.event.FocusListener;
 import java.awt.event.MouseListener;
 
@@ -28,10 +32,6 @@ import java.awt.event.MouseListener;
  * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY
  * WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *******************************************************************************/
-import javax.swing.JComponent;
-import javax.swing.plaf.ComponentUI;
-import javax.swing.plaf.basic.BasicTextAreaUI;
-import javax.swing.text.JTextComponent;
 
 public class KeyboardTextAreaUI extends BasicTextAreaUI {
 

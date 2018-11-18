@@ -26,18 +26,6 @@
 
 package org.comtel2000.keyboard.control;
 
-import static org.comtel2000.keyboard.control.VkProperties.VK_LOCALE;
-import static org.comtel2000.keyboard.control.VkProperties.VK_STATE;
-import static org.comtel2000.keyboard.control.VkProperties.VK_STATE_DISABLED;
-import static org.comtel2000.keyboard.control.VkProperties.VK_TYPE;
-import static org.comtel2000.keyboard.control.VkProperties.VK_TYPE_TEXT;
-
-import java.util.Locale;
-import java.util.Map;
-import java.util.Objects;
-
-import org.comtel2000.keyboard.FXOK;
-
 import javafx.animation.FadeTransition;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -53,12 +41,15 @@ import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Popup;
-import javafx.stage.Screen;
-import javafx.stage.Stage;
-import javafx.stage.Window;
-import javafx.stage.WindowEvent;
+import javafx.stage.*;
 import javafx.util.Duration;
+import org.comtel2000.keyboard.FXOK;
+
+import java.util.Locale;
+import java.util.Map;
+import java.util.Objects;
+
+import static org.comtel2000.keyboard.control.VkProperties.*;
 
 /**
  * Helper class to create a {@link KeyboardPane}
@@ -319,15 +310,20 @@ public class KeyBoardPopup extends Popup {
     animation.setFromValue(visible == Visibility.SHOW ? 0.0 : 1.0);
     animation.setToValue(visible == Visibility.SHOW ? 1.0 : 0.0);
 
-    if (visible == Visibility.SHOW && !isShowing()) {
+    if (visible == Visibility.SHOW) {
       // initial start
+      Window win;
       if (textNode != null && textNode.getScene() != null) {
-        super.show(textNode.getScene().getWindow());
+        win = textNode.getScene().getWindow();
       } else if (owner != null) {
-        super.show(owner.getWindow());
+        win = owner.getWindow();
       } else {
-        super.show(getOwnerWindow());
+        win = getOwnerWindow();
       }
+      if (isShowing() && getOwnerWindow() != win) {
+        hide();
+      }
+      show(win);
     }
     animation.playFromStart();
   }

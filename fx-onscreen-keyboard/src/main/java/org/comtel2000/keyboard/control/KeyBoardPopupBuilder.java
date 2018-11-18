@@ -26,15 +26,15 @@
 
 package org.comtel2000.keyboard.control;
 
-import java.nio.file.Path;
-import java.util.Locale;
-
-import org.comtel2000.keyboard.control.KeyBoardPopup.Visibility;
-import org.comtel2000.keyboard.robot.IRobot;
-
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.util.Builder;
+import org.comtel2000.keyboard.control.KeyBoardPopup.Visibility;
+import org.comtel2000.keyboard.robot.IRobot;
+
+import java.nio.file.Path;
+import java.util.Locale;
+import java.util.Objects;
 
 public class KeyBoardPopupBuilder implements Builder<KeyBoardPopup> {
 
@@ -96,11 +96,7 @@ public class KeyBoardPopupBuilder implements Builder<KeyBoardPopup> {
     if (offset > -1) {
       popup.setOffset(offset);
     }
-    if (closeEventHandler != null) {
-      popup.setOnKeyboardCloseButton(closeEventHandler);
-    } else {
-      popup.setOnKeyboardCloseButton(e -> popup.setVisible(Visibility.HIDE));
-    }
+    popup.setOnKeyboardCloseButton(Objects.requireNonNullElseGet(closeEventHandler, () -> e -> popup.setVisible(Visibility.HIDE)));
     return popup;
   }
 

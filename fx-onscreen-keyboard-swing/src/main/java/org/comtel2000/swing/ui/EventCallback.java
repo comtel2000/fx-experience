@@ -25,10 +25,11 @@ package org.comtel2000.swing.ui;
  * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY
  * WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *******************************************************************************/
-import java.awt.Component;
+
+import java.awt.*;
 
 @FunctionalInterface
-public interface EventCallback {
+interface EventCallback {
 
   void call(Component component, boolean vis);
 

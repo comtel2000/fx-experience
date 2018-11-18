@@ -1,25 +1,16 @@
 package org.comtel2000.samples.swing;
 
-import static org.comtel2000.keyboard.control.VkProperties.VK_LOCALE;
-import static org.comtel2000.keyboard.control.VkProperties.VK_LOCALE_DE;
-import static org.comtel2000.keyboard.control.VkProperties.VK_TYPE;
-import static org.comtel2000.keyboard.control.VkProperties.VK_TYPE_NUMERIC;
+import org.comtel2000.keyboard.control.DefaultLayer;
+import org.comtel2000.swing.control.KeyBoardWindow;
+import org.comtel2000.swing.control.KeyBoardWindowBuilder;
+import org.comtel2000.swing.robot.AWTRobotHandler;
+import org.comtel2000.swing.ui.KeyboardUIManagerTool;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
+import javax.swing.*;
+import java.awt.*;
 import java.util.Locale;
 
-import javax.swing.JButton;
-import javax.swing.JEditorPane;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JSeparator;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
-import javax.swing.WindowConstants;
+import static org.comtel2000.keyboard.control.VkProperties.*;
 
 /*******************************************************************************
  * Copyright (c) 2016 comtel2000
@@ -46,12 +37,6 @@ import javax.swing.WindowConstants;
  * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY
  * WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *******************************************************************************/
-
-import org.comtel2000.keyboard.control.DefaultLayer;
-import org.comtel2000.swing.control.KeyBoardWindow;
-import org.comtel2000.swing.control.KeyBoardWindowBuilder;
-import org.comtel2000.swing.robot.AWTRobotHandler;
-import org.comtel2000.swing.ui.KeyboardUIManagerTool;
 
 public class SwingDemo extends JFrame {
 

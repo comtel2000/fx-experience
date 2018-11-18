@@ -26,70 +26,10 @@
 
 package org.comtel2000.keyboard.control;
 
-import static org.comtel2000.keyboard.xml.XmlHelper.ATTR_CODES;
-import static org.comtel2000.keyboard.xml.XmlHelper.ATTR_H_GAP;
-import static org.comtel2000.keyboard.xml.XmlHelper.ATTR_KEY_EDGE_FLAGS;
-import static org.comtel2000.keyboard.xml.XmlHelper.ATTR_KEY_HEIGHT;
-import static org.comtel2000.keyboard.xml.XmlHelper.ATTR_KEY_ICON_STYLE;
-import static org.comtel2000.keyboard.xml.XmlHelper.ATTR_KEY_LABEL;
-import static org.comtel2000.keyboard.xml.XmlHelper.ATTR_KEY_LABEL_STYLE;
-import static org.comtel2000.keyboard.xml.XmlHelper.ATTR_KEY_OUTPUT_TEXT;
-import static org.comtel2000.keyboard.xml.XmlHelper.ATTR_KEY_WIDTH;
-import static org.comtel2000.keyboard.xml.XmlHelper.ATTR_MOVABLE;
-import static org.comtel2000.keyboard.xml.XmlHelper.ATTR_REPEATABLE;
-import static org.comtel2000.keyboard.xml.XmlHelper.ATTR_ROW_EDGE_FLAGS;
-import static org.comtel2000.keyboard.xml.XmlHelper.ATTR_STICKY;
-import static org.comtel2000.keyboard.xml.XmlHelper.ATTR_V_GAP;
-import static org.comtel2000.keyboard.xml.XmlHelper.FLAG_LEFT;
-import static org.comtel2000.keyboard.xml.XmlHelper.FLAG_RIGHT;
-import static org.comtel2000.keyboard.xml.XmlHelper.KEY;
-import static org.comtel2000.keyboard.xml.XmlHelper.KEYBOARD;
-import static org.comtel2000.keyboard.xml.XmlHelper.ROW;
-import static org.comtel2000.keyboard.xml.XmlHelper.close;
-import static org.comtel2000.keyboard.xml.XmlHelper.parseInt;
-import static org.comtel2000.keyboard.xml.XmlHelper.readAttribute;
-import static org.comtel2000.keyboard.xml.XmlHelper.readBooleanAttribute;
-import static org.comtel2000.keyboard.xml.XmlHelper.readIntAttribute;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.EnumMap;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Objects;
-
-import javax.xml.stream.XMLInputFactory;
-import javax.xml.stream.XMLStreamConstants;
-import javax.xml.stream.XMLStreamReader;
-
-import org.comtel2000.keyboard.event.KeyButtonEvent;
-import org.comtel2000.keyboard.robot.FXRobotHandler;
-import org.comtel2000.keyboard.robot.IRobot;
-import org.slf4j.LoggerFactory;
-
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
@@ -101,14 +41,29 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.RowConstraints;
+import javafx.scene.layout.*;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
+import org.comtel2000.keyboard.event.KeyButtonEvent;
+import org.comtel2000.keyboard.robot.FXRobotHandler;
+import org.comtel2000.keyboard.robot.IRobot;
+import org.slf4j.LoggerFactory;
+
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamConstants;
+import javax.xml.stream.XMLStreamReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.*;
+
+import static org.comtel2000.keyboard.xml.XmlHelper.*;
 
 public class KeyboardPane extends Region implements StandardKeyCode, EventHandler<KeyButtonEvent> {
 

@@ -1,18 +1,17 @@
 package org.comtel2000.samples.fx;
 
-import static org.comtel2000.keyboard.control.VkProperties.VK_LOCALE;
-import static org.comtel2000.keyboard.control.VkProperties.VK_STATE;
-import static org.comtel2000.keyboard.control.VkProperties.VK_STATE_DISABLED;
-import static org.comtel2000.keyboard.control.VkProperties.VK_TYPE;
-import static org.comtel2000.keyboard.control.VkProperties.VK_TYPE_EMAIL;
-import static org.comtel2000.keyboard.control.VkProperties.VK_TYPE_NUMERIC;
-import static org.comtel2000.keyboard.control.VkProperties.VK_TYPE_URL;
-
-import java.util.Locale;
-
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import org.comtel2000.keyboard.control.DefaultLayer;
 import org.comtel2000.keyboard.control.KeyBoardPopup;
 import org.comtel2000.keyboard.control.KeyBoardPopupBuilder;
+
+import java.util.Locale;
+
+import static org.comtel2000.keyboard.control.VkProperties.*;
 
 /*******************************************************************************
  * Copyright (c) 2016 comtel2000
@@ -39,21 +38,6 @@ import org.comtel2000.keyboard.control.KeyBoardPopupBuilder;
  * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY
  * WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *******************************************************************************/
-
-import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.Separator;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TextInputDialog;
-import javafx.scene.control.ToolBar;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
 public class MainDemo extends Application {
 

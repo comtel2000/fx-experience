@@ -1,14 +1,16 @@
 package org.comtel2000.swing.control;
 
-import java.nio.file.Path;
-import java.util.Locale;
-import java.util.concurrent.CountDownLatch;
-
+import javafx.application.Platform;
+import javafx.util.Builder;
 import org.comtel2000.keyboard.control.DefaultLayer;
 import org.comtel2000.keyboard.control.KeyBoardBuilder;
 import org.comtel2000.keyboard.control.KeyBoardPopup;
 import org.comtel2000.keyboard.robot.IRobot;
 import org.comtel2000.swing.robot.AWTRobotHandler;
+
+import java.nio.file.Path;
+import java.util.Locale;
+import java.util.concurrent.CountDownLatch;
 
 /*******************************************************************************
  * Copyright (c) 2016 comtel2000
@@ -35,9 +37,6 @@ import org.comtel2000.swing.robot.AWTRobotHandler;
  * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY
  * WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *******************************************************************************/
-
-import javafx.application.Platform;
-import javafx.util.Builder;
 
 /**
  * Swing {@link KeyBoardWindow} builder

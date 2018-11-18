@@ -26,9 +26,8 @@
 
 package org.comtel2000.keyboard.control;
 
-import org.slf4j.LoggerFactory;
-
 import javafx.scene.input.MouseButton;
+import org.slf4j.LoggerFactory;
 
 class ShortPressKeyButton extends KeyButton {
 

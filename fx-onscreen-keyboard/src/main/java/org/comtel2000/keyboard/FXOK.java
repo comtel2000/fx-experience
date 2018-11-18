@@ -25,15 +25,14 @@
  *******************************************************************************/
 package org.comtel2000.keyboard;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-
+import javafx.scene.Node;
+import javafx.scene.control.TextInputControl;
 import org.comtel2000.keyboard.control.KeyBoardPopup;
 import org.comtel2000.keyboard.control.KeyBoardPopup.Visibility;
 
-import javafx.scene.Node;
-import javafx.scene.control.TextInputControl;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 public class FXOK {
 
