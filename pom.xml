@@ -1,8 +1,8 @@
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.comtel2000</groupId>
 	<artifactId>fx-parent</artifactId>
-	<version>11.0.0-SNAPSHOT</version>
+	<version>11.0.0</version>
 	<packaging>pom</packaging>
 
 	<name>fx-experience</name>
@@ -50,7 +50,7 @@
 		<url>https://github.com/comtel2000/fx-experience</url>
 		<connection>scm:git:git@github.com:comtel2000/fx-experience.git</connection>
 		<developerConnection>scm:git:git@github.com:comtel2000/fx-experience.git</developerConnection>
-		<tag>HEAD</tag>
+		<tag>v11.0.0</tag>
 	</scm>
 
 	<ciManagement>
