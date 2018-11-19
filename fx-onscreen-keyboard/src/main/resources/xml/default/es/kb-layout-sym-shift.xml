@@ -16,6 +16,7 @@
 		<Key codes="-5" keyLabel="!" keyLabelStyle=".font-fxkeyboard" repeatable="true" />
 	</Row>
 	<Row>
+	<Key codes="" keyWidth="5" />
 		<Key codes="35" keyLabel="#" />
 		<Key codes="163" keyLabel="£" />
 		<Key codes="8364" keyLabel="€" />
@@ -26,7 +27,7 @@
 		<Key codes="43" keyLabel="+" />
 		<Key codes="91" keyLabel="[" />
 		<Key codes="93" keyLabel="]" />
-		<Key codes="-9" keyLabel="ENTER" keyLabelStyle=".small-style" keyWidth="70" />
+		<Key codes="-9" keyLabel="ENTER" keyLabelStyle=".small-style" keyWidth="45" />
 	</Row>
 
 	<Row>

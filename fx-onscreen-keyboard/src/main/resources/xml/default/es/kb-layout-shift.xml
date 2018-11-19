@@ -17,6 +17,7 @@
 	</Row>
 
 	<Row>
+		<Key codes="" keyWidth="5" />
 		<Key codes="65,196,197,195,194,193,192" keyLabel="A" />
 		<Key codes="83,7838" keyLabel="S" />
 		<Key codes="68" keyLabel="D" />
@@ -27,7 +28,7 @@
 		<Key codes="75" keyLabel="K" />
 		<Key codes="76" keyLabel="L" />
 		<Key codes="209" keyLabel="Ñ" />
-		<Key codes="-9" keyLabel="ENTER" keyLabelStyle=".small-style" keyWidth="50" />
+		<Key codes="-9" keyLabel="ENTER" keyLabelStyle=".small-style" keyWidth="45" />
 	</Row>
 
 	<Row>

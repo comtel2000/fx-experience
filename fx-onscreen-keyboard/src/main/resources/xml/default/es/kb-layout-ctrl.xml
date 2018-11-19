@@ -17,18 +17,18 @@
 
 	<Row>
 		<Key codes="43" keyLabel="A" keyLabelStyle=".font-fxkeyboard" keyWidth="70" />
-		<Key codes="65" keyLabel="SELECT ALL" keyLabelStyle=".small-style" keyWidth="135" />
-		<Key codes="-14" keyLabel="UNDO" keyLabelStyle=".small-style" keyWidth="70" />
-		<Key codes="-15" keyLabel="REDO" keyLabelStyle=".small-style" keyWidth="70" />
+		<Key codes="65" keyLabel="SELECCIONE TODO" keyLabelStyle=".small-style" keyWidth="136" />
+		<Key codes="-14" keyLabel="DESHACER" keyLabelStyle=".small-style" keyWidth="76" />
+		<Key codes="-15" keyLabel="REHACER" keyLabelStyle=".small-style" keyWidth="76" />
 		<Key codes="-10" keyLabel="▲" keyLabelStyle=".small-style" repeatable="true" />
 		<Key codes="10" keyLabel="ENTER" keyLabelStyle=".small-style" keyWidth="70" />
 	</Row>
 
 	<Row>
 		<Key codes="45" keyLabel="@" keyLabelStyle=".font-fxkeyboard" keyWidth="70" />
-		<Key codes="88" keyLabel="CUT" keyLabelStyle=".small-style" keyWidth="75" />
-		<Key codes="67" keyLabel="COPY" keyLabelStyle=".small-style" keyWidth="75" />
-		<Key codes="86" keyLabel="PASTE" keyLabelStyle=".small-style" keyWidth="77" />
+		<Key codes="88" keyLabel="CORTAR" keyLabelStyle=".small-style" keyWidth="80" />
+		<Key codes="67" keyLabel="COPIAR" keyLabelStyle=".small-style" keyWidth="80" />
+		<Key codes="86" keyLabel="PEGAR" keyLabelStyle=".small-style" keyWidth="80" />
 		<Key codes="-12" keyLabel="◄" keyLabelStyle=".small-style" repeatable="true" />
 		<Key codes="-11" keyLabel="▼" keyLabelStyle=".small-style" repeatable="true" />
 		<Key codes="-13" keyLabel="►" keyLabelStyle=".small-style" repeatable="true" />

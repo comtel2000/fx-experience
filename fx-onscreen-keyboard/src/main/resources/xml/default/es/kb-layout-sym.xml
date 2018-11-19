@@ -16,6 +16,7 @@
 		<Key codes="-5" keyLabel="!" keyLabelStyle=".font-fxkeyboard" repeatable="true" />
 	</Row>
 	<Row>
+		<Key codes="" keyWidth="5" />
 		<Key codes="161" keyLabel="¡" />
 		<Key codes="33" keyLabel="!" />
 		<Key codes="36" keyLabel="$" />
@@ -26,7 +27,7 @@
 		<Key codes="61" keyLabel="=" />
 		<Key codes="40" keyLabel="(" />
 		<Key codes="41" keyLabel=")" />
-		<Key codes="-9" keyLabel="ENTER" keyLabelStyle=".small-style" keyWidth="70" />
+		<Key codes="-9" keyLabel="ENTER" keyLabelStyle=".small-style" keyWidth="45" />
 	</Row>
 	<Row>
 		<Key codes="-1" keyLabel="I" keyLabelStyle=".font-fxkeyboard" keyWidth="40" modifier="true" sticky="true" />
