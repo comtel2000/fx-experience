@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Keyboard horizontalGap="0" keyHeight="30" keyWidth="40" verticalGap="0">
+
+<Keyboard keyHeight="30" keyWidth="40" horizontalGap="5" verticalGap="5">
 	<Row>
 		<Key codes="-112" keyLabel="F1" keyLabelStyle=".small-style" />
 		<Key codes="-113" keyLabel="F2" keyLabelStyle=".small-style" />
@@ -19,11 +20,11 @@
 	</Row>
 	<Row>
 		<Key codes="43" keyLabel="A" keyLabelStyle=".font-fxkeyboard" keyWidth="70" />
-		<Key codes="65" keyLabel="SELECT ALL" keyLabelStyle=".small-style" keyWidth="135" />
-		<Key codes="-14" keyLabel="UNDO" keyLabelStyle=".small-style" keyWidth="70" />
-		<Key codes="-15" keyLabel="REDO" keyLabelStyle=".small-style" keyWidth="70" />
+		<Key codes="65" keyLabel="SELECT ALL" keyLabelStyle=".small-style" keyWidth="120" />
+		<Key codes="-14" keyLabel="UNDO" keyLabelStyle=".small-style" keyWidth="80" />
+		<Key codes="-15" keyLabel="REDO" keyLabelStyle=".small-style" keyWidth="80" />
 		<Key codes="-10" keyLabel="▲" keyLabelStyle=".small-style" repeatable="true" />
-		<Key codes="10" keyLabel="ENTER" keyLabelStyle=".small-style" keyWidth="70" />
+		<Key codes="10" keyLabel="ENTER" keyLabelStyle=".small-style" keyWidth="75" />
 		<Key codes="" keyWidth="5" />
 		<Key codes="-12" keyLabel="◄" keyLabelStyle=".small-style" repeatable="true" />
 		<Key codes="0" keyLabel="3" keyLabelStyle=".font-fxkeyboard-alpha" movable="true" />
@@ -31,13 +32,13 @@
 	</Row>
 	<Row>
 		<Key codes="45" keyLabel="@" keyLabelStyle=".font-fxkeyboard" keyWidth="70" />
-		<Key codes="88" keyLabel="CUT" keyLabelStyle=".small-style" keyWidth="75" />
-		<Key codes="67" keyLabel="COPY" keyLabelStyle=".small-style" keyWidth="75" />
-		<Key codes="86" keyLabel="PASTE" keyLabelStyle=".small-style" keyWidth="77" />
+		<Key codes="88" keyLabel="CUT" keyLabelStyle=".small-style" keyWidth="80" />
+		<Key codes="67" keyLabel="COPY" keyLabelStyle=".small-style" keyWidth="80" />
+		<Key codes="86" keyLabel="PASTE" keyLabelStyle=".small-style" keyWidth="80" />
 		<Key codes="-12" keyLabel="◄" keyLabelStyle=".small-style" repeatable="true" />
 		<Key codes="-11" keyLabel="▼" keyLabelStyle=".small-style" repeatable="true" />
 		<Key codes="-13" keyLabel="►" keyLabelStyle=".small-style" repeatable="true" />
-		<Key codes="" keyWidth="25" />
+		<Key codes="" keyWidth="30" />
 		<Key codes="" keyWidth="5" />
 		<Key codes="-21" keyLabel="END" keyLabelStyle=".small-style" />
 		<Key codes="-11" keyLabel="▼" keyLabelStyle=".small-style" repeatable="true" />
@@ -45,9 +46,9 @@
 	</Row>
 	<Row rowEdgeFlags="bottom">
 		<Key codes="-6" keyLabel="CTRL" keyLabelStyle=".small-style" keyWidth="60" />
-		<Key codes="-19" keyLabel="CAPS" keyLabelStyle=".small-style" keyWidth="50" />
-		<Key codes="32" keyLabel="3" keyLabelStyle=".font-fxkeyboard-alpha" movable="true" keyWidth="255" repeatable="true" />
-		<Key codes="-7" keyLabel="EN" keyLabelStyle=".small-style" keyWidth="40" />
+		<Key codes="-19" keyLabel="CAPS" keyLabelStyle=".small-style" keyWidth="60" />
+		<Key codes="32" keyLabel="3" keyLabelStyle=".font-fxkeyboard-alpha" movable="true" keyWidth="250" repeatable="true" />
+		<Key codes="-7" keyLabel="EN" keyLabelStyle=".small-style" keyWidth="50" />
 		<Key codes="-4" keyLabel="TAB" keyLabelStyle=".small-style" keyWidth="50" />
 		<Key codes="" keyWidth="5" />
 		<Key codes="-25" keyLabel="PRT" keyLabelStyle=".small-style" repeatable="true" />

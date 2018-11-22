@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<Keyboard keyWidth="40" keyHeight="30" horizontalGap="0" verticalGap="0">
+<Keyboard keyWidth="40" keyHeight="30" horizontalGap="5" verticalGap="5">
 
 	<Row>
 		<Key codes="81" keyLabel="Q" />
@@ -31,7 +31,7 @@
 		<Key codes="74" keyLabel="J" />
 		<Key codes="75" keyLabel="K" />
 		<Key codes="76" keyLabel="L" />
-		<Key codes="-9" keyLabel="ENTER" keyLabelStyle=".small-style" keyWidth="70" />
+		<Key codes="-9" keyLabel="ENTER" keyLabelStyle=".small-style" keyWidth="75" />
 		<Key codes="" keyWidth="5" />
 		<Key codes="52" keyLabel="4" />
 		<Key codes="53" keyLabel="5" />
@@ -39,17 +39,17 @@
 	</Row>
 
 	<Row>
-		<Key codes="-1" keyLabel="J" keyLabelStyle=".font-fxkeyboard" keyWidth="40" modifier="true" sticky="true" />
+		<Key codes="-1" keyLabel="J" keyLabelStyle=".font-fxkeyboard" modifier="true" sticky="true" />
 		<Key codes="90" keyLabel="Z" />
 		<Key codes="88" keyLabel="X" />
 		<Key codes="67" keyLabel="C" />
 		<Key codes="86" keyLabel="V" />
 		<Key codes="66" keyLabel="B" />
-		<Key codes="78" keyLabel="N" />
+		<Key codes="78,209" keyLabel="N" />
 		<Key codes="77" keyLabel="M" />
 		<Key codes="59" keyLabel=";" />
 		<Key codes="58" keyLabel=":" />
-		<Key codes="-1" keyLabel="J" keyLabelStyle=".font-fxkeyboard" keyWidth="40" modifier="true" sticky="true" />
+		<Key codes="-1" keyLabel="J" keyLabelStyle=".font-fxkeyboard" modifier="true" sticky="true" />
 		<Key codes="" keyWidth="5" />
 		<Key codes="49" keyLabel="1" />
 		<Key codes="50" keyLabel="2" />
@@ -63,7 +63,7 @@
 		<Key codes="-12" keyLabel="◄" keyLabelStyle=".small-style" />
 		<Key codes="32" keyLabel="3" keyLabelStyle=".font-fxkeyboard-alpha" movable="true" keyWidth="170" repeatable="true" />
 		<Key codes="-13" keyLabel="►" keyLabelStyle=".small-style" />
-		<Key codes="-7" keyLabel="EN" keyLabelStyle=".small-style" keyWidth="40" />
+		<Key codes="-7" keyLabel="EN" keyLabelStyle=".small-style" keyWidth="50" />
 		<Key codes="-4" keyLabel="TAB" keyLabelStyle=".small-style" keyWidth="50" />
 
 		<Key codes="" keyWidth="5" />

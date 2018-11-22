@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 
-<Keyboard keyWidth="40" keyHeight="30" horizontalGap="0" verticalGap="0">
+<Keyboard keyWidth="40" keyHeight="30" horizontalGap="5" verticalGap="5">
 	<Row>
 		<Key codes="126" keyLabel="~" />
 		<Key codes="177" keyLabel="±" />
@@ -30,7 +30,7 @@
 		<Key codes="43" keyLabel="+" />
 		<Key codes="91" keyLabel="[" />
 		<Key codes="93" keyLabel="]" />
-		<Key codes="-9" keyLabel="ENTER" keyLabelStyle=".small-style" keyWidth="70" />
+		<Key codes="-9" keyLabel="ENTER" keyLabelStyle=".small-style" keyWidth="75" />
 		<Key codes="" keyWidth="5" />
 		<Key codes="52" keyLabel="4" />
 		<Key codes="53" keyLabel="5" />
@@ -60,7 +60,7 @@
 		<Key codes="-12" keyLabel="◄" keyLabelStyle=".small-style" />
 		<Key codes="32" keyLabel="3" keyLabelStyle=".font-fxkeyboard-alpha" movable="true" keyWidth="170" repeatable="true" />
 		<Key codes="-13" keyLabel="►" keyLabelStyle=".small-style" />
-		<Key codes="-7" keyLabel="EN" keyLabelStyle=".small-style" keyWidth="40" />
+		<Key codes="-7" keyLabel="EN" keyLabelStyle=".small-style" keyWidth="50" />
 		<Key codes="-4" keyLabel="TAB" keyLabelStyle=".small-style" keyWidth="50" />
 
 		<Key codes="" keyWidth="5" />

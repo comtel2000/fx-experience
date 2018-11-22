@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<Keyboard keyWidth="40" keyHeight="30" horizontalGap="0" verticalGap="0">
+<Keyboard keyWidth="40" keyHeight="30" horizontalGap="5" verticalGap="5">
 
 	<Row>
 		<Key codes="1081" keyLabel="й" />
@@ -31,7 +31,7 @@
 		<Key codes="1076" keyLabel="д" />
 		<Key codes="1078" keyLabel="ж" />
 		<Key codes="1101" keyLabel="э" />
-		<Key codes="-9" keyLabel="ENTER" keyLabelStyle=".small-style" keyWidth="70" />
+		<Key codes="-9" keyLabel="ENTER" keyLabelStyle=".small-style" keyWidth="75" />
 	</Row>
 
 	<Row>
@@ -51,9 +51,9 @@
 	</Row>
 
 	<Row rowEdgeFlags="bottom">
-		<Key codes="-6" keyLabel="CTRL" keyLabelStyle=".small-style" keyWidth="70" />
-		<Key codes="-2" keyLabel="?123" keyLabelStyle=".small-style" keyWidth="70" />
-		<Key codes="32" keyLabel="3" keyLabelStyle=".font-fxkeyboard-alpha" movable="true" keyWidth="280" repeatable="true" />
+		<Key codes="-6" keyLabel="CTRL" keyLabelStyle=".small-style" keyWidth="80" />
+		<Key codes="-2" keyLabel="?123" keyLabelStyle=".small-style" keyWidth="80" />
+		<Key codes="32" keyLabel="3" keyLabelStyle=".font-fxkeyboard-alpha" movable="true" keyWidth="300" repeatable="true" />
 		<Key codes="-7" keyLabel="RU" keyLabelStyle=".small-style" keyWidth="50" />
 		<Key codes="-3" keyLabel="2" keyLabelStyle=".font-fxkeyboard" keyWidth="50" />
 	</Row>

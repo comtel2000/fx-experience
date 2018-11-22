@@ -75,7 +75,7 @@
 											</xsd:documentation>
 										</xsd:annotation>
 									</xsd:attribute>
-									<xsd:attribute name="keyWidth" type="xsd:int">
+									<xsd:attribute name="keyWidth" type="xsd:double">
 										<xsd:annotation>
 											<xsd:documentation>Override the default width of a key, in pixels or
 												percentage of display width.
@@ -93,7 +93,7 @@
 											</xsd:restriction>
 										</xsd:simpleType>
 									</xsd:attribute>
-									<xsd:attribute name="horizontalGap" type="xsd:int">
+									<xsd:attribute name="horizontalGap" type="xsd:double">
 										<xsd:annotation>
 											<xsd:documentation>Default horizontal gap between keys.</xsd:documentation>
 										</xsd:annotation>
@@ -115,23 +115,23 @@
 					</xsd:complexType>
 				</xsd:element>
 			</xsd:sequence>
-			<xsd:attribute name="keyWidth" type="xsd:int">
+			<xsd:attribute name="keyWidth" type="xsd:double">
 				<xsd:annotation>
 					<xsd:documentation>Default width of a key, in pixels or percentage of display width.
 					</xsd:documentation>
 				</xsd:annotation>
 			</xsd:attribute>
-			<xsd:attribute name="keyHeight" type="xsd:int">
+			<xsd:attribute name="keyHeight" type="xsd:double">
 				<xsd:annotation>
 					<xsd:documentation>Height of the key, not including the gap.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:attribute>
-			<xsd:attribute name="horizontalGap" type="xsd:int">
+			<xsd:attribute name="horizontalGap" type="xsd:double">
 				<xsd:annotation>
 					<xsd:documentation>Default horizontal gap between keys.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:attribute>
-			<xsd:attribute name="verticalGap" type="xsd:int">
+			<xsd:attribute name="verticalGap" type="xsd:double">
 				<xsd:annotation>
 					<xsd:documentation>Default vertical gap between rows of keys.</xsd:documentation>
 				</xsd:annotation>

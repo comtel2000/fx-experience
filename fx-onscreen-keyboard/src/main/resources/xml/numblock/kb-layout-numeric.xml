@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Keyboard horizontalGap="0" keyHeight="30" keyWidth="40" verticalGap="0">
+<Keyboard keyHeight="30" keyWidth="40" horizontalGap="5" verticalGap="5">
 	<Row>
 		<Key codes="55" keyLabel="7" />
 		<Key codes="56" keyLabel="8" />

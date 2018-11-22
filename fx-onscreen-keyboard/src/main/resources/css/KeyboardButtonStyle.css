@@ -13,11 +13,9 @@
 
 .key-background-row {
 	-fx-padding: 5;
-	-fx-vgap: 2.5;
 }
 
 .key-background-column {
-	-fx-hgap: 2.5;
 }
 
 .key-context-background {

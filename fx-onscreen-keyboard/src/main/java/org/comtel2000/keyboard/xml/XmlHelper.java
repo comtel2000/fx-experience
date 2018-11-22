@@ -70,10 +70,19 @@ public class XmlHelper {
       } catch (NumberFormatException e) {
         return Optional.empty();
       }
-
     });
   }
 
+  public static Optional<Double> readDoubleAttribute(XMLStreamReader reader, String attr) {
+	    return Optional.ofNullable(reader.getAttributeValue(null, attr)).flatMap(s -> {
+	      try {
+	        return Optional.of(Double.valueOf(s));
+	      } catch (NumberFormatException e) {
+	        return Optional.empty();
+	      }
+	    });
+	  }
+  
   public static int readIntAttribute(XMLStreamReader reader, String attr, int defaultValue) {
     String a = reader.getAttributeValue(null, attr);
     if (a == null || a.isEmpty()) {
@@ -87,6 +96,18 @@ public class XmlHelper {
 
   }
 
+  public static double readDoubleAttribute(XMLStreamReader reader, String attr, double defaultValue) {
+	    String a = reader.getAttributeValue(null, attr);
+	    if (a == null || a.isEmpty()) {
+	      return defaultValue;
+	    }
+	    try {
+	      return Double.parseDouble(a);
+	    } catch (NumberFormatException e) {
+	      return defaultValue;
+	    }
+	  }
+  
   public static boolean readBooleanAttribute(XMLStreamReader reader, String attr,
       boolean defaultValue) {
     String a = reader.getAttributeValue(null, attr);

@@ -411,14 +411,15 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
     rowPane.setAlignment(Pos.CENTER);
     rowPane.getStyleClass().add("key-background-row");
 
-    int keyWidth = 10;
-    int keyHeight = 35;
-    int horizontalGap = 10;
+    double keyWidth = 10;
+    double keyHeight = 35;
+    double horizontalGap = 5;
+    double verticalGap = 5;
     int colIndex = -1;
     int rowIndex = -1;
-    int rowWidth = 0;
-    int minRowWidth = Integer.MAX_VALUE;
-    int maxRowWidth = 0;
+    double rowWidth = 0;
+    double minRowWidth = -1;
+    double maxRowWidth = -1;
 
     GridPane colPane = null;
     XMLStreamReader reader = null;
@@ -430,21 +431,19 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
         case XMLStreamConstants.START_ELEMENT:
           switch (reader.getLocalName()) {
           case KEYBOARD:
-            readIntAttribute(reader, ATTR_V_GAP).ifPresent(rowPane::setVgap);
-            horizontalGap = readIntAttribute(reader, ATTR_H_GAP, horizontalGap);
-            keyWidth = readIntAttribute(reader, ATTR_KEY_WIDTH, keyWidth);
-            keyHeight = readIntAttribute(reader, ATTR_KEY_HEIGHT, keyHeight);
+            verticalGap = readDoubleAttribute(reader, ATTR_V_GAP, verticalGap);
+            rowPane.setVgap(verticalGap);
+            horizontalGap = readDoubleAttribute(reader, ATTR_H_GAP, horizontalGap);
+
+            keyWidth = readDoubleAttribute(reader, ATTR_KEY_WIDTH, keyWidth);
+            keyHeight = readDoubleAttribute(reader, ATTR_KEY_HEIGHT, keyHeight);
             break;
           case ROW:
             rowIndex++;
             colIndex = -1;
-            maxRowWidth = Math.max(maxRowWidth, rowWidth);
-            if (rowWidth > 0) {
-              minRowWidth = Math.min(minRowWidth, rowWidth);
-            }
-            logger.trace("{} - [{}/{}] url: {}", rowWidth, minRowWidth, maxRowWidth, layout);
             rowWidth = 0;
             colPane = new GridPane();
+            colPane.setHgap(horizontalGap);
             colPane.getStyleClass().add("key-background-column");
             rowPane.add(colPane, 0, rowIndex);
             RowConstraints rc = new RowConstraints();
@@ -459,7 +458,7 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
             ColumnConstraints cc = new ColumnConstraints();
             cc.setHgrow(Priority.SOMETIMES);
             cc.setFillWidth(true);
-            cc.setPrefWidth(readIntAttribute(reader, ATTR_KEY_WIDTH, keyWidth));
+            cc.setPrefWidth(readDoubleAttribute(reader, ATTR_KEY_WIDTH, keyWidth));
             String code = reader.getAttributeValue(null, ATTR_CODES);
             if (code == null || code.isEmpty()) {
               Pane placeholder = new Pane();
@@ -588,11 +587,21 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
             }
             colPane.add(button, colIndex, 0);
             colPane.getColumnConstraints().add(cc);
-            rowWidth += cc.getPrefWidth();
+            rowWidth += colPane.getHgap() + cc.getPrefWidth();
             break;
           }
 
           break;
+        case XMLStreamConstants.END_ELEMENT:
+        	if (reader.getLocalName().equals(ROW)) {
+                maxRowWidth = Math.max(maxRowWidth, rowWidth);
+                minRowWidth = minRowWidth == -1.0 ? rowWidth : Math.min(minRowWidth, rowWidth);
+                if (maxRowWidth != minRowWidth) {
+                	//logger.warn("row size: {} [{}/{}] url: {}", rowWidth, minRowWidth, maxRowWidth, layout.getPath());
+                }
+        		logger.info("{} - [{}/{}] url: {}", rowWidth ,rowIndex, colIndex, layout.getPath());
+        	}
+        	break;
         case XMLStreamConstants.END_DOCUMENT:
           // rowPane.setMinWidth(minRowWidth);
           // rowPane.setMaxWidth(maxRowWidth);

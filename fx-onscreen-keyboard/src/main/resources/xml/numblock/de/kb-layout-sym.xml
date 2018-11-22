@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 
-<Keyboard keyWidth="40" keyHeight="30" horizontalGap="0" verticalGap="0">
+<Keyboard keyWidth="40" keyHeight="30" horizontalGap="5" verticalGap="5">
 	<Row>
 		<Key codes="49" keyLabel="1" />
 		<Key codes="50" keyLabel="2" />
@@ -30,7 +30,7 @@
 		<Key codes="61" keyLabel="=" />
 		<Key codes="40" keyLabel="(" />
 		<Key codes="41" keyLabel=")" />
-		<Key codes="-9" keyLabel="ENTER" keyLabelStyle=".small-style" keyWidth="70" />
+		<Key codes="-9" keyLabel="ENTER" keyLabelStyle=".small-style" keyWidth="75" />
 		<Key codes="" keyWidth="5" />
 		<Key codes="52" keyLabel="4" />
 		<Key codes="53" keyLabel="5" />
@@ -47,7 +47,7 @@
 		<Key codes="63" keyLabel="?" />
 		<Key codes="44" keyLabel="," />
 		<Key codes="46" keyLabel="." />
-		<Key codes="-1" keyLabel="I" keyLabelStyle=".font-fxkeyboard" keyWidth="40" modifier="true" sticky="true" />
+		<Key codes="-1" keyLabel="I" keyLabelStyle=".font-fxkeyboard" modifier="true" sticky="true" />
 
 		<Key codes="" keyWidth="5" />
 		<Key codes="49" keyLabel="1" />
@@ -56,12 +56,12 @@
 	</Row>
 
 	<Row rowEdgeFlags="bottom">
-		<Key codes="-6" keyLabel="CTRL" keyLabelStyle=".small-style" keyWidth="60" />
+		<Key codes="-6" keyLabel="STRG" keyLabelStyle=".small-style" keyWidth="60" />
 		<Key codes="-2" keyLabel="ABC" keyLabelStyle=".small-style" keyWidth="50" />
 		<Key codes="-12" keyLabel="◄" keyLabelStyle=".small-style" />
 		<Key codes="32" keyLabel="3" keyLabelStyle=".font-fxkeyboard-alpha" movable="true" keyWidth="170" repeatable="true" />
 		<Key codes="-13" keyLabel="►" keyLabelStyle=".small-style" />
-		<Key codes="-7" keyLabel="DE" keyLabelStyle=".small-style" keyWidth="40" />
+		<Key codes="-7" keyLabel="DE" keyLabelStyle=".small-style" keyWidth="50" />
 		<Key codes="-4" keyLabel="TAB" keyLabelStyle=".small-style" keyWidth="50" />
 
 		<Key codes="" keyWidth="5" />
