@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.comtel2000</groupId>
 	<artifactId>fx-parent</artifactId>
-	<version>11.0.1-SNAPSHOT</version>
+	<version>11.0.1</version>
 	<packaging>pom</packaging>
 
 	<name>fx-experience</name>
@@ -50,7 +50,7 @@
 		<url>https://github.com/comtel2000/fx-experience</url>
 		<connection>scm:git:git@github.com:comtel2000/fx-experience.git</connection>
 		<developerConnection>scm:git:git@github.com:comtel2000/fx-experience.git</developerConnection>
-		<tag>v11.0.0</tag>
+		<tag>11.0.1</tag>
 	</scm>
 
 	<ciManagement>
