@@ -59,7 +59,7 @@ Java 11 (java11 branch):
 <dependency>
   <groupId>org.comtel2000</groupId>
   <artifactId>fx-onscreen-keyboard</artifactId>
-  <version>11.0.0</version>
+  <version>11.0.1</version>
 </dependency>
 ```
 

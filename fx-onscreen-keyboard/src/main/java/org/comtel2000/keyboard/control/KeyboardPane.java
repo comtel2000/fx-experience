@@ -224,7 +224,7 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
       setActiveLocale(Locale.forLanguageTag(local.getLanguage()));
     } else {
       if (Locale.ENGLISH.equals(getActiveLocale())) {
-        logger.info("locale language already active: {}", local);
+        logger.debug("locale language already active: {}", local);
         return;
       }
       setActiveLocale(Locale.ENGLISH);
@@ -593,15 +593,12 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
 
           break;
         case XMLStreamConstants.END_ELEMENT:
-        	if (reader.getLocalName().equals(ROW)) {
-                maxRowWidth = Math.max(maxRowWidth, rowWidth);
-                minRowWidth = minRowWidth == -1.0 ? rowWidth : Math.min(minRowWidth, rowWidth);
-                if (maxRowWidth != minRowWidth) {
-                	//logger.warn("row size: {} [{}/{}] url: {}", rowWidth, minRowWidth, maxRowWidth, layout.getPath());
-                }
-        		logger.info("{} - [{}/{}] url: {}", rowWidth ,rowIndex, colIndex, layout.getPath());
-        	}
-        	break;
+          if (reader.getLocalName().equals(ROW)) {
+            maxRowWidth = Math.max(maxRowWidth, rowWidth);
+            minRowWidth = minRowWidth == -1.0 ? rowWidth : Math.min(minRowWidth, rowWidth);
+            logger.trace("{} - [{}/{}] url: {}", rowWidth, rowIndex, colIndex, layout.getPath());
+          }
+          break;
         case XMLStreamConstants.END_DOCUMENT:
           // rowPane.setMinWidth(minRowWidth);
           // rowPane.setMaxWidth(maxRowWidth);
