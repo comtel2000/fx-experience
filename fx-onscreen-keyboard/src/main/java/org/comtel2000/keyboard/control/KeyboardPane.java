@@ -26,6 +26,8 @@
 
 package org.comtel2000.keyboard.control;
 
+import static org.comtel2000.keyboard.control.KeyboardType.EMAIL;
+import static org.comtel2000.keyboard.control.KeyboardType.NUMERIC;
 import static org.comtel2000.keyboard.xml.XmlHelper.ATTR_CODES;
 import static org.comtel2000.keyboard.xml.XmlHelper.ATTR_H_GAP;
 import static org.comtel2000.keyboard.xml.XmlHelper.ATTR_KEY_EDGE_FLAGS;
@@ -64,24 +66,12 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-
-import javax.xml.stream.XMLInputFactory;
-import javax.xml.stream.XMLStreamConstants;
-import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.XMLStreamReader;
-
-import org.comtel2000.keyboard.event.KeyButtonEvent;
-import org.comtel2000.keyboard.robot.FXRobotHandler;
-import org.comtel2000.keyboard.robot.IRobot;
-import org.slf4j.LoggerFactory;
-
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -112,12 +102,20 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.RowConstraints;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamConstants;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamReader;
+import org.comtel2000.keyboard.event.KeyButtonEvent;
+import org.comtel2000.keyboard.robot.FXRobotHandler;
+import org.comtel2000.keyboard.robot.IRobot;
+import org.slf4j.LoggerFactory;
 
 public class KeyboardPane extends Region implements StandardKeyCode, EventHandler<KeyButtonEvent> {
 
   private static final org.slf4j.Logger logger = LoggerFactory.getLogger(KeyboardPane.class);
 
-  private final EnumMap<KeyboardType, Region> typeRegionMap = new EnumMap<>(KeyboardType.class);
+  private final Map<String, Region> typeRegionMap = new HashMap<>();
 
   private final XMLInputFactory factory = XMLInputFactory.newInstance();
 
@@ -299,7 +297,7 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
     addTypeRegion(KeyboardType.SYMBOL, root, "kb-layout-sym.xml");
     addTypeRegion(KeyboardType.SYMBOL_SHIFT, root, "kb-layout-sym-shift.xml");
     addTypeRegion(KeyboardType.CTRL, root, "kb-layout-ctrl.xml");
-    addTypeRegion(KeyboardType.NUMERIC, root, "kb-layout-numeric.xml");
+    addTypeRegion(NUMERIC, root, "kb-layout-numeric.xml");
     addTypeRegion(KeyboardType.EMAIL, root, "kb-layout-email.xml");
     addTypeRegion(KeyboardType.URL, root, "kb-layout-url.xml");
 
@@ -312,7 +310,7 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
     }
     if (url != null) {
       logger.debug("add layout: {}", url);
-      typeRegionMap.put(type, getKeyboardPane(url));
+      typeRegionMap.put(type.toString(), getKeyboardPane(url));
       return;
     }
     String defaultRoot = getAvailableLocales().get(Locale.ENGLISH);
@@ -323,9 +321,43 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
     url = KeyboardPane.class.getResource(defaultRoot + "/" + file);
     if (url != null) {
       logger.debug("add default layout: {}", url);
+      typeRegionMap.put(type.toString(), getKeyboardPane(url));
+      return;
+    }
+    if (Files.exists(Paths.get(defaultRoot, file))) {
+      url = Paths.get(defaultRoot, file).toUri().toURL();
+      logger.debug("add default layout: {}", url);
+      typeRegionMap.put(type.toString(), getKeyboardPane(url));
+    }
+  }
+
+  public void addTypeRegion(String type, String root, String file) throws Exception {
+
+    URL url = KeyboardPane.class.getResource(root + "/" + file);
+
+    if (url == null && Files.exists(Paths.get(root, file))) {
+      url = Paths.get(root, file).toUri().toURL();
+    }
+
+    if (url != null) {
+      logger.debug("add layout: {}", url);
       typeRegionMap.put(type, getKeyboardPane(url));
       return;
     }
+
+    String defaultRoot = getAvailableLocales().get(Locale.ENGLISH);
+    if (defaultRoot == null) {
+      logger.error("layout: {} / {} not found - no default available", root, file);
+      return;
+    }
+
+    url = KeyboardPane.class.getResource(defaultRoot + "/" + file);
+    if (url != null) {
+      logger.debug("add default layout: {}", url);
+      typeRegionMap.put(type, getKeyboardPane(url));
+      return;
+    }
+
     if (Files.exists(Paths.get(defaultRoot, file))) {
       url = Paths.get(defaultRoot, file).toUri().toURL();
       logger.debug("add default layout: {}", url);
@@ -397,51 +429,67 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
       setControl(false);
       setShift(false);
       setSymbol(false);
-      pane = typeRegionMap.getOrDefault(type, typeRegionMap.get(KeyboardType.SYMBOL));
+      pane = typeRegionMap.getOrDefault(type.toString(), typeRegionMap.get(KeyboardType.SYMBOL.toString()));
       break;
     case EMAIL:
       setControl(false);
       setShift(false);
       setSymbol(false);
-      pane = typeRegionMap.get(type);
+      pane = typeRegionMap.get(type.toString());
       break;
     case URL:
       setControl(false);
       setShift(false);
       setSymbol(false);
-      pane = typeRegionMap.get(type);
+      pane = typeRegionMap.get(type.toString());
       break;
     case SYMBOL:
       setControl(false);
       setShift(false);
       setSymbol(true);
-      pane = typeRegionMap.get(type);
+      pane = typeRegionMap.get(type.toString());
       break;
     case SYMBOL_SHIFT:
       setControl(false);
       setShift(true);
       setSymbol(true);
-      pane = typeRegionMap.get(type);
+      pane = typeRegionMap.get(type.toString());
       break;
     case CTRL:
       setControl(true);
       setShift(false);
       setSymbol(false);
-      pane = typeRegionMap.get(type);
+      pane = typeRegionMap.get(type.toString());
       break;
     case TEXT_SHIFT:
       setControl(false);
       setShift(true);
       setSymbol(false);
-      pane = typeRegionMap.get(type);
+      pane = typeRegionMap.get(type.toString());
       break;
     default:
       setControl(false);
       setShift(false);
       setSymbol(false);
-      pane = typeRegionMap.get(type);
+      pane = typeRegionMap.get(type.toString());
       break;
     }
+    if (pane == null) {
+      pane = typeRegionMap.get(KeyboardType.TEXT.toString());
+    }
+    if (pane != null) {
+      getChildren().setAll(pane);
+    }
+  }
+
+  public void setKeyboardType(String type) {
+
+    logger.debug("try to set type: {}->{}", getActiveType(), type);
+    //TODO handle ActiveType
+    setControl(false);
+    setShift(false);
+    setSymbol(false);
+    Region pane = typeRegionMap.get(type);
     if (pane == null) {
       pane = typeRegionMap.get(KeyboardType.TEXT);
     }
@@ -451,6 +499,12 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
   }
 
   public void setKeyboardType(Object type) {
+
+    if(type instanceof String && !KeyboardType.findValue(type).isPresent()) {
+      setKeyboardType((String) type);
+      return;
+    }
+
     setKeyboardType(KeyboardType.findValue(type).orElse(KeyboardType.TEXT));
   }
 
@@ -752,7 +806,7 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
       sendToComponent((char) java.awt.event.KeyEvent.VK_HELP, true);
       break;
     case NUMERIC_TYPE:
-      setKeyboardType(KeyboardType.NUMERIC);
+      setKeyboardType(NUMERIC);
       break;
     case EMAIL_TYPE:
       setKeyboardType(KeyboardType.EMAIL);

@@ -27,12 +27,6 @@
 package org.comtel2000.samples.fx;
 
 import java.util.Locale;
-
-import org.comtel2000.keyboard.control.DefaultLayer;
-import org.comtel2000.keyboard.control.KeyBoardPopup;
-import org.comtel2000.keyboard.control.KeyBoardPopupBuilder;
-import org.comtel2000.keyboard.control.VkProperties;
-
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -47,6 +41,10 @@ import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.ToolBar;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import org.comtel2000.keyboard.control.DefaultLayer;
+import org.comtel2000.keyboard.control.KeyBoardPopup;
+import org.comtel2000.keyboard.control.KeyBoardPopupBuilder;
+import org.comtel2000.keyboard.control.VkProperties;
 
 public class MainDemo extends Application implements VkProperties {
 
@@ -81,6 +79,12 @@ public class MainDemo extends Application implements VkProperties {
     CheckBox numblock = new CheckBox("NumBlock");
     numblock.setSelected(false);
     numblock.selectedProperty().addListener((l, a, b) -> popup.getKeyBoard().switchLayer(b ? DefaultLayer.NUMBLOCK : DefaultLayer.DEFAULT));
+
+    try {
+      popup.getKeyBoard().addTypeRegion("my_numeric", "","kb-layout-my-numeric.xml");
+    } catch (Exception e) {
+      e.getStackTrace();
+    }
 
     VBox pane = new VBox(10);
 
@@ -122,6 +126,12 @@ public class MainDemo extends Application implements VkProperties {
     tf5.setPromptText("control");
     tf5.getProperties().put(VK_TYPE, VK_TYPE_CTRL);
     pane.getChildren().add(tf5);
+
+    pane.getChildren().add(new Label("Text6 (my_numeric)"));
+    TextField tf6 = new TextField();
+    tf6.setPromptText("control");
+    tf6.getProperties().put(VK_TYPE, "my_numeric");
+    pane.getChildren().add(tf6);
 
     ComboBox<String> combo = new ComboBox<>();
     combo.setEditable(true);
