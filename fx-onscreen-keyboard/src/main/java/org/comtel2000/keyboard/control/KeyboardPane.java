@@ -68,7 +68,11 @@ import static org.comtel2000.keyboard.xml.XmlHelper.*;
 public class KeyboardPane extends Region implements StandardKeyCode, EventHandler<KeyButtonEvent> {
 
   private final static org.slf4j.Logger logger = LoggerFactory.getLogger(KeyboardPane.class);
-  private final static String DEFAULT_CSS = "/css/KeyboardButtonStyle.css";
+  
+  
+  private final static String DEFAULT_XML_PATH = "layer";
+  private final static String DEFAULT_CSS = "KeyboardButtonStyle.css";
+  
   private final EnumMap<KeyboardType, Region> typeRegionMap = new EnumMap<>(KeyboardType.class);
   private final XMLInputFactory factory = XMLInputFactory.newInstance();
   private final List<IRobot> robots = new ArrayList<>();
@@ -277,10 +281,11 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
     }
     if (getLayerPath() == null) {
       String layer = getLayer().toString().toLowerCase(Locale.ENGLISH);
-      URL url = Objects.requireNonNull(KeyboardPane.class.getResource("/xml/" + layer));
+      String path = DEFAULT_XML_PATH + "/"+ layer;
+      URL url = Objects.requireNonNull(KeyboardPane.class.getResource(path));
       logger.debug("use embedded layer path: {}", url);
       if (url.toExternalForm().contains("!")) {
-        availableLocales.put(Locale.ENGLISH, "/xml/" + layer);
+        availableLocales.put(Locale.ENGLISH, path);
         readJarLocales(url);
         return availableLocales;
       }
