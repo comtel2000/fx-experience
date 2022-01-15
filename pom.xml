@@ -13,9 +13,9 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>11</maven.compiler.source>
 		<maven.compiler.target>11</maven.compiler.target>
-		<javafx.version>13.0.1</javafx.version>
+		<javafx.version>17.0.1</javafx.version>
 		<junit.version>5.5.2</junit.version>
-		<slf4j.version>2.0.0-alpha1</slf4j.version>
+		<slf4j.version>2.0.0-alpha2</slf4j.version>
 	</properties>
 
 	<modules>
@@ -82,7 +82,7 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-source-plugin</artifactId>
-						<version>3.2.0</version>
+						<version>3.2.1</version>
 						<executions>
 							<execution>
 								<id>attach-sources</id>
@@ -95,7 +95,7 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-javadoc-plugin</artifactId>
-						<version>3.1.1</version>
+						<version>3.3.0</version>
 						<executions>
 							<execution>
 								<id>attach-javadocs</id>
@@ -108,7 +108,7 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-gpg-plugin</artifactId>
-						<version>1.6</version>
+						<version>3.0.1</version>
 						<executions>
 							<execution>
 								<id>sign-artifacts</id>
@@ -141,7 +141,7 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-source-plugin</artifactId>
-						<version>3.2.0</version>
+						<version>3.2.1</version>
 						<executions>
 							<execution>
 								<id>attach-sources</id>
@@ -154,7 +154,7 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-javadoc-plugin</artifactId>
-						<version>3.1.1</version>
+						<version>3.3.0</version>
 						<executions>
 							<execution>
 								<id>attach-javadocs</id>
@@ -184,7 +184,7 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>findbugs-maven-plugin</artifactId>
-				<version>3.0.4</version>
+				<version>3.0.5</version>
 			</plugin>
 		</plugins>
 
@@ -192,12 +192,11 @@
 			<plugins>
 				<plugin>
 					<artifactId>maven-surefire-plugin</artifactId>
-					<version>3.0.0-M4</version>
+					<version>3.0.0-M5</version>
 					<configuration>
 						<parallel>classes</parallel>
 						<useUnlimitedThreads>true</useUnlimitedThreads>
 					</configuration>
-
 				</plugin>
 
 				<plugin>
@@ -208,7 +207,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-javadoc-plugin</artifactId>
-					<version>3.1.1</version>
+					<version>3.3.0</version>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
@@ -244,7 +243,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-checkstyle-plugin</artifactId>
-				<version>3.0.0</version>
+				<version>3.1.2</version>
 			</plugin>
 		</plugins>
 	</reporting>
