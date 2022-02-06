@@ -12,6 +12,7 @@ import org.comtel2000.swing.robot.NativeAsciiRobotHandler;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.Serial;
 import java.nio.file.Paths;
 import java.text.ParseException;
 import java.util.Collections;
@@ -19,39 +20,16 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-/*******************************************************************************
- * Copyright (c) 2016 comtel2000
- *
- * Redistribution and use in source and binary forms, with or without modification, are permitted
- * provided that the following conditions are met:
- *
- * 1. Redistributions of source code must retain the above copyright notice, this list of conditions
- * and the following disclaimer.
- *
- * 2. Redistributions in binary form must reproduce the above copyright notice, this list of
- * conditions and the following disclaimer in the documentation and/or other materials provided with
- * the distribution.
- *
- * 3. Neither the name of the comtel2000 nor the names of its contributors may be used to endorse or
- * promote products derived from this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
- * FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
- * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
- * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY
- * WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *******************************************************************************/
 
 public class StandAloneApp extends JFrame {
 
-  private static final long serialVersionUID = 1L;
+  @Serial
+  private static final long serialVersionUID = 291529300404728337L;
   private static String[] arguments;
   private int posX, posY;
 
-  public StandAloneApp() {}
+  public StandAloneApp() {
+  }
 
   public static void main(String[] args) {
     arguments = args;
@@ -118,7 +96,7 @@ public class StandAloneApp extends JFrame {
         showHelp();
       }
       if (params.containsKey("scale")) {
-        kb.setScale(Double.valueOf(params.get("scale")));
+        kb.setScale(Double.parseDouble(params.get("scale")));
       }
       if (params.containsKey("locale")) {
         kb.setLocale(parseLocale(params.get("locale")));
@@ -149,7 +127,7 @@ public class StandAloneApp extends JFrame {
 
   private void showHelp() {
     System.out.println();
-    System.out.println("\t--scale=<double>\tset the intial scale");
+    System.out.println("\t--scale=<double>\tset the initial scale");
     System.out.println("\t--lang=<locale>\t\tsetting keyboard language (en,de,ru,..)");
     System.out.println("\t--layout=<path>\t\tpath to custom layout xml");
     System.out.println("\t--pos=<x,y>\t\tinitial keyboard position");
@@ -171,13 +149,13 @@ public class StandAloneApp extends JFrame {
 
   private void parsePosition(String p) throws Exception {
     if (p == null || p.isEmpty()) {
-      throw new Exception("invalid position: " + String.valueOf(p));
+      throw new Exception("invalid position: " + p);
     }
 
     String[] pos = p.split(",");
     if (pos.length == 2) {
-      posX = Integer.valueOf(pos[0]);
-      posY = Integer.valueOf(pos[1]);
+      posX = Integer.parseInt(pos[0]);
+      posY = Integer.parseInt(pos[1]);
     }
   }
 }
