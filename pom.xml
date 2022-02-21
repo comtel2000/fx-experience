@@ -16,6 +16,7 @@
 		<javafx.version>17.0.1</javafx.version>
 		<junit.version>5.5.2</junit.version>
 		<slf4j.version>2.0.0-alpha6</slf4j.version>
+		<closeTestReports>true</closeTestReports>
 	</properties>
 
 	<modules>
