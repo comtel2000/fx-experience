@@ -25,4 +25,4 @@ jobs:
           OSSRH_TOKEN: ${{ secrets.OSSRH_TOKEN }}
           MAVEN_GPG_KEY: ${{ secrets.GPG_SECRET_KEY }}
           MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_SECRET_KEY_PASSPHRASE }}
-        run: mvn --batch-mode -DskipTests=true releaser:release
+        run: mvn deploy
