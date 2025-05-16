@@ -26,6 +26,8 @@
 
 package org.comtel2000.keyboard.control;
 
+import org.comtel2000.keyboard.event.KeyButtonEvent;
+
 import javafx.animation.Timeline;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ObjectPropertyBase;
@@ -33,10 +35,6 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import org.comtel2000.keyboard.event.KeyButtonEvent;
-
-import java.security.AccessController;
-import java.security.PrivilegedAction;
 
 public abstract class KeyButton extends Button implements LongPressable {
 
@@ -54,39 +52,39 @@ public abstract class KeyButton extends Button implements LongPressable {
   private ObjectProperty<EventHandler<? super KeyButtonEvent>> onShortPressed;
 
   static {
-    AccessController.doPrivileged((PrivilegedAction<Void>) () -> {
-
-      String s = System.getProperty("org.comtel2000.keyboard.longPressDelay");
-      if (s != null) {
-        Double delay = Double.valueOf(s);
-        KEY_LONG_PRESS_DELAY = Math.min(Math.max(delay, KEY_LONG_PRESS_DELAY_MIN),
-            KEY_LONG_PRESS_DELAY_MAX);
-      }
-      return null;
-    });
+    String s = System.getProperty("org.comtel2000.keyboard.longPressDelay");
+    if (s != null && !s.isBlank()) {
+      try {
+		Double delay = Double.valueOf(s);
+		KEY_LONG_PRESS_DELAY = Math.min(Math.max(delay, KEY_LONG_PRESS_DELAY_MIN),
+		    KEY_LONG_PRESS_DELAY_MAX);
+	  } catch (NumberFormatException e) {
+		// ignore
+	  }
+    }
   }
 
   public KeyButton() {
     this(null, null, KEY_LONG_PRESS_DELAY);
   }
 
-  public KeyButton(String label) {
+  protected KeyButton(String label) {
     this(label, null, KEY_LONG_PRESS_DELAY);
   }
 
-  public KeyButton(Node graphic) {
+  protected KeyButton(Node graphic) {
     this(null, graphic, KEY_LONG_PRESS_DELAY);
   }
 
-  public KeyButton(String label, Node graphic) {
+  protected KeyButton(String label, Node graphic) {
     this(label, graphic, KEY_LONG_PRESS_DELAY);
   }
 
-  public KeyButton(String label, double delay) {
+  protected KeyButton(String label, double delay) {
     this(label, null, delay);
   }
 
-  public KeyButton(String label, Node graphic, double delay) {
+  protected KeyButton(String label, Node graphic, double delay) {
     super(label, graphic);
     getStyleClass().add("key-button");
     initEventListener(delay > 0 ? delay : KEY_LONG_PRESS_DELAY);

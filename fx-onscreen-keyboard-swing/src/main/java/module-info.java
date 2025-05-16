@@ -1,6 +1,8 @@
 module fx.onscreen.keyboard.swing {
 
-  requires fx.onscreen.keyboard;
+  requires transitive fx.onscreen.keyboard;
+  requires transitive javafx.base;
+  requires transitive java.desktop;
   requires javafx.swing;
   requires org.slf4j;
 

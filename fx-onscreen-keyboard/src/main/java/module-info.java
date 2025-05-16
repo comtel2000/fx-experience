@@ -2,7 +2,7 @@ module fx.onscreen.keyboard {
 
   requires transitive javafx.base;
   requires transitive javafx.graphics;
-  requires javafx.controls;
+  requires transitive javafx.controls;
   requires org.slf4j;
   requires java.xml;
   requires java.desktop;

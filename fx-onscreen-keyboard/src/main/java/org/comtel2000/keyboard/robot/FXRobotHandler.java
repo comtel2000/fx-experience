@@ -44,7 +44,7 @@ import static javafx.scene.input.KeyCode.META;
 
 public class FXRobotHandler implements IRobot {
 
-  private final static Logger logger = LoggerFactory.getLogger(FXRobotHandler.class);
+  private static final Logger logger = LoggerFactory.getLogger(FXRobotHandler.class);
 
   private final KeyCode controlKeyCode;
 
@@ -63,8 +63,8 @@ public class FXRobotHandler implements IRobot {
     final Window keyboardWindow = ((KeyboardPane) kb).getScene().getWindow();
     if (keyboardWindow != null) {
       final Scene scene;
-      if (keyboardWindow instanceof Popup) {
-        scene = ((Popup) keyboardWindow).getOwnerWindow().getScene();
+      if (keyboardWindow instanceof Popup popup) {
+        scene = popup.getOwnerWindow().getScene();
       } else {
         scene = keyboardWindow.getScene();
       }

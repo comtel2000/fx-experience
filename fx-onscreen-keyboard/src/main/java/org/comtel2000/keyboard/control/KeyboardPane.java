@@ -67,14 +67,14 @@ import static org.comtel2000.keyboard.xml.XmlHelper.*;
 
 public class KeyboardPane extends Region implements StandardKeyCode, EventHandler<KeyButtonEvent> {
 
-  private final static org.slf4j.Logger logger = LoggerFactory.getLogger(KeyboardPane.class);
+  private static final org.slf4j.Logger logger = LoggerFactory.getLogger(KeyboardPane.class);
   
   
-  private final static String DEFAULT_XML_PATH = "layer";
-  private final static String DEFAULT_CSS = "KeyboardButtonStyle.css";
+  private static final String DEFAULT_XML_PATH = "layer";
+  private static final String DEFAULT_CSS = "KeyboardButtonStyle.css";
   
   private final EnumMap<KeyboardType, Region> typeRegionMap = new EnumMap<>(KeyboardType.class);
-  private final XMLInputFactory factory = XMLInputFactory.newInstance();
+  private final XMLInputFactory factory = XMLInputFactory.newDefaultFactory();
   private final List<IRobot> robots = new ArrayList<>();
   private final Map<URL, Region> layoutCache = new HashMap<>();
   private final Map<Locale, String> availableLocales = new LinkedHashMap<>();
@@ -358,12 +358,6 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
       setSymbol(false);
       pane = typeRegionMap.get(type);
       break;
-    case URL:
-      setControl(false);
-      setShift(false);
-      setSymbol(false);
-      pane = typeRegionMap.get(type);
-      break;
     case SYMBOL:
       setControl(false);
       setShift(false);
@@ -388,6 +382,7 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
       setSymbol(false);
       pane = typeRegionMap.get(type);
       break;
+    case URL:
     default:
       setControl(false);
       setShift(false);

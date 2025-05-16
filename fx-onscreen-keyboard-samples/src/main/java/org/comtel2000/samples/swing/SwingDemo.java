@@ -13,7 +13,7 @@ import java.util.Locale;
 import static org.comtel2000.keyboard.control.VkProperties.*;
 
 /*******************************************************************************
- * Copyright (c) 2016 comtel2000
+ * Copyright (c) 2025 comtel2000
  *
  * Redistribution and use in source and binary forms, with or without modification, are permitted
  * provided that the following conditions are met:

@@ -12,7 +12,7 @@ import javax.swing.*;
 import java.util.Optional;
 
 /*******************************************************************************
- * Copyright (c) 2016 comtel2000
+ * Copyright (c) 2025 comtel2000
  *
  * Redistribution and use in source and binary forms, with or without modification, are permitted
  * provided that the following conditions are met:
@@ -44,24 +44,24 @@ import java.util.Optional;
  */
 public class KeyBoardWindow extends JWindow {
 
-  public final static EventHandler<? super Event> DEFAULT_CLOSE_HANDLER = (event) -> {
-    if (event.getSource() instanceof Node) {
-      ((Node) event.getSource()).getScene().getWindow().hide();
+  public static final EventHandler<? super Event> DEFAULT_CLOSE_HANDLER = event -> {
+    if (event.getSource() instanceof Node node) {
+      node.getScene().getWindow().hide();
     }
   };
   private static final long serialVersionUID = 1564988010984549166L;
   private final JFXPanel jfxPanel;
-  private KeyBoardPopup popup;
+  private transient KeyBoardPopup popup;
 
   protected KeyBoardWindow() {
     super();
     setModalExclusionType(java.awt.Dialog.ModalExclusionType.APPLICATION_EXCLUDE);
     setFocusable(false);
     setBackground(null);
-
-    getContentPane().add(jfxPanel = new JFXPanel());
+    jfxPanel = new JFXPanel();
     jfxPanel.setFocusable(false);
     jfxPanel.setOpaque(false);
+    getContentPane().add(jfxPanel);
   }
 
   /**
