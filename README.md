@@ -1,5 +1,5 @@
 # fx-onscreen-keyboard
-[![Build Status](https://travis-ci.org/comtel2000/fx-experience.png?branch=master)](https://travis-ci.org/comtel2000/fx-experience)  [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.comtel2000/fx-parent/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.comtel2000/fx-parent)  [![License](https://img.shields.io/badge/license-BSD--3--Clause-blue.svg)](http://opensource.org/licenses/BSD-3-Clause)
+[![CI](https://github.com/comtel2000/fx-experience/actions/workflows/ci.yml/badge.svg)](https://github.com/comtel2000/fx-experience/actions/workflows/ci.yml)  [![Maven Central Version](https://img.shields.io/maven-central/v/org.comtel2000/fx-parent)](https://central.sonatype.com/artifact/org.comtel2000/fx-parent)  [![License](https://img.shields.io/badge/license-BSD--3--Clause-blue.svg)](http://opensource.org/licenses/BSD-3-Clause)
 
 *FXOK* provides a JavaFX 8 (OpenJFX 11-17) based virtual on-screen keyboard component for touch based monitors with xml layout configuration
 

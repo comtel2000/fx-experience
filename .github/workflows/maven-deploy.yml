@@ -1,0 +1,28 @@
+name: Maven Deploy (Snapshots)
+
+on:
+  push:
+    branches: [ "dev" ]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment: OSSRH
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Maven Central Repository
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'liberica'
+          java-package: jdk+fx # optional (jdk, jre, jdk+fx or jre+fx) - defaults to jdk
+          server-id: central
+          server-username: MAVEN_USERNAME # env variable for username in deploy
+          server-password: MAVEN_CENTRAL_TOKEN # env variable for token in deploy
+          
+      - name: Publish Snapshot artifact
+        run: mvn -B clean deploy
+        env:
+          MAVEN_USERNAME: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
+          MAVEN_CENTRAL_TOKEN: ${{ secrets.MAVEN_CENTRAL_TOKEN }}

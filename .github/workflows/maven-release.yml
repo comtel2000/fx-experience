@@ -1,7 +1,8 @@
-name: Maven Publish manually
+name: Maven Release
 
 on:
-  workflow_dispatch:
+  release:
+    types: [ created ]
 
 permissions:
   contents: write
@@ -35,4 +36,3 @@ jobs:
           MAVEN_USERNAME: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
           MAVEN_CENTRAL_TOKEN: ${{ secrets.MAVEN_CENTRAL_TOKEN }}
           MAVEN_GPG_PASSPHRASE: ${{ secrets.MAVEN_GPG_PASSPHRASE }}
-
