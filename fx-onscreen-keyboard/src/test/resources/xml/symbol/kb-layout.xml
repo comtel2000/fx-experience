@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Keyboards xmlns="http://comtel2000.org/fxml/layout">
+    <Keyboard title="Test Symbol Layer Keyboard" locale="test" type="TEXT" width="800" height="300">
+        <Row>
+            <Key label="S1" codes="1001" />
+            <Key label="S2" codes="1002" />
+        </Row>
+        <!-- This layer file could also define its own SYMBOL type, but for this test,
+             we are primarily interested in checking that TEXT type under SYMBOL layer
+             is different from TEXT type under DEFAULT layer for the same "test" locale. -->
+    </Keyboard>
+    <!-- Can add other locales for symbol layer if needed, e.g., test_US -->
+    <Keyboard title="Test US Symbol Layer Keyboard" locale="test_US" type="TEXT" width="800" height="300">
+        <Row>
+            <Key label="US-S1" codes="2001" />
+        </Row>
+    </Keyboard>
+</Keyboards>

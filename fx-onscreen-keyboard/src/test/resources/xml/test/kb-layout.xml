@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Keyboards xmlns="http://comtel2000.org/fxml/layout">
+    <Keyboard title="Test Keyboard" locale="test" type="TEXT" width="800" height="300">
+        <Row>
+            <Key codes="97" label="a"/> <!-- Changed from A, 65 -->
+            <Key label="B" codes="66" />
+            <Key label="C" codes="67" />
+        </Row>
+        <Row type="SYMBOL">
+            <Key label="1" codes="49" />
+            <Key label="2" codes="50" />
+            <Key label="3" codes="51" />
+        </Row>
+    </Keyboard>
+    <Keyboard title="Test US Keyboard" locale="test_US" type="TEXT" width="800" height="300">
+        <Row>
+            <Key label="X" codes="88" />
+            <Key label="Y" codes="89" />
+            <Key label="Z" codes="90" />
+            <Key label="W" codes="87" />
+        </Row>
+        <!-- No specific SYMBOL type for test_US, will rely on fallback or default -->
+    </Keyboard>
+</Keyboards>
