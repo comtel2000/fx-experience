@@ -69,7 +69,7 @@ Java 17 (dev):
 <dependency>
   <groupId>org.comtel2000</groupId>
   <artifactId>fx-onscreen-keyboard</artifactId>
-  <version>17.0.1</version>
+  <version>17.0.2</version>
 </dependency>
 ```
 
