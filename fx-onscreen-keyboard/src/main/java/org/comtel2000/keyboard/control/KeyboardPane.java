@@ -479,6 +479,7 @@ public class KeyboardPane extends Region implements StandardKeyCode, EventHandle
             }
 
             button.setFocusTraversable(false);
+            button.setPickOnBounds(true); // Ensures the button reacts to clicks/taps on the entire area, including label/icon (fixes #92)
             button.setOnShortPressed(this);
 
             button.setMinHeight(1);
