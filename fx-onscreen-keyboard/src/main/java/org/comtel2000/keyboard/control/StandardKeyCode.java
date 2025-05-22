@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2017 comtel2000
+ * Copyright (c) 2025 comtel2000
  *
  * Redistribution and use in source and binary forms, with or without modification, are permitted
  * provided that the following conditions are met:
@@ -26,80 +26,83 @@
 
 package org.comtel2000.keyboard.control;
 
-interface StandardKeyCode {
+public class StandardKeyCode {
 
-  int SHIFT_DOWN = -1;
+  private StandardKeyCode() {
+  }
 
-  int SYMBOL_DOWN = -2;
+  public static final int SHIFT_DOWN = -1;
 
-  int CLOSE = -3;
+  public static final int SYMBOL_DOWN = -2;
 
-  int TAB = -4;
+  public static final int CLOSE = -3;
 
-  int BACK_SPACE = -5;
+  public static final int TAB = -4;
 
-  int CTRL_DOWN = -6;
+  public static final int BACK_SPACE = -5;
 
-  int LOCALE_SWITCH = -7;
+  public static final int CTRL_DOWN = -6;
 
-  int DELETE = -8;
+  public static final int LOCALE_SWITCH = -7;
 
-  int ENTER = -9;
+  public static final int DELETE = -8;
 
-  int ARROW_UP = -10;
+  public static final int ENTER = -9;
 
-  int ARROW_DOWN = -11;
+  public static final int ARROW_UP = -10;
 
-  int ARROW_LEFT = -12;
+  public static final int ARROW_DOWN = -11;
 
-  int ARROW_RIGHT = -13;
+  public static final int ARROW_LEFT = -12;
 
-  int UNDO = -14;
+  public static final int ARROW_RIGHT = -13;
 
-  int REDO = -15;
+  public static final int UNDO = -14;
 
-  int NUMERIC_TYPE = -16;
+  public static final int REDO = -15;
 
-  int EMAIL_TYPE = -17;
+  public static final int NUMERIC_TYPE = -16;
 
-  int URL_TYPE = -18;
+  public static final int EMAIL_TYPE = -17;
 
-  int CAPS_LOCK = -19;
+  public static final int URL_TYPE = -18;
 
-  int HOME = -20;
+  public static final int CAPS_LOCK = -19;
 
-  int END = -21;
+  public static final int HOME = -20;
 
-  int PAGE_UP = -22;
+  public static final int END = -21;
 
-  int PAGE_DOWN = -23;
+  public static final int PAGE_UP = -22;
 
-  int HELP = -24;
+  public static final int PAGE_DOWN = -23;
 
-  int PRINTSCREEN = -25;
+  public static final int HELP = -24;
 
-  int F1 = -112;
+  public static final int PRINTSCREEN = -25;
 
-  int F2 = -113;
+  public static final int F1 = -112;
 
-  int F3 = -114;
+  public static final int F2 = -113;
 
-  int F4 = -115;
+  public static final int F3 = -114;
 
-  int F5 = -116;
+  public static final int F4 = -115;
 
-  int F6 = -117;
+  public static final int F5 = -116;
 
-  int F7 = -118;
+  public static final int F6 = -117;
 
-  int F8 = -119;
+  public static final int F7 = -118;
 
-  int F9 = -120;
+  public static final int F8 = -119;
 
-  int F10 = -121;
+  public static final int F9 = -120;
 
-  int F11 = -122;
+  public static final int F10 = -121;
 
-  int F12 = -123;
+  public static final int F11 = -122;
+
+  public static final int F12 = -123;
 
 }
