@@ -261,7 +261,7 @@ public class KeyBoardPopup extends Popup {
   }
 
   public void setVisible(final Visibility visible, final TextInputControl textNode) {
-
+    keyboard.timelines().stop();
     if ((visible == Visibility.POS || visible == Visibility.SHOW) && textNode != null) {
       Map<String, String> vkProps = FXOK.getVkProperties(textNode);
       if (vkProps.isEmpty()) {

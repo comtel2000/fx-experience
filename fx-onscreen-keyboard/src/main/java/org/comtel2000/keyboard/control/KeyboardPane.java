@@ -115,12 +115,15 @@ public class KeyboardPane extends Region implements EventHandler<KeyButtonEvent>
 
   private final KeyboardLocales keyboardLocalesSupplier;
 
+  private final Timelines timelines;
+  
   public KeyboardPane() {
     getStyleClass().add("key-background");
     setFocusTraversable(false);
     keyButtonEventHandler = new KeyButtonEventHandler(this);
     layoutLocaleSwitcher = new LayoutLocaleSwitcher(this);
     keyboardLocalesSupplier = new KeyboardLocales(this);
+    timelines = new Timelines();
   }
 
   @Override
@@ -644,4 +647,7 @@ public class KeyboardPane extends Region implements EventHandler<KeyButtonEvent>
     keyButtonEventHandler.handle(event);
   }
 
+  Timelines timelines() {
+    return timelines;
+  }
 }

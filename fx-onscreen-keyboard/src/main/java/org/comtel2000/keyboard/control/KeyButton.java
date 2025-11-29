@@ -28,7 +28,6 @@ package org.comtel2000.keyboard.control;
 
 import org.comtel2000.keyboard.event.KeyButtonEvent;
 
-import javafx.animation.Timeline;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ObjectPropertyBase;
 import javafx.event.Event;
@@ -38,12 +37,6 @@ import javafx.scene.control.Button;
 
 public abstract class KeyButton extends Button implements LongPressable {
 
-  private static double KEY_LONG_PRESS_DELAY = 400;
-
-  private static final double KEY_LONG_PRESS_DELAY_MIN = 100;
-  private static final double KEY_LONG_PRESS_DELAY_MAX = 1000;
-
-  Timeline buttonDelay;
   private String keyText;
   private boolean movable;
   private boolean sticky;
@@ -51,47 +44,28 @@ public abstract class KeyButton extends Button implements LongPressable {
   private ObjectProperty<EventHandler<? super KeyButtonEvent>> onLongPressed;
   private ObjectProperty<EventHandler<? super KeyButtonEvent>> onShortPressed;
 
-  static {
-    String s = System.getProperty("org.comtel2000.keyboard.longPressDelay");
-    if (s != null && !s.isBlank()) {
-      try {
-		Double delay = Double.valueOf(s);
-		KEY_LONG_PRESS_DELAY = Math.min(Math.max(delay, KEY_LONG_PRESS_DELAY_MIN),
-		    KEY_LONG_PRESS_DELAY_MAX);
-	  } catch (NumberFormatException e) {
-		// ignore
-	  }
-    }
-  }
-
-  public KeyButton() {
-    this(null, null, KEY_LONG_PRESS_DELAY);
+  protected KeyButton() {
+    this(null, null);
   }
 
   protected KeyButton(String label) {
-    this(label, null, KEY_LONG_PRESS_DELAY);
+    this(label, null);
   }
 
   protected KeyButton(Node graphic) {
-    this(null, graphic, KEY_LONG_PRESS_DELAY);
+    this(null, graphic);
   }
 
   protected KeyButton(String label, Node graphic) {
-    this(label, graphic, KEY_LONG_PRESS_DELAY);
-  }
-
-  protected KeyButton(String label, double delay) {
-    this(label, null, delay);
-  }
-
-  protected KeyButton(String label, Node graphic, double delay) {
     super(label, graphic);
     getStyleClass().add("key-button");
-    initEventListener(delay > 0 ? delay : KEY_LONG_PRESS_DELAY);
-
   }
 
-  protected abstract void initEventListener(double delay);
+  final void setTimelines(Timelines timelines) {
+    initEventListener(timelines);
+  }
+  
+  protected abstract void initEventListener(Timelines timelines);
 
   void fireLongPressed() {
     fireEvent(new KeyButtonEvent(this, KeyButtonEvent.LONG_PRESSED));
@@ -169,42 +143,42 @@ public abstract class KeyButton extends Button implements LongPressable {
     return onShortPressed;
   }
 
-  public int getKeyCode() {
+  int getKeyCode() {
     return keyCode;
   }
 
-  public void setKeyCode(int keyCode) {
+  void setKeyCode(int keyCode) {
     this.keyCode = keyCode;
   }
 
-  public String getKeyText() {
+  String getKeyText() {
     return keyText;
   }
 
-  public void setKeyText(String keyText) {
+  void setKeyText(String keyText) {
     this.keyText = keyText;
   }
 
-  public void addExtKeyCode(int keyCode, String label) {
+  void addExtKeyCode(Timelines timelines, int keyCode, String label) {
   }
 
-  public boolean isMovable() {
+  boolean isMovable() {
     return movable;
   }
 
-  public void setMovable(boolean movable) {
+  void setMovable(boolean movable) {
     this.movable = movable;
   }
 
-  public boolean isRepeatable() {
+  boolean isRepeatable() {
     return false;
   }
 
-  public boolean isSticky() {
+  boolean isSticky() {
     return sticky;
   }
 
-  public void setSticky(boolean sticky) {
+  void setSticky(boolean sticky) {
     this.sticky = sticky;
   }
 

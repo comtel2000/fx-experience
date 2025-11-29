@@ -26,29 +26,52 @@
 
 package org.comtel2000.keyboard.control;
 
-import org.slf4j.LoggerFactory;
+import java.util.function.Consumer;
 
-import javafx.scene.input.MouseButton;
+import javafx.event.ActionEvent;
+import javafx.scene.Node;
 
-class ShortPressKeyButton extends KeyButton {
+class Timelines {
 
-  private static final org.slf4j.Logger logger = LoggerFactory.getLogger(ShortPressKeyButton.class);
+  private RepeatableButtonTimeline repeatableButtonTimeline;
+  private LongPressDelayTimeline longPressDelayTimeline;
 
-  ShortPressKeyButton() {
-    super();
+  ButtonTimeline repeatableButtonTimeline() {
+    if (repeatableButtonTimeline == null) {
+      repeatableButtonTimeline = new RepeatableButtonTimeline();
+    }
+    return repeatableButtonTimeline;
   }
 
-  @Override
-  protected void initEventListener(Timelines timelines) {
-    setOnMousePressed(event -> {
-      logger.trace("{} pressed", getKeyCode());
-      timelines.stop();
-      if (event.getButton().equals(MouseButton.PRIMARY)) {
-        fireShortPressed();
-      }
-      setFocused(false);
-      event.consume();
-    });
+  ButtonTimeline longPressDelayTimeline() {
+    if (longPressDelayTimeline == null) {
+      longPressDelayTimeline = new LongPressDelayTimeline();
+    }
+    return longPressDelayTimeline;
+  }
+  
+  ButtonTimeline repeatableButtonTimeline(Node owner, Consumer<ActionEvent> handler) {
+    return repeatableButtonTimeline().withOwner(owner, handler);
   }
 
+  ButtonTimeline longPressDelayTimeline(Node owner, Consumer<ActionEvent> handler) {
+    return longPressDelayTimeline().withOwner(owner, handler);
+  }
+
+  void stopRepeatableButtonTimeline() {
+    if (repeatableButtonTimeline != null) {
+      repeatableButtonTimeline.stop();
+    }
+  }
+
+  void stopLongPressDelayTimeline() {
+    if (longPressDelayTimeline != null) {
+      longPressDelayTimeline.stop();
+    }
+  }
+
+  void stop() {
+    stopRepeatableButtonTimeline();
+    stopLongPressDelayTimeline();
+  }
 }
