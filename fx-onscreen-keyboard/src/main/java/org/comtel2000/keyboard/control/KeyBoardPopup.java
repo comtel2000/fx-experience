@@ -80,7 +80,7 @@ public class KeyBoardPopup extends Popup {
       ((Node) event.getSource()).fireEvent(new WindowEvent(null, WindowEvent.WINDOW_CLOSE_REQUEST));
     }
   };
-  private static final String STYLE_CSS = "/css/KeyboardTextInputSkin.css";
+  private static final String STYLE_CSS = "KeyboardTextInputSkin.css";
   private final KeyboardPane keyboard;
 
   private boolean doNotOpenHiddenKeyboard = false;
