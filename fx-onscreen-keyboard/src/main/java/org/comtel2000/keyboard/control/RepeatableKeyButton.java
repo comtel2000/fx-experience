@@ -28,40 +28,12 @@ package org.comtel2000.keyboard.control;
 
 import org.slf4j.LoggerFactory;
 
-import javafx.animation.Animation;
 import javafx.animation.Animation.Status;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.scene.input.MouseButton;
-import javafx.util.Duration;
 
 class RepeatableKeyButton extends KeyButton {
 
   private static final org.slf4j.Logger logger = LoggerFactory.getLogger(RepeatableKeyButton.class);
-
-  // key repeat rate (cps)
-  private static double KEY_REPEAT_RATE = 25;
-  private static final double KEY_REPEAT_RATE_MIN = 2;
-  private static final double KEY_REPEAT_RATE_MAX = 50;
-
-  private Timeline repeatDelay;
-
-  static {
-    String s = System.getProperty("org.comtel2000.keyboard.repeatRate");
-    if (s != null && !s.isBlank()) {
-      try {
-        Double rate = Double.valueOf(s);
-        if (rate <= 0) {
-          // disable key repeat
-          KEY_REPEAT_RATE = 0;
-        } else {
-          KEY_REPEAT_RATE = Math.min(Math.max(rate, KEY_REPEAT_RATE_MIN), KEY_REPEAT_RATE_MAX);
-        }
-      } catch (NumberFormatException e) {
-        // ignore
-      }
-    }
-  }
 
   RepeatableKeyButton() {
     super();
@@ -74,43 +46,45 @@ class RepeatableKeyButton extends KeyButton {
   }
 
   @Override
-  protected void initEventListener(double delay) {
+  protected void initEventListener(Timelines timelines) {
 
-    if (KEY_REPEAT_RATE > 0) {
-      buttonDelay = new Timeline(new KeyFrame(Duration.millis(delay), event -> {
-	fireShortPressed();
-	repeatDelay.playFromStart();
-      }));
-      repeatDelay = new Timeline(new KeyFrame(Duration.millis(1000.0 / KEY_REPEAT_RATE), event -> fireShortPressed()));
-      repeatDelay.setCycleCount(Animation.INDEFINITE);
-      setOnDragDetected(e -> {
-	logger.trace("{} drag detected", getKeyCode());
-	buttonDelay.stop();
-	e.consume();
-      });
+    setOnDragDetected(e -> {
+      logger.trace("{} drag detected", getKeyCode());
+      timelines.stopLongPressDelayTimeline();
+      e.consume();
+    });
 
-      setOnMousePressed(e -> {
-	logger.trace("{} pressed", getKeyCode());
-	if (e.getButton().equals(MouseButton.PRIMARY)) {
-	  if (!isMovable()) {
-	    fireShortPressed();
-	  }
-	  buttonDelay.playFromStart();
-	}
-	e.consume();
-      });
+    setOnMousePressed(e -> {
+      logger.trace("{} pressed", getKeyCode());
+      if (e.getButton().equals(MouseButton.PRIMARY)) {
+        if (!isMovable()) {
+          fireShortPressed();
+        }
+        longPressDelayTimeline(timelines).playFromStart();
+      }
+      e.consume();
+    });
 
-      setOnMouseReleased(e -> {
-	logger.trace("{} released", getKeyCode());
-	if (isMovable() && buttonDelay.getStatus() == Status.RUNNING) {
-	  fireShortPressed();
-	}
-	buttonDelay.stop();
-	repeatDelay.stop();
-	setFocused(false);
-	e.consume();
-      });
-    }
+    setOnMouseReleased(e -> {
+      logger.trace("{} released", getKeyCode());
+      var delayTimeLine = longPressDelayTimeline(timelines);
+      if (isMovable() && delayTimeLine.getStatus() == Status.RUNNING) {
+        fireShortPressed();
+      }
+      delayTimeLine.stop();
+      timelines.stopRepeatableButtonTimeline();
+      setFocused(false);
+      e.consume();
+    });
   }
 
+  ButtonTimeline longPressDelayTimeline(Timelines timelines) {
+    return timelines.longPressDelayTimeline(this, evt -> onLongPressedEvent(timelines));
+  }
+
+  void onLongPressedEvent(Timelines timelines) {
+    fireShortPressed();
+    timelines.repeatableButtonTimeline(this, evt -> fireShortPressed()).playFromStart();
+
+  }
 }

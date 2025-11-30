@@ -26,29 +26,33 @@
 
 package org.comtel2000.keyboard.control;
 
-import org.slf4j.LoggerFactory;
+import javafx.animation.Animation;
 
-import javafx.scene.input.MouseButton;
+class RepeatableButtonTimeline extends ButtonTimeline {
 
-class ShortPressKeyButton extends KeyButton {
+  private static final double KEY_REPEAT_RATE_DEF = 25;
 
-  private static final org.slf4j.Logger logger = LoggerFactory.getLogger(ShortPressKeyButton.class);
+  private static final double KEY_REPEAT_RATE_MIN = 2;
+  private static final double KEY_REPEAT_RATE_MAX = 50;
 
-  ShortPressKeyButton() {
-    super();
+  // key repeat rate (cps)
+  private static double keyRepeatRate = KEY_REPEAT_RATE_DEF;
+
+  static {
+    String s = System.getProperty("org.comtel2000.keyboard.repeatRate");
+    if (s != null && !s.isBlank()) {
+      try {
+        double delay = Double.parseDouble(s);
+        keyRepeatRate = Math.min(Math.max(delay, KEY_REPEAT_RATE_MIN), KEY_REPEAT_RATE_MAX);
+      } catch (NumberFormatException e) {
+        // ignore
+      }
+    }
   }
 
-  @Override
-  protected void initEventListener(Timelines timelines) {
-    setOnMousePressed(event -> {
-      logger.trace("{} pressed", getKeyCode());
-      timelines.stop();
-      if (event.getButton().equals(MouseButton.PRIMARY)) {
-        fireShortPressed();
-      }
-      setFocused(false);
-      event.consume();
-    });
+  RepeatableButtonTimeline() {
+    super(keyRepeatRate);
+    timeline.setCycleCount(Animation.INDEFINITE);
   }
 
 }
