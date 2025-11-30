@@ -1,16 +1,6 @@
+/* Copyright (c) 2025-2000 comtel2000 (BSD 3-Clause) */
 package org.comtel2000.samples.swing;
 
-import javafx.application.Platform;
-import javafx.embed.swing.JFXPanel;
-import javafx.scene.Group;
-import javafx.scene.Scene;
-import org.comtel2000.keyboard.control.DefaultLayer;
-import org.comtel2000.keyboard.control.KeyBoardPopup;
-import org.comtel2000.keyboard.control.KeyboardPane;
-import org.comtel2000.keyboard.control.KeyboardType;
-import org.comtel2000.swing.robot.NativeAsciiRobotHandler;
-
-import javax.swing.*;
 import java.awt.*;
 import java.nio.file.Paths;
 import java.text.ParseException;
@@ -18,6 +8,16 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import javafx.application.Platform;
+import javafx.embed.swing.JFXPanel;
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javax.swing.*;
+import org.comtel2000.keyboard.control.DefaultLayer;
+import org.comtel2000.keyboard.control.KeyBoardPopup;
+import org.comtel2000.keyboard.control.KeyboardPane;
+import org.comtel2000.keyboard.control.KeyboardType;
+import org.comtel2000.swing.robot.NativeAsciiRobotHandler;
 
 /*******************************************************************************
  * Copyright (c) 2025 comtel2000
@@ -55,10 +55,11 @@ public class StandAloneApp extends JFrame {
 
   public static void main(String[] args) {
     arguments = args;
-    SwingUtilities.invokeLater(() -> {
-      StandAloneApp app = new StandAloneApp();
-      app.init();
-    });
+    SwingUtilities.invokeLater(
+        () -> {
+          StandAloneApp app = new StandAloneApp();
+          app.init();
+        });
   }
 
   public static Map<String, String> getParameters() {
@@ -97,7 +98,6 @@ public class StandAloneApp extends JFrame {
 
     // create JavaFX scene
     Platform.runLater(() -> createScene(javafxPanel));
-
   }
 
   public void createScene(JFXPanel javafxPanel) {

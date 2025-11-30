@@ -1,29 +1,4 @@
-/*******************************************************************************
- * Copyright (c) 2025 comtel2000
- *
- * Redistribution and use in source and binary forms, with or without modification, are permitted
- * provided that the following conditions are met:
- *
- * 1. Redistributions of source code must retain the above copyright notice, this list of conditions
- * and the following disclaimer.
- *
- * 2. Redistributions in binary form must reproduce the above copyright notice, this list of
- * conditions and the following disclaimer in the documentation and/or other materials provided with
- * the distribution.
- *
- * 3. Neither the name of the comtel2000 nor the names of its contributors may be used to endorse or
- * promote products derived from this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
- * FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
- * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
- * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY
- * WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *******************************************************************************/
-
+/* Copyright (c) 2025-2000 comtel2000 (BSD 3-Clause) */
 package org.comtel2000.keyboard.control;
 
 import java.net.URL;
@@ -35,12 +10,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-
-import org.comtel2000.keyboard.event.KeyButtonEvent;
-import org.comtel2000.keyboard.robot.FXRobotHandler;
-import org.comtel2000.keyboard.robot.IRobot;
-import org.slf4j.LoggerFactory;
-
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.property.BooleanProperty;
@@ -58,6 +27,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Region;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
+import org.comtel2000.keyboard.event.KeyButtonEvent;
+import org.comtel2000.keyboard.robot.FXRobotHandler;
+import org.comtel2000.keyboard.robot.IRobot;
+import org.slf4j.LoggerFactory;
 
 public class KeyboardPane extends Region implements EventHandler<KeyButtonEvent> {
 
@@ -116,7 +89,7 @@ public class KeyboardPane extends Region implements EventHandler<KeyButtonEvent>
   private final KeyboardLocales keyboardLocalesSupplier;
 
   private final Timelines timelines;
-  
+
   public KeyboardPane() {
     getStyleClass().add("key-background");
     setFocusTraversable(false);
@@ -146,21 +119,23 @@ public class KeyboardPane extends Region implements EventHandler<KeyButtonEvent>
       setScaleY(getScale());
     }
 
-    setOnZoom(e -> {
-      double s = getScale() * e.getTotalZoomFactor();
-      if (s >= getMinScale() && s <= getMaxScale()) {
-        setScale(s);
-        e.consume();
-      }
-    });
+    setOnZoom(
+        e -> {
+          double s = getScale() * e.getTotalZoomFactor();
+          if (s >= getMinScale() && s <= getMaxScale()) {
+            setScale(s);
+            e.consume();
+          }
+        });
 
-    setOnScroll(e -> {
-      double s = getScale() + (e.getDeltaY() > 0.0d ? getScaleOffset() : -getScaleOffset());
-      if (s >= getMinScale() && s <= getMaxScale()) {
-        setScale(s);
-        e.consume();
-      }
-    });
+    setOnScroll(
+        e -> {
+          double s = getScale() + (e.getDeltaY() > 0.0d ? getScaleOffset() : -getScaleOffset());
+          if (s >= getMinScale() && s <= getMaxScale()) {
+            setScale(s);
+            e.consume();
+          }
+        });
   }
 
   void setKeyboardType(boolean ctrl, boolean shift, boolean symbol) {
@@ -209,7 +184,6 @@ public class KeyboardPane extends Region implements EventHandler<KeyButtonEvent>
     } catch (Exception e) {
       logger.error(e.getMessage(), e);
     }
-
   }
 
   Map<Locale, String> getAvailableLocales() {
@@ -218,7 +192,10 @@ public class KeyboardPane extends Region implements EventHandler<KeyButtonEvent>
 
   public void setKeyboardType(String type) {
     try {
-      setKeyboardType(type == null || type.isEmpty() ? KeyboardType.TEXT : KeyboardType.valueOf(type.toUpperCase(Locale.ENGLISH)));
+      setKeyboardType(
+          type == null || type.isEmpty()
+              ? KeyboardType.TEXT
+              : KeyboardType.valueOf(type.toUpperCase(Locale.ENGLISH)));
     } catch (Exception e) {
       logger.error("unknown type: {}", type);
       setKeyboardType(KeyboardType.TEXT);
@@ -242,9 +219,17 @@ public class KeyboardPane extends Region implements EventHandler<KeyButtonEvent>
 
   void fireCloseEvent(Event event) {
     if (closeEventHandler == null) {
-      new Timeline(new KeyFrame(Duration.millis(50), ev -> fireEvent(new WindowEvent(getScene().getWindow(), WindowEvent.WINDOW_CLOSE_REQUEST)))).playFromStart();
+      new Timeline(
+              new KeyFrame(
+                  Duration.millis(50),
+                  ev ->
+                      fireEvent(
+                          new WindowEvent(
+                              getScene().getWindow(), WindowEvent.WINDOW_CLOSE_REQUEST))))
+          .playFromStart();
     } else {
-      new Timeline(new KeyFrame(Duration.millis(50), ev -> closeEventHandler.handle(event))).playFromStart();
+      new Timeline(new KeyFrame(Duration.millis(50), ev -> closeEventHandler.handle(event)))
+          .playFromStart();
     }
   }
 
@@ -260,19 +245,19 @@ public class KeyboardPane extends Region implements EventHandler<KeyButtonEvent>
 
     if (ctrl) {
       switch (Character.toUpperCase(ch)) {
-      case java.awt.event.KeyEvent.VK_MINUS:
-        if (getScale() - getScaleOffset() >= getMinScale()) {
-          setScale(getScale() - getScaleOffset());
-        }
-        return;
-      case 0x2B:
-        if (getScale() + getScaleOffset() <= getMaxScale()) {
-          setScale(getScale() + getScaleOffset());
-        }
-        return;
+        case java.awt.event.KeyEvent.VK_MINUS:
+          if (getScale() - getScaleOffset() >= getMinScale()) {
+            setScale(getScale() - getScaleOffset());
+          }
+          return;
+        case 0x2B:
+          if (getScale() + getScaleOffset() <= getMaxScale()) {
+            setScale(getScale() + getScaleOffset());
+          }
+          return;
 
-      default:
-        break;
+        default:
+          break;
       }
     }
 
@@ -283,7 +268,6 @@ public class KeyboardPane extends Region implements EventHandler<KeyButtonEvent>
     for (IRobot robot : robots) {
       robot.sendToComponent(this, ch, ctrl);
     }
-
   }
 
   public void addRobotHandler(IRobot robot) {
@@ -478,12 +462,13 @@ public class KeyboardPane extends Region implements EventHandler<KeyButtonEvent>
   public final DoubleProperty scaleProperty() {
     if (scale == null) {
       scale = new SimpleDoubleProperty(this, "scale", _scale);
-      scale.addListener((l, o, s) -> {
-        if (!Objects.equals(o, s)) {
-          setScaleX(s.doubleValue());
-          setScaleY(s.doubleValue());
-        }
-      });
+      scale.addListener(
+          (l, o, s) -> {
+            if (!Objects.equals(o, s)) {
+              setScaleX(s.doubleValue());
+              setScaleY(s.doubleValue());
+            }
+          });
     }
     return scale;
   }
@@ -623,20 +608,22 @@ public class KeyboardPane extends Region implements EventHandler<KeyButtonEvent>
 
   void installMoveHandler(Node node) {
     if (movedHandler == null) {
-      movedHandler = e -> {
-        if (isSpaceKeyMove()) {
-          mousePressedX = getScene().getWindow().getX() - e.getScreenX();
-          mousePressedY = getScene().getWindow().getY() - e.getScreenY();
-        }
-      };
+      movedHandler =
+          e -> {
+            if (isSpaceKeyMove()) {
+              mousePressedX = getScene().getWindow().getX() - e.getScreenX();
+              mousePressedY = getScene().getWindow().getY() - e.getScreenY();
+            }
+          };
     }
     if (draggedHandler == null) {
-      draggedHandler = e -> {
-        if (isSpaceKeyMove()) {
-          getScene().getWindow().setX(e.getScreenX() + mousePressedX);
-          getScene().getWindow().setY(e.getScreenY() + mousePressedY);
-        }
-      };
+      draggedHandler =
+          e -> {
+            if (isSpaceKeyMove()) {
+              getScene().getWindow().setX(e.getScreenX() + mousePressedX);
+              getScene().getWindow().setY(e.getScreenY() + mousePressedY);
+            }
+          };
     }
     node.setOnMouseMoved(movedHandler);
     node.setOnMouseDragged(draggedHandler);

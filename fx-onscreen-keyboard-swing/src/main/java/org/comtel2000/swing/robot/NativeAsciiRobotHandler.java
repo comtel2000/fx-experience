@@ -1,13 +1,13 @@
+/* Copyright (c) 2025-2000 comtel2000 (BSD 3-Clause) */
 package org.comtel2000.swing.robot;
 
-import org.comtel2000.keyboard.robot.IRobot;
-import org.slf4j.LoggerFactory;
+import static java.awt.event.KeyEvent.*;
 
 import java.awt.*;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.StringSelection;
-
-import static java.awt.event.KeyEvent.*;
+import org.comtel2000.keyboard.robot.IRobot;
+import org.slf4j.LoggerFactory;
 
 /*******************************************************************************
  * Copyright (c) 2025 comtel2000
@@ -37,14 +37,15 @@ import static java.awt.event.KeyEvent.*;
 
 /**
  * native OS support
- * <p>
- * dirty unicode char support only by transfer over OS clipboard..
+ *
+ * <p>dirty unicode char support only by transfer over OS clipboard..
  *
  * @author comtel
  */
 public class NativeAsciiRobotHandler implements IRobot {
 
-  private static final org.slf4j.Logger logger = LoggerFactory.getLogger(NativeAsciiRobotHandler.class);
+  private static final org.slf4j.Logger logger =
+      LoggerFactory.getLogger(NativeAsciiRobotHandler.class);
 
   private final int controlKeyEvent;
 
@@ -74,28 +75,54 @@ public class NativeAsciiRobotHandler implements IRobot {
 
     if (ctrl) {
       switch (ch) {
-      case VK_ENTER, VK_BACK_SPACE, VK_DELETE, VK_ESCAPE, VK_SPACE, VK_TAB, VK_UP, VK_DOWN, VK_LEFT, VK_RIGHT, VK_UNDO,
-	  VK_AGAIN, VK_HOME, VK_END, VK_PAGE_UP, VK_PAGE_DOWN, VK_HELP, VK_PRINTSCREEN, VK_F1, VK_F2, VK_F3, VK_F4,
-	  VK_F5, VK_F6, VK_F7, VK_F8, VK_F9, VK_F10, VK_F11, VK_F12:
-	robot.keyPress(ch);
-	robot.keyRelease(ch);
-	return;
-      default:
-	break;
+        case VK_ENTER,
+            VK_BACK_SPACE,
+            VK_DELETE,
+            VK_ESCAPE,
+            VK_SPACE,
+            VK_TAB,
+            VK_UP,
+            VK_DOWN,
+            VK_LEFT,
+            VK_RIGHT,
+            VK_UNDO,
+            VK_AGAIN,
+            VK_HOME,
+            VK_END,
+            VK_PAGE_UP,
+            VK_PAGE_DOWN,
+            VK_HELP,
+            VK_PRINTSCREEN,
+            VK_F1,
+            VK_F2,
+            VK_F3,
+            VK_F4,
+            VK_F5,
+            VK_F6,
+            VK_F7,
+            VK_F8,
+            VK_F9,
+            VK_F10,
+            VK_F11,
+            VK_F12:
+          robot.keyPress(ch);
+          robot.keyRelease(ch);
+          return;
+        default:
+          break;
       }
 
       int upperCase = Character.toUpperCase(ch);
       switch (upperCase) {
-      case VK_A, VK_X, VK_C, VK_V, VK_Z, VK_Y:
-	robot.keyPress(controlKeyEvent);
-	robot.keyPress(upperCase);
-	robot.keyRelease(upperCase);
-	robot.keyRelease(controlKeyEvent);
-	return;
-      default:
-	break;
+        case VK_A, VK_X, VK_C, VK_V, VK_Z, VK_Y:
+          robot.keyPress(controlKeyEvent);
+          robot.keyPress(upperCase);
+          robot.keyRelease(upperCase);
+          robot.keyRelease(controlKeyEvent);
+          return;
+        default:
+          break;
       }
-
     }
 
     int keyCode = getExtendedKeyCodeForChar(ch);
@@ -125,19 +152,20 @@ public class NativeAsciiRobotHandler implements IRobot {
       }
       clipboardTransfer(robot, ch);
       return;
-
     }
     if (isUpperCase) {
       robot.keyRelease(VK_SHIFT);
     }
-
   }
 
   private void clipboardTransfer(Robot robot, char ch) {
     try {
       StringSelection stringSelection = new StringSelection(Character.toString(ch));
       java.awt.datatransfer.Clipboard clpbrd = Toolkit.getDefaultToolkit().getSystemClipboard();
-      Object recover = clpbrd.isDataFlavorAvailable(DataFlavor.stringFlavor) ? clpbrd.getData(DataFlavor.stringFlavor) : null;
+      Object recover =
+          clpbrd.isDataFlavorAvailable(DataFlavor.stringFlavor)
+              ? clpbrd.getData(DataFlavor.stringFlavor)
+              : null;
       clpbrd.setContents(stringSelection, null);
 
       robot.keyPress(controlKeyEvent);
@@ -146,11 +174,11 @@ public class NativeAsciiRobotHandler implements IRobot {
       robot.keyRelease(controlKeyEvent);
       robot.delay(50);
 
-      StringSelection recoverSelection = new StringSelection(recover != null ? recover.toString() : "");
+      StringSelection recoverSelection =
+          new StringSelection(recover != null ? recover.toString() : "");
       clpbrd.setContents(recoverSelection, null);
     } catch (Exception e) {
       logger.error(e.getMessage(), e);
     }
   }
-
 }

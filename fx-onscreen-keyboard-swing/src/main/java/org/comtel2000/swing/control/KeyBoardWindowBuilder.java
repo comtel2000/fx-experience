@@ -1,5 +1,9 @@
+/* Copyright (c) 2025-2000 comtel2000 (BSD 3-Clause) */
 package org.comtel2000.swing.control;
 
+import java.nio.file.Path;
+import java.util.Locale;
+import java.util.concurrent.CountDownLatch;
 import javafx.application.Platform;
 import javafx.util.Builder;
 import org.comtel2000.keyboard.control.DefaultLayer;
@@ -7,10 +11,6 @@ import org.comtel2000.keyboard.control.KeyBoardBuilder;
 import org.comtel2000.keyboard.control.KeyBoardPopup;
 import org.comtel2000.keyboard.robot.IRobot;
 import org.comtel2000.swing.robot.AWTRobotHandler;
-
-import java.nio.file.Path;
-import java.util.Locale;
-import java.util.concurrent.CountDownLatch;
 
 /*******************************************************************************
  * Copyright (c) 2025 comtel2000
@@ -136,11 +136,12 @@ public class KeyBoardWindowBuilder implements Builder<KeyBoardWindow> {
   @Override
   public KeyBoardWindow build() {
     final KeyBoardWindow window = new KeyBoardWindow();
-    Platform.runLater(() -> {
-      KeyBoardPopup popup = new KeyBoardPopup(kb.build());
-      window.createScene(popup);
-      latch.countDown();
-    });
+    Platform.runLater(
+        () -> {
+          KeyBoardPopup popup = new KeyBoardPopup(kb.build());
+          window.createScene(popup);
+          latch.countDown();
+        });
     try {
       latch.await();
     } catch (InterruptedException e) {
@@ -148,5 +149,4 @@ public class KeyBoardWindowBuilder implements Builder<KeyBoardWindow> {
     }
     return window;
   }
-
 }
