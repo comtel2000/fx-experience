@@ -1,0 +1,17 @@
+* text eol=lf
+
+# Images
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.bmp binary
+*.webp binary
+
+# Other binaries
+*.class binary
+*.so binary
+*.dll binary
+*.dylib binary
+*.exe binary
