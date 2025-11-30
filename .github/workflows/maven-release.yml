@@ -10,6 +10,13 @@ permissions:
 jobs:
   publish-artifact:
     runs-on: ubuntu-latest
+    env:
+      JAVA_TOOL_OPTIONS: >
+        -Djava.awt.headless=true
+        -Dprism.order=sw
+        -Dprism.forceGPU=false
+        -Dglass.platform=Monocle
+        -Dmonocle.platform=Headless
     environment: OSSRH
     name: Publish artifact via Central Portal
     steps:
@@ -21,8 +28,8 @@ jobs:
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
-          java-version: '17'
-          distribution: 'liberica'
+          java-version: 17
+          distribution: liberica
           java-package: jdk+fx # optional (jdk, jre, jdk+fx or jre+fx) - defaults to jdk
           cache: maven
           server-id: central

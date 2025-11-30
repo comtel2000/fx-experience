@@ -7,6 +7,13 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    env:
+      JAVA_TOOL_OPTIONS: >
+        -Djava.awt.headless=true
+        -Dprism.order=sw
+        -Dprism.forceGPU=false
+        -Dglass.platform=Monocle
+        -Dmonocle.platform=Headless
     environment: OSSRH
     steps:
       - uses: actions/checkout@v4
@@ -14,8 +21,8 @@ jobs:
       - name: Set up Maven Central Repository
         uses: actions/setup-java@v4
         with:
-          java-version: '17'
-          distribution: 'liberica'
+          java-version: 17
+          distribution: liberica
           java-package: jdk+fx # optional (jdk, jre, jdk+fx or jre+fx) - defaults to jdk
           server-id: central
           server-username: MAVEN_USERNAME # env variable for username in deploy
