@@ -8,6 +8,7 @@
 *.ico binary
 *.bmp binary
 *.webp binary
+*.svg binary
 
 # Other binaries
 *.class binary
@@ -15,3 +16,5 @@
 *.dll binary
 *.dylib binary
 *.exe binary
+*.ttf binary
+*.cdr binary
