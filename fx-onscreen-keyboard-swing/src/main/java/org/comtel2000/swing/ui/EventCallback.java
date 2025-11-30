@@ -1,3 +1,4 @@
+/* Copyright (c) 2025 comtel2000 */
 package org.comtel2000.swing.ui;
 
 /*******************************************************************************
@@ -32,5 +33,4 @@ import java.awt.*;
 public interface EventCallback {
 
   void call(Component component, boolean vis);
-
 }

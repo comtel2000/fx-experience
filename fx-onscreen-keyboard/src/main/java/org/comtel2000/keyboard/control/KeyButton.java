@@ -1,32 +1,5 @@
-/*******************************************************************************
- * Copyright (c) 2025 comtel2000
- *
- * Redistribution and use in source and binary forms, with or without modification, are permitted
- * provided that the following conditions are met:
- *
- * 1. Redistributions of source code must retain the above copyright notice, this list of conditions
- * and the following disclaimer.
- *
- * 2. Redistributions in binary form must reproduce the above copyright notice, this list of
- * conditions and the following disclaimer in the documentation and/or other materials provided with
- * the distribution.
- *
- * 3. Neither the name of the comtel2000 nor the names of its contributors may be used to endorse or
- * promote products derived from this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
- * FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
- * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
- * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY
- * WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *******************************************************************************/
-
+/* Copyright (c) 2025-2000 comtel2000 */
 package org.comtel2000.keyboard.control;
-
-import org.comtel2000.keyboard.event.KeyButtonEvent;
 
 import javafx.animation.Timeline;
 import javafx.beans.property.ObjectProperty;
@@ -35,6 +8,7 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import org.comtel2000.keyboard.event.KeyButtonEvent;
 
 public abstract class KeyButton extends Button implements LongPressable {
 
@@ -55,12 +29,12 @@ public abstract class KeyButton extends Button implements LongPressable {
     String s = System.getProperty("org.comtel2000.keyboard.longPressDelay");
     if (s != null && !s.isBlank()) {
       try {
-		Double delay = Double.valueOf(s);
-		KEY_LONG_PRESS_DELAY = Math.min(Math.max(delay, KEY_LONG_PRESS_DELAY_MIN),
-		    KEY_LONG_PRESS_DELAY_MAX);
-	  } catch (NumberFormatException e) {
-		// ignore
-	  }
+        Double delay = Double.valueOf(s);
+        KEY_LONG_PRESS_DELAY =
+            Math.min(Math.max(delay, KEY_LONG_PRESS_DELAY_MIN), KEY_LONG_PRESS_DELAY_MAX);
+      } catch (NumberFormatException e) {
+        // ignore
+      }
     }
   }
 
@@ -88,7 +62,6 @@ public abstract class KeyButton extends Button implements LongPressable {
     super(label, graphic);
     getStyleClass().add("key-button");
     initEventListener(delay > 0 ? delay : KEY_LONG_PRESS_DELAY);
-
   }
 
   protected abstract void initEventListener(double delay);
@@ -114,23 +87,24 @@ public abstract class KeyButton extends Button implements LongPressable {
   @Override
   public final ObjectProperty<EventHandler<? super KeyButtonEvent>> onLongPressedProperty() {
     if (onLongPressed == null) {
-      onLongPressed = new ObjectPropertyBase<>() {
-        @SuppressWarnings("unchecked")
-        @Override
-        protected void invalidated() {
-          setEventHandler(KeyButtonEvent.LONG_PRESSED, (EventHandler<? super Event>) get());
-        }
+      onLongPressed =
+          new ObjectPropertyBase<>() {
+            @SuppressWarnings("unchecked")
+            @Override
+            protected void invalidated() {
+              setEventHandler(KeyButtonEvent.LONG_PRESSED, (EventHandler<? super Event>) get());
+            }
 
-        @Override
-        public Object getBean() {
-          return KeyButton.this;
-        }
+            @Override
+            public Object getBean() {
+              return KeyButton.this;
+            }
 
-        @Override
-        public String getName() {
-          return "onLongPressed";
-        }
-      };
+            @Override
+            public String getName() {
+              return "onLongPressed";
+            }
+          };
     }
     return onLongPressed;
   }
@@ -148,23 +122,24 @@ public abstract class KeyButton extends Button implements LongPressable {
   @Override
   public final ObjectProperty<EventHandler<? super KeyButtonEvent>> onShortPressedProperty() {
     if (onShortPressed == null) {
-      onShortPressed = new ObjectPropertyBase<>() {
-        @SuppressWarnings("unchecked")
-        @Override
-        protected void invalidated() {
-          setEventHandler(KeyButtonEvent.SHORT_PRESSED, (EventHandler<? super Event>) get());
-        }
+      onShortPressed =
+          new ObjectPropertyBase<>() {
+            @SuppressWarnings("unchecked")
+            @Override
+            protected void invalidated() {
+              setEventHandler(KeyButtonEvent.SHORT_PRESSED, (EventHandler<? super Event>) get());
+            }
 
-        @Override
-        public Object getBean() {
-          return KeyButton.this;
-        }
+            @Override
+            public Object getBean() {
+              return KeyButton.this;
+            }
 
-        @Override
-        public String getName() {
-          return "onShortPressed";
-        }
-      };
+            @Override
+            public String getName() {
+              return "onShortPressed";
+            }
+          };
     }
     return onShortPressed;
   }
@@ -185,8 +160,7 @@ public abstract class KeyButton extends Button implements LongPressable {
     this.keyText = keyText;
   }
 
-  public void addExtKeyCode(int keyCode, String label) {
-  }
+  public void addExtKeyCode(int keyCode, String label) {}
 
   public boolean isMovable() {
     return movable;
@@ -207,5 +181,4 @@ public abstract class KeyButton extends Button implements LongPressable {
   public void setSticky(boolean sticky) {
     this.sticky = sticky;
   }
-
 }

@@ -1,15 +1,15 @@
+/* Copyright (c) 2025 comtel2000 */
 package org.comtel2000.swing.control;
 
+import java.util.Optional;
 import javafx.embed.swing.JFXPanel;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import org.comtel2000.keyboard.control.KeyBoardPopup;
-
 import javax.swing.*;
-import java.util.Optional;
+import org.comtel2000.keyboard.control.KeyBoardPopup;
 
 /*******************************************************************************
  * Copyright (c) 2025 comtel2000
@@ -44,11 +44,12 @@ import java.util.Optional;
  */
 public class KeyBoardWindow extends JWindow {
 
-  public static final EventHandler<? super Event> DEFAULT_CLOSE_HANDLER = event -> {
-    if (event.getSource() instanceof Node node) {
-      node.getScene().getWindow().hide();
-    }
-  };
+  public static final EventHandler<? super Event> DEFAULT_CLOSE_HANDLER =
+      event -> {
+        if (event.getSource() instanceof Node node) {
+          node.getScene().getWindow().hide();
+        }
+      };
   private static final long serialVersionUID = 1564988010984549166L;
   private final JFXPanel jfxPanel;
   private transient KeyBoardPopup popup;
@@ -79,5 +80,4 @@ public class KeyBoardWindow extends JWindow {
   public Optional<KeyBoardPopup> getKeyBoardPopup() {
     return Optional.ofNullable(popup);
   }
-
 }

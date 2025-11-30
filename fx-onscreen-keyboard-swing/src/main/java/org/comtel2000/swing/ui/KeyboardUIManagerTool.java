@@ -1,20 +1,20 @@
+/* Copyright (c) 2025 comtel2000 */
 package org.comtel2000.swing.ui;
 
+import java.awt.*;
+import java.awt.event.*;
+import java.util.Locale;
 import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
 import javafx.animation.Transition;
 import javafx.application.Platform;
 import javafx.util.Duration;
+import javax.swing.*;
+import javax.swing.text.JTextComponent;
 import org.comtel2000.keyboard.control.KeyBoardPopup;
 import org.comtel2000.keyboard.control.KeyboardType;
 import org.comtel2000.keyboard.control.VkProperties;
 import org.comtel2000.swing.control.KeyBoardWindow;
-
-import javax.swing.*;
-import javax.swing.text.JTextComponent;
-import java.awt.*;
-import java.awt.event.*;
-import java.util.Locale;
 
 /*******************************************************************************
  * Copyright (c) 2025 comtel2000
@@ -48,8 +48,7 @@ import java.util.Locale;
 
 public class KeyboardUIManagerTool {
 
-  private KeyboardUIManagerTool() {
-  }
+  private KeyboardUIManagerTool() {}
 
   /**
    * install listener to basic UI text components
@@ -84,24 +83,26 @@ public class KeyboardUIManagerTool {
    * @see #installKeyboardDefaults(FocusListener, MouseListener)
    */
   public static void installKeyboardDefaults(EventCallback callback) {
-    installKeyboardDefaults(createFocusListener(callback), createMouseDoubleClickListener(callback));
+    installKeyboardDefaults(
+        createFocusListener(callback), createMouseDoubleClickListener(callback));
   }
 
   public static void installKeyboardDefaults(final KeyBoardWindow window) {
     SwingCallback callback = new SwingCallback(window);
-    installKeyboardDefaults(createFocusListener(callback), createMouseDoubleClickListener(callback));
+    installKeyboardDefaults(
+        createFocusListener(callback), createMouseDoubleClickListener(callback));
   }
 
   private static FocusListener createFocusListener(EventCallback c) {
     return new FocusListener() {
       @Override
       public void focusLost(FocusEvent e) {
-	c.call(null, false);
+        c.call(null, false);
       }
 
       @Override
       public void focusGained(FocusEvent e) {
-	c.call(e.getComponent(), true);
+        c.call(e.getComponent(), true);
       }
     };
   }
@@ -110,9 +111,9 @@ public class KeyboardUIManagerTool {
     return new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent e) {
-	if (e.getClickCount() == 2) {
-	  c.call(e.getComponent(), true);
-	}
+        if (e.getClickCount() == 2) {
+          c.call(e.getComponent(), true);
+        }
       }
     };
   }
@@ -129,71 +130,74 @@ public class KeyboardUIManagerTool {
 
     @Override
     public void call(final Component comp, final boolean show) {
-      window.getKeyBoardPopup().ifPresentOrElse(popup -> call(popup, comp, show), () -> initPosition = comp);
+      window
+          .getKeyBoardPopup()
+          .ifPresentOrElse(popup -> call(popup, comp, show), () -> initPosition = comp);
     }
 
     private void call(final KeyBoardPopup popup, final Component comp, final boolean show) {
       Component location;
 
       if (show && comp == null) {
-	// recover cached component
-	location = initPosition;
+        // recover cached component
+        location = initPosition;
       } else {
-	location = comp;
+        location = comp;
       }
       Platform.runLater(() -> callUI(popup, show, location));
     }
 
     private void callUI(final KeyBoardPopup popup, final boolean show, Component location) {
       if (show && location != null) {
-	popup.setX(location.getLocationOnScreen().getX());
-	popup.setY(location.getLocationOnScreen().getY() + location.getHeight());
+        popup.setX(location.getLocationOnScreen().getX());
+        popup.setY(location.getLocationOnScreen().getY() + location.getHeight());
 
-	if (location instanceof JTextComponent textComponent) {
-	  Object type = textComponent.getDocument().getProperty(VkProperties.VK_TYPE);
-	  if (type != null) {
-	    popup.getKeyBoard().setKeyboardType((String) type);
-	  } else {
-	    popup.getKeyBoard().setKeyboardType(KeyboardType.TEXT);
-	  }
-	  Object locale = textComponent.getDocument().getProperty(VkProperties.VK_LOCALE);
-	  if (locale != null) {
-	    popup.getKeyBoard().switchLocale(new Locale((String) locale));
-	  }
-	}
+        if (location instanceof JTextComponent textComponent) {
+          Object type = textComponent.getDocument().getProperty(VkProperties.VK_TYPE);
+          if (type != null) {
+            popup.getKeyBoard().setKeyboardType((String) type);
+          } else {
+            popup.getKeyBoard().setKeyboardType(KeyboardType.TEXT);
+          }
+          Object locale = textComponent.getDocument().getProperty(VkProperties.VK_LOCALE);
+          if (locale != null) {
+            popup.getKeyBoard().switchLocale(new Locale((String) locale));
+          }
+        }
       }
 
       if (transition == null) {
-	transition = new FadeTransition(Duration.seconds(0.1), popup.getKeyBoard());
+        transition = new FadeTransition(Duration.seconds(0.1), popup.getKeyBoard());
       }
       updateTransitionUI(popup, show);
     }
 
     private void updateTransitionUI(final KeyBoardPopup popup, final boolean show) {
       if (show) {
-	if (popup.isVisible() && transition.getStatus() == Animation.Status.STOPPED) {
-	  return;
-	}
-	transition.setOnFinished(evt -> { // ignore
-	});
-	transition.stop();
+        if (popup.isVisible() && transition.getStatus() == Animation.Status.STOPPED) {
+          return;
+        }
+        transition.setOnFinished(
+            evt -> { // ignore
+            });
+        transition.stop();
 
-	popup.getKeyBoard().setOpacity(0.0);
-	popup.setVisible(true);
-	((FadeTransition) transition).setFromValue(0.0f);
-	((FadeTransition) transition).setToValue(1.0f);
-	transition.play();
+        popup.getKeyBoard().setOpacity(0.0);
+        popup.setVisible(true);
+        ((FadeTransition) transition).setFromValue(0.0f);
+        ((FadeTransition) transition).setToValue(1.0f);
+        transition.play();
 
       } else {
-	if (!popup.isVisible() && transition.getStatus() == Animation.Status.STOPPED) {
-	  return;
-	}
-	transition.stop();
-	transition.setOnFinished(evt -> popup.setVisible(false));
+        if (!popup.isVisible() && transition.getStatus() == Animation.Status.STOPPED) {
+          return;
+        }
+        transition.stop();
+        transition.setOnFinished(evt -> popup.setVisible(false));
 
-	((FadeTransition) transition).setFromValue(1.0f);
-	((FadeTransition) transition).setToValue(0.0f);
-	transition.play();
+        ((FadeTransition) transition).setFromValue(1.0f);
+        ((FadeTransition) transition).setToValue(0.0f);
+        transition.play();
       }
     }
   }

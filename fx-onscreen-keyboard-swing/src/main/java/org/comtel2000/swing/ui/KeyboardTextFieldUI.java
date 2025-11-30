@@ -1,11 +1,12 @@
+/* Copyright (c) 2025 comtel2000 */
 package org.comtel2000.swing.ui;
 
+import java.awt.event.FocusListener;
+import java.awt.event.MouseListener;
 import javax.swing.*;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicTextFieldUI;
 import javax.swing.text.JTextComponent;
-import java.awt.event.FocusListener;
-import java.awt.event.MouseListener;
 
 /*******************************************************************************
  * Copyright (c) 2025 comtel2000

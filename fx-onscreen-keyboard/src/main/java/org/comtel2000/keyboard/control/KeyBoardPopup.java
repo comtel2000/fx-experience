@@ -1,31 +1,11 @@
-/*******************************************************************************
- * Copyright (c) 2025 comtel2000
- *
- * Redistribution and use in source and binary forms, with or without modification, are permitted
- * provided that the following conditions are met:
- *
- * 1. Redistributions of source code must retain the above copyright notice, this list of conditions
- * and the following disclaimer.
- *
- * 2. Redistributions in binary form must reproduce the above copyright notice, this list of
- * conditions and the following disclaimer in the documentation and/or other materials provided with
- * the distribution.
- *
- * 3. Neither the name of the comtel2000 nor the names of its contributors may be used to endorse or
- * promote products derived from this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
- * FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
- * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
- * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY
- * WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *******************************************************************************/
-
+/* Copyright (c) 2025-2000 comtel2000 */
 package org.comtel2000.keyboard.control;
 
+import static org.comtel2000.keyboard.control.VkProperties.*;
+
+import java.util.Locale;
+import java.util.Map;
+import java.util.Objects;
 import javafx.animation.FadeTransition;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -45,12 +25,6 @@ import javafx.stage.*;
 import javafx.util.Duration;
 import org.comtel2000.keyboard.FXOK;
 
-import java.util.Locale;
-import java.util.Map;
-import java.util.Objects;
-
-import static org.comtel2000.keyboard.control.VkProperties.*;
-
 /**
  * Helper class to create a {@link KeyboardPane}
  *
@@ -59,63 +33,60 @@ import static org.comtel2000.keyboard.control.VkProperties.*;
 public class KeyBoardPopup extends Popup {
 
   public enum Visibility {
-    /**
-     * Set position and visible true
-     */
+    /** Set position and visible true */
     SHOW,
 
-    /**
-     * Set visible false
-     */
+    /** Set visible false */
     HIDE,
 
-    /**
-     * Set positioning only if visible true
-     */
+    /** Set positioning only if visible true */
     POS
   }
 
-  public static final EventHandler<? super Event> DEFAULT_CLOSE_HANDLER = event -> {
-    if (event.getSource() instanceof Node) {
-      ((Node) event.getSource()).fireEvent(new WindowEvent(null, WindowEvent.WINDOW_CLOSE_REQUEST));
-    }
-  };
+  public static final EventHandler<? super Event> DEFAULT_CLOSE_HANDLER =
+      event -> {
+        if (event.getSource() instanceof Node) {
+          ((Node) event.getSource())
+              .fireEvent(new WindowEvent(null, WindowEvent.WINDOW_CLOSE_REQUEST));
+        }
+      };
   private static final String STYLE_CSS = "KeyboardTextInputSkin.css";
   private final KeyboardPane keyboard;
 
   private boolean doNotOpenHiddenKeyboard = false;
 
-  private final ChangeListener<? super Node> focusChangeListener = (value, n1, n2) -> {
-    if (n2 instanceof TextInputControl) {
-      setVisible(doNotOpenHiddenKeyboard ? Visibility.POS : Visibility.SHOW, (TextInputControl) n2);
-      return;
-    }
-    if (n2 instanceof Parent) {
-      TextInputControl control = findTextInputControl((Parent) n2);
-      if (control != null) {
-        setVisible(doNotOpenHiddenKeyboard ? Visibility.POS : Visibility.SHOW, control);
-        return;
-      }
-    }
-    setVisible(Visibility.HIDE);
-  };
+  private final ChangeListener<? super Node> focusChangeListener =
+      (value, n1, n2) -> {
+        if (n2 instanceof TextInputControl) {
+          setVisible(
+              doNotOpenHiddenKeyboard ? Visibility.POS : Visibility.SHOW, (TextInputControl) n2);
+          return;
+        }
+        if (n2 instanceof Parent) {
+          TextInputControl control = findTextInputControl((Parent) n2);
+          if (control != null) {
+            setVisible(doNotOpenHiddenKeyboard ? Visibility.POS : Visibility.SHOW, control);
+            return;
+          }
+        }
+        setVisible(Visibility.HIDE);
+      };
 
-  private final EventHandler<? super MouseEvent> doubleClickEventFilter = event -> {
-    if (event.getClickCount() == 2 && event.getSource() instanceof Stage) {
-      Node node = ((Stage) event.getSource()).getScene().getFocusOwner();
-      if (node instanceof TextInputControl) {
-        setVisible(Visibility.SHOW, (TextInputControl) node);
-      }
-    }
-  };
+  private final EventHandler<? super MouseEvent> doubleClickEventFilter =
+      event -> {
+        if (event.getClickCount() == 2 && event.getSource() instanceof Stage) {
+          Node node = ((Stage) event.getSource()).getScene().getFocusOwner();
+          if (node instanceof TextInputControl) {
+            setVisible(Visibility.SHOW, (TextInputControl) node);
+          }
+        }
+      };
 
   private Scene owner;
 
   private double offsetValue = 5d;
 
-  /**
-   * default vertical keyboard to text component offset
-   */
+  /** default vertical keyboard to text component offset */
   private DoubleProperty offset;
 
   private FadeTransition animation;
@@ -172,8 +143,7 @@ public class KeyBoardPopup extends Popup {
   /**
    * Adds a FocusListener to Scene and open keyboard on {@link TextInputControl}
    *
-   * @param scene
-   *          {@link Scene} to connect with the keyboard
+   * @param scene {@link Scene} to connect with the keyboard
    * @see #addGlobalFocusListener()
    */
   public void addFocusListener(final Scene scene) {
@@ -183,10 +153,9 @@ public class KeyBoardPopup extends Popup {
   /**
    * Adds a FocusListener to Scene and open keyboard on {@link TextInputControl}
    *
-   * @param scene
-   *          {@link Scene} to connect with the keyboard
-   * @param doNotOpen
-   *          on hidden keyboard do nothing and on showing keyboard move to current component
+   * @param scene {@link Scene} to connect with the keyboard
+   * @param doNotOpen on hidden keyboard do nothing and on showing keyboard move to current
+   *     component
    * @see #addGlobalFocusListener()
    */
   public void addFocusListener(final Scene scene, boolean doNotOpen) {
@@ -207,30 +176,36 @@ public class KeyBoardPopup extends Popup {
   /**
    * Add keyboard popup listener to all open dialogs, stages, etc.
    *
-   * @param doNotOpen
-   *          on hidden keyboard do nothing and on showing keyboard move to current component
+   * @param doNotOpen on hidden keyboard do nothing and on showing keyboard move to current
+   *     component
    */
   public void addGlobalFocusListener(boolean doNotOpen) {
     doNotOpenHiddenKeyboard = doNotOpen;
-    Window.getWindows().addListener((ListChangeListener.Change<? extends Window> c) -> {
-      while (c.next()) {
-        if (!c.wasPermutated()) {
-          c.getAddedSubList()
-              .forEach(win -> win.getScene().focusOwnerProperty().addListener(focusChangeListener));
-          c.getRemoved().forEach(
-              win -> win.getScene().focusOwnerProperty().removeListener(focusChangeListener));
-        }
-      }
-    });
+    Window.getWindows()
+        .addListener(
+            (ListChangeListener.Change<? extends Window> c) -> {
+              while (c.next()) {
+                if (!c.wasPermutated()) {
+                  c.getAddedSubList()
+                      .forEach(
+                          win ->
+                              win.getScene().focusOwnerProperty().addListener(focusChangeListener));
+                  c.getRemoved()
+                      .forEach(
+                          win ->
+                              win.getScene()
+                                  .focusOwnerProperty()
+                                  .removeListener(focusChangeListener));
+                }
+              }
+            });
   }
 
   /**
-   * Adds a mouse listener to the Stage and open the keyboards on 'double' click a
-   * {@link TextInputControl}
+   * Adds a mouse listener to the Stage and open the keyboards on 'double' click a {@link
+   * TextInputControl}
    *
-   * @param stage
-   *          {@link Stage} to connect with the keyboard
-   *
+   * @param stage {@link Stage} to connect with the keyboard
    * @see #addGlobalDoubleClickEventFilter()
    */
   public void addDoubleClickEventFilter(final Stage stage) {
@@ -238,22 +213,29 @@ public class KeyBoardPopup extends Popup {
   }
 
   /**
-   * Adds a mouse listener to all Stage and open the keyboards on 'double' click a
-   * {@link TextInputControl}
+   * Adds a mouse listener to all Stage and open the keyboards on 'double' click a {@link
+   * TextInputControl}
    *
    * @see #addDoubleClickEventFilter(Stage)
    */
   public void addGlobalDoubleClickEventFilter() {
-    Window.getWindows().addListener((ListChangeListener.Change<? extends Window> c) -> {
-      while (c.next()) {
-        if (!c.wasPermutated()) {
-          c.getAddedSubList()
-              .forEach(win -> win.addEventFilter(MouseEvent.MOUSE_CLICKED, doubleClickEventFilter));
-          c.getRemoved().forEach(
-              win -> win.removeEventFilter(MouseEvent.MOUSE_CLICKED, doubleClickEventFilter));
-        }
-      }
-    });
+    Window.getWindows()
+        .addListener(
+            (ListChangeListener.Change<? extends Window> c) -> {
+              while (c.next()) {
+                if (!c.wasPermutated()) {
+                  c.getAddedSubList()
+                      .forEach(
+                          win ->
+                              win.addEventFilter(MouseEvent.MOUSE_CLICKED, doubleClickEventFilter));
+                  c.getRemoved()
+                      .forEach(
+                          win ->
+                              win.removeEventFilter(
+                                  MouseEvent.MOUSE_CLICKED, doubleClickEventFilter));
+                }
+              }
+            });
   }
 
   public void setOnKeyboardCloseButton(EventHandler<? super Event> value) {
@@ -301,11 +283,12 @@ public class KeyBoardPopup extends Popup {
       animation.stop();
     } else {
       animation = new FadeTransition(Duration.millis(100), getKeyBoard());
-      animation.setOnFinished(e -> {
-        if (animation.toValueProperty().get() == 0.0) {
-          KeyBoardPopup.this.hide();
-        }
-      });
+      animation.setOnFinished(
+          e -> {
+            if (animation.toValueProperty().get() == 0.0) {
+              KeyBoardPopup.this.hide();
+            }
+          });
     }
     animation.setFromValue(visible == Visibility.SHOW ? 0.0 : 1.0);
     animation.setToValue(visible == Visibility.SHOW ? 1.0 : 0.0);
@@ -340,8 +323,7 @@ public class KeyBoardPopup extends Popup {
   /**
    * Set the vertical keyboard to text component offset
    *
-   * @param value
-   *          offset
+   * @param value offset
    */
   public final void setOffset(double value) {
     if (offset == null) {
@@ -370,5 +352,4 @@ public class KeyBoardPopup extends Popup {
   public EventHandler<? super MouseEvent> getDoubleClickEventFilter() {
     return doubleClickEventFilter;
   }
-
 }

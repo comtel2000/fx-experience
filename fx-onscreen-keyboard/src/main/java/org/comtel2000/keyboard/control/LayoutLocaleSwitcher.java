@@ -1,3 +1,4 @@
+/* Copyright (c) 2025 comtel2000 */
 package org.comtel2000.keyboard.control;
 
 import java.nio.file.Files;
@@ -6,24 +7,22 @@ import java.util.EnumMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.function.Consumer;
-
+import javafx.scene.layout.Region;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javafx.scene.layout.Region;
 
 class LayoutLocaleSwitcher {
 
   private static final Logger logger = LoggerFactory.getLogger(LayoutLocaleSwitcher.class);
-  
+
   private final Map<KeyboardType, Region> typeRegionMap = new EnumMap<>(KeyboardType.class);
-  
+
   private final KeyboardPane keyboard;
-  
+
   LayoutLocaleSwitcher(KeyboardPane keyboard) {
     this.keyboard = keyboard;
   }
-  
+
   void setLayout(final Locale local) throws Exception {
 
     logger.debug("try to set keyboard local: {}->{}", keyboard.getActiveLocale(), local);
@@ -59,7 +58,6 @@ class LayoutLocaleSwitcher {
     addTypeRegion(KeyboardType.NUMERIC, root, "kb-layout-numeric.xml");
     addTypeRegion(KeyboardType.EMAIL, root, "kb-layout-email.xml");
     addTypeRegion(KeyboardType.URL, root, "kb-layout-url.xml");
-
   }
 
   private void addTypeRegion(KeyboardType type, String root, String file) throws Exception {
@@ -93,11 +91,11 @@ class LayoutLocaleSwitcher {
   private Region getRegion(KeyboardType type) {
     return typeRegionMap.get(type);
   }
-  
+
   private Region getRegionOrDefault(KeyboardType type, KeyboardType defaultRegion) {
     return typeRegionMap.getOrDefault(type, typeRegionMap.get(defaultRegion));
   }
-  
+
   void switchKeyboardTypeRegion(KeyboardType type, Consumer<Region> comsumer) {
     logger.debug("try to set type: {}->{}", keyboard.getActiveType(), type);
     if (type.equals(keyboard.getActiveType())) {
@@ -106,48 +104,47 @@ class LayoutLocaleSwitcher {
     keyboard.setActiveType(type);
     Region pane;
     switch (type) {
-    case NUMERIC:
-      keyboard.setControl(false);
-      keyboard.setShift(false);
-      keyboard.setSymbol(false);
-      pane = getRegionOrDefault(type, KeyboardType.SYMBOL);
-      break;
-    case SYMBOL:
-      keyboard.setControl(false);
-      keyboard.setShift(false);
-      keyboard.setSymbol(true);
-      pane = getRegion(type);
-      break;
-    case SYMBOL_SHIFT:
-      keyboard.setControl(false);
-      keyboard.setShift(true);
-      keyboard.setSymbol(true);
-      pane = getRegion(type);
-      break;
-    case CTRL:
-      keyboard.setControl(true);
-      keyboard.setShift(false);
-      keyboard.setSymbol(false);
-      pane = getRegion(type);
-      break;
-    case TEXT_SHIFT:
-      keyboard.setControl(false);
-      keyboard.setShift(true);
-      keyboard.setSymbol(false);
-      pane = getRegion(type);
-      break;
-    case EMAIL, URL:
-    default:
-      keyboard.setControl(false);
-      keyboard.setShift(false);
-      keyboard.setSymbol(false);
-      pane = getRegion(type);
-      break;
+      case NUMERIC:
+        keyboard.setControl(false);
+        keyboard.setShift(false);
+        keyboard.setSymbol(false);
+        pane = getRegionOrDefault(type, KeyboardType.SYMBOL);
+        break;
+      case SYMBOL:
+        keyboard.setControl(false);
+        keyboard.setShift(false);
+        keyboard.setSymbol(true);
+        pane = getRegion(type);
+        break;
+      case SYMBOL_SHIFT:
+        keyboard.setControl(false);
+        keyboard.setShift(true);
+        keyboard.setSymbol(true);
+        pane = getRegion(type);
+        break;
+      case CTRL:
+        keyboard.setControl(true);
+        keyboard.setShift(false);
+        keyboard.setSymbol(false);
+        pane = getRegion(type);
+        break;
+      case TEXT_SHIFT:
+        keyboard.setControl(false);
+        keyboard.setShift(true);
+        keyboard.setSymbol(false);
+        pane = getRegion(type);
+        break;
+      case EMAIL, URL:
+      default:
+        keyboard.setControl(false);
+        keyboard.setShift(false);
+        keyboard.setSymbol(false);
+        pane = getRegion(type);
+        break;
     }
     if (pane == null) {
       pane = getRegion(KeyboardType.TEXT);
     }
     comsumer.accept(pane);
   }
-
 }

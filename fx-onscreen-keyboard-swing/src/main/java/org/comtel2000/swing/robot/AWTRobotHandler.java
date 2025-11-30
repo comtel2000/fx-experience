@@ -1,16 +1,16 @@
+/* Copyright (c) 2025 comtel2000 */
 package org.comtel2000.swing.robot;
-
-import org.comtel2000.keyboard.robot.IRobot;
-import org.slf4j.LoggerFactory;
-
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.KeyEvent;
 
 import static java.awt.event.InputEvent.CTRL_DOWN_MASK;
 import static java.awt.event.InputEvent.META_DOWN_MASK;
 import static java.awt.event.InputEvent.SHIFT_DOWN_MASK;
 import static java.awt.event.KeyEvent.*;
+
+import java.awt.*;
+import java.awt.event.KeyEvent;
+import javax.swing.*;
+import org.comtel2000.keyboard.robot.IRobot;
+import org.slf4j.LoggerFactory;
 
 /*******************************************************************************
  * Copyright (c) 2025 comtel2000
@@ -100,25 +100,67 @@ public class AWTRobotHandler implements IRobot {
         case java.awt.event.KeyEvent.VK_F10:
         case java.awt.event.KeyEvent.VK_F11:
         case java.awt.event.KeyEvent.VK_F12:
-          kfm.dispatchKeyEvent(new KeyEvent(c, KEY_PRESSED, System.currentTimeMillis(), 0, ch, ch, KEY_LOCATION_STANDARD));
-          kfm.dispatchKeyEvent(new KeyEvent(c, KEY_RELEASED, System.currentTimeMillis(), 0, ch, ch, KEY_LOCATION_STANDARD));
+          kfm.dispatchKeyEvent(
+              new KeyEvent(
+                  c, KEY_PRESSED, System.currentTimeMillis(), 0, ch, ch, KEY_LOCATION_STANDARD));
+          kfm.dispatchKeyEvent(
+              new KeyEvent(
+                  c, KEY_RELEASED, System.currentTimeMillis(), 0, ch, ch, KEY_LOCATION_STANDARD));
           return;
       }
 
       int keycode = KeyEvent.getExtendedKeyCodeForChar(ch);
       if (keycode != KeyEvent.VK_UNDEFINED) {
-        kfm.dispatchKeyEvent(new KeyEvent(c, KEY_PRESSED, System.currentTimeMillis(), controlDownMask, keycode, ch, KEY_LOCATION_STANDARD));
-        kfm.dispatchKeyEvent(new KeyEvent(c, KEY_RELEASED, System.currentTimeMillis(), controlDownMask, keycode, ch, KEY_LOCATION_STANDARD));
+        kfm.dispatchKeyEvent(
+            new KeyEvent(
+                c,
+                KEY_PRESSED,
+                System.currentTimeMillis(),
+                controlDownMask,
+                keycode,
+                ch,
+                KEY_LOCATION_STANDARD));
+        kfm.dispatchKeyEvent(
+            new KeyEvent(
+                c,
+                KEY_RELEASED,
+                System.currentTimeMillis(),
+                controlDownMask,
+                keycode,
+                ch,
+                KEY_LOCATION_STANDARD));
         return;
       }
     }
 
     int modififiers = Character.isUpperCase(ch) ? SHIFT_DOWN_MASK : 0;
 
-    kfm.dispatchKeyEvent(new KeyEvent(c, KEY_PRESSED, System.currentTimeMillis(), modififiers, VK_UNDEFINED, ch, KEY_LOCATION_STANDARD));
-    kfm.dispatchKeyEvent(new KeyEvent(c, KEY_TYPED, System.currentTimeMillis(), modififiers, VK_UNDEFINED, ch, KEY_LOCATION_UNKNOWN));
-    kfm.dispatchKeyEvent(new KeyEvent(c, KEY_RELEASED, System.currentTimeMillis(), modififiers, VK_UNDEFINED, ch, KEY_LOCATION_STANDARD));
-
+    kfm.dispatchKeyEvent(
+        new KeyEvent(
+            c,
+            KEY_PRESSED,
+            System.currentTimeMillis(),
+            modififiers,
+            VK_UNDEFINED,
+            ch,
+            KEY_LOCATION_STANDARD));
+    kfm.dispatchKeyEvent(
+        new KeyEvent(
+            c,
+            KEY_TYPED,
+            System.currentTimeMillis(),
+            modififiers,
+            VK_UNDEFINED,
+            ch,
+            KEY_LOCATION_UNKNOWN));
+    kfm.dispatchKeyEvent(
+        new KeyEvent(
+            c,
+            KEY_RELEASED,
+            System.currentTimeMillis(),
+            modififiers,
+            VK_UNDEFINED,
+            ch,
+            KEY_LOCATION_STANDARD));
   }
-
 }

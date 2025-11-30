@@ -1,5 +1,10 @@
+/* Copyright (c) 2025 comtel2000 */
 package org.comtel2000.samples.fx;
 
+import java.nio.file.Paths;
+import java.text.ParseException;
+import java.util.Locale;
+import java.util.Map;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -10,11 +15,6 @@ import org.comtel2000.keyboard.control.KeyBoardPopup;
 import org.comtel2000.keyboard.control.KeyboardPane;
 import org.comtel2000.keyboard.control.KeyboardType;
 import org.comtel2000.swing.robot.NativeAsciiRobotHandler;
-
-import java.nio.file.Paths;
-import java.text.ParseException;
-import java.util.Locale;
-import java.util.Map;
 
 /*******************************************************************************
  * Copyright (c) 2025 comtel2000
@@ -102,7 +102,6 @@ public class StandAloneApp extends Application {
 
     popup.registerScene(scene);
     popup.setVisible(true);
-
   }
 
   private void showHelp() {
@@ -138,5 +137,4 @@ public class StandAloneApp extends Application {
       posY = Integer.valueOf(pos[1]);
     }
   }
-
 }

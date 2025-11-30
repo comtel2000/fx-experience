@@ -1,3 +1,4 @@
+/* Copyright (c) 2025 comtel2000 */
 package org.comtel2000.keyboard.control;
 
 import java.io.IOException;
@@ -13,7 +14,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Supplier;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -1,5 +1,9 @@
+/* Copyright (c) 2025 comtel2000 */
 package org.comtel2000.samples.fx;
 
+import static org.comtel2000.keyboard.control.VkProperties.*;
+
+import java.util.Locale;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -8,10 +12,6 @@ import javafx.stage.Stage;
 import org.comtel2000.keyboard.control.DefaultLayer;
 import org.comtel2000.keyboard.control.KeyBoardPopup;
 import org.comtel2000.keyboard.control.KeyBoardPopupBuilder;
-
-import java.util.Locale;
-
-import static org.comtel2000.keyboard.control.VkProperties.*;
 
 /*******************************************************************************
  * Copyright (c) 2025 comtel2000
@@ -61,14 +61,13 @@ public class MainDemo extends Application {
     cancelButton.setCancelButton(true);
 
     Button popupButton = new Button("Popup");
-    popupButton.setOnAction(act -> {
-      TextInputDialog dialog = new TextInputDialog("Popup");
-      dialog.setTitle("Text Input Dialog");
-      dialog.setContentText("Please enter your name:");
-      dialog.showAndWait();
-
-    });
-
+    popupButton.setOnAction(
+        act -> {
+          TextInputDialog dialog = new TextInputDialog("Popup");
+          dialog.setTitle("Text Input Dialog");
+          dialog.setContentText("Please enter your name:");
+          dialog.showAndWait();
+        });
 
     CheckBox spaceKeyMove = new CheckBox("Movable");
     spaceKeyMove.setSelected(true);
@@ -80,9 +79,16 @@ public class MainDemo extends Application {
 
     CheckBox numblock = new CheckBox("NumBlock");
     numblock.setSelected(false);
-    numblock.selectedProperty().addListener((l, a, b) -> popup.getKeyBoard().switchLayer(b == Boolean.TRUE ? DefaultLayer.NUMBLOCK : DefaultLayer.DEFAULT));
+    numblock
+        .selectedProperty()
+        .addListener(
+            (l, a, b) ->
+                popup
+                    .getKeyBoard()
+                    .switchLayer(b == Boolean.TRUE ? DefaultLayer.NUMBLOCK : DefaultLayer.DEFAULT));
 
-    pane.getChildren().add(new ToolBar(okButton, cancelButton, popupButton, spaceKeyMove, capsLock, numblock));
+    pane.getChildren()
+        .add(new ToolBar(okButton, cancelButton, popupButton, spaceKeyMove, capsLock, numblock));
 
     pane.getChildren().add(new Label("Text0"));
     TextField tf0 = new TextField();
@@ -141,7 +147,5 @@ public class MainDemo extends Application {
     popup.addGlobalDoubleClickEventFilter();
 
     stage.show();
-
   }
-
 }

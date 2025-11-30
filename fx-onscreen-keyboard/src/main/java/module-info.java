@@ -1,5 +1,4 @@
 module fx.onscreen.keyboard {
-
   requires transitive javafx.base;
   requires transitive javafx.graphics;
   requires transitive javafx.controls;
@@ -11,6 +10,6 @@ module fx.onscreen.keyboard {
   exports org.comtel2000.keyboard.control;
   exports org.comtel2000.keyboard.event;
 
-  provides org.comtel2000.keyboard.robot.IRobot with org.comtel2000.keyboard.robot.FXRobotHandler;
-
+  provides org.comtel2000.keyboard.robot.IRobot with
+      org.comtel2000.keyboard.robot.FXRobotHandler;
 }

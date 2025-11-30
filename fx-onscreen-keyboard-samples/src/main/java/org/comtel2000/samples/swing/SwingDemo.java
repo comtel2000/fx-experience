@@ -1,16 +1,16 @@
+/* Copyright (c) 2025 comtel2000 */
 package org.comtel2000.samples.swing;
 
+import static org.comtel2000.keyboard.control.VkProperties.*;
+
+import java.awt.*;
+import java.util.Locale;
+import javax.swing.*;
 import org.comtel2000.keyboard.control.DefaultLayer;
 import org.comtel2000.swing.control.KeyBoardWindow;
 import org.comtel2000.swing.control.KeyBoardWindowBuilder;
 import org.comtel2000.swing.robot.AWTRobotHandler;
 import org.comtel2000.swing.ui.KeyboardUIManagerTool;
-
-import javax.swing.*;
-import java.awt.*;
-import java.util.Locale;
-
-import static org.comtel2000.keyboard.control.VkProperties.*;
 
 /*******************************************************************************
  * Copyright (c) 2025 comtel2000
@@ -43,25 +43,29 @@ public class SwingDemo extends JFrame {
   private static final long serialVersionUID = 1L;
 
   public static void main(String[] args) {
-    SwingUtilities.invokeLater(() -> {
-      JFrame frame = new JFrame("Swing FX Keyboard");
-      frame.setResizable(false);
-      frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    SwingUtilities.invokeLater(
+        () -> {
+          JFrame frame = new JFrame("Swing FX Keyboard");
+          frame.setResizable(false);
+          frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-      SwingDemo kb = new SwingDemo();
-      kb.init();
-      frame.setContentPane(kb.getContentPane());
-      frame.pack();
-      frame.setLocationRelativeTo(null);
-      frame.setVisible(true);
-
-    });
+          SwingDemo kb = new SwingDemo();
+          kb.init();
+          frame.setContentPane(kb.getContentPane());
+          frame.pack();
+          frame.setLocationRelativeTo(null);
+          frame.setVisible(true);
+        });
   }
 
   public void init() {
 
     KeyBoardWindow window =
-        KeyBoardWindowBuilder.create().initLocale(Locale.forLanguageTag("en")).addIRobot(new AWTRobotHandler()).layer(DefaultLayer.NUMBLOCK).build();
+        KeyBoardWindowBuilder.create()
+            .initLocale(Locale.forLanguageTag("en"))
+            .addIRobot(new AWTRobotHandler())
+            .layer(DefaultLayer.NUMBLOCK)
+            .build();
     KeyboardUIManagerTool.installKeyboardDefaults(window);
 
     JPanel panel = new JPanel();
@@ -90,7 +94,5 @@ public class SwingDemo extends JFrame {
 
     setLayout(new BorderLayout());
     add(panel, BorderLayout.CENTER);
-
   }
-
 }
