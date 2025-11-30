@@ -1,3 +1,4 @@
+/* Copyright (c) 2025-2000 comtel2000 (BSD 3-Clause) */
 package org.comtel2000.swing.ui;
 
 /*******************************************************************************
@@ -26,12 +27,12 @@ package org.comtel2000.swing.ui;
  * WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *******************************************************************************/
 
+import java.awt.event.FocusListener;
+import java.awt.event.MouseListener;
 import javax.swing.*;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicPasswordFieldUI;
 import javax.swing.text.JTextComponent;
-import java.awt.event.FocusListener;
-import java.awt.event.MouseListener;
 
 public class KeyboardPasswordFieldUI extends BasicPasswordFieldUI {
 

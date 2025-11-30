@@ -1,17 +1,17 @@
+/* Copyright (c) 2025-2000 comtel2000 (BSD 3-Clause) */
 package org.comtel2000.keyboard.xml;
-
-import org.junit.jupiter.api.Test;
-
-import javax.xml.stream.*;
-import java.io.IOException;
-import java.net.URL;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class XmlHelperTest {
+import java.io.IOException;
+import java.net.URL;
+import javax.xml.stream.*;
+import org.junit.jupiter.api.Test;
+
+class XmlHelperTest {
 
   @Test
-  public void readAttribute() throws XMLStreamException, FactoryConfigurationError, IOException {
+  void readAttribute() throws XMLStreamException, FactoryConfigurationError, IOException {
     URL url = XmlHelperTest.class.getResource("/xml/default/kb-layout.xml");
     XMLStreamReader reader = XMLInputFactory.newInstance().createXMLStreamReader(url.openStream());
     reader.next();
@@ -27,20 +27,22 @@ public class XmlHelperTest {
   }
 
   @Test
-  public void readIntAttribute() throws XMLStreamException, FactoryConfigurationError, IOException {
+  void readIntAttribute() throws XMLStreamException, FactoryConfigurationError, IOException {
     URL url = XmlHelperTest.class.getResource("/xml/default/kb-layout.xml");
     XMLStreamReader reader = XMLInputFactory.newInstance().createXMLStreamReader(url.openStream());
     reader.next();
     reader.require(XMLStreamConstants.START_ELEMENT, null, XmlHelper.KEYBOARD);
 
-    assertEquals(Integer.valueOf(40),
+    assertEquals(
+        Integer.valueOf(40),
         XmlHelper.readIntAttribute(reader, XmlHelper.ATTR_KEY_WIDTH).orElse(-1));
-    assertEquals(Integer.valueOf(30),
+    assertEquals(
+        Integer.valueOf(30),
         XmlHelper.readIntAttribute(reader, XmlHelper.ATTR_KEY_HEIGHT).orElse(-1));
-    assertEquals(Integer.valueOf(0),
-        XmlHelper.readIntAttribute(reader, XmlHelper.ATTR_H_GAP).orElse(-1));
-    assertEquals(Integer.valueOf(0),
-        XmlHelper.readIntAttribute(reader, XmlHelper.ATTR_V_GAP).orElse(-1));
+    assertEquals(
+        Integer.valueOf(0), XmlHelper.readIntAttribute(reader, XmlHelper.ATTR_H_GAP).orElse(-1));
+    assertEquals(
+        Integer.valueOf(0), XmlHelper.readIntAttribute(reader, XmlHelper.ATTR_V_GAP).orElse(-1));
     assertNull(XmlHelper.readIntAttribute(reader, "verticalGapX").orElse(null));
 
     assertEquals(40, XmlHelper.readIntAttribute(reader, XmlHelper.ATTR_KEY_WIDTH, 1));
@@ -53,8 +55,7 @@ public class XmlHelperTest {
   }
 
   @Test
-  public void readBooleanAttribute()
-      throws XMLStreamException, FactoryConfigurationError, IOException {
+  void readBooleanAttribute() throws XMLStreamException, FactoryConfigurationError, IOException {
     URL url = XmlHelperTest.class.getResource("/xml/default/kb-layout.xml");
     XMLStreamReader reader = XMLInputFactory.newInstance().createXMLStreamReader(url.openStream());
     reader.next();

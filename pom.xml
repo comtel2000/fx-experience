@@ -185,7 +185,7 @@
 						<java>
 							<googleJavaFormat />
 							<licenseHeader>
-								<content>/* Copyright (c) $YEAR comtel2000 */</content>
+								<content>/* Copyright (c) $YEAR comtel2000 (BSD 3-Clause) */</content>
 							</licenseHeader>
 						</java>
 					</configuration>
