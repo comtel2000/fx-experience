@@ -26,16 +26,14 @@
 
 package org.comtel2000.keyboard.control;
 
+import java.util.Collection;
+
+import org.slf4j.LoggerFactory;
+
 import javafx.animation.Animation.Status;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.input.MouseButton;
-import javafx.util.Duration;
-import org.slf4j.LoggerFactory;
-
-import java.util.Collection;
 
 class MultiKeyButton extends KeyButton {
 
@@ -52,12 +50,11 @@ class MultiKeyButton extends KeyButton {
   }
 
   @Override
-  protected void initEventListener(double delay) {
-
-    buttonDelay = new Timeline(new KeyFrame(new Duration(delay), event -> fireLongPressed()));
+  protected void initEventListener(Timelines timelines) {
 
     setOnDragDetected(e -> {
       logger.trace("{} drag detected", getKeyCode());
+      var buttonDelay = timelines.longPressDelayTimeline(this, ev -> fireLongPressed());
       if (buttonDelay.getStatus().equals(Status.RUNNING) && buttonDelay.getCurrentRate() > 0) {
         buttonDelay.stop();
         fireLongPressed();
@@ -66,19 +63,20 @@ class MultiKeyButton extends KeyButton {
     });
 
     setOnMouseClicked(event -> {
+      
+      var buttonDelay = timelines.longPressDelayTimeline(this, ev -> fireLongPressed());
       logger.trace("{} clicked: {}", getKeyCode(), buttonDelay.getCurrentRate());
 
-      if (event.getButton().equals(MouseButton.PRIMARY)) {
-        if (buttonDelay.getStatus().equals(Status.RUNNING)) {
-          buttonDelay.stop();
-          fireShortPressed();
-        }
+      if (event.getButton().equals(MouseButton.PRIMARY) && buttonDelay.getStatus().equals(Status.RUNNING)) {
+        buttonDelay.stop();
+        fireShortPressed();
       }
       setFocused(false);
       event.consume();
     });
 
     setOnMousePressed(event -> {
+      var buttonDelay = timelines.longPressDelayTimeline(this, ev -> fireLongPressed());
       logger.trace("{} pressed: {}", getKeyCode(), buttonDelay.getCurrentRate());
       if (event.getButton().equals(MouseButton.PRIMARY)) {
         buttonDelay.playFromStart();
@@ -108,8 +106,9 @@ class MultiKeyButton extends KeyButton {
   }
 
   @Override
-  public void addExtKeyCode(int extKeyCode, String label) {
+  public void addExtKeyCode(Timelines timelines, int extKeyCode, String label) {
     KeyButton button = new ShortPressKeyButton();
+    button.setTimelines(timelines);
     button.setText(label);
     button.setKeyCode(extKeyCode);
 

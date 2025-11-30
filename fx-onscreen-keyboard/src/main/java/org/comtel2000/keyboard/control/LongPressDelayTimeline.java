@@ -26,29 +26,29 @@
 
 package org.comtel2000.keyboard.control;
 
-import org.slf4j.LoggerFactory;
+class LongPressDelayTimeline extends ButtonTimeline {
 
-import javafx.scene.input.MouseButton;
+  private static final double KEY_LONG_PRESS_DELAY_DEF = 400;
 
-class ShortPressKeyButton extends KeyButton {
+  private static final double KEY_LONG_PRESS_DELAY_MIN = 100;
+  private static final double KEY_LONG_PRESS_DELAY_MAX = 1000;
 
-  private static final org.slf4j.Logger logger = LoggerFactory.getLogger(ShortPressKeyButton.class);
+  private static double keyLongPressDelay = KEY_LONG_PRESS_DELAY_DEF;
 
-  ShortPressKeyButton() {
-    super();
+  static {
+    String s = System.getProperty("org.comtel2000.keyboard.longPressDelay");
+    if (s != null && !s.isBlank()) {
+      try {
+        Double delay = Double.valueOf(s);
+        keyLongPressDelay = Math.min(Math.max(delay, KEY_LONG_PRESS_DELAY_MIN), KEY_LONG_PRESS_DELAY_MAX);
+      } catch (NumberFormatException e) {
+        // ignore
+      }
+    }
   }
 
-  @Override
-  protected void initEventListener(Timelines timelines) {
-    setOnMousePressed(event -> {
-      logger.trace("{} pressed", getKeyCode());
-      timelines.stop();
-      if (event.getButton().equals(MouseButton.PRIMARY)) {
-        fireShortPressed();
-      }
-      setFocused(false);
-      event.consume();
-    });
+  protected LongPressDelayTimeline() {
+    super(keyLongPressDelay);
   }
 
 }
