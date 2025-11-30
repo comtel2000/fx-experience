@@ -7,10 +7,10 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AssertionFailureBuilder;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Timeout;
 
 import javafx.animation.Animation;
 import javafx.application.Platform;
@@ -21,20 +21,21 @@ class KeyButtonTest {
 
   @BeforeAll
   static void initToolkit() throws Exception {
-    // Initialize JavaFX toolkit
-    var latch = new CountDownLatch(1);
-    Platform.startup(latch::countDown);
-    if (!latch.await(3, TimeUnit.SECONDS)) {
-      throw new IllegalStateException("JavaFX toolkit failed to initialize");
+    // Ensure headless property is set early in CI via JAVA_TOOL_OPTIONS; this is
+    // just in case.
+    System.setProperty("java.awt.headless", System.getProperty("java.awt.headless", "true"));
+
+    // Initialize JavaFX toolkit (safe if already started)
+    try {
+      Platform.startup(() -> {
+        /* no-op */ });
+    } catch (IllegalStateException ex) {
+      // toolkit already started
     }
   }
 
-  @AfterAll
-  static void exitToolkit() throws Exception {
-    Platform.exit();
-  }
-
   @Test
+  @Timeout(value = 20, unit = TimeUnit.SECONDS)
   void previousTimelineStoppedWhenNewPressed() throws Exception {
     var latch = new CountDownLatch(1);
     var exception = new AtomicReference<Throwable>();
