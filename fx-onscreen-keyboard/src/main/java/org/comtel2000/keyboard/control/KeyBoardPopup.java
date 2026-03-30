@@ -260,7 +260,17 @@ public class KeyBoardPopup extends Popup {
       }
 
       Bounds textNodeBounds = textNode.localToScreen(textNode.getBoundsInLocal());
-      Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+      // Find the screen that contains the text input control
+      Rectangle2D screenBounds =
+          Screen.getScreensForRectangle(
+                  textNodeBounds.getMinX(),
+                  textNodeBounds.getMinY(),
+                  textNodeBounds.getWidth(),
+                  textNodeBounds.getHeight())
+              .stream()
+              .map(Screen::getVisualBounds)
+              .findFirst()
+              .orElse(Screen.getPrimary().getVisualBounds());
       if (textNodeBounds.getMinX() + getWidth() > screenBounds.getMaxX()) {
         setX(screenBounds.getMaxX() - getWidth());
       } else {
