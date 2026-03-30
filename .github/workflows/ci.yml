@@ -8,19 +8,11 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
     timeout-minutes: 10
     strategy:
       matrix:
         java-version: [17, 21, 25]
-    env:
-      JAVA_TOOL_OPTIONS: >
-        -Djava.awt.headless=true
-        -Dprism.order=sw
-        -Dprism.forceGPU=false
-        -Dglass.platform=Monocle
-        -Dmonocle.platform=Headless
     steps:
     - uses: actions/checkout@v4
     - name: Set up JDK ${{ matrix.java-version }}
@@ -31,12 +23,10 @@ jobs:
         java-package: jdk+fx # optional (jdk, jre, jdk+fx or jre+fx) - defaults to jdk
         cache: maven
     - name: Build with Maven
-      run: mvn -B package --file pom.xml
-    
+      run: mvn -B test --file pom.xml
     - name: Upload test logs on failure
       if: failure()
       uses: actions/upload-artifact@v4
       with:
         name: test-logs
         path: target/surefire-reports/**
-
