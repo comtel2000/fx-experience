@@ -23,6 +23,10 @@ class KeyButtonTest {
     // Ensure headless property is set early in CI via JAVA_TOOL_OPTIONS; this is
     // just in case.
     System.setProperty("java.awt.headless", System.getProperty("java.awt.headless", "true"));
+    System.setProperty("prism.order", "sw");
+    System.setProperty("prism.forceGPU", "false");
+    System.setProperty("glass.platform", "Monocle");
+    System.setProperty("monocle.platform", "Headless");
 
     // Initialize JavaFX toolkit (safe if already started)
     try {
@@ -32,6 +36,11 @@ class KeyButtonTest {
           });
     } catch (IllegalStateException ex) {
       // toolkit already started
+    } catch (NullPointerException | RuntimeException ex) {
+      // Handle glass platform initialization failures in JDK 25+
+      // This can occur when the glass platform factory is not properly initialized
+      System.err.println("Warning: Failed to initialize JavaFX toolkit: " + ex.getMessage());
+      ex.printStackTrace();
     }
   }
 
