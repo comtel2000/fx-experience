@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Keyboard keyWidth="40" keyHeight="30">
+	<Row>
+		<Key codes="97" keyLabel="a" keyLabelStyle="" keyIconStyle="" />
+		<Key codes="98" keyLabel="b" />
+	</Row>
+</Keyboard>
