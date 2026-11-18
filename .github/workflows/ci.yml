@@ -26,10 +26,17 @@ jobs:
         java-package: jdk+fx # optional (jdk, jre, jdk+fx or jre+fx) - defaults to jdk
         cache: maven
     - name: Build with Maven
-      run: mvn -B test --file pom.xml
+      # JavaFX tests need a display; xvfb is preinstalled on ubuntu runners
+      run: xvfb-run -a mvn -B test --file pom.xml
     - name: Upload test logs on failure
       if: failure()
       uses: actions/upload-artifact@v4
       with:
-        name: test-logs
-        path: target/surefire-reports/**
+        name: test-logs-jdk${{ matrix.java-version }}
+        path: '**/target/surefire-reports/**'
+    - name: Upload coverage report
+      if: matrix.java-version == 17
+      uses: actions/upload-artifact@v4
+      with:
+        name: coverage-report
+        path: '**/target/site/jacoco/**'

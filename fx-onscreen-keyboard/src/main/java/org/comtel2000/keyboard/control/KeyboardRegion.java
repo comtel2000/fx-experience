@@ -154,6 +154,7 @@ class KeyboardRegion extends GridPane {
                   button.getStyleClass().add("sticky-style");
                 }
                 readAttribute(reader, ATTR_KEY_LABEL_STYLE)
+                    .filter(s -> !s.isEmpty())
                     .ifPresent(
                         s -> {
                           if (s.charAt(0) == '.') {
@@ -184,6 +185,7 @@ class KeyboardRegion extends GridPane {
                 }
 
                 readAttribute(reader, ATTR_KEY_ICON_STYLE)
+                    .filter(s -> !s.isEmpty())
                     .ifPresent(
                         s -> {
                           if (s.charAt(0) == '.') {

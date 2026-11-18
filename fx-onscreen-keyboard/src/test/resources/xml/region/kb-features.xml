@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Keyboard keyWidth="40" keyHeight="30" horizontalGap="3" verticalGap="4">
+	<Row>
+		<Key codes="" keyWidth="10" />
+		<Key codes="97,228,229" keyLabel="a" />
+		<Key codes="0x62" keyLabel="b" keyEdgeFlags="left" />
+		<Key codes="99" keyEdgeFlags="right" />
+		<Key codes="100" keyEdgeFlags="center" keyOutputText="dot." />
+		<Key codes="-5" keyLabel="!" keyLabelStyle=".font-fxkeyboard;.small-style" repeatable="true" />
+		<Key codes="-8" keyLabel="DEL" />
+	</Row>
+	<Row rowEdgeFlags="bottom">
+		<Key codes="-1" keyLabel="I" sticky="true" />
+		<Key codes="32" keyLabel=" " movable="true" repeatable="true" />
+		<Key codes="-7" keyLabel="EN" />
+		<Key codes="-3" keyIconStyle=".icon-close" />
+		<Key codes="-9" keyIconStyle="@missing/icon" />
+		<Key codes="-6" keyLabelStyle="plain" />
+	</Row>
+</Keyboard>
