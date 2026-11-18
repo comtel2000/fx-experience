@@ -153,8 +153,10 @@ class KeyBoardPopupTest {
         () -> {
           assertTrue(popup.isVisible());
           var bounds = field.localToScreen(field.getBoundsInLocal());
-          assertEquals(bounds.getMinX(), popup.getX(), 1.0);
-          assertEquals(bounds.getMaxY() + popup.getOffset(), popup.getY(), 1.0);
+          // the bounds include the focus ring (-1.4px), which is drawn only on a focused field,
+          // and window managers may round the popup position to whole pixels
+          assertEquals(bounds.getMinX(), popup.getX(), 2.0);
+          assertEquals(bounds.getMaxY() + popup.getOffset(), popup.getY(), 2.0);
           assertEquals(KeyboardType.TEXT, popup.getKeyBoard().getActiveType());
         });
 
