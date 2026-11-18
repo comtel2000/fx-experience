@@ -61,16 +61,26 @@ the tests run against a stale core jar from your local repository.
 
 ## JavaFX Tests and Headless Mode
 
-Tests that create JavaFX nodes need the JavaFX toolkit. CI runs on Linux without a display, so:
+Tests that create JavaFX nodes, stages or timelines need the JavaFX toolkit, and the toolkit needs
+a display.
 
-- Surefire sets `java.awt.headless=true` (root `pom.xml`).
-- `KeyButtonTest` shows the pattern: in `@BeforeAll`, set `prism.order=sw`, use the Monocle
-  headless platform when its classes are on the class path, then call `Platform.startup(...)` and
-  ignore `IllegalStateException` if the toolkit is already running.
-- Run JavaFX code inside `Platform.runLater(...)` and wait with a `CountDownLatch` and a
-  `@Timeout`, rethrowing any captured exception on the test thread.
-- `KeyButtonTest` is disabled on JDK 25 (`@DisabledOnJre(JRE.JAVA_25)`) until Monocle works there.
-  Follow the same pattern for new toolkit tests rather than letting CI hang.
+- Use `FxTestSupport` (`fx-onscreen-keyboard/src/test/java/org/comtel2000/keyboard/control/`).
+  Call `FxTestSupport.startToolkit()` in `@BeforeAll`; it starts the toolkit once, disables
+  implicit exit (so closing a test stage does not stop the toolkit), and **skips** the test class
+  when no display is available instead of hanging.
+- Run FX code with `FxTestSupport.runFx(...)` or `callFx(...)`. They run on the FX thread, wait at
+  most 10 seconds and rethrow assertion failures on the test thread. `waitForFxEvents()` flushes
+  work queued with `Platform.runLater`; `waitFor(condition, millis)` polls for async results such
+  as fade animations.
+- On Linux without a display, run the tests under Xvfb, as CI does:
+
+```bash
+xvfb-run -a mvn -q -B test
+```
+
+  Without `xvfb-run` the FX test classes are reported as skipped and only toolkit-free tests run.
+- `RecordingRobot` (`src/test/java/org/comtel2000/keyboard/robot/`) records keys sent by a
+  `KeyboardPane`; add it with `addRobotHandler` to assert typed characters without a real window.
 
 Prefer tests that need no toolkit at all, such as XML parsing through `XmlHelper` or pure logic,
 when the behavior allows it.
@@ -82,3 +92,9 @@ mvn -q -B clean verify
 ```
 
 `verify` also runs `spotless:check`. Run `mvn -q -B spotless:apply` first if formatting fails.
+
+## Coverage
+
+JaCoCo runs with every `test` build. The report for the core module is written to
+`fx-onscreen-keyboard/target/site/jacoco/index.html` (CSV in `jacoco.csv`). CI uploads it as the
+`coverage-report` artifact from the JDK 17 job.

@@ -24,8 +24,9 @@ defined in XML, so new languages and keyboard types are added as resources rathe
 
 ## Building and Testing
 
-The default branch is `dev`. CI (`.github/workflows/ci.yml`) runs `mvn -B test` on JDK 17, 21 and
-25 (Liberica `jdk+fx`).
+The default branch is `dev`. CI (`.github/workflows/ci.yml`) runs `xvfb-run -a mvn -B test` on
+JDK 17, 21 and 25 (Liberica `jdk+fx`). JavaFX tests need a display: on Linux without one, prefix
+test commands with `xvfb-run -a`, otherwise the FX test classes are skipped.
 
 | Command                                    | Purpose                                         |
 |--------------------------------------------|-------------------------------------------------|
@@ -34,6 +35,8 @@ The default branch is `dev`. CI (`.github/workflows/ci.yml`) runs `mvn -B test` 
 | `mvn -q -B clean verify`                   | Full build with tests and the Spotless check    |
 | `mvn -q -B spotless:apply`                 | Fix formatting (google-java-format + header)    |
 | `mvn -q -B install -DskipTests`            | Install modules locally (needed to run samples) |
+
+`test` also writes a JaCoCo coverage report to `fx-onscreen-keyboard/target/site/jacoco/`.
 
 Spotless enforces google-java-format and the license header
 `/* Copyright (c) $YEAR comtel2000 (BSD 3-Clause) */` on every Java file. Run `spotless:apply`

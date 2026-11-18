@@ -50,13 +50,14 @@ Skip the comment when the name already says it, as in `readIntAttributeReturnsDe
   the setter has logic.
 - **Exhaustive repetition**: if two layouts go through the same parser path, one test covers it.
 - **Testing JavaFX itself**: don't test that a `Button` shows its text.
-- **Sleep-based timing**: use latches, timeline control, or `@Timeout`, not `Thread.sleep`.
+- **Sleep-based timing**: use `FxTestSupport.waitFor`, timeline control, or latches, not
+  `Thread.sleep`.
 
 ## Test structure
 
 - **One behavior per test.** A failing test name should tell you what broke.
 - **No logic in tests.** Avoid `if`, `for`, `switch` or `try/catch` in test bodies, except the
-  `Platform.runLater` capture pattern described in `running-tests.md`.
+  `FxTestSupport` helpers described in `running-tests.md`.
 - **Arrange / Act / Assert.**
 - **Use helpers for test data.** Put test layout XML in
   `fx-onscreen-keyboard/src/test/resources/xml/` and share loader helpers instead of repeating
@@ -66,6 +67,7 @@ Skip the comment when the name already says it, as in `readIntAttributeReturnsDe
 
 - JUnit Jupiter (`org.junit.jupiter.api`). Use `assertThrows(...)` for exceptions.
 - Prefer `assertEquals(expected, actual)` over `assertTrue(a == b)`.
-- Give toolkit tests a `@Timeout` so a stuck FX thread fails the test instead of hanging CI.
+- Run toolkit code through `FxTestSupport.runFx`/`callFx`, which time out after 10 seconds, so a
+  stuck FX thread fails the test instead of hanging CI.
 - Group related tests with `@Nested` classes named after the behavior area (`LocaleFallback`,
   `RepeatKeys`), not after the method under test.
